@@ -1,0 +1,6 @@
+cd frontend
+
+pnpm exec lint-staged
+pnpm typecheck
+pnpm format
+pnpm test
