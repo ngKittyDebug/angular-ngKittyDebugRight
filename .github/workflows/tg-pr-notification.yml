@@ -11,7 +11,7 @@ jobs:
     steps:
       # 🔹 PR открыт
       - name: Send PR Opened
-        if: github.event.action == 'opened'
+        if: github.event.action == 'opened' && github.event.pull_request.draft == false
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
