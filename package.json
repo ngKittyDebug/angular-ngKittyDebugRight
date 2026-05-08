@@ -11,8 +11,10 @@
     "test:changed": "jest -o --maxWorkers=50%",
     "test:watch": "jest --watch --maxWorkers=50%",
     "test:cov": "jest --coverage --coverageReporters=text-summary --coverageReporters=text --coverageReporters=json-summary --coverageReporters=lcov",
-    "lint": "eslint src --fix && stylelint \"**/*.{css,scss}\" --fix --ignore-path .gitignore",
-    "format": "prettier src -w",
+    "lint": "eslint src && stylelint \"**/*.{css,scss}\" --ignore-path .gitignore",
+    "lint:fix": "eslint src --fix && stylelint \"**/*.{css,scss}\" --fix --ignore-path .gitignore",
+    "format": "prettier src --check",
+    "format:fix": "prettier src -w",
     "typecheck": "tsc -b --noEmit"
   },
   "private": true,
