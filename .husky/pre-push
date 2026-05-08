@@ -1,4 +1,2 @@
-cd frontend
-
 pnpm exec validate-branch-name
 pnpm lint
