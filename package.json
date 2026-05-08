@@ -15,7 +15,8 @@
     "lint:fix": "eslint src --fix && stylelint \"**/*.{css,scss}\" --fix --ignore-path .gitignore",
     "format": "prettier src --check",
     "format:fix": "prettier src -w",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "prepare": "husky"
   },
   "private": true,
   "type": "module",
