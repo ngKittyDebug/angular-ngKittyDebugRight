@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:watch": "ng test --watch",
-    "test:cov": "ng test --coverage --coverage-reporters json-summary --coverage-reporters text",
+    "test:cov": "ng test --coverage --watch=false --coverage-reporters json-summary --coverage-reporters text",
     "lint": "eslint src && stylelint \"**/*.{css,scss}\" --ignore-path .gitignore",
     "lint:fix": "eslint src --fix && stylelint \"**/*.{css,scss}\" --fix --ignore-path .gitignore",
     "format": "prettier src --check",

@@ -22,9 +22,7 @@ describe('App', () => {
     fixture.detectChanges();
   });
 
-  it('should create the app', () => {
-    const app = fixture.componentInstance;
-
-    expect(app).toBeTruthy();
+  it('должен инициализироваться', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
