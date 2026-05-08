@@ -1,59 +1,54 @@
-# Untitled
+# ngKittyDebug
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
+Frontend-приложение на Angular 21 для отладки и разработки UI-фич.
 
-## Development server
+## Требования
 
-To start a local development server, run:
+- `Node.js` (рекомендуется LTS)
+- `pnpm` (в проекте зафиксирован `pnpm@10.30.0`)
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Быстрый старт
 
 ```bash
-ng generate component component-name
+pnpm install
+pnpm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+После запуска dev-сервера приложение доступно по адресу `http://localhost:4200/`.
+
+## Основные команды
 
 ```bash
-ng generate --help
+pnpm start          # запуск dev-сервера
+pnpm build          # production-сборка
+pnpm watch          # сборка в watch-режиме (development)
+pnpm test           # unit-тесты (Jest)
+pnpm test:fast      # ускоренный прогон тестов
+pnpm test:changed   # тесты только по измененным файлам
+pnpm test:watch     # тесты в watch-режиме
+pnpm test:cov       # тесты с покрытием
+pnpm lint           # eslint + stylelint (с autofix)
+pnpm format         # форматирование prettier
+pnpm typecheck      # проверка TypeScript без эмита
 ```
 
-## Building
+## Работа с ветками и PR
 
-To build the project run:
+- Для имен веток включена проверка формата:
+  `^(chore|feat|fix|docs|style|refactor|perf)\/[a-zA-Z0-9-]+_[a-zA-Z0-9-]+$`
+- При открытии PR GitHub Actions автоматически:
+  - назначает автора в `Assignees`
+  - запрашивает review у команды (кроме автора)
 
-```bash
-ng build
-```
+Workflow: `.github/workflows/assigner.yml`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Стек
 
-## Running unit tests
+- Angular 21
+- TypeScript 5.9
+- Jest
+- ESLint + Stylelint + Prettier
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Полезные ссылки
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular CLI](https://angular.dev/tools/cli)
