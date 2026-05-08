@@ -21,7 +21,7 @@
 [//]: # (TODO добавить)
 
 ## Coverage Status
-![Coverage](../badges/coverage.svg)
+![Coverage](https://raw.githubusercontent.com/ngKittyDebug/angular-ngKittyDebugRight/dev/badges/coverage.svg)
 
 ## Checklist ✅
 ### Mandatory Requirements
