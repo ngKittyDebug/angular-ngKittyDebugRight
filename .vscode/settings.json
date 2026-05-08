@@ -1,4 +1,4 @@
 {
-  "js/ts.tsdk.path": "node_modules/typescript/lib",
-  "js/ts.implicitProjectConfig.checkJs": true
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.implicitProjectConfig.checkJs": true
 }
