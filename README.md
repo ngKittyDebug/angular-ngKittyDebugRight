@@ -21,13 +21,11 @@ pnpm ng             # Angular CLI
 pnpm start          # запуск dev-сервера (ng serve -o)
 pnpm build          # production-сборка
 pnpm watch          # сборка в watch-режиме (development)
-pnpm test           # unit-тесты (Jest)
-pnpm test:fast      # ускоренный прогон тестов
-pnpm test:changed   # тесты только по измененным файлам
+pnpm test           # unit-тесты (Vitest)
 pnpm test:watch     # тесты в watch-режиме
 pnpm test:cov       # тесты с покрытием
 pnpm lint           # eslint + stylelint
-pnpm lint:fix       # eslint + stylelint с autofix
+pnpm lint:fix       # eslint + stylelint (с autofix)
 pnpm format         # проверка форматирования prettier
 pnpm format:fix     # форматирование prettier
 pnpm typecheck      # проверка TypeScript без эмита
@@ -38,7 +36,7 @@ pnpm prepare        # установка git hooks (husky)
 
 - Angular 21
 - TypeScript 5.9
-- Jest
+- Vitest
 - ESLint + Stylelint + Prettier
 
 ## Полезные ссылки

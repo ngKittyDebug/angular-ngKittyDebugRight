@@ -29,10 +29,10 @@ jobs:
         run: pnpm test:cov
 
       - name: Generate badges
-        uses: jpb06/jest-badges-action@latest
+        uses: jaywcjlove/coverage-badges-action@main
         with:
-          branches: main,dev
-          output-folder: 'badges'
+          source: coverage/angular2026q2/coverage-summary.json
+          output: badges/coverage.svg
 
       - name: Add badges to repository
         run: |

@@ -21,7 +21,7 @@
 [//]: # (TODO добавить)
 
 ## Coverage Status
-![Coverage](../badges/coverage-jest%20coverage.svg)
+![Coverage](../badges/coverage.svg)
 
 ## Checklist ✅
 ### Mandatory Requirements
