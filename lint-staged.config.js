@@ -3,8 +3,6 @@
  * @type {import('lint-staged').Configuration}
  */
 export default {
-  // Run Prettier on staged CSS and JSON files
-  '*.{css,scss,json,md}': ['pnpm format'],
-  // Run ESLint and Prettier on all staged JavaScript and TypeScript files
-  '*.{js,ts}': ['pnpm lint', 'pnpm format'],
+  '*.{css,scss,json,md}': ['prettier --write'],
+  '*.{js,ts}': ['eslint --fix', 'prettier --write'],
 };
