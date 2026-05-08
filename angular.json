@@ -30,7 +30,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "dashq",
+      "prefix": "ngKitty",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
