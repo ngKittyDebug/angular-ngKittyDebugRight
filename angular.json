@@ -8,7 +8,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular2026q2": {
+    "ngKittyDebugRight": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -26,7 +26,9 @@
         "@schematics/angular:service": {
           "type": "service"
         },
-        "@schematics/angular:resolver": { "typeSeparator": "." }
+        "@schematics/angular:resolver": {
+          "typeSeparator": "."
+        }
       },
       "root": "",
       "sourceRoot": "src",
@@ -37,6 +39,7 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/ngKittyDebugRight",
             "stylePreprocessorOptions": {
               "includePaths": ["src", "src/styles"]
             },
@@ -85,10 +88,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular2026q2:build:production"
+              "buildTarget": "ngKittyDebugRight:build:production"
             },
             "development": {
-              "buildTarget": "angular2026q2:build:development"
+              "buildTarget": "ngKittyDebugRight:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -98,6 +101,12 @@
           "options": {
             "tsConfig": "tsconfig.spec.json",
             "coverageExclude": ["**/**/*.html"]
+          }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/ngKittyDebugRight/browser"
           }
         }
       }
