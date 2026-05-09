@@ -1,5 +1,9 @@
 # ngKittyDebug
 
+## Деплой
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/be597b1e-bdc6-4923-a2cc-0eb263412cab/deploy-status)](https://app.netlify.com/projects/delulu-church/deploys)
+
 ## Требования
 
 - `Node.js` (рекомендуется LTS)
