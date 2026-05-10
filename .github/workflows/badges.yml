@@ -1,0 +1,43 @@
+name: 'coverage'
+
+on:
+  push:
+    branches: [dev, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests with coverage
+        run: pnpm test:cov
+
+      - name: Generate badges
+        uses: jaywcjlove/coverage-badges-action@main
+        with:
+          source: coverage/angular2026q2/coverage-summary.json
+          output: badges/coverage.svg
+
+      - name: Add badges to repository
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -f badges/
+          git diff --staged --quiet || git commit -m "docs: update coverage badges"
+          git push
