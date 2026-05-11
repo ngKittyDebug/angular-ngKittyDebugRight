@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ngKitty-app-root',
   imports: [RouterOutlet, TuiRoot],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
-export class App {}
+export class AppComponent {}
