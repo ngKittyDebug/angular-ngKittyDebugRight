@@ -5,9 +5,9 @@ import { RouterOutlet } from '@angular/router';
 import { TuiCard } from '@taiga-ui/layout';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ngKitty-app-root',
   imports: [RouterOutlet, TuiRoot, TuiButton, TuiButton, TuiCard],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
-export class App {}
+export class AppComponent {}

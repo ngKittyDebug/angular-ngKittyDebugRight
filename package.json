@@ -2,6 +2,7 @@
   "name": "ngKittyDebug",
   "version": "0.0.0",
   "scripts": {
+    "ci": "pnpm install --frozen-lockfile",
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
