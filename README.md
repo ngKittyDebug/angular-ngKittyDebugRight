@@ -46,3 +46,4 @@ pnpm prepare        # установка git hooks (husky)
 ## Полезные ссылки
 
 - [Angular CLI](https://angular.dev/tools/cli)
+  +++
