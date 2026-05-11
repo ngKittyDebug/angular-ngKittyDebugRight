@@ -31,7 +31,7 @@ jobs:
       - name: Generate badges
         uses: jaywcjlove/coverage-badges-action@main
         with:
-          source: coverage/angular2026q2/coverage-summary.json
+          source: coverage/ngKittyDebugRight/coverage-summary.json
           output: badges/coverage.svg
 
       - name: Add badges to repository
