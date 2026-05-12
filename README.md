@@ -10,14 +10,11 @@ The Church of Holy Deploy — это цифровой храм для прогр
 
 ## 👥 Team Members
 
-| Роль                           | Имя                  | Гитхаб                                           |
-| ------------------------------ | -------------------- | ------------------------------------------------ |
-| Frontend developer / Team Lead | Daria Melnikova      | [dashque](https://github.com/dashque)            |
-| ------------------------------ | -------------------- | ------------------------------------------------ |
-| Frontend developer             | Alena1409            | [alena1409](https://github.com/Alena1409)        |
-| ------------------------------ | -------------------- | ------------------------------------------------ |
-| Frontend developer             | Nadezhda Kozochkina  | [kozochkina82](https://github.com/kozochkina82)  |
-| ------------------------------ | -------------------- | ------------------------------------------------ |
+| Роль                           | Имя                 | Гитхаб                                          |
+| ------------------------------ | ------------------- | ----------------------------------------------- |
+| Frontend developer / Team Lead | Daria Melnikova     | [dashque](https://github.com/dashque)           |
+| Frontend developer             | Alena1409           | [alena1409](https://github.com/Alena1409)       |
+| Frontend developer             | Nadezhda Kozochkina | [kozochkina82](https://github.com/kozochkina82) |
 
 ## :closed_book:Требования
 
@@ -64,6 +61,6 @@ pnpm prepare        # установка git hooks (husky)
 - ESLint + Stylelint + Prettier
 - Taiga UI
 
-## Useful links
+## :books: Useful links
 
 - [Angular CLI](https://angular.dev/tools/cli)
