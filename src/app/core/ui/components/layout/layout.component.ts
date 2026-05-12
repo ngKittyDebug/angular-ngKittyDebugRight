@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiMainComponent } from '@taiga-ui/layout';
 
@@ -7,6 +7,7 @@ import { TuiMainComponent } from '@taiga-ui/layout';
   imports: [RouterOutlet, TuiMainComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
   // protected readonly navigationItemList = [
