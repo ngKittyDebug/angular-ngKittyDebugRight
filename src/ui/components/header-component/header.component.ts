@@ -4,11 +4,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { TuiTitle } from '@taiga-ui/core';
 import { TuiHeader } from '@taiga-ui/layout';
+import { TuiCard } from '@taiga-ui/layout';
 
 @Component({
   selector: 'header-component',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, TuiTitle, TuiHeader],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, TuiTitle, TuiHeader, TuiCard],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
