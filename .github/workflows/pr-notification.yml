@@ -5,7 +5,6 @@ on:
 
 jobs:
   notify-discord:
-    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
@@ -15,4 +14,4 @@ jobs:
             -d '{
               "content": "🚀 PR ${{ github.event.action }}: **${{ github.event.pull_request.title }}**\n🔗 ${{ github.event.pull_request.html_url }}\n👤 Author: ${{ github.event.pull_request.user.login }}"
             }' \
-            "${{ secrets.PR_NOTIFIER_WEBHOOK }}"
+            "${{ secrets.PR_NOTIFIER_WEBHOOK_CHURCH }}"
