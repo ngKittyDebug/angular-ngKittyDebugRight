@@ -14,7 +14,7 @@ describe('LayoutComponent', () => {
 
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('должен инициализироваться', () => {
