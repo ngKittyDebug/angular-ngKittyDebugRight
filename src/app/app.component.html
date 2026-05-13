@@ -1,5 +1,5 @@
 <tui-root tuiTheme="dark">
-  <div class="hihi-haha-container">
+  <div>
     <div>
       <button tuiButton appearance="primary" iconStart="@tui.clock">primary</button>
       <button tuiButton appearance="secondary" iconStart="@tui.clock">secondary</button>
@@ -11,25 +11,9 @@
       <button tuiButton appearance="outline" class="outline-light" size="xs">outline-light</button>
       <button tuiButton appearance="flat">flat</button>
     </div>
-    <div class="cards">
-      <section tuiCardLarge="normal" class="card">
-        <h3>Taiga Card</h3>
-        <p>Смотри тут базовые цвета карточки в текущей теме: фон, текст, граница и поверхность.</p>
-        <button tuiButton>кнопка в карточке</button>
-      </section>
-
-      <p>gfdhfghfgh ndkyfhgf fghtjytjyth</p>
-      <p>gfdhfghfgh ndkyfhgf fghtjytjyth</p>
-      <p>gfdhfghfgh ndkyfhgf fghtjytjyth</p>
-      <p>gfdhfghfgh ndkyfhgf fghtjytjyth</p>
-
-      <div style="display: flex; gap: 1rem; padding: 1rem">
-        <div style="flex: 1; background: var(--fire); color: #fff; padding: 1.5rem; text-align: center">🔥 Fire</div>
-        <div style="flex: 1; background: var(--water); color: #000; padding: 1.5rem; text-align: center">💧 Water</div>
-        <div style="flex: 1; background: var(--earth); color: #000; padding: 1.5rem; text-align: center">🌱 Earth</div>
-        <div style="flex: 1; background: var(--air); color: #000; padding: 1.5rem; text-align: center">🌬️ Air</div>
-      </div>
-    </div>
   </div>
+
   <router-outlet />
+
+  <ngKitty-footer />
 </tui-root>

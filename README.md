@@ -1,15 +1,42 @@
 # ngKittyDebug
 
-## Деплой
+## :church: About the project
+
+The Church of the Holy Deploy — это цифровой храм для программистов, где каждый может исповедоваться в своих багах, вопросить оракула о судьбе деплоя, получить наставление от деда-сеньора и благословение Духа Машины. Входите без страха, и да воздастся вам по вере вашей.
+
+Проект включает в себя сервисы:
+
+- онлайн-исповедальня
+- дневники разработчика (отслеживание эмоционального состояния)
+- гадание на судьбу деплоя (расклад на 3 карты)
+- ежедневный астрологический прогноз
+- новости космоса + космические фотографии NASA
+- погодные условия, UI зависит от стихии дня
+- дед-сеньор — генератор цифровой мудрости
+
+## 🚀 Deployment
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/be597b1e-bdc6-4923-a2cc-0eb263412cab/deploy-status)](https://app.netlify.com/projects/delulu-church/deploys)
 
-## Требования
+## 👥 Team Members
+
+| Роль                           | Имя                 | Гитхаб                                          |
+| ------------------------------ | ------------------- | ----------------------------------------------- |
+| Frontend developer / Team Lead | Daria Melnikova     | [dashque](https://github.com/dashque)           |
+| Frontend developer             | Alena Alekseeva     | [alena1409](https://github.com/Alena1409)       |
+| Frontend developer             | Nadezhda Kozochkina | [kozochkina82](https://github.com/kozochkina82) |
+
+## :closed_book:Требования
 
 - `Node.js` (рекомендуется LTS)
 - `pnpm` (в проекте зафиксирован `pnpm@10.30.0`)
 
-## Быстрый старт
+## ⚡ Get Started
+
+1. Клонировать приложение
+   git clone https://github.com/ngKittyDebug/angular-ngKittyDebugRight.git
+
+2. Ввести в командной строке:
 
 ```bash
 pnpm install --frozen-lockfile
@@ -18,7 +45,7 @@ pnpm start
 
 После запуска dev-сервера приложение доступно по адресу `http://localhost:4200/`.
 
-## Основные команды
+## :gear: Основные команды
 
 ```bash
 pnpm ng             # Angular CLI
@@ -36,13 +63,14 @@ pnpm typecheck      # проверка TypeScript без эмита
 pnpm prepare        # установка git hooks (husky)
 ```
 
-## Стек
+## :hammer_and_wrench: Tech Stack
 
 - Angular 21
 - TypeScript 5.9
 - Vitest
 - ESLint + Stylelint + Prettier
+- Taiga UI
 
-## Полезные ссылки
+## :books: Useful links
 
 - [Angular CLI](https://angular.dev/tools/cli)
