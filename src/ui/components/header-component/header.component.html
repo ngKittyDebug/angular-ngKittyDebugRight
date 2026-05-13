@@ -1,5 +1,18 @@
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
+    <section tuiCardLarge="normal" class="user-card">
+      <tui-avatar-stack direction="start">
+        <div size="s" tuiAvatar="@tui.user" [style.background]="url | tuiAutoColor">
+          <img alt="avatar" [src]="url" />
+        </div>
+      </tui-avatar-stack>
+      <hgroup tuiTitle>
+        <h3 class="user-name">kozochkina82</h3>
+        <p tuiSubtitle>location: Podgorica</p>
+        <p tuiSubtitle>online: 35 min</p>
+      </hgroup>
+      <button tuiButton size="s">exit</button>
+    </section>
     <hgroup tuiTitle>
       <h2 class="header-title">
         {{ title }}
