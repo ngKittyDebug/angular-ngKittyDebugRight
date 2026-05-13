@@ -1,4 +1,4 @@
-import type { NavigationItem } from '@core/ui/components/layout/sidebar/models/navigation-item.model';
+import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 
 export const navigationItemListConfig = [
   {
