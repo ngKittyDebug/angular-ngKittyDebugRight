@@ -1,12 +1,14 @@
 .header-box {
+  display: flex;
+  flex-direction: row;
   width: 100%;
   padding: 24px;
-  margin: 20px 20px 32px 20px;
+  margin: 20px 20px 32px;
   border: 1px solid #a855f7;
 }
 
 .header-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: Orbitron, sans-serif;
   font-optical-sizing: auto;
   text-transform: uppercase;
   font-weight: 400;
@@ -15,11 +17,11 @@
 }
 
 .header-subtitle {
-  font-family: 'Oxanium', sans-serif;
+  font-family: Oxanium, sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   text-align: center;
-  color: #fbbf24;
+  color: #fbbf24 !important;
   animation: pulse 2s infinite;
 }
 
@@ -36,4 +38,11 @@
   100% {
     opacity: 1;
   }
+}
+.header-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  --tui-font-icon: 'Material Symbols Outlined';
 }

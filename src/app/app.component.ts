@@ -7,7 +7,7 @@ import { HeaderComponent } from 'src/ui/components/header-component/header.compo
 
 @Component({
   selector: 'ngKitty-app-root',
-  imports: [RouterOutlet, TuiRoot, TuiButton, TuiButton, TuiCard, HeaderComponent],
+  imports: [RouterOutlet, TuiRoot, TuiButton, TuiCard, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
