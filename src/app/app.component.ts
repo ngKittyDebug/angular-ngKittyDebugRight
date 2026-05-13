@@ -7,7 +7,7 @@ import { FooterComponent } from '@core/layout/footer/footer.component';
 
 @Component({
   selector: 'ngKitty-app-root',
-  imports: [RouterOutlet, TuiRoot, TuiButton, TuiButton, TuiCard, FooterComponent],
+  imports: [RouterOutlet, TuiRoot, TuiButton, TuiCard, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

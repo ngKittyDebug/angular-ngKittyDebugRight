@@ -3,20 +3,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  border-top: 1px dotted var(--accent-primary);
+  gap: 1rem;
+  border-top: 1px solid var(--tui-border-normal);
   overflow: hidden;
+  text-transform: uppercase;
+  font-size: 1rem;
+
+  @media (width <= 768px) {
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    font-size: 10px;
+  }
 
   a {
     color: var(--purple-soft);
     text-decoration: none;
-    transition:
-      color 0.2s ease,
-      text-shadow 0.2s ease;
+    transition: 0.5s ease all;
 
     &:hover {
       color: var(--accent-secondary);
-      text-shadow: 0 0 10px rgb(255 79 216 / 45%);
     }
   }
 }
@@ -30,18 +36,16 @@
 
 .prompt {
   color: var(--warning);
-  text-shadow: 0 0 8px rgb(255 195 0 / 50%);
   animation: pulse 2s infinite;
 }
 
 .text {
-  color: var(--violet);
   letter-spacing: 0.05em;
   animation: pulse 2s infinite;
 }
 
 .divider {
-  color: rgb(255 255 255 / 20%);
+  opacity: 0.5;
 }
 
 @keyframes pulse {

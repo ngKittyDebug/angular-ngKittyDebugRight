@@ -20,4 +20,17 @@ describe('FooterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render GitHub repository link', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    const link = element.querySelector('a[href*="github.com/ngKittyDebug"]');
+
+    expect(link).toBeTruthy();
+  });
+  it('should render all three author links', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    const links = element.querySelectorAll('.authors a');
+
+    expect(links.length).toBe(3);
+  });
 });
