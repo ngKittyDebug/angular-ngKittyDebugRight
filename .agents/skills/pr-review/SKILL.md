@@ -31,13 +31,14 @@ Formula: **jab + diagnosis + fix + source**
 
 ### Severity levels — match tone to impact
 
+- 👺 **Style Guide** (нарушение соглашений из `docs/`: архитектура, нейминг, структура файлов, тестирование) → САМЫЙ жёсткий roast. Это не незнание Angular — это игнор письменного договора команды, который все читали.
 - 🔴 **Critical** (OnPush, `any`, subscription leaks, missing standalone) → жёсткий roast, это блокер.
 - 🟡 **Warning** (prefer-const, member ordering, missing `import type`) → лёгкая ирония, без драмы.
 - 🫥 **Nit** (именование, стиль, мелочи) → одна строка, без roast.
 - 💩 **Shit** (копипаста, дебаг-мусор в коде, магические числа, мёртвый код) → брезгливость и разочарование.
 - 🤮 **Crap** (полный хаос: нечитаемый код, бессмысленные переменные, `any` в каждой строке) → тошнота и усталость от жизни.
 
-Prefix every comment with the matching emoji. Examples: `🔴 Где OnPush?`, `💩 Копипаста с ChatGPT?`, `🟢 именование`.
+Prefix every comment with the matching emoji. Examples: `👺 Стайлгайд`, `🔴 Где OnPush?`, `💩 Копипаста с ChatGPT?`, `🫥 именование`.
 
 ### Mode B — Praising a good move
 
@@ -83,6 +84,62 @@ If the review has 2+ comments about the same pattern (e.g., 3 files missing `OnP
 - **Role**: You are assisting a **mentor** reviewing a student's submission.
 - **Stack**: Angular v21, Standalone components, Taiga UI, Transloco, TypeScript strict mode, zone.js
 - **ESLint**: Strictly enforced — lint errors block approval.
+
+---
+
+## 1.5. Project Style Guides — read before analysis, enforce first
+
+**These docs define the team's written agreements.** Violations get `👺` — the harshest severity.  
+Read them from `$WORKTREE_PATH/docs/` at the start of every review.
+
+| File                                    | What it covers                                                                         | When to read                           |
+| --------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------- |
+| `docs/Стайлгайд нейминг и структура.md` | Component/service/form/method naming, file structure, collections, converters, facades | Always                                 |
+| `docs/Стайлгайд архитектура проекта.md` | core/shared/features layering, facade pattern, dependency rules, file placement        | Always                                 |
+| `docs/Стайлгайд коммиты.md`             | Conventional commit format, scope, subject rules, 100-char limit                       | Always                                 |
+| `docs/Стайлгайд PR.md`                  | Draft→Ready lifecycle, self-check, PR description requirements                         | Always                                 |
+| `docs/Стайлгайд тестирование.md`        | AAA structure, describe/it naming, fixtures, mocks, TestBed, Vitest rules              | When `*.spec.ts` files are in the diff |
+
+### Key 👺 violations to flag
+
+**Architecture (`Стайлгайд архитектура проекта.md`):**
+
+- Component calls `*ApiService` directly, bypassing facade
+- Feature A imports internals of feature B
+- `shared` imports feature-specific business logic
+- `core` contains product code of a single feature page
+- Business rules left in template or page component (not in facade/service)
+- File placed in wrong layer (e.g., reusable component buried inside `<page-name>/` instead of `shared/ui`)
+
+**Naming (`Стайлгайд нейминг и структура.md`):**
+
+- API model named without `ApiData`/`ApiResponse` suffix
+- Client model named without `Model` suffix
+- Array variable missing `List` suffix
+- Converter not following `convert<Entity>To<Target>` pattern
+- Facade not named `<Entity>Facade`
+- Form control/group/array missing `FormControl`/`FormGroup`/`FormArray` suffix
+- Event handler not prefixed with `on`
+- Constant not in `UPPER_SNAKE_CASE`
+
+**Testing (`Стайлгайд тестирование.md`):**
+
+- `describe`/`it` text not in Russian
+- `it` description doesn't start lowercase
+- AAA blocks not separated by blank lines
+- `toHaveBeenCalled()` instead of `toHaveBeenCalledTimes(1)`
+- `toHaveBeenCalledWith(...)` instead of `toHaveBeenNthCalledWith(1, ...)`
+- Mock not typed with `MockedObject<Partial<T>>`
+- Fixture not using `as const satisfies Type`
+- `vi.mock` at module level without team exception
+- Private methods tested directly instead of extracting to helper
+
+**Commits (`Стайлгайд коммиты.md`):**
+
+- Missing conventional prefix (`feat:`, `fix:`, etc.)
+- Subject starts with capital letter or ends with period
+- Line exceeds 100 characters
+- Mixed logical units in one commit
 
 ---
 
@@ -193,8 +250,13 @@ Spawn a `general-purpose` Agent with `model: "opus"`.
 You are doing the analysis phase of a mentor PR review. Do NOT post anything to GitHub — analysis only.
 
 Read these files from the project for full context on style and rules:
-- `.agents/skills/pr-review/SKILL.md` (sections 0, 2, 3)
+- `.agents/skills/pr-review/SKILL.md` (sections 0, 1.5, 2, 3)
 - `.agents/skills/pr-review/reference/tone-examples.md`
+- `docs/Стайлгайд нейминг и структура.md`
+- `docs/Стайлгайд архитектура проекта.md`
+- `docs/Стайлгайд коммиты.md`
+- `docs/Стайлгайд PR.md`
+- `docs/Стайлгайд тестирование.md` (only if *.spec.ts files are in the diff)
 
 ## PR context
 - PR number: <PR_NUMBER>
@@ -207,7 +269,7 @@ Read these files from the project for full context on style and rules:
 1. ONLY comment on lines in the diff (added/modified).
 2. If an existing comment already covers the issue — DO NOT create a new one. Instead, draft a reply (Mode C).
 3. Use ```suggestion blocks ONLY for diff lines.
-4. Apply severity levels (🔴/🟡/🟢/💩/🤮) from Section 0.
+4. Apply severity levels (👺/🔴/🟡/🫥/💩/🤮) from Section 0. Style guide violations (Section 1.5) = 👺 and take priority.
 5. Anti-repetition: one detailed comment per pattern, short refs elsewhere.
 
 ## Output format — ONLY this markdown:
@@ -227,10 +289,10 @@ Read these files from the project for full context on style and rules:
 
 ### Inline Comments
 
-#### <file>:<line> [🔴|🟡|🟢|💩|🤮]
+#### <file>:<line> [👺|🔴|🟡|🫥|💩|🤮]
 <comment body in Russian per Mode A formula>
 
-#### <file>:<line> [🔴|🟡|🟢|💩|🤮]
+#### <file>:<line> [👺|🔴|🟡|🫥|💩|🤮]
 <...>
 ---
 ````
@@ -246,15 +308,16 @@ Read these files from the project for full context on style and rules:
 
 ### Step 2 — Prepare (inline mode only, `FILE_COUNT ≤ 10`)
 
-1. Fetch PR metadata: `gh pr view <PR_NUMBER> --json title,body,state,author`
-2. Fetch existing comments to avoid duplicates: `get_pr_comments.sh <PR_NUMBER>`
-3. Read the diff: `gh pr diff <PR_NUMBER>` — identify which lines were actually changed.
-4. Read all changed files from `$WORKTREE_PATH` for full context.
-5. Apply Sections 2 and 3 checklists. **Only comment on lines in the diff.**
-6. Draft replies (Mode C) to existing comments first.
-7. Draft inline comments (Mode A/B) with severity levels — only for issues NOT already covered by existing comments.
-8. Apply anti-repetition rule — collapse duplicates.
-9. Present the full draft to the mentor and wait for confirmation.
+1. **Read project style guides** from `$WORKTREE_PATH/docs/` per the table in Section 1.5. Always read naming + architecture + commits + PR guides. Add testing guide if `*.spec.ts` files are in the diff.
+2. Fetch PR metadata: `gh pr view <PR_NUMBER> --json title,body,state,author`
+3. Fetch existing comments to avoid duplicates: `get_pr_comments.sh <PR_NUMBER>`
+4. Read the diff: `gh pr diff <PR_NUMBER>` — identify which lines were actually changed.
+5. Read all changed files from `$WORKTREE_PATH` for full context.
+6. Apply **Section 1.5 style guide checklist first** (`👺`), then Sections 2 and 3. **Only comment on lines in the diff.**
+7. Draft replies (Mode C) to existing comments first.
+8. Draft inline comments (Mode A/B) with severity levels — only for issues NOT already covered by existing comments.
+9. Apply anti-repetition rule — collapse duplicates.
+10. Present the full draft to the mentor and wait for confirmation.
 
 ### Step 3 — Post the review (batch, never one by one)
 
