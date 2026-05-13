@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiMainComponent } from '@taiga-ui/layout';
+import { FooterComponent } from '@core/ui/components/layout/footer/footer.component';
 
 @Component({
   selector: 'ngKitty-layout',
-  imports: [RouterOutlet, TuiMainComponent],
+  imports: [RouterOutlet, TuiMainComponent, FooterComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
