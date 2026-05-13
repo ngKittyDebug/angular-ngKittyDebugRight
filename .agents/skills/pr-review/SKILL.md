@@ -24,7 +24,7 @@ Formula: **jab + diagnosis + fix + source**
 
 1. Open with a half-joke — wry, ironic, specific to the mistake. One sentence.
 2. Vary your wording — never repeat the same joke pattern twice in one review. Rotate emotional register: irony, fatigue, surprise, mock admiration, quiet sadness.
-3. Use examples from `reference/tone-examples.md` as inspiration (never copy verbatim).
+3. Before writing each jab — open `reference/tone-examples.md`, find the section matching the issue category (legacy patterns, TypeScript, performance, style/cleanliness, tests, commits, PR description). Pick the emotional register of that category and write the jab in that register. Vary across comments: if comment #1 is ironic, make #2 fatigued, #3 surprised. Exact phrases are just anchors — rewrite with different wording, same spirit.
 4. **Diagnose** — one sentence on why this is wrong in Angular v21 / this project.
 5. **Fix it** — always a ` ```suggestion ` block or corrected snippet. No fix, no comment.
 6. **Link** — Angular docs, ESLint rule, or any other relevant source.
@@ -76,6 +76,17 @@ If the review has 2+ comments about the same pattern (e.g., 3 files missing `OnP
 - Every **positive** comment: brief praise + why (one sentence).
 - Never cruel, never vague, never without a fix.
 - **` ```suggestion ` blocks** — use ONLY for lines that are part of the diff (added/modified). For unchanged lines that need fixing, use a regular code block with instructions.
+
+### Pre-presentation self-check (mandatory)
+
+Before showing the draft to the mentor, verify every negative comment:
+
+- [ ] **Jab first** — opens with an ironic/wry sentence, NOT a technical explanation?
+- [ ] **Severity-matched tone** — 👺 = sharp accusation; 🔴 = hard roast; 💩 = disgust; 🤮 = exhaustion; 🟡 = light irony; 🫥 = one dry line?
+- [ ] **Register variety** — no two consecutive comments use the same joke structure or emotional register?
+- [ ] **All four parts present** — jab + diagnosis + fix + link?
+
+If any comment fails → rewrite the jab before presenting.
 
 ---
 
@@ -240,6 +251,16 @@ All code reading and analysis happens inside `$WORKTREE_PATH`. The mentor's work
 CHANGED_FILES=$(gh pr diff <PR_NUMBER> --name-only | while read f; do [ -f "$WORKTREE_PATH/$f" ] && echo "$f"; done)
 ```
 
+**Identify commentable files** — files with `patch: null` are shown in the PR but GitHub won't accept inline comments on them (common for files that arrived via a merge commit from another branch):
+
+```bash
+COMMENTABLE_FILES=$(gh api \
+  "/repos/$(gh repo view --json nameWithOwner -q .nameWithOwner)/pulls/<PR_NUMBER>/files" \
+  --paginate --jq '.[] | select(.patch != null) | .filename')
+```
+
+Pass `COMMENTABLE_FILES` to the subagent. Issues found in files **not** in this list must go in the review body, not as inline comments.
+
 ---
 
 ### Step 1.5 — Subagent Analysis (subagent mode only, `FILE_COUNT > 10`)
@@ -271,6 +292,8 @@ Read these files from the project for full context on style and rules:
 3. Use ```suggestion blocks ONLY for diff lines.
 4. Apply severity levels (👺/🔴/🟡/🫥/💩/🤮) from Section 0. Style guide violations (Section 1.5) = 👺 and take priority.
 5. Anti-repetition: one detailed comment per pattern, short refs elsewhere.
+6. **Files NOT in COMMENTABLE_FILES** (`patch: null`) cannot receive inline comments — GitHub rejects them. Files added in a previous PR and brought in via a merge commit are a common case. Put observations about those files under `### Review body notes` instead.
+7. **Context lines are NOT valid** for inline comments — only `+` lines (added) count. If you need to flag an issue on a context line, use the nearest `+` line in the same hunk and mention the actual line in the comment body.
 
 ## Output format — ONLY this markdown:
 
@@ -288,12 +311,23 @@ Read these files from the project for full context on style and rules:
 <reply body in Russian, Mode C style>
 
 ### Inline Comments
+(only for files in COMMENTABLE_FILES, only on `+` lines)
 
 #### <file>:<line> [👺|🔴|🟡|🫥|💩|🤮]
-<comment body in Russian per Mode A formula>
+_[jab — one ironic/wry sentence, severity-matched register from tone-examples.md]_
+
+[diagnosis — one sentence: why this is wrong in Angular v21 / this project]
+
+```suggestion / code block with fix```
+
+[link — Angular docs / ESLint rule / MDN]
 
 #### <file>:<line> [👺|🔴|🟡|🫥|💩|🤮]
-<...>
+<same structure>
+
+### Review body notes
+(observations for non-commentable files, commit violations, general notes — go into the review body, not inline)
+- <note in Russian>
 ---
 ````
 
@@ -309,15 +343,22 @@ Read these files from the project for full context on style and rules:
 ### Step 2 — Prepare (inline mode only, `FILE_COUNT ≤ 10`)
 
 1. **Read project style guides** from `$WORKTREE_PATH/docs/` per the table in Section 1.5. Always read naming + architecture + commits + PR guides. Add testing guide if `*.spec.ts` files are in the diff.
+   1a. **Read `.agents/skills/pr-review/reference/tone-examples.md` in full** — mandatory, before drafting any comment. Find the section matching each issue type you discover (legacy patterns, TypeScript, performance, style/cleanliness, tests, commits, PR description). Have it active in context when writing jabs.
 2. Fetch PR metadata: `gh pr view <PR_NUMBER> --json title,body,state,author`
 3. Fetch existing comments to avoid duplicates: `get_pr_comments.sh <PR_NUMBER>`
 4. Read the diff: `gh pr diff <PR_NUMBER>` — identify which lines were actually changed.
+   4a. **Identify commentable files**: `gh api .../pulls/<PR_NUMBER>/files --jq '.[] | select(.patch != null) | .filename'`. Files with `patch: null` (e.g. arrived via a merge commit from another branch) cannot receive inline comments — GitHub rejects them. Issues in those files go in the review body.
 5. Read all changed files from `$WORKTREE_PATH` for full context.
-6. Apply **Section 1.5 style guide checklist first** (`👺`), then Sections 2 and 3. **Only comment on lines in the diff.**
+6. Apply **Section 1.5 style guide checklist first** (`👺`), then Sections 2 and 3. **Only comment on lines in the diff, only on `+` lines (added). Context lines shown in diff hunks are NOT valid for inline comments.**
 7. Draft replies (Mode C) to existing comments first.
-8. Draft inline comments (Mode A/B) with severity levels — only for issues NOT already covered by existing comments.
+8. Draft inline comments (Mode A/B) with severity levels — only for issues NOT already covered by existing comments, only in commentable files on `+` lines. Issues in non-commentable files → review body.
+   For each negative comment, write in this order: **jab first** (pick register from `tone-examples.md`) → diagnosis → fix → link. The jab is not optional.
 9. Apply anti-repetition rule — collapse duplicates.
-10. Present the full draft to the mentor and wait for confirmation.
+10. **Self-check every negative comment before presenting:**
+    - [ ] Opens with a jab (ironic/wry sentence), NOT a technical statement?
+    - [ ] Jab tone matches severity (👺 = sharp accusation, 💩 = disgust/disappointment, 🟡 = light irony, 🤮 = exhaustion)?
+    - [ ] No two consecutive comments open with the same joke structure?
+11. Present the full draft to the mentor and wait for confirmation.
 
 ### Step 3 — Post the review (batch, never one by one)
 
@@ -395,6 +436,6 @@ All scripts: `.agents/skills/pr-review/scripts/`. Require `gh` CLI authenticated
 ## 7. Reference Files
 
 - `reference/router.md` — Angular Router v21 patterns for this project.
-- `reference/tone-examples.md` — Comment style examples for Mode A/B/C (read for inspiration, don't copy verbatim).
+- `reference/tone-examples.md` — **Read BEFORE drafting any comment** (mandatory in both inline and subagent modes). Contains jab openers grouped by issue category and severity. Use as the active emotional register when writing, not as background reading. Vary phrasing — same spirit, different words.
 
 When unsure about Angular patterns — `ls .agents/skills/` and read the relevant `SKILL.md`.
