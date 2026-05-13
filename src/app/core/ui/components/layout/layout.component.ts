@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiMainComponent } from '@taiga-ui/layout';
 import { FooterComponent } from '@core/ui/components/layout/footer/footer.component';
+// import { SidebarComponent } from '@core/ui/components/layout/sidebar/sidebar.component';
+import { navigationItemList } from '@core/ui/components/layout/sidebar/fixtures/navigation-item-list.fixture';
 
 @Component({
   selector: 'ngKitty-layout',
@@ -11,31 +13,5 @@ import { FooterComponent } from '@core/ui/components/layout/footer/footer.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  // protected readonly navigationItemList = [
-  //   {
-  //     icon: '@tui.sparkles',
-  //     label: 'Таро',
-  //     url: '/t',
-  //   },
-  //   {
-  //     icon: '@tui.scroll',
-  //     label: 'Исповедь',
-  //     url: '/i',
-  //   },
-  //   {
-  //     icon: '@tui.flame',
-  //     label: 'Руны CI/CD',
-  //     url: '/r',
-  //   },
-  //   {
-  //     icon: '@tui.sun',
-  //     label: 'Гороскоп',
-  //     url: '/g',
-  //   },
-  //   {
-  //     icon: '@tui.book-open',
-  //     label: 'Хроники',
-  //     url: '/h',
-  //   },
-  // ] as const satisfies NavigationItem[];
+  protected readonly navigationItemList = navigationItemList;
 }
