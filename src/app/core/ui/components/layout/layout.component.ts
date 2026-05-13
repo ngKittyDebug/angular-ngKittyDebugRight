@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiMainComponent } from '@taiga-ui/layout';
 import { FooterComponent } from '@core/ui/components/layout/footer/footer.component';
-import { navigationItemListConfig } from '@core/ui/components/layout/constants/navigation-item-list.config';
+import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
 
 @Component({
   selector: 'ngKitty-layout',
@@ -12,5 +12,5 @@ import { navigationItemListConfig } from '@core/ui/components/layout/constants/n
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  protected readonly navigationItemList = navigationItemListConfig;
+  protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
 }
