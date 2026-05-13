@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr *)",
+      "Bash(gh api *)",
+      "Bash(git remote *)",
+      "Bash(claude --version)",
+      "Bash(python3.13 -c ' *)",
+      "Bash(git worktree *)",
+      "Skill(sasarik:ngKitty-review)"
+    ]
+  }
+}
