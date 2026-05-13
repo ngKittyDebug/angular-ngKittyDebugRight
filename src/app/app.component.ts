@@ -8,6 +8,11 @@ import { HeaderComponent } from 'src/ui/components/header-component/header.compo
 @Component({
   selector: 'ngKitty-app-root',
   imports: [RouterOutlet, TuiRoot, TuiButton, TuiCard, HeaderComponent],
+import { FooterComponent } from '@core/layout/footer/footer.component';
+
+@Component({
+  selector: 'ngKitty-app-root',
+  imports: [RouterOutlet, TuiRoot, TuiButton, TuiCard, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
