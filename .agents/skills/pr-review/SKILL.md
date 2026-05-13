@@ -24,7 +24,7 @@ Formula: **jab + diagnosis + fix + source**
 
 1. Open with a half-joke — wry, ironic, specific to the mistake. One sentence.
 2. Vary your wording — never repeat the same joke pattern twice in one review. Rotate emotional register: irony, fatigue, surprise, mock admiration, quiet sadness.
-3. Before writing each jab — open `reference/tone-examples.md`, find the section matching the issue category (legacy patterns, TypeScript, performance, style/cleanliness, tests, commits, PR description). Pick the emotional register of that category and write the jab in that register. Vary across comments: if comment #1 is ironic, make #2 fatigued, #3 surprised. Exact phrases are just anchors — rewrite with different wording, same spirit.
+3. Before writing each jab — open `reference/tone-examples.md`, find the section matching the issue category (legacy patterns, TypeScript, performance, style/cleanliness, tests, commits, PR description). Pick the emotional register of that category and write **the opening sentence** in that register. The register applies only to the jab — diagnosis, fix, and link that follow must always be precise and technical, no matter the severity. Vary across comments: if comment #1 is ironic, make #2 fatigued, #3 surprised. Exact phrases are just anchors — rewrite with different wording, same spirit.
 4. **Diagnose** — one sentence on why this is wrong in Angular v21 / this project.
 5. **Fix it** — always a ` ```suggestion ` block or corrected snippet. No fix, no comment.
 6. **Link** — Angular docs, ESLint rule, or any other relevant source.
@@ -44,7 +44,7 @@ Prefix every comment with the matching emoji. Examples: `👺 Стайлгайд
 
 Formula: **genuine (slightly ironic) praise + why it's good**
 
-When the student did something clever — call it out. See `reference/tone-examples.md` for examples.
+When the student did something clever — call it out. **Open `reference/tone-examples.md`, find the "Mode B" section, and write the praise in that register** — punchy, slightly ironic, with personality. One sentence of praise + one sentence why. Flat neutral phrases like «корректно» or «зачтено» alone are not enough: they pass no energy to the student. Think "Жиир. Signal input — именно как доктор прописал", not "Signal input used correctly".
 
 Optionally reference @intelligentRaji or @OreskaG as a quality bar — _ситуативно_, not in every comment. See `reference/tone-examples.md` section "Эталон качества" for examples.
 
@@ -61,7 +61,7 @@ Before writing your own comments, **always read existing ones** (via `get_pr_com
 - **Outdated** (student already fixed) → note briefly. Reply.
 - **Trivial agreement** (`prefer-const`, obvious nits Copilot already nailed) → skip, no reply needed.
 
-Tone — same as Mode A: ironic, sharp, to the point. Copilot especially deserves replies when wrong — it's often right but always boring, and when it's wrong it's confidently wrong.
+Tone — same as Mode A: ironic, sharp, to the point. Before writing each reply, find the matching case in `reference/tone-examples.md` section "Mode C — Replies to existing comments" and use that register. Copilot especially deserves replies when wrong — it's often right but always boring, and when it's wrong it's confidently wrong.
 
 Replies via: `reply_pr_comment.sh <PR_NUMBER> <COMMENT_ID> <BODY>`
 
@@ -73,20 +73,32 @@ If the review has 2+ comments about the same pattern (e.g., 3 files missing `OnP
 
 - **Language** — all comments **in Russian**. Code, APIs, links — in English.
 - Every **negative** comment: jab + diagnosis + suggestion block + link. All four. No exceptions.
-- Every **positive** comment: brief praise + why (one sentence).
+- Every **positive** comment: punchy praise in Mode B voice (see `reference/tone-examples.md`) + why it's good. Not flat neutral — give it personality.
+- Every **commit/PR body note**: open with a jab from the matching section of `reference/tone-examples.md` ("Commit messages" or "PR Description"), then the precise fix. Same formula as Mode A, no suggestion block needed.
 - Never cruel, never vague, never without a fix.
 - **` ```suggestion ` blocks** — use ONLY for lines that are part of the diff (added/modified). For unchanged lines that need fixing, use a regular code block with instructions.
 
 ### Pre-presentation self-check (mandatory)
 
-Before showing the draft to the mentor, verify every negative comment:
+Before showing the draft to the mentor, verify every section:
+
+**Inline comments (negative):**
 
 - [ ] **Jab first** — opens with an ironic/wry sentence, NOT a technical explanation?
 - [ ] **Severity-matched tone** — 👺 = sharp accusation; 🔴 = hard roast; 💩 = disgust; 🤮 = exhaustion; 🟡 = light irony; 🫥 = one dry line?
 - [ ] **Register variety** — no two consecutive comments use the same joke structure or emotional register?
 - [ ] **All four parts present** — jab + diagnosis + fix + link?
+- [ ] **Diagnosis is technical** — names the actual problem precisely (not vibes like "медленно, ты понимаешь"), but the specific mechanism, rule, or pattern that's broken?
 
-If any comment fails → rewrite the jab before presenting.
+**Positives:**
+
+- [ ] **Has personality** — each positive uses Mode B register from `tone-examples.md`, not a flat "корректно" or bare "зачтено"?
+
+**Review body notes (commits, PR description):**
+
+- [ ] **Jab opener** — each commit/PR note opens with an ironic line from the matching `tone-examples.md` section, not a plain technical statement?
+
+If any section fails → rewrite before presenting.
 
 ---
 
@@ -303,9 +315,11 @@ Read these files from the project for full context on style and rules:
 **Event**: COMMENT | APPROVE
 
 ### Positives
-- <one-liner per positive, in Russian>
+(use Mode B voice from tone-examples.md — punchy, slightly ironic, not flat neutral)
+- <one-liner per positive in Russian: praise opener + why it's good>
 
 ### Replies to existing comments
+(use Mode C register from tone-examples.md)
 
 #### Reply to comment #<ID> on <file>:<line>
 <reply body in Russian, Mode C style>
@@ -326,8 +340,8 @@ _[jab — one ironic/wry sentence, severity-matched register from tone-examples.
 <same structure>
 
 ### Review body notes
-(observations for non-commentable files, commit violations, general notes — go into the review body, not inline)
-- <note in Russian>
+(use tone-examples.md "Commit messages" / "PR Description" sections — open each note with a jab, then the precise fix; no suggestion block needed)
+- <jab opener + diagnosis + what to fix>
 ---
 ````
 
@@ -343,7 +357,7 @@ _[jab — one ironic/wry sentence, severity-matched register from tone-examples.
 ### Step 2 — Prepare (inline mode only, `FILE_COUNT ≤ 10`)
 
 1. **Read project style guides** from `$WORKTREE_PATH/docs/` per the table in Section 1.5. Always read naming + architecture + commits + PR guides. Add testing guide if `*.spec.ts` files are in the diff.
-   1a. **Read `.agents/skills/pr-review/reference/tone-examples.md` in full** — mandatory, before drafting any comment. Find the section matching each issue type you discover (legacy patterns, TypeScript, performance, style/cleanliness, tests, commits, PR description). Have it active in context when writing jabs.
+   1a. **Read `.agents/skills/pr-review/reference/tone-examples.md` in full** — mandatory, before drafting anything. Keep it active in context for all four uses: - **Inline jabs (Mode A)** → matching category section (legacy, TypeScript, performance, style, tests, commits, PR description). - **Positives (Mode B)** → "Mode B — Praising a good move" section. No flat phrases. - **Replies (Mode C)** → "Mode C — Replies to existing comments" section. - **Body notes on commits/PR description** → "Commit messages" and "PR Description" sections — open each note with a jab from there, then the precise fix.
 2. Fetch PR metadata: `gh pr view <PR_NUMBER> --json title,body,state,author`
 3. Fetch existing comments to avoid duplicates: `get_pr_comments.sh <PR_NUMBER>`
 4. Read the diff: `gh pr diff <PR_NUMBER>` — identify which lines were actually changed.
