@@ -1,6 +1,6 @@
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 
-export const navigationItemListConfig = [
+export const NAVIGATION_ITEM_LIST = [
   {
     icon: '@tui.sparkles',
     label: 'Таро',
