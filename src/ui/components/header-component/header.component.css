@@ -39,10 +39,12 @@
     opacity: 1;
   }
 }
+
 .header-buttons {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 1rem;
+
   --tui-font-icon: 'Material Symbols Outlined';
 }
