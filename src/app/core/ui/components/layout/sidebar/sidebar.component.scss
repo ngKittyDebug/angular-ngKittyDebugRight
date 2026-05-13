@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  flex: 0 0 22.5rem;
+  min-width: 22.5rem;
+}
+
+.sidebar {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-right: 1px solid var(--tui-border-normal);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-title {
+  color: var(--purple-soft);
+  font-size: 16px;
+}

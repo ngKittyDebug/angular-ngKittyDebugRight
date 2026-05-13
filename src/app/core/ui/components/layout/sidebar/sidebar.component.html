@@ -1,0 +1,18 @@
+<aside [tuiNavigationAside]="true" [style.inline-size.rem]="22.5" [style.min-inline-size.rem]="22.5" class="sidebar">
+  <section class="section">
+    <p class="section-title">[ НАВИГАЦИЯ ]</p>
+    <nav class="nav">
+      @for (navigationItem of navigationItemList(); track navigationItem.label) {
+        <!--        TODO заменить на нав айтем компонент-->
+        <button tuiAsideItem type="button">
+          <tui-icon [icon]="navigationItem.icon" />
+          <span>{{ navigationItem.label }}</span>
+        </button>
+      }
+    </nav>
+  </section>
+
+  <div class="content">
+    <ng-content />
+  </div>
+</aside>
