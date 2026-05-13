@@ -49,6 +49,7 @@
 
   --tui-font-icon: 'Material Symbols Outlined';
 }
+
 .user-card {
   display: flex;
   flex-direction: row;
@@ -56,6 +57,7 @@
   border-radius: 1rem;
   padding: 20px;
 }
+
 .user-name {
   font-size: 1.25rem;
   font-weight: 500;
