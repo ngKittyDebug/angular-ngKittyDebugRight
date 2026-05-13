@@ -17,18 +17,16 @@ describe('FooterComponent', () => {
     await fixture.whenStable();
   });
 
-  describe('Happy Path', () => {
-    describe('Компонент инициализирован', () => {
-      it('должен инициализироваться', () => {
-        expect(component).toBeTruthy();
-      });
+  describe('Компонент инициализирован', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
 
-      it('должен отобразить трех авторо', () => {
-        const element: HTMLElement = fixture.nativeElement;
-        const links = element.querySelectorAll('.authors a');
+    it('должен отобразить трех авторов', () => {
+      const element: HTMLElement = fixture.nativeElement;
+      const links = element.querySelectorAll('.authors a');
 
-        expect(links.length).toBe(3);
-      });
+      expect(links.length).toBe(3);
     });
   });
 });
