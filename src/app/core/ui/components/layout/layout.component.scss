@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.layout {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+  flex-direction: row;
+}
+
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.main > * {
+  min-width: 0;
+}

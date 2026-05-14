@@ -14,7 +14,7 @@ describe('FooterComponent', () => {
 
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   describe('Компонент инициализирован', () => {
