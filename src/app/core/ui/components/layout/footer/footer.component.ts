@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'tui-root',
+  selector: 'ngKitty-footer',
   imports: [],
-  template: '<ng-content />',
+  templateUrl: './footer.component.html',
+  styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TuiRootComponentMock {}
+export class FooterComponent {}
