@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.koans-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.koans-content {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.koans-list {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.koans-reader {
+  flex: 1 1 auto;
+  min-width: 0;
+}

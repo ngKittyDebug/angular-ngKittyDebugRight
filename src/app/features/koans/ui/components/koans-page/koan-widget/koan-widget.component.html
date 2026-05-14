@@ -1,0 +1,20 @@
+@if (koan(); as k) {
+  <div class="koan-widget">
+    <div class="koan-widget-header">
+      <span class="koan-widget-label">Коан дня</span>
+      <span class="koan-widget-title">№{{ k.number }} — {{ k.title }}</span>
+    </div>
+    <div class="koan-widget-body">
+      @for (seg of k.segments; track $index) {
+        @if (seg.type === 'question') {
+          <p class="koan-widget-question">{{ seg.text }}</p>
+        }
+      }
+    </div>
+    <div class="koan-widget-footer">
+      <button tuiButton type="button" appearance="outline" size="s" [disabled]="loading()" (click)="onNext()">
+        Следующий коан
+      </button>
+    </div>
+  </div>
+}

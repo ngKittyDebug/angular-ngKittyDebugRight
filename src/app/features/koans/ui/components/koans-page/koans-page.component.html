@@ -1,0 +1,12 @@
+<div class="koans-page">
+  <ngKitty-koan-widget [koan]="store.randomKoan()" [loading]="store.loadingRandom()" (next)="onNextKoan()" />
+  <div class="koans-content">
+    <ngKitty-koan-list
+      class="koans-list"
+      [koanList]="store.koanList()"
+      [selectedSlug]="store.selectedKoan()?.slug ?? null"
+      (koanSelect)="onKoanSelect($event)"
+    />
+    <ngKitty-koan-reader class="koans-reader" [koan]="store.selectedKoan()" />
+  </div>
+</div>

@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.koan-reader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 680px;
+}
+
+.reader-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.reader-hint {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.segment {
+  margin: 0;
+  line-height: 1.7;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.heading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--tui-text-primary);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--tui-border-normal);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.source {
+  color: var(--koan-source);
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.master {
+  color: var(--koan-master);
+  padding-left: 1rem;
+  border-left: 2px solid var(--koan-master);
+}
+
+.student {
+  color: var(--koan-student);
+  padding-left: 1rem;
+  border-left: 2px solid var(--koan-student);
+}
+
+.action {
+  color: var(--koan-action);
+}
+
+.haiku {
+  color: var(--koan-haiku);
+  font-style: italic;
+  text-align: center;
+  padding: 0.75rem 0;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.question {
+  color: var(--koan-question);
+  border-top: 1px solid var(--koan-question);
+  padding-top: 0.75rem;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}

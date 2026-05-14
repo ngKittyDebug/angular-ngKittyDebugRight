@@ -1,0 +1,15 @@
+<ul class="koan-list">
+  @for (item of koanList(); track item.slug) {
+    <li
+      class="koan-list-item"
+      tabindex="0"
+      [class.active]="item.slug === selectedSlug()"
+      (click)="onSelect(item.slug)"
+      (keydown.enter)="onSelect(item.slug)"
+      (keydown.space)="onSelect(item.slug)"
+    >
+      <span class="koan-list-number">#{{ item.number }}</span>
+      <span class="koan-list-title">{{ item.title }}</span>
+    </li>
+  }
+</ul>

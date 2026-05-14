@@ -1,0 +1,36 @@
+@if (koan(); as k) {
+  <div class="koan-reader">
+    @for (seg of k.segments; track $index) {
+      @switch (seg.type) {
+        @case ('heading') {
+          <h2 class="segment heading">{{ seg.text }}</h2>
+        }
+        @case ('code') {
+          <markdown [data]="'```' + seg.lang + '\n' + seg.text + '\n```'" />
+        }
+        @case ('master') {
+          <p class="segment master">{{ seg.text }}</p>
+        }
+        @case ('student') {
+          <p class="segment student">{{ seg.text }}</p>
+        }
+        @case ('haiku') {
+          <p class="segment haiku">{{ seg.text }}</p>
+        }
+        @case ('question') {
+          <p class="segment question">{{ seg.text }}</p>
+        }
+        @case ('source') {
+          <p class="segment source">{{ seg.text }}</p>
+        }
+        @default {
+          <p class="segment action">{{ seg.text }}</p>
+        }
+      }
+    }
+  </div>
+} @else {
+  <div class="reader-empty">
+    <p class="reader-hint">Выберите коан из списка</p>
+  </div>
+}
