@@ -1,6 +1,15 @@
+[dev]
+  command = "pnpm ng serve"
+  targetPort = 4200
+  autoLaunch = false
+
 [build]
   command = "pnpm build"
   publish = "dist/ngKittyDebugRight/browser"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["public/koans/*.mdx"]
 
 [[redirects]]
   from = "/*"
