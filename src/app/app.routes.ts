@@ -5,6 +5,11 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: [],
+    children: [
+      {
+        path: 'koans',
+        loadChildren: () => import('@features/koans/koans.routes').then((feature) => feature.KOANS_ROUTES),
+      },
+    ],
   },
 ];

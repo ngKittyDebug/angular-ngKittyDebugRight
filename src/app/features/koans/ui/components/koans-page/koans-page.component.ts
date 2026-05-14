@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
 
-import { KoansStore } from '@features/koans/data/facades/koans.facade';
+import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoanWidgetComponent } from './koan-widget/koan-widget.component';
 import { KoanListComponent } from './koan-list/koan-list.component';
 import { KoanReaderComponent } from './koan-reader/koan-reader.component';
@@ -14,7 +14,7 @@ import { KoanReaderComponent } from './koan-reader/koan-reader.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KoansPageComponent implements OnInit {
-  protected readonly store = inject(KoansStore);
+  protected readonly store = inject(KoansFacade);
 
   public ngOnInit(): void {
     this.store.loadRandomKoan();

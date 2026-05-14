@@ -7,6 +7,8 @@ import type { KoanSegment } from '@features/koans/data/models/koan.model';
 @Injectable({ providedIn: 'root' })
 export class KoanBodyParserService {
   public parse(body: string): KoanSegment[] {
+    // marked's lexer is typed as (MarkedToken | Tokens.Generic)[]; Generic's index
+    // signature widens every field to `any`, so we assert the concrete token union.
     const tokens = lexer(body) as unknown as MarkedToken[];
     const segments: KoanSegment[] = [];
     let seenCode = false;
@@ -19,7 +21,7 @@ export class KoanBodyParserService {
 
       if (token.type === 'code') {
         seenCode = true;
-        segments.push({ type: 'code', text: token.text, lang: token.lang ?? 'js' });
+        segments.push({ type: 'code', text: token.text, lang: token.lang || 'js' });
       } else if (token.type === 'heading') {
         segments.push({ type: 'heading', text: token.text });
       } else if (token.type === 'paragraph') {

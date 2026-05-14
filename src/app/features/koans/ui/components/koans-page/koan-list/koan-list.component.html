@@ -1,15 +1,22 @@
-<ul class="koan-list">
-  @for (item of koanList(); track item.slug) {
-    <li
-      class="koan-list-item"
-      tabindex="0"
-      [class.active]="item.slug === selectedSlug()"
-      (click)="onSelect(item.slug)"
-      (keydown.enter)="onSelect(item.slug)"
-      (keydown.space)="onSelect(item.slug)"
-    >
-      <span class="koan-list-number">#{{ item.number }}</span>
-      <span class="koan-list-title">{{ item.title }}</span>
-    </li>
-  }
-</ul>
+@if (loading()) {
+  <p class="koan-list-status" aria-live="polite">Свитки разворачиваются…</p>
+} @else if (koanList().length) {
+  <ul class="koan-list" aria-label="Список коанов">
+    @for (item of koanList(); track item.slug) {
+      <li class="koan-list-item">
+        <button
+          type="button"
+          class="koan-list-button"
+          [class.active]="item.slug === selectedSlug()"
+          [attr.aria-current]="item.slug === selectedSlug() ? 'true' : null"
+          (click)="onSelect(item.slug)"
+        >
+          <span class="koan-list-number">#{{ item.number }}</span>
+          <span class="koan-list-title">{{ item.title }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+} @else {
+  <p class="koan-list-status" aria-live="polite">Свитки не найдены</p>
+}

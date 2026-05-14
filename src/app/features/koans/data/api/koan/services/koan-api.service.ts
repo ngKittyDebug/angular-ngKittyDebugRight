@@ -3,13 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import type { Observable } from 'rxjs';
+import type { KoanApiResponse } from '@features/koans/data/api/koan/models/koan-api.model';
 import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import { convertKoanApiResponseToKoanModel } from '@features/koans/data/api/koan/helpers/convert-koan-api-response-to-koan-model';
 import { KoanBodyParserService } from '@features/koans/data/services/koan-body-parser.service';
-
-interface RawKoanResponse {
-  frontmatter: Omit<KoanModel, 'body' | 'segments'>;
-  body: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class KoanApiService {
@@ -18,25 +15,17 @@ export class KoanApiService {
 
   public getRandomKoan(): Observable<KoanModel> {
     return this.http
-      .get<RawKoanResponse>('/.netlify/functions/random-koan')
-      .pipe(map((raw) => this.buildKoanModel(raw)));
+      .get<KoanApiResponse>('/.netlify/functions/koan-random')
+      .pipe(map((response) => convertKoanApiResponseToKoanModel(response, this.bodyParser)));
   }
 
   public getKoanList(): Observable<KoanListItemModel[]> {
-    return this.http.get<KoanListItemModel[]>('/.netlify/functions/koans-list');
+    return this.http.get<KoanListItemModel[]>('/.netlify/functions/koan-list');
   }
 
   public getKoan(slug: string): Observable<KoanModel> {
     return this.http
-      .get<RawKoanResponse>(`/.netlify/functions/get-koan?slug=${slug}`)
-      .pipe(map((raw) => this.buildKoanModel(raw)));
-  }
-
-  private buildKoanModel(raw: RawKoanResponse): KoanModel {
-    return {
-      ...raw.frontmatter,
-      body: raw.body,
-      segments: this.bodyParser.parse(raw.body),
-    };
+      .get<KoanApiResponse>('/.netlify/functions/koan-get', { params: { slug } })
+      .pipe(map((response) => convertKoanApiResponseToKoanModel(response, this.bodyParser)));
   }
 }

@@ -57,6 +57,12 @@
   --secondary-text-hover: var(--accent-soft);
   --secondary-shadow: 0 0 10px rgb(214 168 95 / 25%);
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --koan-master: var(--accent-primary);
+  --koan-student: var(--accent-secondary);
+  --koan-haiku: var(--water);
+  --koan-question: var(--warning);
+  --koan-source: color-mix(in srgb, var(--tui-text-primary) 55%, transparent);
+  --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
 }
 
 :root,
@@ -124,10 +130,28 @@
   --outline-hover-bg: rgb(255 255 255 / 3%);
   --outline-hover-shadow: 0 0 12px rgb(255 79 216 / 14%);
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --koan-master: var(--accent-primary);
+  --koan-student: var(--accent-secondary);
+  --koan-haiku: var(--water);
+  --koan-question: var(--warning);
+  --koan-source: color-mix(in srgb, var(--tui-text-primary) 55%, transparent);
+  --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
 }
 
 * {
   box-sizing: border-box;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 html,

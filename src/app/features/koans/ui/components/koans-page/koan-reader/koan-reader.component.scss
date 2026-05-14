@@ -5,6 +5,14 @@
   padding: 1.5rem;
 }
 
+.koan-reader-region {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  outline: none;
+}
+
 .koan-reader {
   display: flex;
   flex-direction: column;
@@ -12,18 +20,26 @@
   max-width: 680px;
 }
 
+.reader-status {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--koan-source);
+}
+
 .reader-empty {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  opacity: 0.4;
 }
 
 .reader-hint {
   font-family: 'Courier New', monospace;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
+  color: var(--koan-source);
 }
 
 .segment {

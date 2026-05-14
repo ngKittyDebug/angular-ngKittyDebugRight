@@ -1,13 +1,4 @@
-export type KoanSegmentType =
-  | 'heading'
-  | 'source'
-  | 'code'
-  | 'master'
-  | 'student'
-  | 'action'
-  | 'haiku'
-  | 'question'
-  | 'prose';
+export type KoanSegmentType = 'heading' | 'source' | 'code' | 'master' | 'student' | 'action' | 'haiku' | 'question';
 
 export interface KoanSegment {
   type: KoanSegmentType;

@@ -11,6 +11,7 @@ import type { KoanListItemModel } from '@features/koans/data/models/koan.model';
 export class KoanListComponent {
   public readonly koanList = input<KoanListItemModel[]>([]);
   public readonly selectedSlug = input<string | null>(null);
+  public readonly loading = input<boolean>(false);
   public readonly koanSelect = output<string>();
 
   protected readonly onSelect = (slug: string): void => {

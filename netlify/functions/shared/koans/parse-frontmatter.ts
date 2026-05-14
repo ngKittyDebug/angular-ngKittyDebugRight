@@ -38,6 +38,16 @@ function parseLine(line: string): [string, string] | null {
   return [line.slice(0, colon).trim(), line.slice(colon + 1).trim()];
 }
 
+function parseTags(value: string): string[] {
+  try {
+    const parsed: unknown = JSON.parse(value);
+
+    return Array.isArray(parsed) ? (parsed as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
 function parseFrontmatterBlock(frontmatterBlock: string): Partial<KoanFrontmatter> {
   const frontmatter: Partial<KoanFrontmatter> = {};
 
@@ -53,7 +63,7 @@ function parseFrontmatterBlock(frontmatterBlock: string): Partial<KoanFrontmatte
     if (key === 'number') {
       frontmatter.number = Number(value);
     } else if (key === 'tags') {
-      frontmatter.tags = JSON.parse(value) as string[];
+      frontmatter.tags = parseTags(value);
     } else if (key === 'title' || key === 'slug' || key === 'category' || key === 'source') {
       frontmatter[key] = value.replaceAll(/^"|"$/g, '');
     }

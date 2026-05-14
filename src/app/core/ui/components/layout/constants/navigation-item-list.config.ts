@@ -26,4 +26,9 @@ export const NAVIGATION_ITEM_LIST = [
     label: 'Хроники',
     url: '/chronicle',
   },
+  {
+    icon: '@tui.infinity',
+    label: 'Коаны',
+    url: '/koans',
+  },
 ] as const satisfies NavigationItem[];

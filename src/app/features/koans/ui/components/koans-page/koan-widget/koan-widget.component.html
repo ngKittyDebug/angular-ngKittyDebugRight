@@ -1,5 +1,10 @@
-@if (koan(); as k) {
-  <div class="koan-widget">
+@if (loading() && !koan()) {
+  <div class="koan-widget" aria-busy="true">
+    <span class="koan-widget-label">Коан дня</span>
+    <p class="koan-widget-loading" aria-live="polite">Мастер выбирает свиток…</p>
+  </div>
+} @else if (koan(); as k) {
+  <div class="koan-widget" [attr.aria-busy]="loading()">
     <div class="koan-widget-header">
       <span class="koan-widget-label">Коан дня</span>
       <span class="koan-widget-title">№{{ k.number }} — {{ k.title }}</span>

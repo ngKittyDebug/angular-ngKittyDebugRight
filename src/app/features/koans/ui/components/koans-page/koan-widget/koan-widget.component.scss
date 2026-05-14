@@ -36,6 +36,14 @@
   min-height: 2.5rem;
 }
 
+.koan-widget-loading {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--koan-source);
+  line-height: 1.6;
+}
+
 .koan-widget-question {
   margin: 0;
   font-family: 'Courier New', monospace;
