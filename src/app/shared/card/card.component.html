@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [attr.tabindex]="isClickable() ? 0 : null" (click)="onCardClick()" (keydown.enter)="onCardClick()">
   @if (icon()) {
     <div class="icon-shell">
       <tui-icon [icon]="icon()!" class="icon" />
@@ -21,8 +21,8 @@
     </div>
   }
 
-  @if (decryption()) {
-    <p class="decryption">"{{ decryption() }}"</p>
+  @if (description()) {
+    <p class="decryption">"{{ description() }}"</p>
   }
 
   @if (badge() || buttonLabel()) {
@@ -32,7 +32,7 @@
         <span class="badge">{{ badge() }}</span>
       }
       @if (buttonLabel()) {
-        <button tuiButton type="button" appearance="secondary" size="s" (click)="buttonClick.emit()">
+        <button tuiButton type="button" appearance="secondary" size="s" (click)="onButtonClick($event)">
           {{ buttonLabel() }}
         </button>
       }

@@ -17,7 +17,9 @@ describe('CardComponent', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Компонент инициализирован', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
   });
 });

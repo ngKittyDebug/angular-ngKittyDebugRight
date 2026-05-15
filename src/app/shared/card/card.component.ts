@@ -12,9 +12,22 @@ export class CardComponent {
   public readonly icon = input<string>();
   public readonly title = input<string>();
   public readonly subtitle = input<string>();
-  public readonly decryption = input<string>();
+  public readonly description = input<string>();
   public readonly buttonLabel = input<string>();
   public readonly badge = input<string>();
+  public readonly isClickable = input<boolean>(false);
 
-  public readonly buttonClick = output<void>();
+  public readonly cardClicked = output<void>();
+  public readonly buttonClicked = output<void>();
+
+  protected onCardClick() {
+    if (this.isClickable()) {
+      this.cardClicked.emit();
+    }
+  }
+
+  protected onButtonClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.buttonClicked.emit();
+  }
 }

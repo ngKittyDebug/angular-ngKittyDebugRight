@@ -9,8 +9,7 @@
   padding: 1rem;
   border: 1px solid var(--tui-border-normal);
   background: var(--tui-background-elevation-2);
-  width: min(100%, 16rem);
-  min-width: 120px;
+  width: 100%;
   text-align: center;
   isolation: isolate;
   box-shadow: var(--card-glow);
