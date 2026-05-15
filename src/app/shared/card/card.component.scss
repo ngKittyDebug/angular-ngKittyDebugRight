@@ -1,14 +1,107 @@
 .card {
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
   border: 1px solid var(--tui-border-normal);
-  background: var(--tui-background-base);
-  width: 120px;
+  background: var(--tui-background-elevation-2);
+  width: min(100%, 16rem);
+  min-width: 120px;
+  text-align: center;
+  isolation: isolate;
+  box-shadow: var(--card-glow);
+}
 
-  .icon {
-    --tui-icon-size: 5rem;
-  }
+.icon-shell {
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--accent-primary);
+  background-image: var(--bg-primary-btn);
+  box-shadow: var(--primary-shadow);
+}
+
+.icon {
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  color: var(--accent-secondary);
+
+  --tui-stroke-width: 3px;
+  --tui-icon-size: 3.5rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--accent-primary);
+}
+
+.icon-title {
+  inline-size: 0.95rem;
+  block-size: 0.95rem;
+  color: var(--accent-primary);
+
+  --tui-stroke-width: 1px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--accent-primary-soft);
+  text-wrap: balance;
+}
+
+.decryption {
+  margin: 0;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  background: transparent;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--accent-secondary);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.badge {
+  color: 1px solid var(--accent-primary);
+  text-transform: capitalize;
 }

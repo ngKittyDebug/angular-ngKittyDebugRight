@@ -1,13 +1,41 @@
-<div appearance="floating" tuiCardLarge>
-  <header tuiHeader>
-    <h2 tuiTitle>{{ title() }}</h2>
-    <span tuiSubtitle>{{ subtitle() }}</span>
-  </header>
-  <tui-icon [icon]="icon()" class="icon" />
+<div class="card">
+  @if (icon()) {
+    <div class="icon-shell">
+      <tui-icon [icon]="icon()!" class="icon" />
+    </div>
+  }
 
-  <section>{{ decryption() }}</section>
+  @if (title() || subtitle()) {
+    <div class="header">
+      @if (title()) {
+        <h2 class="title">
+          <tui-icon icon="@tui.star" class="icon-title" />
+          {{ title() }}
+          <tui-icon icon="@tui.star" class="icon-title" />
+        </h2>
+      }
 
-  <footer>
-    <button appearance="secondary" size="m" tuiButton type="button">Label</button>
-  </footer>
+      @if (subtitle()) {
+        <p class="subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+  }
+
+  @if (decryption()) {
+    <p class="decryption">"{{ decryption() }}"</p>
+  }
+
+  @if (badge() || buttonLabel()) {
+    <div class="footer">
+      <hr class="divider" />
+      @if (badge()) {
+        <span class="badge">{{ badge() }}</span>
+      }
+      @if (buttonLabel()) {
+        <button tuiButton type="button" appearance="secondary" size="s" (click)="buttonClick.emit()">
+          {{ buttonLabel() }}
+        </button>
+      }
+    </div>
+  }
 </div>
