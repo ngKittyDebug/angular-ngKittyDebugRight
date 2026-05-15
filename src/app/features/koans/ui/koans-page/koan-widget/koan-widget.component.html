@@ -10,10 +10,8 @@
       <span class="koan-widget-title">№{{ k.number }} — {{ k.title }}</span>
     </div>
     <div class="koan-widget-body">
-      @for (seg of k.segments; track $index) {
-        @if (seg.type === 'question') {
-          <p class="koan-widget-question">{{ seg.text }}</p>
-        }
+      @if (question(); as q) {
+        <p class="koan-widget-question">{{ q }}</p>
       }
     </div>
     <div class="koan-widget-footer">

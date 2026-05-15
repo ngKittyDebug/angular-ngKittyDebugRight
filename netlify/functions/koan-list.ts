@@ -15,9 +15,15 @@ const cache = {
   koanList: [],
 } satisfies { koanList: Partial<KoanListItem>[] };
 
-const koanList = async (): Promise<Response> => {
+const koanList = async (request: Request): Promise<Response> => {
+  if (request.method !== 'GET') {
+    return jsonError(405, 'Method not allowed');
+  }
+
+  const LIST_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
+
   if (cache.koanList.length > 0) {
-    return Response.json(cache.koanList);
+    return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
   }
 
   try {
@@ -33,7 +39,7 @@ const koanList = async (): Promise<Response> => {
 
     Object.assign(cache, { koanList });
 
-    return Response.json(cache.koanList);
+    return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
   } catch (error) {
     console.error('koan-list failed', error);
 
@@ -41,12 +47,8 @@ const koanList = async (): Promise<Response> => {
   }
 };
 
-function sortByKoanNumber(a, b) {
-  if (Object.hasOwn(a, 'number') && Object.hasOwn(b, 'number')) {
-    return a.number - b.number;
-  }
-
-  return 0;
+function sortByKoanNumber(a: Partial<KoanListItem>, b: Partial<KoanListItem>): number {
+  return (a.number ?? Infinity) - (b.number ?? Infinity);
 }
 
 function getKoanList(directory: string, files: string[]) {

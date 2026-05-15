@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
 import type { ComponentFixture } from '@angular/core/testing';
-import { KoanListFixture } from '@features/koans/fixtures/koan.fixture';
+import { KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoanListComponent } from './koan-list.component';
 
 describe('KoanListComponent', () => {

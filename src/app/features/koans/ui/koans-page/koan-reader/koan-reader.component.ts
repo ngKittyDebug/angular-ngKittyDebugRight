@@ -19,12 +19,8 @@ export class KoanReaderComponent {
 
   constructor() {
     effect(() => {
-      const koan = this.koan();
-      const region = this.regionRef()?.nativeElement;
-
-      if (koan && region) {
-        region.focus();
-      }
+      this.koan();
+      this.regionRef()?.nativeElement.scrollTo?.({ top: 0, behavior: 'instant' });
     });
   }
 }

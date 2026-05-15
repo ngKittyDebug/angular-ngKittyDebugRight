@@ -1,0 +1,14 @@
+<span class="sr-only" aria-live="polite" aria-atomic="true">{{
+  koan() ? 'Загружен коан №' + koan()!.number + ' — ' + koan()!.title : loading() ? 'Загружается коан' : ''
+}}</span>
+<section #readerRegion class="koan-reader-region" aria-label="Текст коана" tabindex="-1">
+  @if (loading()) {
+    <p class="reader-status">Свиток разворачивается…</p>
+  } @else if (koan(); as k) {
+    <markdown class="koan-reader" [data]="k.body" />
+  } @else {
+    <div class="reader-empty">
+      <p class="reader-hint">Выберите коан из списка</p>
+    </div>
+  }
+</section>

@@ -102,9 +102,10 @@ Functions live in `netlify/functions/` and are available at `/.netlify/functions
 
 ```
 netlify/functions/
-├── koans-list.ts       # GET /.netlify/functions/koans-list → KoanListItemModel[]
-├── random-koan.ts      # GET /.netlify/functions/random-koan → { frontmatter, body }
-└── shared/koans/       # shared helpers (parseFrontmatter, getAllKoanFiles, etc.)
+├── koan-list.ts        # GET /.netlify/functions/koan-list → KoanListItemModel[]
+├── koan-random.ts      # GET /.netlify/functions/koan-random → KoanModel (no category/tags/source)
+├── koan-get.ts         # GET /.netlify/functions/koan-get?slug=… → KoanModel
+└── shared/             # shared helpers (parseFrontmatter, getAllKoanFiles, getKoansDirectory)
 ```
 
 Koans content files live in `public/koans/*.mdx`. They are bundled into the Netlify deploy via `included_files` in `netlify.toml` and read at runtime by the functions.
@@ -141,14 +142,17 @@ Tests live in `*.spec.ts` files next to the source. Mocks in `*.mock.ts` next to
 **Structure (`describe` hierarchy):**
 
 ```typescript
-describe('UserListComponent', () => {          // what is being tested
-  describe('Happy Path', () => {               // scenario type
-    describe('Данные получены', () => {         // specific context (Russian)
-      it('должен отобразить список пользователей', () => {});  // it in Russian, lowercase
+describe('UserListComponent', () => {
+  // what is being tested
+  describe('Happy Path', () => {
+    // scenario type
+    describe('Данные получены', () => {
+      // specific context (Russian)
+      it('должен отобразить список пользователей', () => {}); // it in Russian, lowercase
     });
   });
-  describe('Edge Cases', () => { ... });
-  describe('Negative Cases', () => { ... });
+  describe('Edge Cases', () => {});
+  describe('Negative Cases', () => {});
 });
 ```
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
 import type { ComponentFixture } from '@angular/core/testing';
-import { KoanFixture } from '@features/koans/fixtures/koan.fixture';
+import { KoanFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoanWidgetComponent } from './koan-widget.component';
 
 describe('KoanWidgetComponent', () => {
@@ -20,7 +20,7 @@ describe('KoanWidgetComponent', () => {
 
   describe('Happy Path', () => {
     describe('Коан дня получен', () => {
-      it('должен отобразить только question-сегменты', () => {
+      it('должен отобразить question из тела коана', () => {
         fixture.componentRef.setInput('koan', KoanFixture);
         fixture.detectChanges();
 

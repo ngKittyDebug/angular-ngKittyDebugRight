@@ -1,10 +1,11 @@
 import { inject } from '@angular/core';
+import type { HttpErrorResponse } from '@angular/common/http';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, EMPTY, pipe, switchMap, tap } from 'rxjs';
 
 import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
-import { KoanApiService } from '@features/koans/data/api/koan/services/koan-api.service';
+import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 
 interface KoansState {
   randomKoan: KoanModel | null;
@@ -14,6 +15,7 @@ interface KoansState {
   loadingList: boolean;
   loadingSelected: boolean;
   error: string | null;
+  koanCache: Record<string, KoanModel>;
 }
 
 const initialState: KoansState = {
@@ -24,21 +26,37 @@ const initialState: KoansState = {
   loadingList: false,
   loadingSelected: false,
   error: null,
+  koanCache: {},
 };
 
 const ERROR_MESSAGE = 'Свиток недоступен. Мастер велит подождать и попробовать снова.';
+const ERROR_NETWORK = 'Связь с монастырём прервана. Проверьте соединение.';
+const ERROR_NOT_FOUND = 'Этого коана нет в свитках.';
+
+const resolveKoanError = (status: number): string => {
+  if (status === 0) {
+    return ERROR_NETWORK;
+  }
+  if (status === 404) {
+    return ERROR_NOT_FOUND;
+  }
+
+  return ERROR_MESSAGE;
+};
 
 export const KoansFacade = signalStore(
   withState<KoansState>(initialState),
   withMethods((store, api = inject(KoanApiService)) => ({
-    loadRandomKoan: rxMethod<void>(
+    loadRandomKoan: rxMethod<string | null>(
       pipe(
         tap(() => patchState(store, { loadingRandom: true, error: null })),
-        switchMap(() =>
-          api.getRandomKoan().pipe(
+        switchMap((exclude) =>
+          api.getRandomKoan(exclude ?? undefined).pipe(
             tap((randomKoan) => patchState(store, { randomKoan, loadingRandom: false })),
-            catchError(() => {
-              patchState(store, { loadingRandom: false, error: ERROR_MESSAGE });
+            catchError((error_: HttpErrorResponse) => {
+              const error = error_.status === 0 ? ERROR_NETWORK : ERROR_MESSAGE;
+
+              patchState(store, { loadingRandom: false, error });
 
               return EMPTY;
             })
@@ -52,9 +70,13 @@ export const KoansFacade = signalStore(
         tap(() => patchState(store, { loadingList: true, error: null })),
         switchMap(() =>
           api.getKoanList().pipe(
-            tap((koanList) => patchState(store, { koanList, loadingList: false })),
-            catchError(() => {
-              patchState(store, { loadingList: false, error: ERROR_MESSAGE });
+            tap((koanList) => {
+              patchState(store, { koanList, loadingList: false });
+            }),
+            catchError((error_: HttpErrorResponse) => {
+              const error = error_.status === 0 ? ERROR_NETWORK : ERROR_MESSAGE;
+
+              patchState(store, { loadingList: false, error });
 
               return EMPTY;
             })
@@ -66,16 +88,32 @@ export const KoansFacade = signalStore(
     selectKoan: rxMethod<string>(
       pipe(
         tap(() => patchState(store, { loadingSelected: true, error: null })),
-        switchMap((slug) =>
-          api.getKoan(slug).pipe(
-            tap((selectedKoan) => patchState(store, { selectedKoan, loadingSelected: false })),
-            catchError(() => {
-              patchState(store, { loadingSelected: false, error: ERROR_MESSAGE });
+        switchMap((slug) => {
+          const cached = store.koanCache()[slug];
+
+          if (cached) {
+            patchState(store, { selectedKoan: cached, loadingSelected: false });
+
+            return EMPTY;
+          }
+
+          return api.getKoan(slug).pipe(
+            tap((selectedKoan) =>
+              patchState(store, (s) => ({
+                selectedKoan,
+                loadingSelected: false,
+                koanCache: { ...s.koanCache, [slug]: selectedKoan },
+              }))
+            ),
+            catchError((error_: HttpErrorResponse) => {
+              const error = resolveKoanError(error_.status);
+
+              patchState(store, { loadingSelected: false, error });
 
               return EMPTY;
             })
-          )
-        )
+          );
+        })
       )
     ),
   }))

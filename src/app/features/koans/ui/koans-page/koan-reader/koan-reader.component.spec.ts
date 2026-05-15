@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { provideMarkdown } from 'ngx-markdown';
+import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 
 import type { ComponentFixture } from '@angular/core/testing';
-import { KoanFixture } from '@features/koans/fixtures/koan.fixture';
+import { koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
+import { KoanFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoanReaderComponent } from './koan-reader.component';
 
 describe('KoanReaderComponent', () => {
@@ -11,7 +12,11 @@ describe('KoanReaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [KoanReaderComponent],
-      providers: [provideMarkdown()],
+      providers: [
+        provideMarkdown({
+          markedExtensions: [{ provide: MARKED_EXTENSIONS, useValue: koanMarkedExtensions, multi: true }],
+        }),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(KoanReaderComponent);
@@ -19,19 +24,18 @@ describe('KoanReaderComponent', () => {
 
   describe('Happy Path', () => {
     describe('Коан выбран', () => {
-      it('должен отрендерить сегменты разных типов', () => {
+      it('должен отрендерить сегменты с CSS-классами через marked extensions', async () => {
         fixture.componentRef.setInput('koan', KoanFixture);
         fixture.detectChanges();
+        await new Promise<void>((resolve) => setTimeout(resolve, 0));
 
         const element = fixture.nativeElement as HTMLElement;
 
-        expect(element.querySelector('.segment.heading')).toBeTruthy();
-        expect(element.querySelector('.segment.source')).toBeTruthy();
         expect(element.querySelector('.segment.master')).toBeTruthy();
         expect(element.querySelector('.segment.student')).toBeTruthy();
-        expect(element.querySelector('.segment.haiku')).toBeTruthy();
+        expect(element.querySelector('figure.haiku')).toBeTruthy();
         expect(element.querySelector('.segment.question')).toBeTruthy();
-        expect(element.querySelector('markdown')).toBeTruthy();
+        expect(element.querySelector('.segment.source')).toBeTruthy();
       });
     });
   });
