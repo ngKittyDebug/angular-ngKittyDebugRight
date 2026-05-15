@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TuiAsideComponent, TuiAsideItemDirective } from '@taiga-ui/layout';
 import { TuiIcon } from '@taiga-ui/core';
+import { TuiAsideComponent, TuiAsideItemDirective } from '@taiga-ui/layout';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 
 @Component({
@@ -12,4 +12,5 @@ import type { NavigationItem } from '@core/ui/components/layout/models/navigatio
 })
 export class SidebarComponent {
   public readonly navigationItemList = input.required<NavigationItem[]>();
+  public readonly mobileOpen = input(false);
 }

@@ -1,7 +1,7 @@
-<aside [tuiNavigationAside]="true" class="sidebar">
+<aside [tuiNavigationAside]="true" class="sidebar" [class.sidebar-mobile-open]="mobileOpen()">
   <section class="section">
     <p class="section-title">[ НАВИГАЦИЯ ]</p>
-    <nav class="nav">
+    <nav class="nav" id="sidebar-nav">
       @for (navigationItem of navigationItemList(); track navigationItem.label) {
         <!--        TODO заменить на нав айтем компонент-->
         <button tuiAsideItem type="button">

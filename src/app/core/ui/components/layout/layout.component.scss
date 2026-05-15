@@ -11,12 +11,52 @@
   min-height: 0;
   align-items: stretch;
   flex-direction: row;
+  position: relative;
+}
+
+.layout-sidebar-backdrop {
+  display: none;
+}
+
+@media (width <= 768px) {
+  .layout-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: auto;
+    cursor: pointer;
+    background: rgb(0 0 0 / 42%);
+  }
+}
+
+.main-toolbar {
+  display: none;
+  grid-column: span 12;
+  justify-self: start;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (width <= 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-block: 0.25rem 0.5rem;
+    padding-inline: 0;
+  }
 }
 
 .main {
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
+}
+
+@media (width <= 768px) {
+  .main {
+    place-content: start;
+    justify-items: stretch;
+  }
 }
 
 .main > * {
