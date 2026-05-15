@@ -1,8 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { parseFrontmatter } from './shared/koans/parse-frontmatter';
-import { jsonError } from './shared/koans/http';
-import { getAllKoanFiles, getKoansDirectory } from './shared/koans/utilities';
+import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
+import { jsonError } from './shared/http';
 
 const koanRandom = async (): Promise<Response> => {
   try {
@@ -15,9 +14,9 @@ const koanRandom = async (): Promise<Response> => {
 
     const file = files[Math.floor(Math.random() * files.length)];
     const raw = await readFile(join(koansDirectory, file), 'utf-8');
-    const parsed = parseFrontmatter(raw);
+    const { frontmatter, body } = parseFrontmatter(raw);
 
-    return Response.json(parsed);
+    return Response.json({ ...frontmatter, body });
   } catch (error) {
     console.error('koan-random failed', error);
 

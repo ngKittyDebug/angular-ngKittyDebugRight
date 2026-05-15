@@ -1,8 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 
-import koanGet from '../koan-get';
-import { RAW_KOAN_FIXTURE } from './koan-raw.fixture';
+import koanGet from '../../functions/koan-get';
+import { RAW_KOAN_FIXTURE } from '../koan-raw.fixture';
 
 vi.mock('node:fs/promises');
 
@@ -19,7 +19,7 @@ describe('koan-get', () => {
         const body = await response.json();
 
         expect(response.status).toBe(200);
-        expect(body.frontmatter.slug).toBe('001-o-pustote-argumenta');
+        expect(body.slug).toBe('001-o-pustote-argumenta');
       });
     });
   });

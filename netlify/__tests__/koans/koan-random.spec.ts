@@ -1,8 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 
-import koanRandom from '../koan-random';
-import { RAW_KOAN_FIXTURE } from './koan-raw.fixture';
+import koanRandom from '../../functions/koan-random';
+import { RAW_KOAN_FIXTURE } from '../koan-raw.fixture';
 
 vi.mock('node:fs/promises');
 
@@ -17,7 +17,7 @@ describe('koan-random', () => {
         const body = await response.json();
 
         expect(response.status).toBe(200);
-        expect(body.frontmatter.slug).toBe('001-o-pustote-argumenta');
+        expect(body.slug).toBe('001-o-pustote-argumenta');
       });
     });
   });

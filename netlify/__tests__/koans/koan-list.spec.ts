@@ -1,14 +1,13 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
-
-import { buildRawKoan } from './koan-raw.fixture';
+import { buildRawKoan } from '../koan-raw.fixture';
 
 vi.mock('node:fs/promises');
 
 // koan-list keeps a module-scope cache, so each test imports a fresh module instance.
 const importKoanList = async (): Promise<() => Promise<Response>> => {
   vi.resetModules();
-  const module = await import('../koan-list');
+  const module = await import('../../functions/koan-list');
 
   return module.default;
 };

@@ -1,3 +1,15 @@
+import { join } from 'node:path';
+import { readdir } from 'node:fs/promises';
+
+export const getKoansDirectory = () => join(process.cwd(), 'public', 'koans');
+
+export const getAllKoanFiles = async (): Promise<string[]> => {
+  const koansDirectory = getKoansDirectory();
+  const allFiles = await readdir(koansDirectory);
+
+  return allFiles.filter((f) => f.endsWith('.mdx'));
+};
+
 interface KoanFrontmatter {
   number: number;
   title: string;
@@ -8,7 +20,7 @@ interface KoanFrontmatter {
 }
 
 interface ParsedKoan {
-  frontmatter: KoanFrontmatter;
+  frontmatter: Partial<KoanFrontmatter>;
   body: string;
 }
 
@@ -16,7 +28,7 @@ export function parseFrontmatter(raw: string): ParsedKoan {
   const { frontmatterBlock, body } = splitRaw(raw);
   const frontmatter = parseFrontmatterBlock(frontmatterBlock);
 
-  return { frontmatter: frontmatter as KoanFrontmatter, body };
+  return { frontmatter, body };
 }
 
 function splitRaw(raw: string): { frontmatterBlock: string; body: string } {
