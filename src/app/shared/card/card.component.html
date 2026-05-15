@@ -1,41 +1,39 @@
-<div class="card" [attr.tabindex]="isClickable() ? 0 : null" (click)="onCardClick()" (keydown.enter)="onCardClick()">
-  @if (icon()) {
-    <div class="icon-shell">
-      <tui-icon [icon]="icon()!" class="icon" />
-    </div>
-  }
+@if (icon()) {
+  <div class="icon-shell">
+    <tui-icon [icon]="icon()!" class="icon" />
+  </div>
+}
 
-  @if (title() || subtitle()) {
-    <div class="header">
-      @if (title()) {
-        <h2 class="title">
-          <tui-icon icon="@tui.star" class="icon-title" />
-          {{ title() }}
-          <tui-icon icon="@tui.star" class="icon-title" />
-        </h2>
-      }
+@if (title() || subtitle()) {
+  <div class="header">
+    @if (title()) {
+      <h2 class="title">
+        <tui-icon icon="@tui.star" class="icon-title" />
+        {{ title() }}
+        <tui-icon icon="@tui.star" class="icon-title" />
+      </h2>
+    }
 
-      @if (subtitle()) {
-        <p class="subtitle">{{ subtitle() }}</p>
-      }
-    </div>
-  }
+    @if (subtitle()) {
+      <p class="subtitle">{{ subtitle() }}</p>
+    }
+  </div>
+}
 
-  @if (description()) {
-    <p class="decryption">"{{ description() }}"</p>
-  }
+@if (description()) {
+  <p class="decryption">"{{ description() }}"</p>
+}
 
-  @if (badge() || buttonLabel()) {
-    <div class="footer">
-      <hr class="divider" />
-      @if (badge()) {
-        <span class="badge">{{ badge() }}</span>
-      }
-      @if (buttonLabel()) {
-        <button tuiButton type="button" appearance="secondary" size="s" (click)="onButtonClick($event)">
-          {{ buttonLabel() }}
-        </button>
-      }
-    </div>
-  }
-</div>
+@if (badge() || buttonLabel()) {
+  <div class="footer">
+    <hr class="divider" />
+    @if (badge()) {
+      <span class="badge">{{ badge() }}</span>
+    }
+    @if (buttonLabel()) {
+      <button tuiButton type="button" appearance="secondary" size="s" (click)="onButtonClick($event)">
+        {{ buttonLabel() }}
+      </button>
+    }
+  </div>
+}

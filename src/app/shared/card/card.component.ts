@@ -7,6 +7,11 @@ import { TuiButton, TuiIcon } from '@taiga-ui/core';
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.tabindex]': 'isClickable() ? 0 : null',
+    '(click)': 'onCardClick()',
+    '(keydown.enter)': 'onCardClick()',
+  },
 })
 export class CardComponent {
   public readonly icon = input<string>();
