@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config';
 // environment (node) and source root.
 export default defineConfig({
   test: {
-    root: 'netlify/functions',
+    root: 'netlify/__tests__',
     include: ['**/*.spec.ts'],
     environment: 'node',
     globals: true,
