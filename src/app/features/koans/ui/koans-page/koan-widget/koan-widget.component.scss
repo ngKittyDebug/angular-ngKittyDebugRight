@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.koan-widget {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--tui-border-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.koan-widget-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.koan-widget-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--koan-source);
+  flex-shrink: 0;
+}
+
+.koan-widget-title {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: var(--koan-master);
+  font-weight: 600;
+}
+
+.koan-widget-body {
+  min-height: 2.5rem;
+}
+
+.koan-widget-loading {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--koan-source);
+  line-height: 1.6;
+}
+
+.koan-widget-question {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--koan-question);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.koan-widget-footer {
+  display: flex;
+  justify-content: flex-end;
+}

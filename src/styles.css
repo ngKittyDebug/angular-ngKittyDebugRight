@@ -57,6 +57,12 @@
   --secondary-text-hover: var(--accent-soft);
   --secondary-shadow: 0 0 10px rgb(214 168 95 / 25%);
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --koan-master: var(--accent-primary);
+  --koan-student: var(--accent-secondary);
+  --koan-haiku: var(--water);
+  --koan-question: var(--warning);
+  --koan-source: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
+  --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
 }
 
 :root,
@@ -124,6 +130,12 @@
   --outline-hover-bg: rgb(255 255 255 / 3%);
   --outline-hover-shadow: 0 0 12px rgb(255 79 216 / 14%);
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --koan-master: var(--accent-primary);
+  --koan-student: var(--accent-secondary);
+  --koan-haiku: var(--water);
+  --koan-question: var(--warning);
+  --koan-source: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
+  --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
 }
 
 * {
@@ -247,4 +259,10 @@ button[tuiButton][data-appearance='flat'] {
 button[tuiButton][data-appearance='flat']:hover,
 button[tuiButton][data-appearance='flat']:active {
   color: var(--accent-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button[tuiButton] {
+    transition: none;
+  }
 }

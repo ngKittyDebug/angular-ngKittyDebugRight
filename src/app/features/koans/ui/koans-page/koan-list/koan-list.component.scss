@@ -1,0 +1,87 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 1px solid var(--tui-border-normal);
+}
+
+.koan-list {
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+}
+
+.koan-list-status {
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--koan-source);
+}
+
+.koan-list-number {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--koan-source);
+  flex-shrink: 0;
+  min-width: 2rem;
+}
+
+.koan-list-title {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--tui-text-primary);
+  opacity: 0.8;
+  line-height: 1.4;
+  transition: opacity 0.15s ease;
+}
+
+.koan-list-button {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  text-align: left;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--outline-hover-bg);
+
+    .koan-list-title {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--koan-master);
+    outline-offset: -2px;
+  }
+
+  &.active {
+    border-left-color: var(--koan-master);
+    background-color: var(--outline-hover-bg);
+
+    .koan-list-number {
+      color: var(--koan-master);
+    }
+
+    .koan-list-title {
+      color: var(--tui-text-primary);
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .koan-list-button,
+  .koan-list-title {
+    transition: none;
+  }
+}

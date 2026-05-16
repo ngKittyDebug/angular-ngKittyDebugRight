@@ -17,7 +17,9 @@ export default tseslint.config(
       sourceType: 'module',
       parser: tseslint.parser,
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['*.config.ts'],
+        },
       },
     },
     extends: [
@@ -135,6 +137,7 @@ export default tseslint.config(
           fixture: 'off',
           token: 'off',
           facade: 'off',
+          store: 'off',
         },
       ],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
