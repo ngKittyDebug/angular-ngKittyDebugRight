@@ -1,5 +1,21 @@
 <div class="layout">
+  <ngKitty-sidebar [isMobileOpen]="isMobileNavOpen()" [navigationItemList]="navigationItemList" />
+  @if (isMobileNavOpen()) {
+    <div class="layout-sidebar-backdrop" role="presentation" (click)="onCloseMobileNav()"></div>
+  }
   <main tuiNavigationMain class="main">
+    <div class="main-toolbar">
+      <button
+        tuiButton
+        type="button"
+        appearance="outline"
+        size="m"
+        [attr.aria-expanded]="isMobileNavOpen()"
+        (click)="onToggleMobileNav()"
+      >
+        <tui-icon icon="@tui.menu" />
+      </button>
+    </div>
     <router-outlet />
   </main>
 </div>
