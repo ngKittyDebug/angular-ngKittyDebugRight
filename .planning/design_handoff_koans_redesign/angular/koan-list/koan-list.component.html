@@ -1,0 +1,108 @@
+@if (loading()) {
+  <p class="kl-status" aria-live="polite">Свитки разворачиваются…</p>
+} @else {
+  <div class="kl-scroll">
+    <section class="kl-section">
+      <div class="kl-label">
+        <span>Раздел</span>
+        <span class="kl-label-kanji">部</span>
+      </div>
+      <ul class="kl-cat-list">
+        @for (meta of CATEGORY_META; track meta.id) {
+          @if (categoryCounts().get(meta.id); as count) {
+            <li>
+              <button
+                type="button"
+                class="kl-cat-btn"
+                [class.is-on]="activeCategory() === meta.id"
+                (click)="onCategory(meta.id)"
+              >
+                <span class="kl-cat-dot"></span>
+                <span class="kl-cat-name">{{ meta.label }}</span>
+                <span class="kl-cat-count">{{ count }}</span>
+              </button>
+            </li>
+          }
+        }
+        <li>
+          <button
+            type="button"
+            class="kl-cat-btn"
+            [class.is-on]="!activeCategory()"
+            (click)="onCategory(null)"
+          >
+            <span class="kl-cat-dot"></span>
+            <span class="kl-cat-name">Все</span>
+            <span class="kl-cat-count">{{ totalCount() }}</span>
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    @if (tagCounts().length > 0) {
+      <section class="kl-section">
+        <div class="kl-label">
+          <span>Метки</span>
+          <span class="kl-label-kanji">標</span>
+        </div>
+        <div class="kl-tag-chips">
+          @for (tc of visibleTags(); track tc[0]) {
+            <button
+              type="button"
+              class="kl-tag"
+              [class.is-on]="activeTagSet().has(tc[0])"
+              (click)="onTag(tc[0])"
+            >{{ tc[0] }}</button>
+          }
+          @if (hiddenTagCount() > 0) {
+            <button type="button" class="kl-tag kl-tag-more" (click)="toggleTagsExpanded()">
+              {{ tagsExpanded() ? '— меньше' : '+' + hiddenTagCount() }}
+            </button>
+          }
+        </div>
+      </section>
+    }
+
+    <section class="kl-section kl-section--list">
+      <div class="kl-label kl-label--inset">
+        <span>Свитки</span>
+        <span class="kl-label-kanji">巻 · {{ filteredCount() }}</span>
+      </div>
+
+      @if (filteredCount() === 0) {
+        <p class="kl-empty">
+          Ничего не найдено@if (query()) {<span> по «{{ query() }}»</span>}.
+        </p>
+      } @else {
+        <ul class="kl-list">
+          @for (group of groups(); track group.category) {
+            <li class="kl-group">
+              <div class="kl-group-head">
+                <span class="kl-group-kanji">{{ categoryMeta(group.category).kanji }}</span>
+                <span>{{ categoryMeta(group.category).label }}</span>
+              </div>
+              <ul class="kl-list">
+                @for (item of group.items; track item.slug) {
+                  <li>
+                    <button
+                      type="button"
+                      class="kl-item"
+                      [class.is-active]="item.slug === selectedSlug()"
+                      [class.is-read]="readSet().has(item.slug)"
+                      [attr.aria-current]="item.slug === selectedSlug() ? 'true' : null"
+                      (click)="onSelect(item.slug)"
+                    >
+                      <span class="kl-item-num">№{{ padNumber(item.number) }}</span>
+                      <span class="kl-item-title">{{ item.title }}</span>
+                      <span class="kl-item-seal" [attr.aria-label]="readSet().has(item.slug) ? 'прочитано' : null"></span>
+                    </button>
+                  </li>
+                }
+              </ul>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+}

@@ -1,0 +1,347 @@
+@use 'sass:color';
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+  isolation: isolate;
+  background: var(--k-paper);
+  color: var(--k-ink);
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+  overflow: hidden;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--k-vermillion);
+  color: var(--k-paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transform: translateY(-100%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+/* ─── Header ──────────────────────────────────────────── */
+
+.kp-header {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 36px 16px;
+  border-bottom: 1px solid var(--k-rule);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--k-paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.kp-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.kp-enso {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.kp-brand-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.kp-brand-kanji {
+  margin-bottom: 4px;
+  color: var(--k-vermillion);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+}
+
+.kp-brand-name {
+  color: var(--k-ink);
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.kp-search-wrap {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.kp-search {
+  width: 100%;
+  padding: 8px 30px 8px 26px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--k-rule);
+  color: var(--k-ink);
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--k-ink-faint);
+    font-style: italic;
+  }
+
+  &:focus {
+    border-bottom-color: var(--k-ink);
+  }
+}
+
+.kp-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--k-ink-faint);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.kp-search-clear {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  padding: 4px;
+  background: none;
+  border: 0;
+  color: var(--k-ink-faint);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &:hover {
+    color: var(--k-ink);
+  }
+}
+
+.kp-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.kp-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--k-ink-soft);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border-radius: 0;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--k-paper-2);
+    color: var(--k-ink);
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.kp-sign-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--k-rule);
+  color: var(--k-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    border-color: var(--k-vermillion);
+    color: var(--k-vermillion);
+  }
+}
+
+.kp-kanji {
+  color: var(--k-vermillion);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px;
+}
+
+/* ─── Error ───────────────────────────────────────────── */
+
+.kp-error {
+  margin: 0;
+  padding: 12px 36px;
+  background: color-mix(in srgb, var(--k-vermillion) 12%, transparent);
+  border-bottom: 1px solid var(--k-vermillion);
+  color: var(--k-vermillion);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* ─── Body grid ───────────────────────────────────────── */
+
+.kp-body {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+.kp-list-toggle {
+  display: none;
+}
+
+.kp-sidebar {
+  height: calc(100vh - 72px);
+  border-right: 1px solid var(--k-rule);
+  background: color-mix(in srgb, var(--k-paper) 60%, transparent);
+  overflow: hidden;
+}
+
+.kp-reader-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ─── Toast ──────────────────────────────────────────── */
+
+.kp-toast {
+  display: inline-flex;
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  z-index: 200;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: var(--k-ink);
+  color: var(--k-paper);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-4px);
+  animation: kp-toast-in 0.25s ease both;
+
+  .kp-kanji {
+    color: var(--k-gold-soft);
+  }
+}
+
+@keyframes kp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+
+@media (width <= 920px) {
+  .kp-header {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 14px 20px;
+  }
+
+  .kp-search-wrap {
+    grid-column: 1 / -1;
+    order: 3;
+    max-width: none;
+  }
+
+  .kp-body {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-list-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: var(--k-paper-2);
+    border: 0;
+    border-bottom: 1px solid var(--k-rule);
+    color: var(--k-ink);
+    font: inherit;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    order: -1;
+  }
+
+  .kp-sidebar {
+    width: 100%;
+    max-height: 60vh;
+    height: auto;
+
+    &--collapsed {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

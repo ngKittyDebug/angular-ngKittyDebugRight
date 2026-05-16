@@ -8,6 +8,9 @@ import importPlugin from 'eslint-plugin-import-x';
 
 export default tseslint.config(
   {
+    ignores: ['.planning/'],
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       ecmaVersion: 2024,
