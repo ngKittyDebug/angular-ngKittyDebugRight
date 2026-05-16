@@ -3,9 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  padding: 24px;
-  margin: 20px 20px 32px;
-  border: 1px solid #a855f7;
+  padding: 1rem;
+  border: 1px solid var(--accent-primary);
 }
 
 .header-title {
@@ -14,7 +13,7 @@
   text-transform: uppercase;
   font-weight: 400;
   text-align: center;
-  color: var(--color-accent, #a855f7);
+  color: var(--accent-primary);
 }
 
 .header-subtitle {
@@ -22,7 +21,7 @@
   font-optical-sizing: auto;
   font-weight: 200;
   text-align: center;
-  color: var(--warning, #fbbf24) !important;
+  color: var(--warning) !important;
   animation: pulse 2s infinite;
 }
 
@@ -50,9 +49,9 @@
 }
 
 .user-card {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 1rem;
   border-radius: 1rem;
   padding: 20px;

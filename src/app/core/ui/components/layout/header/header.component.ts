@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
-import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
-import { TuiAutoColorPipe, TuiAvatar, TuiAvatarStack } from '@taiga-ui/kit';
+import { TuiHeader } from '@taiga-ui/layout';
 
 @Component({
-  selector: 'header-component',
-  imports: [TuiTitle, TuiHeader, TuiButton, TuiIcon, TuiAutoColorPipe, TuiAvatar, TuiAvatarStack, TuiCardLarge],
+  selector: 'ngKitty-header',
+  imports: [TuiTitle, TuiHeader, TuiButton, TuiIcon],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,6 +13,5 @@ import { TuiAutoColorPipe, TuiAvatar, TuiAvatarStack } from '@taiga-ui/kit';
 export class HeaderComponent {
   protected readonly title = 'Cult Of The Holy Deploy';
   protected readonly subtitle = '>> "Machine Spirit is unstable"<<';
-
   protected readonly url = 'https://avatars.githubusercontent.com/u/70115541';
 }
