@@ -17,7 +17,7 @@ import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navig
 export class LayoutComponent {
   protected readonly layoutService = inject(LayoutService);
   protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
-  protected isMobileNavOpen = this.layoutService.isMobileNavOpen;
+  protected readonly isMobileNavOpen = this.layoutService.isMobileNavOpen;
 
   constructor() {
     afterNextRender(() => {

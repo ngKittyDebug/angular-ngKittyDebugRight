@@ -1,12 +1,18 @@
 :host {
   display: block;
-  flex: 0 0 22.5rem;
-  min-width: 22.5rem;
+  flex: 0 0 auto;
+  align-self: stretch;
 
   @media (width <= 768px) {
-    flex: 0 0 0;
-    min-width: 0;
-    align-self: stretch;
+    position: fixed;
+    z-index: 1010;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    flex: none;
+    inline-size: 0;
+    block-size: 0;
+    overflow: visible;
+    pointer-events: none;
   }
 }
 
@@ -18,6 +24,7 @@
   gap: 1rem;
   padding: 1rem;
   border-right: 1px solid var(--tui-border-normal);
+  background: var(--tui-background-base);
 
   @media (width <= 768px) {
     position: fixed;
@@ -25,19 +32,20 @@
     inset-inline-start: 0;
     z-index: 1010;
     inline-size: min(22.5rem, 88vw);
-    min-height: 100dvh;
+    min-block-size: 100dvh;
     max-block-size: 100dvh;
     overflow-y: auto;
     border-right: none;
     box-shadow: 4px 0 24px rgb(0 0 0 / 28%);
-    transform: translateX(-100%);
+    pointer-events: auto;
+    transform: translate3d(-100%, 0, 0);
     transition: transform var(--tui-duration, 0.3s) ease-in-out;
   }
 }
 
 .sidebar.sidebar-mobile-open {
   @media (width <= 768px) {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -54,5 +62,5 @@
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 1rem;
 }
