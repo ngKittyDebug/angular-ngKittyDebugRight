@@ -4,7 +4,6 @@ import { TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from '@core/services/layout/layout.service';
 import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
-import { describe } from 'vitest';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -28,7 +27,7 @@ describe('LayoutComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('должен подписаться на отслеживание ширины экрана ', () => {
+    it('должен подписаться на отслеживание ширины экрана', () => {
       expect(layoutServiceMock.watchMobileNavMediaQuery).toHaveBeenCalledTimes(1);
     });
   });
