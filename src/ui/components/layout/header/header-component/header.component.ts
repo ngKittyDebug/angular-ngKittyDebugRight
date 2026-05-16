@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
-import { TuiHeader } from '@taiga-ui/layout';
+import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { TuiAutoColorPipe, TuiAvatar, TuiAvatarStack } from '@taiga-ui/kit';
-import { TuiCardMedium } from '@taiga-ui/layout';
 
 @Component({
   selector: 'header-component',
-  standalone: true,
-  imports: [TuiTitle, TuiHeader, TuiButton, TuiIcon, TuiAutoColorPipe, TuiAvatar, TuiAvatarStack, TuiCardMedium],
+  imports: [TuiTitle, TuiHeader, TuiButton, TuiIcon, TuiAutoColorPipe, TuiAvatar, TuiAvatarStack, TuiCardLarge],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
