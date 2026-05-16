@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from '@core/ui/components/layout/services/layout.service';
 import { layoutServiceMock } from '@core/ui/components/layout/services/layout.service.mock';
+import { describe } from 'vitest';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -22,6 +23,12 @@ describe('LayoutComponent', () => {
 
   it('должен инициализироваться', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('Отслеживание ширины экрана', () => {
+    it('должен вызывать метод сервиса ', () => {
+      expect(layoutServiceMock.watchMobileNavMediaQuery).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('Переключение открытия сайдбара', () => {

@@ -1,4 +1,4 @@
-import { afterNextRender, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { LAYOUT_MOBILE_MEDIA_QUERY } from '@core/ui/components/layout/constants/layout-mobile-media-query';
 
 @Injectable({
@@ -9,12 +9,6 @@ export class LayoutService {
   private readonly _isMobileNavOpen = signal(false);
   public readonly isMobileNavOpen = this._isMobileNavOpen.asReadonly();
 
-  constructor() {
-    afterNextRender(() => {
-      this.watchMobileNavMediaQuery();
-    });
-  }
-
   public onToggleMobileNav() {
     this._isMobileNavOpen.update((value) => !value);
   }
@@ -23,7 +17,7 @@ export class LayoutService {
     this._isMobileNavOpen.set(false);
   }
 
-  private watchMobileNavMediaQuery() {
+  public watchMobileNavMediaQuery() {
     if (typeof globalThis.matchMedia === 'undefined') {
       return;
     }

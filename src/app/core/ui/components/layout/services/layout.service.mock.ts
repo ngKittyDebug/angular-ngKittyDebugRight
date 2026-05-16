@@ -7,4 +7,5 @@ export const layoutServiceMock = {
   isMobileNavOpen: vi.fn().mockReturnValue(false) as unknown as Signal<boolean>,
   onToggleMobileNav: vi.fn(),
   onCloseMobileNav: vi.fn(),
+  watchMobileNavMediaQuery: vi.fn(),
 } as const satisfies Mocked<Partial<LayoutService>>;
