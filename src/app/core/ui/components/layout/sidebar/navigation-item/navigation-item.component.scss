@@ -1,0 +1,11 @@
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.nav-item.active {
+  background: rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+}
