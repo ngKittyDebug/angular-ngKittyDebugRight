@@ -21,6 +21,7 @@ describe('NavigationItemComponent', () => {
     component.item = {
       url: '/test',
       icon: 'home',
+      label: 'Test',
     } as any;
 
     fixture.detectChanges();
