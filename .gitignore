@@ -49,6 +49,7 @@ Thumbs.db
 # Claude Code local files
 .claude/settings.local.json
 .claude/todos.json
+.planning
 
 # Local Netlify folder
 .netlify

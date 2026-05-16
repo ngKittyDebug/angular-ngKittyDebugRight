@@ -77,6 +77,25 @@ describe('KoanApiService', () => {
   });
 
   describe('Edge Cases', () => {
+    describe('getKoan кэш', () => {
+      it('должен вернуть кэшированный коан без HTTP-запроса при повторном вызове', () => {
+        const slug = '001-o-pustote-argumenta';
+        let firstResult: KoanModel | undefined;
+        let secondResult: KoanModel | undefined;
+
+        service.getKoan(slug).subscribe((k) => (firstResult = k));
+        httpMock
+          .expectOne((request) => request.url === '/.netlify/functions/koan-get' && request.params.get('slug') === slug)
+          .flush(KoanFixture);
+
+        service.getKoan(slug).subscribe((k) => (secondResult = k));
+        httpMock.expectNone('/.netlify/functions/koan-get');
+
+        expect(firstResult).toEqual(KoanFixture);
+        expect(secondResult).toEqual(KoanFixture);
+      });
+    });
+
     describe('getKoan со спецсимволами в slug', () => {
       it('должен закодировать slug в query-строке', () => {
         const slug = 'коан & вопрос';

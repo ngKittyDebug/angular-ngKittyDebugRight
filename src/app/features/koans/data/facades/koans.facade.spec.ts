@@ -5,16 +5,24 @@ import { of, Subject, throwError } from 'rxjs';
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
 import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
+import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
+import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 import { KoansFacade } from './koans.facade';
 
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 describe('KoansFacade', () => {
-  let facade: InstanceType<typeof KoansFacade>;
+  let facade: KoansFacade;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [KoansFacade, { provide: KoanApiService, useValue: KoanApiServiceMock }],
+      providers: [
+        KoansStore,
+        KoansFacade,
+        { provide: KoanApiService, useValue: KoanApiServiceMock },
+        { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
+      ],
     });
 
     facade = TestBed.inject(KoansFacade);
@@ -61,16 +69,6 @@ describe('KoansFacade', () => {
 
         expect(facade.selectedKoan()).toEqual(KoanFixture);
         expect(facade.loadingSelected()).toBe(false);
-      });
-
-      it('должен вернуть коан из кэша без HTTP-запроса при повторном вызове', () => {
-        KoanApiServiceMock.getKoan.mockReturnValue(of(KoanFixture));
-
-        facade.selectKoan(KoanFixture.slug);
-        facade.selectKoan(KoanFixture.slug);
-
-        expect(KoanApiServiceMock.getKoan).toHaveBeenCalledTimes(1);
-        expect(facade.selectedKoan()).toEqual(KoanFixture);
       });
     });
   });

@@ -8,6 +8,9 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
+import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
+import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 import { koanHeadingExtension, koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
 import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoansPageComponent } from './koans-page.component';
@@ -27,8 +30,10 @@ describe('KoansPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [KoansPageComponent],
       providers: [
+        KoansStore,
         KoansFacade,
         { provide: KoanApiService, useValue: KoanApiServiceMock },
+        { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
         { provide: Router, useValue: RouterMock },
         provideMarkdown({
           markedExtensions: [

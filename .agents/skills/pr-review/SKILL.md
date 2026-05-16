@@ -291,6 +291,8 @@ Read these files from the project for full context on style and rules:
 - `docs/Стайлгайд PR.md`
 - `docs/Стайлгайд тестирование.md` (only if *.spec.ts files are in the diff)
 
+**Before writing any comment about Angular patterns, signals, or testing — validate your assessment against the relevant project skill.** Beyond your initial read, consult: `.agents/skills/angular-v21/SKILL.md` (modern APIs), `.agents/skills/angular-testing/SKILL.md` (vitest patterns), `.agents/skills/angular-signals/SKILL.md` (signal/computed/effect rules), `.agents/skills/angular-best-practices/SKILL.md` (general v21 conventions). Read the matching skill to confirm the verdict, not as a last resort.
+
 ## PR context
 - PR number: <PR_NUMBER>
 - Worktree path: <WORKTREE_PATH>
@@ -357,7 +359,8 @@ _[jab — one ironic/wry sentence, severity-matched register from tone-examples.
 ### Step 2 — Prepare (inline mode only, `FILE_COUNT ≤ 10`)
 
 1. **Read project style guides** from `$WORKTREE_PATH/docs/` per the table in Section 1.5. Always read naming + architecture + commits + PR guides. Add testing guide if `*.spec.ts` files are in the diff.
-   1a. **Read `.agents/skills/pr-review/reference/tone-examples.md` in full** — mandatory, before drafting anything. Keep it active in context for all four uses: - **Inline jabs (Mode A)** → matching category section (legacy, TypeScript, performance, style, tests, commits, PR description). - **Positives (Mode B)** → "Mode B — Praising a good move" section. No flat phrases. - **Replies (Mode C)** → "Mode C — Replies to existing comments" section. - **Body notes on commits/PR description** → "Commit messages" and "PR Description" sections — open each note with a jab from there, then the precise fix.
+   1a. **Read `.agents/skills/pr-review/reference/tone-examples.md` in full** — mandatory, before drafting anything.
+   1b. **Consult the relevant Angular skill before writing any pattern-specific comment.** Beyond your initial assessment, validate against: `angular-v21`, `angular-testing`, `angular-signals`, `angular-best-practices`, `angular-services`. Read the matching `SKILL.md` to confirm the verdict — don't rely on training data alone for Angular v21+ specifics. Keep it active in context for all four uses: - **Inline jabs (Mode A)** → matching category section (legacy, TypeScript, performance, style, tests, commits, PR description). - **Positives (Mode B)** → "Mode B — Praising a good move" section. No flat phrases. - **Replies (Mode C)** → "Mode C — Replies to existing comments" section. - **Body notes on commits/PR description** → "Commit messages" and "PR Description" sections — open each note with a jab from there, then the precise fix.
 2. Fetch PR metadata: `gh pr view <PR_NUMBER> --json title,body,state,author`
 3. Fetch existing comments to avoid duplicates: `get_pr_comments.sh <PR_NUMBER>`
 4. Read the diff: `gh pr diff <PR_NUMBER>` — identify which lines were actually changed.
@@ -452,4 +455,4 @@ All scripts: `.agents/skills/pr-review/scripts/`. Require `gh` CLI authenticated
 - `reference/router.md` — Angular Router v21 patterns for this project.
 - `reference/tone-examples.md` — **Read BEFORE drafting any comment** (mandatory in both inline and subagent modes). Contains jab openers grouped by issue category and severity. Use as the active emotional register when writing, not as background reading. Vary phrasing — same spirit, different words.
 
-When unsure about Angular patterns — `ls .agents/skills/` and read the relevant `SKILL.md`.
+**Beyond your initial assessment — validate Angular v21 pattern calls against the project skills before writing the comment, not after.** Relevant skills for this project: `angular-v21`, `angular-testing`, `angular-signals`, `angular-best-practices`, `angular-services`. Read the `SKILL.md` of the matching skill to confirm your verdict. Training data alone is not enough for Angular v21+ specifics.

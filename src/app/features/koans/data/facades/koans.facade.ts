@@ -1,120 +1,131 @@
-import { inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import type { HttpErrorResponse } from '@angular/common/http';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { catchError, EMPTY, pipe, switchMap, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, EMPTY, Subject, switchMap, tap } from 'rxjs';
 
-import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
+import { resolveKoanError } from '@features/koans/data/api/koan-errors';
+import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 
-interface KoansState {
-  randomKoan: KoanModel | null;
-  koanList: KoanListItemModel[];
-  selectedKoan: KoanModel | null;
-  loadingRandom: boolean;
-  loadingList: boolean;
-  loadingSelected: boolean;
-  error: string | null;
-  koanCache: Record<string, KoanModel>;
-}
+@Injectable()
+export class KoansFacade {
+  private readonly store = inject(KoansStore);
+  private readonly api = inject(KoanApiService);
+  private readonly persistence = inject(KoansPersistenceService);
+  private readonly randomKoan$ = new Subject<string | null>();
+  private readonly koanList$ = new Subject<void>();
+  private readonly selectKoan$ = new Subject<string>();
 
-const initialState: KoansState = {
-  randomKoan: null,
-  koanList: [],
-  selectedKoan: null,
-  loadingRandom: false,
-  loadingList: false,
-  loadingSelected: false,
-  error: null,
-  koanCache: {},
-};
+  public readonly randomKoan = this.store.randomKoan;
+  public readonly koanList = this.store.koanList;
+  public readonly filteredList = this.store.filteredList;
+  public readonly groupedList = this.store.groupedList;
+  public readonly selectedKoan = this.store.selectedKoan;
+  public readonly loadingRandom = this.store.loadingRandom;
+  public readonly loadingList = this.store.loadingList;
+  public readonly loadingSelected = this.store.loadingSelected;
+  public readonly error = this.store.error;
+  public readonly readSet = this.store.readSet;
+  public readonly koanTheme = this.store.koanTheme;
 
-const ERROR_MESSAGE = 'Свиток недоступен. Мастер велит подождать и попробовать снова.';
-const ERROR_NETWORK = 'Связь с монастырём прервана. Проверьте соединение.';
-const ERROR_NOT_FOUND = 'Этого коана нет в свитках.';
+  constructor() {
+    this.store.setReadSet(this.persistence.loadReadSet());
+    this.store.setKoanTheme(this.persistence.loadTheme());
 
-const resolveKoanError = (status: number): string => {
-  if (status === 0) {
-    return ERROR_NETWORK;
-  }
-  if (status === 404) {
-    return ERROR_NOT_FOUND;
-  }
-
-  return ERROR_MESSAGE;
-};
-
-export const KoansFacade = signalStore(
-  withState<KoansState>(initialState),
-  withMethods((store, api = inject(KoanApiService)) => ({
-    loadRandomKoan: rxMethod<string | null>(
-      pipe(
-        tap(() => patchState(store, { loadingRandom: true, error: null })),
+    this.randomKoan$
+      .pipe(
+        tap(() => this.store.startLoadingRandom()),
         switchMap((exclude) =>
-          api.getRandomKoan(exclude ?? undefined).pipe(
-            tap((randomKoan) => patchState(store, { randomKoan, loadingRandom: false })),
-            catchError((error_: HttpErrorResponse) => {
-              const error = error_.status === 0 ? ERROR_NETWORK : ERROR_MESSAGE;
-
-              patchState(store, { loadingRandom: false, error });
+          this.api.getRandomKoan(exclude ?? undefined).pipe(
+            tap((koan) => this.store.setRandomKoan(koan)),
+            catchError((error: HttpErrorResponse) => {
+              this.store.setError(resolveKoanError(error.status), 'random');
 
               return EMPTY;
             })
           )
-        )
+        ),
+        takeUntilDestroyed()
       )
-    ),
+      .subscribe();
 
-    loadKoanList: rxMethod<void>(
-      pipe(
-        tap(() => patchState(store, { loadingList: true, error: null })),
+    this.koanList$
+      .pipe(
+        tap(() => this.store.startLoadingList()),
         switchMap(() =>
-          api.getKoanList().pipe(
-            tap((koanList) => {
-              patchState(store, { koanList, loadingList: false });
-            }),
-            catchError((error_: HttpErrorResponse) => {
-              const error = error_.status === 0 ? ERROR_NETWORK : ERROR_MESSAGE;
-
-              patchState(store, { loadingList: false, error });
+          this.api.getKoanList().pipe(
+            tap((list) => this.store.setKoanList(list)),
+            catchError((error: HttpErrorResponse) => {
+              this.store.setError(resolveKoanError(error.status), 'list');
 
               return EMPTY;
             })
           )
-        )
+        ),
+        takeUntilDestroyed()
       )
-    ),
+      .subscribe();
 
-    selectKoan: rxMethod<string>(
-      pipe(
-        tap(() => patchState(store, { loadingSelected: true, error: null })),
-        switchMap((slug) => {
-          const cached = store.koanCache()[slug];
-
-          if (cached) {
-            patchState(store, { selectedKoan: cached, loadingSelected: false });
-
-            return EMPTY;
-          }
-
-          return api.getKoan(slug).pipe(
-            tap((selectedKoan) =>
-              patchState(store, (s) => ({
-                selectedKoan,
-                loadingSelected: false,
-                koanCache: { ...s.koanCache, [slug]: selectedKoan },
-              }))
-            ),
-            catchError((error_: HttpErrorResponse) => {
-              const error = resolveKoanError(error_.status);
-
-              patchState(store, { loadingSelected: false, error });
+    this.selectKoan$
+      .pipe(
+        tap(() => this.store.startLoadingSelected()),
+        switchMap((slug) =>
+          this.api.getKoan(slug).pipe(
+            tap((koan) => this.store.setSelectedKoan(koan)),
+            catchError((error: HttpErrorResponse) => {
+              this.store.setError(resolveKoanError(error.status), 'selected');
 
               return EMPTY;
             })
-          );
-        })
+          )
+        ),
+        takeUntilDestroyed()
       )
-    ),
-  }))
-);
+      .subscribe();
+  }
+
+  public loadRandomKoan(exclude: string | null): void {
+    this.randomKoan$.next(exclude);
+  }
+
+  public loadKoanList(): void {
+    this.koanList$.next();
+  }
+
+  public selectKoan(slug: string): void {
+    this.selectKoan$.next(slug);
+  }
+
+  public setQuery(query: string): void {
+    this.store.setQuery(query);
+  }
+
+  public setCategory(category: string | null): void {
+    this.store.setCategory(category);
+  }
+
+  public toggleTag(tag: string): void {
+    this.store.toggleTag(tag);
+  }
+
+  public markRead(slug: string): void {
+    this.store.markRead(slug);
+    this.persistence.saveReadSet(this.store.readSet());
+  }
+
+  public setKoanTheme(theme: 'sumi' | 'washi'): void {
+    this.store.setKoanTheme(theme);
+    this.persistence.saveTheme(theme);
+  }
+
+  public selectRandomFromFiltered(): void {
+    const pool = this.store.filteredList().filter((k) => k.slug !== this.store.selectedKoan()?.slug);
+
+    if (!pool.length) {
+      return;
+    }
+
+    this.selectKoan$.next(pool[Math.floor(Math.random() * pool.length)].slug);
+  }
+}

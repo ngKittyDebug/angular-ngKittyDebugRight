@@ -136,6 +136,7 @@ export default tseslint.config(
           fixture: 'off',
           token: 'off',
           facade: 'off',
+          store: 'off',
         },
       ],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
