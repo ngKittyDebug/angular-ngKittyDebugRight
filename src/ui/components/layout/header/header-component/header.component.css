@@ -100,6 +100,7 @@
   .user-name {
     font-size: 1rem;
   }
+
   .header-content {
     display: flex;
     flex-direction: row;
@@ -126,6 +127,7 @@
   .user-card {
     padding: 12px;
   }
+
   .header-content {
     display: flex;
     flex-direction: column;
