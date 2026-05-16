@@ -26,12 +26,12 @@ const koanRandom = async (request: Request): Promise<Response> => {
     const file = pool[Math.floor(Math.random() * pool.length)];
     const raw = await readFile(join(koansDirectory, file), 'utf-8');
     const {
-      frontmatter: { number, title, slug },
+      frontmatter: { number, title, slug, category, tags, source },
       body,
     } = parseFrontmatter(raw);
 
     return Response.json(
-      { number, title, slug, body },
+      { number, title, slug, category, tags, source, body },
       {
         headers: { 'Cache-Control': 'no-store' },
       }

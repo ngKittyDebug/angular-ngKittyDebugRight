@@ -31,6 +31,21 @@ describe('koan-get', () => {
         expect(body.slug).toBe('001-o-pustote-argumenta');
       });
 
+      it('должен пробрасывать category, tags и source из frontmatter', async () => {
+        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
+        const koanGet = await importKoanGet();
+
+        const response = await koanGet(buildRequest('?slug=001-o-pustote-argumenta'));
+        const body = await response.json();
+
+        expect(body).toMatchObject({
+          category: 'javascript',
+          tags: ['arguments', 'undefined'],
+          source: 'Монастырь Мацуо-дэра',
+        });
+      });
+
       it('должен вернуть Cache-Control: public, max-age=3600, immutable', async () => {
         vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);

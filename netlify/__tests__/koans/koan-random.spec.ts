@@ -31,6 +31,21 @@ describe('koan-random', () => {
         expect(body.slug).toBe('001-o-pustote-argumenta');
       });
 
+      it('должен пробрасывать category, tags и source из frontmatter', async () => {
+        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
+        const koanRandom = await importKoanRandom();
+
+        const response = await koanRandom(buildRequest());
+        const body = await response.json();
+
+        expect(body).toMatchObject({
+          category: 'javascript',
+          tags: ['arguments', 'undefined'],
+          source: 'Монастырь Мацуо-дэра',
+        });
+      });
+
       it('должен вернуть Cache-Control: no-store', async () => {
         vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);

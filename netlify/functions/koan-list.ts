@@ -7,6 +7,8 @@ interface KoanListItem {
   number: number;
   title: string;
   slug: string;
+  category?: string;
+  tags?: string[];
 }
 
 // Koan files are bundled with the deployment and not change at runtime, so the
@@ -56,10 +58,10 @@ function getKoanList(directory: string, files: string[]) {
     files.map((file) =>
       readFile(join(directory, file), 'utf-8').then((raw) => {
         const {
-          frontmatter: { number, title, slug },
+          frontmatter: { number, title, slug, category, tags },
         } = parseFrontmatter(raw);
 
-        return { number, title, slug };
+        return { number, title, slug, category, tags };
       })
     )
   );

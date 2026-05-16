@@ -40,12 +40,12 @@ const koanGet = async (request: Request): Promise<Response> => {
 
     const raw = await readFile(join(koansDirectory, fileName), 'utf-8');
     const {
-      frontmatter: { number, title, slug: koanSlug },
+      frontmatter: { number, title, slug: koanSlug, category, tags, source },
       body,
     } = parseFrontmatter(raw);
 
     return Response.json(
-      { number, title, slug: koanSlug, body },
+      { number, title, slug: koanSlug, category, tags, source, body },
       {
         headers: { 'Cache-Control': 'public, max-age=3600, immutable' },
       }

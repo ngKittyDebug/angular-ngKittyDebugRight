@@ -32,6 +32,22 @@ describe('koan-list', () => {
         expect(body.map((item: { number: number }) => item.number)).toEqual([1, 2]);
       });
 
+      it('должен пробрасывать category и tags из frontmatter', async () => {
+        vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
+        vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
+        const koanList = await importKoanList();
+
+        const response = await koanList(GET);
+        const body = await response.json();
+
+        expect(body[0]).toMatchObject({
+          number: 1,
+          slug: '001-a',
+          category: 'javascript',
+          tags: ['arguments', 'undefined'],
+        });
+      });
+
       it('должен вернуть Cache-Control: public, max-age=300, stale-while-revalidate=3600', async () => {
         vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
         vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
