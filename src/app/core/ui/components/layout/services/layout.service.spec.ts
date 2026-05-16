@@ -6,24 +6,29 @@ describe('LayoutService', () => {
   let service: LayoutService;
 
   beforeEach(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [LayoutService],
     });
     service = TestBed.inject(LayoutService);
   });
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('должен инициализироваться', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Переключение открытия сайдбара', () => {
-    it('должен переключить флаг открытия мобильной навигации в true', () => {
+  describe('onToggleMobileNav', () => {
+    it('должен открыть мобильную навигацию', () => {
       service.onToggleMobileNav();
 
       expect(service.isMobileNavOpen()).toBe(true);
     });
 
-    it('должен переключить флаг открытия мобильной навигации в false', () => {
+    it('должен закрыть мобильную навигацию после повторного вызова', () => {
       service.onToggleMobileNav();
       service.onToggleMobileNav();
 
@@ -31,8 +36,8 @@ describe('LayoutService', () => {
     });
   });
 
-  describe('Закрытие сайдбара', () => {
-    it('должен сбросить флаг открытия мобильной навигации в false', () => {
+  describe('onCloseMobileNav', () => {
+    it('должен закрыть мобильную навигацию', () => {
       service.onToggleMobileNav();
       service.onCloseMobileNav();
 

@@ -19,11 +19,11 @@ export class LayoutComponent {
   protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
   protected isMobileNavOpen = this.layoutService.isMobileNavOpen;
 
-  protected onCloseMobileNav() {
+  public onCloseMobileNav() {
     this.layoutService.onCloseMobileNav();
   }
 
-  protected onToggleMobileNav() {
+  public onToggleMobileNav() {
     this.layoutService.onToggleMobileNav();
   }
 }
