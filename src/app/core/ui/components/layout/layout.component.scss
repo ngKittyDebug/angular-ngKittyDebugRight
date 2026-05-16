@@ -32,33 +32,58 @@
 
 .main-toolbar {
   display: none;
-  grid-column: span 12;
-  justify-self: start;
-  width: 100%;
+  flex: 0 0 auto;
   box-sizing: border-box;
 
   @media (width <= 768px) {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-block: 0.25rem 0.5rem;
-    padding-inline: 0;
+    width: 100%;
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem 0.75rem;
   }
 }
 
 .main {
   display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+
+  @media (width <= 768px) {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    place-content: unset;
+    justify-items: unset;
+  }
+}
+
+.main-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+}
+
+.main-content > * {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
 }
 
 @media (width <= 768px) {
-  .main {
-    place-content: start;
-    justify-items: stretch;
+  .main[tuiNavigationMain] {
+    display: flex !important;
+    flex-direction: column;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
-}
-
-.main > * {
-  min-width: 0;
 }
