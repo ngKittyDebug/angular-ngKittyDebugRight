@@ -11,6 +11,8 @@ describe('LayoutComponent', () => {
   let fixture: ComponentFixture<LayoutComponent>;
 
   beforeEach(async () => {
+    vi.clearAllMocks();
+
     await TestBed.configureTestingModule({
       imports: [LayoutComponent],
       providers: [{ provide: LayoutService, useValue: layoutServiceMock }],
@@ -21,13 +23,13 @@ describe('LayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('должен инициализироваться', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Инициализация компонента', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
 
-  describe('Отслеживание ширины экрана', () => {
-    it('должен вызывать метод сервиса ', () => {
-      expect(layoutServiceMock.watchMobileNavMediaQuery).toHaveBeenCalledTimes(2);
+    it('должен подписаться на отслеживание ширины экрана ', () => {
+      expect(layoutServiceMock.watchMobileNavMediaQuery).toHaveBeenCalledTimes(1);
     });
   });
 

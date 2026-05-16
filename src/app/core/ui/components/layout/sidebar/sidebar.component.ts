@@ -12,5 +12,5 @@ import type { NavigationItem } from '@core/ui/components/layout/models/navigatio
 })
 export class SidebarComponent {
   public readonly navigationItemList = input.required<NavigationItem[]>();
-  public readonly mobileOpen = input(false);
+  public readonly isMobileOpen = input(false);
 }
