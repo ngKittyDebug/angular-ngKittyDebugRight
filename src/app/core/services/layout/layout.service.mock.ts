@@ -1,6 +1,6 @@
 import type { Mocked } from 'vitest';
 import { vi } from 'vitest';
-import type { LayoutService } from '@core/ui/components/layout/services/layout.service';
+import type { LayoutService } from '@core/services/layout/layout.service';
 import type { Signal } from '@angular/core';
 
 export const layoutServiceMock = {

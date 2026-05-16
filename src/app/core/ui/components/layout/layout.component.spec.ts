@@ -2,8 +2,8 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { LayoutComponent } from './layout.component';
-import { LayoutService } from '@core/ui/components/layout/services/layout.service';
-import { layoutServiceMock } from '@core/ui/components/layout/services/layout.service.mock';
+import { LayoutService } from '@core/services/layout/layout.service';
+import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
 import { describe } from 'vitest';
 
 describe('LayoutComponent', () => {
