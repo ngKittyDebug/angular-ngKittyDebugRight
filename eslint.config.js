@@ -100,6 +100,7 @@ export default tseslint.config(
       ],
       '@typescript-eslint/no-empty-function': 'warn',
       '@typescript-eslint/no-empty-interface': 'error',
+      '@typescript-eslint/prefer-readonly': 'error',
       // common
       curly: ['error', 'all'],
       complexity: ['error', 20],
