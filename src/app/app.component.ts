@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { TuiCard } from '@taiga-ui/layout';
-import { HeaderComponent } from 'src/ui/components/layout/header/header-component/header.component';
+import { HeaderComponent } from '@core/layout/header/header.component';
 
 @Component({
   selector: 'ngKitty-app-root',
