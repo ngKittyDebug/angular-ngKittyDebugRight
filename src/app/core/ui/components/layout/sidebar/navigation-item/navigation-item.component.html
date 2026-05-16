@@ -1,4 +1,4 @@
 <button tuiAsideItem type="button" class="nav-item" [class.active]="isActive" (click)="onClick()">
-  <tui-icon [icon]="item.icon" />
+  <tui-icon [icon]="item?.icon" />
   <span>{{ item.label }}</span>
 </button>

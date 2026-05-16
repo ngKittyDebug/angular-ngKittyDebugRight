@@ -18,6 +18,13 @@ describe('NavigationItemComponent', () => {
   });
 
   it('should create', () => {
+    component.item = {
+      url: '/test',
+      icon: 'home',
+    } as any;
+
+    fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
 });
