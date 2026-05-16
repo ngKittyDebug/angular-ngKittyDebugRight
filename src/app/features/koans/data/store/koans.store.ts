@@ -1,7 +1,7 @@
 import { computed } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
-import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import type { KoanCategory, KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
 
 interface KoansState {
   randomKoan: KoanModel | null;
@@ -12,7 +12,7 @@ interface KoansState {
   loadingSelected: boolean;
   error: string | null;
   query: string;
-  activeCategory: string | null;
+  activeCategory: KoanCategory | null;
   activeTags: ReadonlySet<string>;
   readSet: ReadonlySet<string>;
   koanTheme: 'sumi' | 'washi';
@@ -113,7 +113,7 @@ export const KoansStore = signalStore(
     setQuery(query: string): void {
       patchState(store, { query });
     },
-    setCategory(activeCategory: string | null): void {
+    setCategory(activeCategory: KoanCategory | null): void {
       patchState(store, { activeCategory });
     },
     toggleTag(tag: string): void {

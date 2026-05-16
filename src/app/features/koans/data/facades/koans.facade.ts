@@ -8,6 +8,8 @@ import { resolveKoanError } from '@features/koans/data/api/koan-errors';
 import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
 import { KoansStore } from '@features/koans/data/store/koans.store';
 
+import type { KoanCategory } from '@features/koans/data/models/koan.model';
+
 @Injectable()
 export class KoansFacade {
   private readonly store = inject(KoansStore);
@@ -101,7 +103,7 @@ export class KoansFacade {
     this.store.setQuery(query);
   }
 
-  public setCategory(category: string | null): void {
+  public setCategory(category: KoanCategory | null): void {
     this.store.setCategory(category);
   }
 

@@ -8,7 +8,7 @@ import type { KoanListItemModel } from '@features/koans/data/models/koan.model';
 const koanListWithMeta: KoanListItemModel[] = [
   { number: 1, title: 'Async операция', slug: 'koan-1', category: 'javascript', tags: ['promises', 'async'] },
   { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'javascript', tags: ['closures'] },
-  { number: 3, title: 'Паттерны стора', slug: 'koan-3', category: 'patterns', tags: ['store', 'state'] },
+  { number: 3, title: 'О сигналах', slug: 'koan-3', category: 'angular', tags: ['signals', 'state'] },
 ];
 
 describe('KoansStore', () => {
@@ -36,7 +36,7 @@ describe('KoansStore', () => {
 
     it('должен фильтровать по activeCategory', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('patterns');
+      store.setCategory('angular');
 
       expect(store.filteredList()).toHaveLength(1);
       expect(store.filteredList()[0].slug).toBe('koan-3');
@@ -66,10 +66,10 @@ describe('KoansStore', () => {
 
       expect(groups).toHaveLength(2);
       const jsGroup = groups.find((g) => g.category === 'javascript');
-      const patGroup = groups.find((g) => g.category === 'patterns');
+      const ngGroup = groups.find((g) => g.category === 'angular');
 
       expect(jsGroup?.items).toHaveLength(2);
-      expect(patGroup?.items).toHaveLength(1);
+      expect(ngGroup?.items).toHaveLength(1);
     });
 
     it('должен отражать изменения filteredList', () => {

@@ -24,10 +24,31 @@ export const KoanFixture: KoanModel = {
   title: 'О пустоте аргумента',
   slug: '001-o-pustote-argumenta',
   body: KoanBodyFixture,
+  category: 'javascript',
+  tags: ['arguments', 'undefined', 'functions'],
+  source: 'Монастырь Мацуо-дэра, 1174 г.',
 };
 
 export const KoanListFixture: KoanListItemModel[] = [
-  { number: 1, title: 'О пустоте аргумента', slug: '001-o-pustote-argumenta' },
-  { number: 2, title: 'О ленивом писце', slug: '002-o-lenivom-pisce' },
-  { number: 3, title: 'О мёртвой зоне', slug: '003-o-mertvoi-zone' },
+  {
+    number: 1,
+    title: 'О пустоте аргумента',
+    slug: '001-o-pustote-argumenta',
+    category: 'javascript',
+    tags: ['arguments', 'undefined'],
+  },
+  {
+    number: 2,
+    title: 'О ленивом писце',
+    slug: '002-o-lenivom-pisce',
+    category: 'angular',
+    tags: ['change-detection', 'zone'],
+  },
+  {
+    number: 3,
+    title: 'О мёртвой зоне',
+    slug: '003-o-mertvoi-zone',
+    category: 'philosophy',
+    tags: ['void', 'silence'],
+  },
 ];
