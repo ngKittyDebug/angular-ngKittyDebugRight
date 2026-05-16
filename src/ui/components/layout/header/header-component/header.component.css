@@ -67,7 +67,7 @@
   text-align: left;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .header-box {
     flex-direction: column;
     align-items: stretch;
@@ -80,7 +80,6 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-
     width: 100%;
     padding: 16px;
   }
@@ -103,7 +102,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .header-box {
     padding: 12px;
   }
