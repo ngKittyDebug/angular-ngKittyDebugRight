@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { TuiCard } from '@taiga-ui/layout';
+import { TuiButton } from '@taiga-ui/core';
 import { HeaderComponent } from '@core/layout/header/header.component';
 
 @Component({
