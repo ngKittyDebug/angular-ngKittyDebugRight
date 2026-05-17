@@ -1,6 +1,8 @@
 import { computed } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
+import { KOAN_CATEGORIES } from '@features/koans/data/models/koan.model';
+
 import type { KoanCategory, KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
 
 interface KoansState {
@@ -33,13 +35,17 @@ const initialState: KoansState = {
   koanTheme: 'sumi',
 };
 
-export type KoanGroup = Readonly<{ category: string; items: KoanListItemModel[] }>;
+export type KoanGroupCategory = KoanCategory | 'other';
+
+export type KoanGroup = Readonly<{ category: KoanGroupCategory; items: KoanListItemModel[] }>;
+
+const GROUP_ORDER: readonly KoanGroupCategory[] = [...KOAN_CATEGORIES.map((c) => c.id), 'other'];
 
 function groupByCategory(list: KoanListItemModel[]): KoanGroup[] {
-  const map = new Map<string, KoanListItemModel[]>();
+  const map = new Map<KoanGroupCategory, KoanListItemModel[]>();
 
   for (const item of list) {
-    const key = item.category ?? '';
+    const key: KoanGroupCategory = item.category ?? 'other';
     const group = map.get(key);
 
     if (group) {
@@ -49,7 +55,10 @@ function groupByCategory(list: KoanListItemModel[]): KoanGroup[] {
     }
   }
 
-  return [...map.entries()].map(([category, items]) => ({ category, items }));
+  return GROUP_ORDER.filter((c) => map.has(c)).map((category) => ({
+    category,
+    items: map.get(category) ?? [],
+  }));
 }
 
 export const KoansStore = signalStore(
@@ -78,6 +87,30 @@ export const KoansStore = signalStore(
     return {
       filteredList,
       groupedList: computed(() => groupByCategory(filteredList())),
+
+      categoryCounts: computed<ReadonlyMap<KoanCategory, number>>(() => {
+        const out = new Map<KoanCategory, number>();
+
+        for (const k of koanList()) {
+          if (k.category) {
+            out.set(k.category, (out.get(k.category) ?? 0) + 1);
+          }
+        }
+
+        return out;
+      }),
+
+      tagCounts: computed<readonly (readonly [string, number])[]>(() => {
+        const m = new Map<string, number>();
+
+        for (const k of koanList()) {
+          for (const t of k.tags ?? []) {
+            m.set(t, (m.get(t) ?? 0) + 1);
+          }
+        }
+
+        return [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+      }),
     };
   }),
   withMethods((store) => ({
@@ -116,6 +149,9 @@ export const KoansStore = signalStore(
     setCategory(activeCategory: KoanCategory | null): void {
       patchState(store, { activeCategory });
     },
+    toggleCategory(category: KoanCategory | null): void {
+      patchState(store, { activeCategory: store.activeCategory() === category ? null : category });
+    },
     toggleTag(tag: string): void {
       const next = new Set(store.activeTags());
 
@@ -125,6 +161,9 @@ export const KoansStore = signalStore(
         next.add(tag);
       }
       patchState(store, { activeTags: next });
+    },
+    clearTags(): void {
+      patchState(store, { activeTags: new Set<string>() });
     },
     markRead(slug: string): void {
       const next = new Set(store.readSet());
@@ -137,6 +176,9 @@ export const KoansStore = signalStore(
     },
     setKoanTheme(koanTheme: 'sumi' | 'washi'): void {
       patchState(store, { koanTheme });
+    },
+    toggleKoanTheme(): void {
+      patchState(store, { koanTheme: store.koanTheme() === 'sumi' ? 'washi' : 'sumi' });
     },
   }))
 );

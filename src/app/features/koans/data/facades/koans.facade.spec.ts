@@ -153,4 +153,41 @@ describe('KoansFacade', () => {
       });
     });
   });
+
+  describe('Filters', () => {
+    it('toggleCategory должен переключать activeCategory через store', () => {
+      facade.toggleCategory('angular');
+      expect(facade.activeCategory()).toBe('angular');
+
+      facade.toggleCategory('angular');
+      expect(facade.activeCategory()).toBeNull();
+    });
+
+    it('clearTags должен сбрасывать activeTags через store', () => {
+      facade.toggleTag('a');
+      facade.toggleTag('b');
+      facade.clearTags();
+
+      expect(facade.activeTags().size).toBe(0);
+    });
+  });
+
+  describe('Theme persistence', () => {
+    it('setKoanTheme должен сохранять выбор через persistence', () => {
+      facade.setKoanTheme('washi');
+
+      expect(facade.koanTheme()).toBe('washi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenCalledWith('washi');
+    });
+
+    it('toggleKoanTheme должен переключать sumi ↔ washi и сохранять', () => {
+      facade.toggleKoanTheme();
+      expect(facade.koanTheme()).toBe('washi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenLastCalledWith('washi');
+
+      facade.toggleKoanTheme();
+      expect(facade.koanTheme()).toBe('sumi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenLastCalledWith('sumi');
+    });
+  });
 });

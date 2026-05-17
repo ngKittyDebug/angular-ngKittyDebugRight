@@ -23,11 +23,16 @@ export class KoansFacade {
   public readonly koanList = this.store.koanList;
   public readonly filteredList = this.store.filteredList;
   public readonly groupedList = this.store.groupedList;
+  public readonly categoryCounts = this.store.categoryCounts;
+  public readonly tagCounts = this.store.tagCounts;
   public readonly selectedKoan = this.store.selectedKoan;
   public readonly loadingRandom = this.store.loadingRandom;
   public readonly loadingList = this.store.loadingList;
   public readonly loadingSelected = this.store.loadingSelected;
   public readonly error = this.store.error;
+  public readonly query = this.store.query;
+  public readonly activeCategory = this.store.activeCategory;
+  public readonly activeTags = this.store.activeTags;
   public readonly readSet = this.store.readSet;
   public readonly koanTheme = this.store.koanTheme;
 
@@ -107,8 +112,16 @@ export class KoansFacade {
     this.store.setCategory(category);
   }
 
+  public toggleCategory(category: KoanCategory | null): void {
+    this.store.toggleCategory(category);
+  }
+
   public toggleTag(tag: string): void {
     this.store.toggleTag(tag);
+  }
+
+  public clearTags(): void {
+    this.store.clearTags();
   }
 
   public markRead(slug: string): void {
@@ -119,6 +132,10 @@ export class KoansFacade {
   public setKoanTheme(theme: 'sumi' | 'washi'): void {
     this.store.setKoanTheme(theme);
     this.persistence.saveTheme(theme);
+  }
+
+  public toggleKoanTheme(): void {
+    this.setKoanTheme(this.store.koanTheme() === 'sumi' ? 'washi' : 'sumi');
   }
 
   public selectRandomFromFiltered(): void {
