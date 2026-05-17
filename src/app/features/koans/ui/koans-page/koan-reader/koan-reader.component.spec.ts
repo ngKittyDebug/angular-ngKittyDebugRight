@@ -33,8 +33,9 @@ describe('KoanReaderComponent', () => {
 
         expect(element.querySelector('.segment.master')).toBeTruthy();
         expect(element.querySelector('.segment.student')).toBeTruthy();
-        expect(element.querySelector('figure.haiku')).toBeTruthy();
+        expect(element.querySelector('.segment.haiku')).toBeTruthy();
         expect(element.querySelector('.segment.question')).toBeTruthy();
+        expect(element.querySelector('.segment.question .question-mark')?.textContent).toBe('問');
         expect(element.querySelector('.segment.source')).toBeTruthy();
       });
     });
