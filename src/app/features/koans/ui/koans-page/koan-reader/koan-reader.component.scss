@@ -1,134 +1,419 @@
 :host {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
-  overflow-y: auto;
-  padding: 1.5rem;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
+  padding: 0;
   overflow: hidden;
-  clip-path: inset(50%);
   white-space: nowrap;
+  clip-path: inset(50%);
   border-width: 0;
 }
 
-.koan-reader-region {
+.kr-region {
   display: flex;
-  flex-direction: column;
   flex: 1 1 auto;
-  min-height: 0;
-  outline: none;
-}
-
-.koan-reader {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 680px;
-}
-
-.reader-status {
-  margin: 0;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  color: var(--koan-source);
-}
-
-.reader-empty {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100%;
+  min-height: 0;
+  padding: 56px 56px 96px;
+  overflow-y: auto;
+  outline: none;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--k-rule);
+    border-radius: 4px;
+  }
 }
 
-.reader-hint {
-  font-family: 'Courier New', monospace;
+.kr-status {
+  margin: 0;
+  color: var(--k-ink-mute);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
-  color: var(--koan-source);
 }
 
-::ng-deep .koan-reader {
+.kr-empty {
+  width: 100%;
+  padding: 80px 24px;
+  color: var(--k-ink-mute);
+  font-size: 14.5px;
+  font-style: italic;
+  text-align: center;
+}
+
+.kr-empty-kanji {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--k-ink-faint);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 64px;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Article ────────────────────────────────────────────── */
+
+.kr-article {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+
+  /* Vertical brushstroke in the left margin */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: -36px;
+    width: 2px;
+    background: linear-gradient(180deg, transparent 0%, var(--k-ink) 8%, var(--k-ink) 92%, transparent 100%);
+    opacity: 0.65;
+  }
+}
+
+.kr-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 6px;
+  color: var(--k-ink-faint);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kr-meta-kanji {
+  color: var(--k-vermillion);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kr-meta-dot {
+  color: var(--k-ink-faint);
+}
+
+.kr-title {
+  margin: 0 0 14px;
+  color: var(--k-ink-strong);
+  font-family: Manrope, sans-serif;
+  font-size: 38px;
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.kr-source-head {
+  margin: 0 0 36px;
+  color: var(--k-ink-mute);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.kr-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 36px;
+}
+
+.kr-tag {
+  padding: 2px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted var(--k-rule);
+  color: var(--k-ink-mute);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &::before {
+    content: '#';
+    margin-right: 1px;
+    color: var(--k-ink-faint);
+  }
+
+  &:hover {
+    color: var(--k-vermillion);
+    border-bottom-color: var(--k-vermillion);
+  }
+}
+
+/* ─── Markdown body / segments ───────────────────────────── */
+
+.kr-segments {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 20px;
+}
+
+/* ::ng-deep so we can style the markdown-generated HTML coming from
+   koanMarkedExtensions (.segment.master / .student / etc). */
+::ng-deep .kr-segments {
+  .segment {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.75;
+    letter-spacing: 0.005em;
+  }
 
   h1,
   h2,
   h3 {
     margin: 0 0 0.25rem;
+    color: var(--k-ink-strong);
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--tui-text-primary);
     letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--tui-border-normal);
-    padding-bottom: 0.5rem;
+
+    /* The reader already shows the title in `.kr-title` — markdown's h1
+       (`Коан №1 — …`) is hidden to avoid duplication. */
+    &:first-child {
+      display: none;
+    }
   }
 
-  .segment {
-    margin: 0;
-    line-height: 1.7;
-    font-family: 'Courier New', monospace;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-  }
-
-  .source {
-    color: var(--koan-source);
+  .segment.source {
+    max-width: 580px;
+    color: var(--k-ink-mute);
+    font-size: 14.5px;
     font-style: italic;
-    font-size: 0.85rem;
+    line-height: 1.7;
   }
 
-  .master {
-    color: var(--koan-master);
-    padding-left: 1rem;
-    border-left: 2px solid var(--koan-master);
+  .segment.master {
+    position: relative;
+    padding-left: 22px;
+    color: var(--k-ink);
+    font-size: 16.5px;
   }
 
-  .student {
-    color: var(--koan-student);
-    padding-left: 1rem;
-    border-left: 2px solid var(--koan-student);
+  .segment.master::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 2px;
+    background: var(--k-gold);
   }
 
-  .action {
-    color: var(--koan-action);
+  .segment.student {
+    position: relative;
+    padding-left: 22px;
+    color: var(--k-ink-soft);
+    font-size: 16.5px;
   }
 
-  figure.haiku {
-    margin: 0;
-    padding: 0.75rem 0;
-    text-align: left;
+  .segment.student::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 2px;
+    background: var(--k-vermillion);
+  }
 
-    figcaption {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
+  .segment.action {
+    position: relative;
+    padding-left: 22px;
+    color: var(--k-ink-mute);
+    font-size: 14.5px;
+    font-style: italic;
+  }
+
+  .segment.haiku {
+    margin: 12px 0;
+    padding: 18px 22px;
+    background: var(--k-paper-tint);
+    border-top: 1px solid var(--k-rule);
+    border-bottom: 1px solid var(--k-rule);
+    color: var(--k-ink);
+    font-family: 'Noto Serif JP', 'Noto Serif', serif;
+    font-size: 17px;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    line-height: 1.9;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .segment.question {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--k-rule);
+    color: var(--k-ink);
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+
+  .question-mark {
+    display: inline-flex;
+    position: relative;
+    top: -2px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+    background: var(--k-vermillion);
+    color: var(--k-paper);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    transform: rotate(-2deg);
+  }
+
+  /* Code fences — rendered by ngx-markdown as <pre><code class="language-*">.
+     Optional: drop ngx-highlightjs/PrismJS in to colorize tokens. */
+  pre {
+    position: relative;
+    margin: 8px -8px;
+    padding: 16px 22px;
+    overflow-x: auto;
+    background: var(--k-paper-tint);
+    color: var(--k-ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    letter-spacing: 0;
+    line-height: 1.65;
+    white-space: pre;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 0;
+      width: 1px;
+      background: var(--k-gold);
+      opacity: 0.5;
     }
-
-    .haiku-line {
-      display: block;
-      color: var(--koan-haiku);
-      font-style: italic;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.05em;
-      opacity: 0.9;
-    }
   }
 
-  .question {
-    color: var(--koan-question);
-    border-top: 1px solid var(--koan-question);
-    padding-top: 0.75rem;
-    margin-top: 0.25rem;
-    font-size: 0.9rem;
-    opacity: 0.9;
+  code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Bullet for action segments — kept as top-level under ::ng-deep to satisfy
+     no-descending-specificity against the (less specific) `pre::before` above. */
+  .segment.action::before {
+    content: '•';
+    position: absolute;
+    left: 6px;
+    color: var(--k-ink-faint);
+  }
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+
+.kr-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 56px;
+  padding-top: 22px;
+  border-top: 1px solid var(--k-rule);
+}
+
+.kr-foot-nav {
+  display: flex;
+  gap: 6px;
+}
+
+.kr-foot-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--k-rule);
+  color: var(--k-ink-soft);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--k-ink-soft);
+    color: var(--k-ink);
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.kr-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 0;
+  color: var(--k-ink-mute);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--k-vermillion);
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (width <= 920px) {
+  .kr-region {
+    padding: 32px 24px 64px;
+  }
+
+  .kr-title {
+    font-size: 28px;
+  }
+
+  .kr-article::before {
+    display: none;
   }
 }
