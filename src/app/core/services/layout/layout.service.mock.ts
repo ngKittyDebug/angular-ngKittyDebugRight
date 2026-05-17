@@ -1,4 +1,4 @@
-import type { Mocked } from 'vitest';
+import type { MockedObject } from 'vitest';
 import { vi } from 'vitest';
 import type { LayoutService } from '@core/services/layout/layout.service';
 import type { Signal } from '@angular/core';
@@ -8,4 +8,4 @@ export const layoutServiceMock = {
   onToggleMobileNav: vi.fn(),
   onCloseMobileNav: vi.fn(),
   watchMobileNavMediaQuery: vi.fn(),
-} as const satisfies Mocked<Partial<LayoutService>>;
+} as const satisfies MockedObject<Partial<LayoutService>>;
