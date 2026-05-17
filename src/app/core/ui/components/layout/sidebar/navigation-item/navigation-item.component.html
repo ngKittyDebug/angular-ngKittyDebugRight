@@ -1,4 +1,17 @@
-<button tuiAsideItem type="button" class="nav-item" [class.active]="isActive" (click)="onClick()">
-  <tui-icon [icon]="item?.icon" />
-  <span>{{ item.label }}</span>
+<button
+  tuiButton
+  type="button"
+  appearance="primary"
+  size="m"
+  class="nav-item"
+  [class.active]="isActive"
+  (click)="onClick()"
+>
+  <div class="button-content">
+    <tui-icon [icon]="item?.icon" />
+    <span>{{ item.label }}</span>
+  </div>
+  <div class="button-arrow">
+    <span> > </span>
+  </div>
 </button>
