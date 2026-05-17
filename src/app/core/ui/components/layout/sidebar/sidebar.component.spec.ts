@@ -1,6 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-
+import { provideRouter } from '@angular/router';
 import { SidebarComponent } from './sidebar.component';
 import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
 
@@ -11,6 +11,7 @@ describe('SidebarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SidebarComponent],
+      providers: [provideRouter([{ path: '', component: SidebarComponent }])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarComponent);
