@@ -20,6 +20,10 @@ aside[tuiNavigationAside] {
   position: static;
 }
 
+aside.sidebar[class*='expanded']::before {
+  display: none;
+}
+
 .sidebar {
   box-sizing: border-box;
   display: flex;
