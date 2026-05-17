@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
 
-import type { ComponentFixture } from '@angular/core/testing';
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
@@ -15,12 +14,12 @@ import { koanHeadingExtension, koanMarkedExtensions } from '@features/koans/koan
 import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoansPageComponent } from './koans-page.component';
 
-const RouterMock = {
-  navigate: vi.fn(),
-} as const;
+import type { ComponentFixture } from '@angular/core/testing';
 
 describe('KoansPageComponent', () => {
   let fixture: ComponentFixture<KoansPageComponent>;
+  let element: HTMLElement;
+  let navigateSpy: ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     KoanApiServiceMock.getRandomKoan.mockReturnValue(of(KoanFixture));
@@ -30,11 +29,11 @@ describe('KoansPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [KoansPageComponent],
       providers: [
+        provideRouter([]),
         KoansStore,
         KoansFacade,
         { provide: KoanApiService, useValue: KoanApiServiceMock },
         { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
-        { provide: Router, useValue: RouterMock },
         provideMarkdown({
           markedExtensions: [
             { provide: MARKED_EXTENSIONS, useValue: koanMarkedExtensions, multi: true },
@@ -44,89 +43,156 @@ describe('KoansPageComponent', () => {
       ],
     }).compileComponents();
 
+    const router = TestBed.inject(Router);
+
+    navigateSpy = vi.fn().mockResolvedValue(true);
+    router.navigate = navigateSpy as unknown as Router['navigate'];
+
     fixture = TestBed.createComponent(KoansPageComponent);
+    element = fixture.nativeElement as HTMLElement;
   });
 
   describe('Happy Path', () => {
-    describe('Страница инициализирована', () => {
-      it('должен загрузить случайный коан и список при инициализации', () => {
+    describe('Инициализация', () => {
+      it('должен загрузить список коанов и НЕ дёрнуть randomKoan (виджет убран)', () => {
         fixture.detectChanges();
 
-        expect(KoanApiServiceMock.getRandomKoan).toHaveBeenCalledTimes(1);
         expect(KoanApiServiceMock.getKoanList).toHaveBeenCalledTimes(1);
+        expect(KoanApiServiceMock.getRandomKoan).not.toHaveBeenCalled();
       });
+
+      it('должен выставить data-koan-theme на host через store.koanTheme()', () => {
+        fixture.detectChanges();
+
+        const host = fixture.debugElement.nativeElement as HTMLElement;
+
+        expect(host.getAttribute('data-koan-theme')).toBe('sumi');
+        expect(host.classList).toContain('koans-page');
+      });
+
+      it('должен выбрать коан при подаче slug через input', () => {
+        fixture.componentRef.setInput('slug', KoanFixture.slug);
+        fixture.detectChanges();
+
+        expect(KoanApiServiceMock.getKoan).toHaveBeenCalledWith(KoanFixture.slug);
+      });
+    });
+
+    describe('Header', () => {
+      beforeEach(() => fixture.detectChanges());
+
+      it('должен показать enso-логотип и кандзи 公案 в шапке', () => {
+        expect(element.querySelector('.kp-enso')).toBeTruthy();
+        expect(element.querySelector('.kp-brand-kanji')?.textContent).toBe('公案');
+      });
+
+      it('должен прокинуть значение search в store.setQuery', () => {
+        const input = element.querySelector<HTMLInputElement>('.kp-search');
+
+        if (!input) {
+          throw new Error('search input not found');
+        }
+
+        input.value = 'async';
+        input.dispatchEvent(new Event('input'));
+
+        const store = TestBed.inject(KoansFacade);
+
+        expect(store.query()).toBe('async');
+      });
+
+      it('должен переключить тему по клику на icon-кнопку и сохранить через persistence', () => {
+        const themeButton = element.querySelector<HTMLButtonElement>('.kp-icon-btn');
+
+        themeButton?.click();
+        fixture.detectChanges();
+
+        const host = fixture.debugElement.nativeElement as HTMLElement;
+
+        expect(host.getAttribute('data-koan-theme')).toBe('washi');
+        expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenCalledWith('washi');
+      });
+
+      it('кнопка «Дай знак» должна навигировать на случайный slug из filteredList', () => {
+        const randomButton = element.querySelector<HTMLButtonElement>('.kp-sign-btn');
+
+        randomButton?.click();
+
+        expect(navigateSpy).toHaveBeenCalledTimes(1);
+        const [path, slug] = navigateSpy.mock.calls[0][0] as [string, string];
+
+        expect(path).toBe('/koans');
+        expect(KoanListFixture.map((k) => k.slug)).toContain(slug);
+      });
+    });
+
+    describe('Sidebar interaction', () => {
+      beforeEach(() => fixture.detectChanges());
 
       it('должен навигировать к коану при клике по пункту списка', () => {
-        fixture.detectChanges();
-
-        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.kl-item');
+        const firstItem = element.querySelector<HTMLButtonElement>('.kl-item');
 
         firstItem?.click();
 
-        expect(RouterMock.navigate).toHaveBeenCalledTimes(1);
-        expect(RouterMock.navigate).toHaveBeenNthCalledWith(1, ['/koans', KoanListFixture[0].slug]);
+        expect(navigateSpy).toHaveBeenCalledWith(['/koans', KoanListFixture[0].slug]);
       });
 
-      it('должен выбрать коан при установке slug через input', () => {
-        KoanApiServiceMock.getKoan.mockReturnValue(of(KoanFixture));
-        fixture.componentRef.setInput('slug', KoanFixture.slug);
-        fixture.detectChanges();
-
-        expect(KoanApiServiceMock.getKoan).toHaveBeenCalledTimes(1);
-        expect(KoanApiServiceMock.getKoan).toHaveBeenNthCalledWith(1, KoanFixture.slug);
-      });
-
-      it('должен запросить новый случайный коан при клике «Следующий коан»', () => {
-        fixture.detectChanges();
-
-        const nextButton = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
-          '.koan-widget-footer button'
-        );
-
-        nextButton?.click();
-
-        expect(KoanApiServiceMock.getRandomKoan).toHaveBeenCalledTimes(2);
-      });
-
-      it('должен свернуть список при выборе коана из списка', () => {
-        fixture.detectChanges();
-
-        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.kl-item');
+      it('должен свернуть sidebar при выборе коана', () => {
+        const firstItem = element.querySelector<HTMLButtonElement>('.kl-item');
 
         firstItem?.click();
         fixture.detectChanges();
 
-        const nav = (fixture.nativeElement as HTMLElement).querySelector('#koans-nav');
+        const nav = element.querySelector('#koans-nav');
 
-        expect(nav?.classList).toContain('koans-list--collapsed');
+        expect(nav?.classList).toContain('kp-sidebar--collapsed');
       });
+    });
+  });
 
-      it('должен свернуть список при установке slug через input', () => {
+  describe('Keyboard navigation', () => {
+    it('Arrow Right должна навигировать к следующему коану из filteredList', () => {
+      fixture.componentRef.setInput('slug', KoanListFixture[0].slug);
+      fixture.detectChanges();
+
+      const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+
+      window.dispatchEvent(event);
+
+      expect(navigateSpy).toHaveBeenCalledWith(['/koans', KoanListFixture[1].slug]);
+    });
+
+    it('должна игнорировать клавиши при фокусе в INPUT', () => {
+      fixture.detectChanges();
+
+      const input = element.querySelector<HTMLInputElement>('.kp-search');
+
+      input?.focus();
+      const event = new KeyboardEvent('keydown', { key: 'r' });
+
+      input?.dispatchEvent(event);
+
+      expect(navigateSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Auto-mark read', () => {
+    it('должен пометить выбранный коан как прочитанный через 2.5s dwell', () => {
+      vi.useFakeTimers();
+      try {
+        fixture.detectChanges();
         fixture.componentRef.setInput('slug', KoanFixture.slug);
         fixture.detectChanges();
 
-        const nav = (fixture.nativeElement as HTMLElement).querySelector('#koans-nav');
+        vi.advanceTimersByTime(2500);
 
-        expect(nav?.classList).toContain('koans-list--collapsed');
-      });
+        const store = TestBed.inject(KoansFacade);
 
-      it('должен переключить видимость списка по кнопке-тогглу', () => {
-        fixture.detectChanges();
-
-        const toggle = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.list-toggle');
-
-        toggle?.click();
-        fixture.detectChanges();
-
-        const nav = (fixture.nativeElement as HTMLElement).querySelector('#koans-nav');
-
-        expect(nav?.classList).toContain('koans-list--collapsed');
-
-        toggle?.click();
-        fixture.detectChanges();
-
-        expect(nav?.classList).not.toContain('koans-list--collapsed');
-      });
+        expect(store.readSet().has(KoanFixture.slug)).toBe(true);
+        expect(KoansPersistenceServiceMock.saveReadSet).toHaveBeenCalled();
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });

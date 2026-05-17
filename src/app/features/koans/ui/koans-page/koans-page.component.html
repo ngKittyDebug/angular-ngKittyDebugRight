@@ -1,30 +1,137 @@
 <a href="#koans-main" class="skip-link">Перейти к тексту коана</a>
-<div class="koans-page">
-  <h1 class="koans-title">Коаны</h1>
-  @if (store.error(); as error) {
-    <p class="koans-error" role="alert">{{ error }}</p>
-  }
-  <ngKitty-koan-widget [koan]="store.randomKoan()" [loading]="store.loadingRandom()" (next)="onNextKoan()" />
-  <div class="koans-content">
-    <button class="list-toggle" [attr.aria-expanded]="listOpen()" aria-controls="koans-nav" (click)="onToggleList()">
-      @if (listOpen()) {
-        Скрыть список
+
+<header class="kp-header">
+  <a routerLink="/koans" class="kp-brand" aria-label="К списку коанов">
+    <svg class="kp-enso" viewBox="0 0 40 40" aria-hidden="true">
+      <defs>
+        <linearGradient id="kp-enso-stroke" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--k-ink-strong)" stop-opacity="0.95" />
+          <stop offset="60%" stop-color="var(--k-ink)" stop-opacity="0.9" />
+          <stop offset="92%" stop-color="var(--k-ink)" stop-opacity="0.5" />
+          <stop offset="100%" stop-color="var(--k-ink)" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M 33 14 C 38 24, 30 35, 19 34 C 8 33, 4 22, 9 13 C 14 4, 26 4, 31 11"
+        stroke="url(#kp-enso-stroke)"
+        stroke-width="2.6"
+        stroke-linecap="round"
+        fill="none"
+      />
+      <circle cx="34" cy="12" r="1.6" fill="var(--k-vermillion)" />
+    </svg>
+    <span class="kp-brand-stack">
+      <span class="kp-brand-kanji">公案</span>
+      <span class="kp-brand-name">Коаны</span>
+    </span>
+  </a>
+
+  <div class="kp-search-wrap">
+    <svg
+      class="kp-search-icon"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.4"
+      aria-hidden="true"
+    >
+      <circle cx="7" cy="7" r="4.5" />
+      <path d="M10.5 10.5l3 3" stroke-linecap="round" />
+    </svg>
+    <input
+      class="kp-search"
+      type="search"
+      placeholder="искать по тексту, тегу, источнику…"
+      [value]="store.query()"
+      (input)="onQueryInput($event)"
+      aria-label="Поиск по коанам"
+    />
+    @if (store.query()) {
+      <button class="kp-search-clear" type="button" (click)="onClearQuery()" aria-label="Очистить">✕</button>
+    }
+  </div>
+
+  <div class="kp-header-actions">
+    <button
+      class="kp-icon-btn"
+      type="button"
+      (click)="onToggleTheme()"
+      [attr.aria-label]="store.koanTheme() === 'sumi' ? 'Светлая тема' : 'Тёмная тема'"
+      [title]="store.koanTheme() === 'sumi' ? 'Тема: sumi (тёмная)' : 'Тема: washi (светлая)'"
+    >
+      @if (store.koanTheme() === 'sumi') {
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <circle cx="8" cy="8" r="3" />
+          <path
+            d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6L13 13M3 13l1.4-1.4M11.6 4.4L13 3"
+            stroke-linecap="round"
+          />
+        </svg>
       } @else {
-        Список коанов
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M13 9.5A5.5 5.5 0 1 1 6.5 3a4.5 4.5 0 0 0 6.5 6.5z" stroke-linejoin="round" />
+        </svg>
       }
     </button>
-    <nav id="koans-nav" class="koans-list" [class.koans-list--collapsed]="!listOpen()" aria-label="Список коанов">
-      <ngKitty-koan-list
-        [groups]="store.groupedList()"
-        [loading]="store.loadingList()"
-        [selectedSlug]="store.selectedKoan()?.slug ?? null"
-        [totalCount]="store.koanList().length"
-        [filteredCount]="store.filteredList().length"
-        (koanSelect)="onKoanSelect($event)"
-      />
-    </nav>
-    <main id="koans-main" class="koans-reader" tabindex="-1">
-      <ngKitty-koan-reader [koan]="store.selectedKoan()" [loading]="store.loadingSelected()" />
-    </main>
+    <button class="kp-sign-btn" type="button" (click)="onRandom()" title="Случайный коан (R)">
+      <span class="kp-kanji">兆</span>
+      Дай знак
+    </button>
   </div>
+</header>
+
+@if (store.error(); as error) {
+  <p class="kp-error" role="alert">{{ error }}</p>
+}
+
+<div class="kp-body">
+  <button
+    class="kp-list-toggle"
+    type="button"
+    [attr.aria-expanded]="listOpen()"
+    aria-controls="koans-nav"
+    (click)="onToggleList()"
+  >
+    @if (listOpen()) {
+      Скрыть список
+    } @else {
+      Список коанов
+    }
+  </button>
+
+  <nav id="koans-nav" class="kp-sidebar" [class.kp-sidebar--collapsed]="!listOpen()" aria-label="Список коанов">
+    <ngKitty-koan-list
+      [groups]="store.groupedList()"
+      [categoryCounts]="store.categoryCounts()"
+      [activeCategory]="store.activeCategory()"
+      [tagCounts]="store.tagCounts()"
+      [activeTags]="store.activeTags()"
+      [readSet]="store.readSet()"
+      [selectedSlug]="store.selectedKoan()?.slug ?? null"
+      [totalCount]="store.koanList().length"
+      [filteredCount]="store.filteredList().length"
+      [loading]="store.loadingList()"
+      [query]="store.query()"
+      (koanSelect)="onKoanSelect($event)"
+      (categoryToggle)="onCategoryToggle($event)"
+      (tagToggle)="onTagToggle($event)"
+    />
+  </nav>
+
+  <main id="koans-main" class="kp-reader-wrap" tabindex="-1">
+    <ngKitty-koan-reader
+      [koan]="store.selectedKoan()"
+      [loading]="store.loadingSelected()"
+      [hasPrev]="hasPrev()"
+      [hasNext]="hasNext()"
+      (tagClick)="onTagToggle($event)"
+      (prev)="onPrev()"
+      (next)="onNext()"
+      (share)="onShare()"
+    />
+  </main>
 </div>
+
+@if (toastMessage(); as toast) {
+  <div class="kp-toast" role="status" aria-live="polite"><span class="kp-kanji">写</span>{{ toast }}</div>
+}
