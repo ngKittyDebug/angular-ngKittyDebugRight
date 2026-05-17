@@ -5,6 +5,11 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: [],
+    children: [
+      {
+        path: '**',
+        loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),
+      },
+    ],
   },
 ];
