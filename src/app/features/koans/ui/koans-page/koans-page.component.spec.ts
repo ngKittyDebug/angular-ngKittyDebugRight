@@ -59,7 +59,7 @@ describe('KoansPageComponent', () => {
       it('должен навигировать к коану при клике по пункту списка', () => {
         fixture.detectChanges();
 
-        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.koan-list-button');
+        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.kl-item');
 
         firstItem?.click();
 
@@ -91,7 +91,7 @@ describe('KoansPageComponent', () => {
       it('должен свернуть список при выборе коана из списка', () => {
         fixture.detectChanges();
 
-        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.koan-list-button');
+        const firstItem = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.kl-item');
 
         firstItem?.click();
         fixture.detectChanges();

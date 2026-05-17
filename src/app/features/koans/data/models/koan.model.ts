@@ -29,3 +29,10 @@ export const KOAN_CATEGORIES: readonly KoanCategoryMeta[] = [
   { id: 'angular', label: 'Angular', kanji: '骨' },
   { id: 'philosophy', label: 'Философия', kanji: '道' },
 ] as const;
+
+export type KoanGroupCategory = KoanCategory | 'other';
+
+export interface KoanGroup {
+  readonly category: KoanGroupCategory;
+  readonly items: readonly KoanListItemModel[];
+}

@@ -3,7 +3,13 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 
 import { KOAN_CATEGORIES } from '@features/koans/data/models/koan.model';
 
-import type { KoanCategory, KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import type {
+  KoanCategory,
+  KoanGroup,
+  KoanGroupCategory,
+  KoanListItemModel,
+  KoanModel,
+} from '@features/koans/data/models/koan.model';
 
 interface KoansState {
   randomKoan: KoanModel | null;
@@ -34,10 +40,6 @@ const initialState: KoansState = {
   readSet: new Set(),
   koanTheme: 'sumi',
 };
-
-export type KoanGroupCategory = KoanCategory | 'other';
-
-export type KoanGroup = Readonly<{ category: KoanGroupCategory; items: KoanListItemModel[] }>;
 
 const GROUP_ORDER: readonly KoanGroupCategory[] = [...KOAN_CATEGORIES.map((c) => c.id), 'other'];
 

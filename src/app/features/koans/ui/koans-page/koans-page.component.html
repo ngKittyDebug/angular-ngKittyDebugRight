@@ -15,9 +15,11 @@
     </button>
     <nav id="koans-nav" class="koans-list" [class.koans-list--collapsed]="!listOpen()" aria-label="Список коанов">
       <ngKitty-koan-list
-        [koanList]="store.koanList()"
+        [groups]="store.groupedList()"
         [loading]="store.loadingList()"
         [selectedSlug]="store.selectedKoan()?.slug ?? null"
+        [totalCount]="store.koanList().length"
+        [filteredCount]="store.filteredList().length"
         (koanSelect)="onKoanSelect($event)"
       />
     </nav>

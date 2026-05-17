@@ -1,86 +1,202 @@
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
-import type { ComponentFixture } from '@angular/core/testing';
-import { KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoanListComponent } from './koan-list.component';
+
+import type { ComponentFixture } from '@angular/core/testing';
+import type { KoanCategory, KoanGroup } from '@features/koans/data/models/koan.model';
+
+const GROUPS: readonly KoanGroup[] = [
+  {
+    category: 'javascript',
+    items: [
+      { number: 1, title: 'Async операция', slug: 'koan-1', category: 'javascript' },
+      { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'javascript' },
+    ],
+  },
+  {
+    category: 'angular',
+    items: [{ number: 3, title: 'О сигналах', slug: 'koan-3', category: 'angular' }],
+  },
+];
+
+const CATEGORY_COUNTS: ReadonlyMap<KoanCategory, number> = new Map([
+  ['javascript', 2],
+  ['angular', 1],
+]);
+
+const TAG_COUNTS: readonly (readonly [string, number])[] = [
+  ['promises', 3],
+  ['signals', 2],
+  ['closures', 1],
+];
 
 describe('KoanListComponent', () => {
   let component: KoanListComponent;
   let fixture: ComponentFixture<KoanListComponent>;
+  let element: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [KoanListComponent],
-    }).compileComponents();
-
+    await TestBed.configureTestingModule({ imports: [KoanListComponent] }).compileComponents();
     fixture = TestBed.createComponent(KoanListComponent);
     component = fixture.componentInstance;
+    element = fixture.nativeElement as HTMLElement;
   });
 
   describe('Happy Path', () => {
-    describe('Список коанов получен', () => {
-      it('должен отобразить все пункты списка', () => {
-        fixture.componentRef.setInput('koanList', KoanListFixture);
-        fixture.detectChanges();
+    beforeEach(() => {
+      fixture.componentRef.setInput('groups', GROUPS);
+      fixture.componentRef.setInput('categoryCounts', CATEGORY_COUNTS);
+      fixture.componentRef.setInput('tagCounts', TAG_COUNTS);
+      fixture.componentRef.setInput('totalCount', 3);
+      fixture.componentRef.setInput('filteredCount', 3);
+      fixture.detectChanges();
+    });
 
-        const buttons = (fixture.nativeElement as HTMLElement).querySelectorAll('.koan-list-button');
+    it('должен отрисовать все koan items из всех групп', () => {
+      expect(element.querySelectorAll('.kl-item')).toHaveLength(3);
+    });
 
-        expect(buttons.length).toBe(KoanListFixture.length);
-      });
+    it('должен показать заголовок группы с кандзи и подписью', () => {
+      const headings = [...element.querySelectorAll('.kl-group-head')].map((h) => h.textContent ?? '');
 
-      it('должен эмитить slug при клике по пункту', () => {
-        const selectSpy = vi.fn();
+      expect(headings.some((t) => t.includes('言') && t.includes('JavaScript'))).toBe(true);
+      expect(headings.some((t) => t.includes('骨') && t.includes('Angular'))).toBe(true);
+    });
 
-        component.koanSelect.subscribe(selectSpy);
-        fixture.componentRef.setInput('koanList', KoanListFixture);
-        fixture.detectChanges();
+    it('должен отрендерить категории, у которых есть count > 0', () => {
+      const labels = [...element.querySelectorAll('.kl-cat-name')].map((s) => s.textContent?.trim());
 
-        const firstButton = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
-          '.koan-list-button'
-        );
+      expect(labels).toContain('JavaScript');
+      expect(labels).toContain('Angular');
+      expect(labels).toContain('Все');
+      expect(labels).not.toContain('Философия');
+    });
 
-        firstButton?.click();
+    it('должен отрендерить теги с count', () => {
+      const tags = [...element.querySelectorAll('.kl-tag:not(.kl-tag-more)')].map((b) => b.textContent?.trim());
 
-        expect(selectSpy).toHaveBeenCalledTimes(1);
-        expect(selectSpy).toHaveBeenNthCalledWith(1, KoanListFixture[0].slug);
-      });
+      expect(tags).toEqual(['promises', 'signals', 'closures']);
+    });
 
-      it('должен пометить активный пункт через aria-current', () => {
-        fixture.componentRef.setInput('koanList', KoanListFixture);
-        fixture.componentRef.setInput('selectedSlug', KoanListFixture[1].slug);
-        fixture.detectChanges();
+    it('должен пометить активную категорию через is-on', () => {
+      fixture.componentRef.setInput('activeCategory', 'angular');
+      fixture.detectChanges();
 
-        const activeButton = (fixture.nativeElement as HTMLElement).querySelector(
-          '.koan-list-button[aria-current="true"]'
-        );
+      const active = element.querySelector<HTMLButtonElement>('.kl-cat-btn.is-on');
 
-        expect(activeButton?.textContent).toContain(KoanListFixture[1].title);
-      });
+      expect(active?.textContent).toContain('Angular');
+    });
+
+    it('должен пометить активные теги через is-on', () => {
+      fixture.componentRef.setInput('activeTags', new Set(['promises']));
+      fixture.detectChanges();
+
+      const activeTag = element.querySelector<HTMLButtonElement>('.kl-tag.is-on');
+
+      expect(activeTag?.textContent?.trim()).toBe('promises');
+    });
+
+    it('должен пометить выбранный slug через is-active и aria-current', () => {
+      fixture.componentRef.setInput('selectedSlug', 'koan-2');
+      fixture.detectChanges();
+
+      const active = element.querySelector<HTMLButtonElement>('.kl-item.is-active[aria-current="true"]');
+
+      expect(active?.querySelector('.kl-item-title')?.textContent).toContain('О замыканиях');
+    });
+
+    it('должен пометить прочитанные slug через is-read и aria-label на печати', () => {
+      fixture.componentRef.setInput('readSet', new Set(['koan-1']));
+      fixture.detectChanges();
+
+      const read = element.querySelector<HTMLButtonElement>('.kl-item.is-read');
+
+      expect(read?.querySelector('.kl-item-seal')?.getAttribute('aria-label')).toBe('прочитано');
+    });
+
+    it('должен эмитить koanSelect при клике', () => {
+      const spy = vi.fn();
+
+      component.koanSelect.subscribe(spy);
+
+      element.querySelector<HTMLButtonElement>('.kl-item')?.click();
+
+      expect(spy).toHaveBeenCalledWith('koan-1');
+    });
+
+    it('должен эмитить categoryToggle при клике по категории', () => {
+      const spy = vi.fn();
+
+      component.categoryToggle.subscribe(spy);
+
+      element.querySelector<HTMLButtonElement>('.kl-cat-btn')?.click();
+
+      expect(spy).toHaveBeenCalledWith('javascript');
+    });
+
+    it('должен эмитить categoryToggle с null при клике по «Все»', () => {
+      const spy = vi.fn();
+
+      component.categoryToggle.subscribe(spy);
+
+      const allButton = [...element.querySelectorAll<HTMLButtonElement>('.kl-cat-btn')].at(-1);
+
+      allButton?.click();
+
+      expect(spy).toHaveBeenCalledWith(null);
+    });
+
+    it('должен эмитить tagToggle при клике по чипу', () => {
+      const spy = vi.fn();
+
+      component.tagToggle.subscribe(spy);
+
+      element.querySelector<HTMLButtonElement>('.kl-tag')?.click();
+
+      expect(spy).toHaveBeenCalledWith('promises');
+    });
+
+    it('должен подставлять номер с padStart до 2 знаков', () => {
+      const first = element.querySelector('.kl-item-num');
+
+      expect(first?.textContent).toBe('№01');
     });
   });
 
   describe('Edge Cases', () => {
-    describe('Список пуст', () => {
-      it('должен показать сообщение об отсутствии коанов', () => {
-        fixture.componentRef.setInput('koanList', []);
-        fixture.detectChanges();
+    it('должен показать индикатор загрузки и скрыть список', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
 
-        const status = (fixture.nativeElement as HTMLElement).querySelector('.koan-list-status');
-
-        expect(status?.textContent).toContain('Свитки не найдены');
-      });
+      expect(element.querySelector('.kl-status')?.textContent).toContain('Свитки разворачиваются');
+      expect(element.querySelector('.kl-list')).toBeNull();
     });
 
-    describe('Идёт загрузка', () => {
-      it('должен показать индикатор загрузки', () => {
-        fixture.componentRef.setInput('loading', true);
-        fixture.detectChanges();
+    it('должен показать пустое сообщение с query в кавычках, если filteredCount=0', () => {
+      fixture.componentRef.setInput('groups', []);
+      fixture.componentRef.setInput('categoryCounts', new Map());
+      fixture.componentRef.setInput('tagCounts', []);
+      fixture.componentRef.setInput('totalCount', 0);
+      fixture.componentRef.setInput('filteredCount', 0);
+      fixture.componentRef.setInput('query', 'xyz');
+      fixture.detectChanges();
 
-        const status = (fixture.nativeElement as HTMLElement).querySelector('.koan-list-status');
+      const empty = element.querySelector('.kl-empty');
 
-        expect(status?.textContent).toContain('Свитки разворачиваются');
-      });
+      expect(empty?.textContent).toContain('Ничего не найдено');
+      expect(empty?.textContent).toContain('«xyz»');
+    });
+
+    it('должен показать кнопку +N если тегов больше VISIBLE_TAG_COUNT', () => {
+      const manyTags: (readonly [string, number])[] = Array.from({ length: 25 }, (_, i) => [`t${i}`, 25 - i] as const);
+
+      fixture.componentRef.setInput('tagCounts', manyTags);
+      fixture.detectChanges();
+
+      const moreButton = element.querySelector('.kl-tag-more');
+
+      expect(moreButton?.textContent).toContain('+7');
     });
   });
 });
