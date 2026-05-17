@@ -1,18 +1,16 @@
 :host {
   position: relative;
-  margin: 0;
-  padding: clamp(1rem, 2vw, 2rem);
+  height: 100%;
+  padding: 1rem;
   display: grid;
-  grid-template-columns: minmax(18rem, 1.05fr) minmax(20rem, 0.95fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
-  min-height: 100vh;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
   align-items: stretch;
   text-transform: uppercase;
-  height: 100vh;
+  box-sizing: border-box;
 
   @media (width <= 900px) {
     grid-template-columns: 1fr;
-    padding: 0;
   }
 }
 
@@ -32,13 +30,12 @@
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.1;
-    width: 100%;
   }
 
   img {
-    width: min(95%, 34rem);
-    max-height: 85%;
+    width: 55%;
     height: auto;
+    max-height: 100%;
     position: relative;
     z-index: 1;
     object-fit: contain;
@@ -55,7 +52,6 @@
   flex-direction: column;
   justify-content: center;
   gap: 1.25rem;
-  width: 100%;
   padding: 1rem;
   background-color: transparent;
 
@@ -69,7 +65,6 @@
       background-repeat: no-repeat;
       background-size: cover;
       opacity: 0.06;
-      width: 100%;
     }
   }
 
@@ -79,7 +74,7 @@
 }
 
 .error-code {
-  font-size: clamp(1rem, 20vw, 10rem);
+  font-size: clamp(1rem, 15vw, 10rem);
   font-weight: 900;
   background: var(--bg-primary-btn);
   padding: 0;
@@ -93,20 +88,23 @@
 
 .error-title {
   margin: 0;
-  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-size: clamp(1.4rem, 2vw, 2rem);
   text-align: center;
   letter-spacing: 0.2em;
   text-wrap: balance;
 }
 
 .wisdom-block {
-  width: 100%;
   border: 1px solid var(--tui-border-normal);
   padding: 1rem;
   background-color: rgb(255 255 255 / 3%);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  @media (width <= 400px) {
+    display: none;
+  }
 }
 
 .wisdom-label,
@@ -117,10 +115,6 @@
 
 .wisdom-label {
   opacity: 0.8;
-
-  @media (width <= 350px) {
-    font-size: 0.75rem;
-  }
 }
 
 .wisdom-quote {
@@ -135,6 +129,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
+
+  @media (width <= 560px) {
+    display: none;
+  }
 }
 
 .stats-item {
@@ -144,10 +142,6 @@
 
 .stats-divider {
   opacity: 0.7;
-
-  @media (width <= 560px) {
-    display: none;
-  }
 }
 
 @keyframes puls {
@@ -215,8 +209,8 @@
 
 .charge {
   position: absolute;
-  right: 3rem;
-  top: 3rem;
+  right: 2rem;
+  top: 2rem;
   color: var(--critical);
   inline-size: 2rem;
   block-size: 2rem;
