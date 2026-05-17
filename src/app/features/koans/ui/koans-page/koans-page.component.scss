@@ -125,6 +125,11 @@
   &:focus {
     border-bottom-color: var(--k-ink);
   }
+
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    appearance: none;
+  }
 }
 
 .kp-search-icon {
