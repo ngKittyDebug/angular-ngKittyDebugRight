@@ -138,13 +138,16 @@ export class KoansFacade {
     this.setKoanTheme(this.store.koanTheme() === 'sumi' ? 'washi' : 'sumi');
   }
 
-  public selectRandomFromFiltered(): void {
-    const pool = this.store.filteredList().filter((k) => k.slug !== this.store.selectedKoan()?.slug);
+  public pickRandomFromFiltered(): string | null {
+    const current = this.store.selectedKoan()?.slug ?? null;
+    const list = this.store.filteredList();
+    const others = list.filter((k) => k.slug !== current);
+    const pool = others.length ? others : list;
 
     if (!pool.length) {
-      return;
+      return null;
     }
 
-    this.selectKoan$.next(pool[Math.floor(Math.random() * pool.length)].slug);
+    return pool[Math.floor(Math.random() * pool.length)].slug;
   }
 }

@@ -121,18 +121,11 @@ export class KoansPageComponent implements OnInit {
   }
 
   protected onRandom(): void {
-    const current = this.store.selectedKoan()?.slug ?? null;
-    const list = this.store.filteredList();
-    const others = list.filter((k) => k.slug !== current);
-    const pool = others.length ? others : list;
+    const next = this.store.pickRandomFromFiltered();
 
-    if (!pool.length) {
-      return;
+    if (next) {
+      void this.router.navigate(['/koans', next]);
     }
-
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-
-    void this.router.navigate(['/koans', pick.slug]);
   }
 
   protected onPrev(): void {

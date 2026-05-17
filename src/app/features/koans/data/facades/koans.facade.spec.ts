@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, Subject, throwError } from 'rxjs';
+import { vi } from 'vitest';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
@@ -169,6 +170,40 @@ describe('KoansFacade', () => {
       facade.clearTags();
 
       expect(facade.activeTags().size).toBe(0);
+    });
+  });
+
+  describe('pickRandomFromFiltered', () => {
+    beforeEach(() => {
+      KoanApiServiceMock.getKoanList.mockReturnValue(of(KoanListFixture));
+      facade.loadKoanList();
+    });
+
+    it('должен вернуть slug случайного коана из отфильтрованных', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+
+      const result = facade.pickRandomFromFiltered();
+
+      expect(result).toBe(KoanListFixture[0].slug);
+    });
+
+    it('должен исключить текущий коан и вернуть другого', () => {
+      KoanApiServiceMock.getKoan.mockReturnValue(of({ ...KoanFixture, slug: KoanListFixture[0].slug }));
+      facade.selectKoan(KoanListFixture[0].slug);
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+
+      const result = facade.pickRandomFromFiltered();
+
+      expect(result).toBe(KoanListFixture[1].slug);
+    });
+
+    it('должен вернуть null, если отфильтрованный список пуст', () => {
+      KoanApiServiceMock.getKoanList.mockReturnValue(of([]));
+      facade.loadKoanList();
+
+      const result = facade.pickRandomFromFiltered();
+
+      expect(result).toBeNull();
     });
   });
 
