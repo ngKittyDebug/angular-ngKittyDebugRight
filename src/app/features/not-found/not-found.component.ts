@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 
 @Component({
@@ -8,4 +9,10 @@ import { TuiButton, TuiIcon } from '@taiga-ui/core';
   styleUrl: './not-found.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundComponent {}
+export class NotFoundComponent {
+  private readonly router = inject(Router);
+
+  protected onClick() {
+    this.router.navigate(['/']);
+  }
+}
