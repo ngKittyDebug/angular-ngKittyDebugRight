@@ -54,7 +54,7 @@ describe('KoansPageComponent', () => {
 
   describe('Happy Path', () => {
     describe('Инициализация', () => {
-      it('должен загрузить список коанов и НЕ дёрнуть randomKoan (виджет убран)', () => {
+      it('должен загрузить список коанов и НЕ дёрнуть randomKoan на init', () => {
         fixture.detectChanges();
 
         expect(KoanApiServiceMock.getKoanList).toHaveBeenCalledTimes(1);
