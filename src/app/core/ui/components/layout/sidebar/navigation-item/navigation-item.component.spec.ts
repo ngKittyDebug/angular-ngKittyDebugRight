@@ -14,10 +14,7 @@ describe('NavigationItemComponent', () => {
 
     fixture = TestBed.createComponent(NavigationItemComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
     component.item = {
       url: '/test',
       icon: 'home',
@@ -25,7 +22,9 @@ describe('NavigationItemComponent', () => {
     } as any;
 
     fixture.detectChanges();
+  });
 
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
