@@ -300,7 +300,7 @@ button[tuiButton][data-appearance='flat']:active {
   --k-paper: #efe5cf;
   --k-paper-2: #e7dcc1;
   --k-paper-deep: #ddd0b0;
-  --k-paper-tint: #e9dec5;
+  --k-paper-tint: #f5edda;
   --k-ink: #1a1715;
   --k-ink-strong: #0c0a08;
   --k-ink-soft: #50473d;
@@ -313,7 +313,7 @@ button[tuiButton][data-appearance='flat']:active {
   --k-vermillion: #b03a2a;
   --k-vermillion-soft: #c25140;
   --k-jade: #5f7a5e;
-  --k-noise-opacity: 0.42;
+  --k-noise-opacity: 0.18;
   --k-noise-mix: multiply;
 }
 
