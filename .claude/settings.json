@@ -6,6 +6,8 @@
       "Bash(pnpm prettier *)",
       "Bash(npx stylelint *)",
       "Bash(pnpm build *)",
+      "Bash(pnpm lint:fix)",
+      "Bash(pnpm format:fix)",
       "Bash(npx tsc *)",
       "Bash(npx eslint *)",
       "Bash(npx vitest *)",
