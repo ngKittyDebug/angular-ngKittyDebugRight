@@ -1,0 +1,254 @@
+:root,
+[tuiTheme='light'] {
+  --tui-background-base: #14100f;
+  --tui-background-base-alt: #1b1513;
+  --tui-background-elevation-1: #000;
+  --tui-background-elevation-2: #000;
+  --tui-text-primary: #f4e7c8;
+  --tui-border-normal: #8b6a32;
+  --tui-status-positive-pale: rgb(96 255 180 / 16%);
+  --tui-status-negative-pale: rgb(255 82 82 / 16%);
+  --tui-status-warning-pale: rgb(255 190 92 / 16%);
+  --accent-primary: #d6a85f;
+  --accent-primary-soft: #e8c98f;
+  --accent-secondary: #ffd98f;
+  --accent-soft: #fff0c7;
+  --critical: #ff5f5f;
+  --warning: #f0b84d;
+  --fire: #ff962e;
+  --water: #7adfff;
+  --earth: #c8ff78;
+  --air: #fff5da;
+  --primary-shadow: 0 0 10px rgb(214 168 95 / 35%), 0 0 25px rgb(214 168 95 / 12%);
+  --outline-hover-bg: rgb(255 214 145 / 6%);
+  --outline-hover-shadow: 0 0 10px rgb(255 214 145 / 12%);
+  --bg-secondary-btn: repeating-linear-gradient(
+    180deg,
+    rgb(40 40 40 / 90%) 0,
+    rgb(55 55 55 / 90%) 2px,
+    rgb(70 70 70 / 90%) 3px
+  );
+  --bg-secondary-hover-btn: repeating-linear-gradient(
+    180deg,
+    rgb(25 25 25 / 85%) 0,
+    rgb(40 40 40 / 85%) 2px,
+    rgb(55 55 55 / 85%) 3px
+  );
+  --bg-primary-btn: repeating-linear-gradient(
+    180deg,
+    rgb(80 55 15 / 92%) 0,
+    rgb(80 55 15 / 92%) 1px,
+    rgb(100 70 20 / 92%) 1px,
+    rgb(100 70 20 / 92%) 2px,
+    rgb(120 85 25 / 92%) 2px,
+    rgb(120 85 25 / 92%) 3px
+  );
+  --bg-primary-hover-btn: repeating-linear-gradient(
+    180deg,
+    rgb(60 40 10 / 85%) 0,
+    rgb(60 40 10 / 85%) 1px,
+    rgb(78 52 14 / 85%) 1px,
+    rgb(78 52 14 / 85%) 2px,
+    rgb(96 65 18 / 85%) 2px,
+    rgb(96 65 18 / 85%) 3px
+  );
+  --secondary-border: #c8912a;
+  --secondary-text: var(--accent-secondary);
+  --secondary-text-hover: var(--accent-soft);
+  --secondary-shadow: 0 0 10px rgb(214 168 95 / 25%);
+  --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-oxanium: 'Oxanium', sans-serif;
+}
+
+:root,
+[tuiTheme='dark'] {
+  --tui-background-base: #0f071b;
+  --tui-background-base-alt: #0d0617;
+  --tui-background-elevation-1: #171021;
+  --tui-background-elevation-2: #171021;
+  --tui-text-primary: #dccdff;
+  --tui-border-normal: #7c3aed;
+  --tui-status-positive-pale: rgb(0 255 200 / 18%);
+  --tui-status-negative-pale: rgb(255 0 98 / 18%);
+  --tui-status-warning-pale: rgb(255 166 0 / 18%);
+  --accent-primary: #a855f7;
+  --accent-primary-soft: #c084fc;
+  --accent-soft: #d0a8ff;
+  --accent-secondary: #00e5ff;
+  --critical: #ff3d6e;
+  --warning: #ffc300;
+  --fire: #ff7a00;
+  --water: #00d9ff;
+  --earth: #9eff00;
+  --air: #d7d7ff;
+  --bg-primary-btn: repeating-linear-gradient(
+    180deg,
+    rgb(57 24 84 / 90%) 0,
+    rgb(57 24 84 / 90%) 1px,
+    rgb(67 31 97 / 90%) 1px,
+    rgb(67 31 97 / 90%) 2px,
+    rgb(77 40 110 / 90%) 2px,
+    rgb(77 40 110 / 90%) 3px
+  );
+  --bg-primary-hover-btn: repeating-linear-gradient(
+    180deg,
+    rgb(71 31 104 / 85%) 0,
+    rgb(71 31 104 / 85%) 1px,
+    rgb(82 38 120 / 85%) 1px,
+    rgb(82 38 120 / 85%) 2px,
+    rgb(94 47 135 / 85%) 2px,
+    rgb(94 47 135 / 85%) 3px
+  );
+  --bg-secondary-btn: repeating-linear-gradient(
+    180deg,
+    rgb(18 56 73 / 92%) 0,
+    rgb(18 56 73 / 92%) 1px,
+    rgb(24 72 93 / 92%) 1px,
+    rgb(24 72 93 / 92%) 2px,
+    rgb(30 88 113 / 92%) 2px,
+    rgb(30 88 113 / 92%) 3px
+  );
+  --bg-secondary-hover-btn: repeating-linear-gradient(
+    180deg,
+    rgb(18 56 73 / 85%) 0,
+    rgb(18 56 73 / 85%) 1px,
+    rgb(24 72 93 / 85%) 1px,
+    rgb(24 72 93 / 85%) 2px,
+    rgb(30 88 113 / 85%) 2px,
+    rgb(30 88 113 / 85%) 3px
+  );
+  --secondary-border: var(--water);
+  --secondary-text: var(--accent-secondary);
+  --secondary-text-hover: #b6f7ff;
+  --secondary-shadow: 0 0 10px rgb(0 217 255 / 30%);
+  --primary-shadow: 0 0 10px rgb(168 85 247 / 45%), 0 0 24px rgb(255 79 216 / 12%);
+  --outline-hover-bg: rgb(255 255 255 / 3%);
+  --outline-hover-shadow: 0 0 12px rgb(255 79 216 / 14%);
+  --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-oxanium: 'Oxanium', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  letter-spacing: 0.03em;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.t-root-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+}
+
+button[tuiButton][data-appearance='primary'] {
+  border-radius: 0;
+  background-image: var(--bg-primary-btn);
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.25s ease all;
+  box-shadow: var(--primary-shadow);
+}
+
+button[tuiButton][data-appearance='primary']:hover,
+button[tuiButton][data-appearance='primary']:active {
+  color: var(--accent-soft);
+  background-image: var(--bg-primary-hover-btn);
+}
+
+button[tuiButton][data-appearance='secondary'] {
+  border-radius: 0;
+  background-image: var(--bg-secondary-btn);
+  border: 1px solid var(--secondary-border);
+  color: var(--secondary-text);
+  font-family: 'Courier New', monospace;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.25s ease all;
+  box-shadow: var(--secondary-shadow);
+}
+
+button[tuiButton][data-appearance='outline'] {
+  border-radius: 0;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: capitalize;
+  box-shadow: none;
+  text-shadow: none;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button[tuiButton][data-appearance='outline']:hover,
+button[tuiButton][data-appearance='outline']:active {
+  background-color: var(--outline-hover-bg);
+  background-image: none;
+  box-shadow: var(--outline-hover-shadow);
+}
+
+button[tuiButton][data-appearance='outline'].outline-critical {
+  border-color: var(--critical);
+  color: var(--critical);
+}
+
+button[tuiButton][data-appearance='outline'].outline-high {
+  border-color: var(--fire);
+  color: var(--fire);
+}
+
+button[tuiButton][data-appearance='outline'].outline-medium {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+button[tuiButton][data-appearance='outline'].outline-light {
+  border-color: var(--earth);
+  color: var(--earth);
+}
+
+button[tuiButton][data-appearance='flat'] {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent-soft);
+  font-size: 0.98rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  transition: color 0.2s ease;
+}
+
+button[tuiButton][data-appearance='flat']:hover,
+button[tuiButton][data-appearance='flat']:active {
+  color: var(--accent-primary);
+}
