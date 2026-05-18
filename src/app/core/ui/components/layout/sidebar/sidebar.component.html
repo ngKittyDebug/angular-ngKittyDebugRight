@@ -3,11 +3,7 @@
     <p class="section-title">[ НАВИГАЦИЯ ]</p>
     <nav class="nav" id="sidebar-nav">
       @for (navigationItem of navigationItemList(); track navigationItem.label) {
-        <!--        TODO заменить на нав айтем компонент-->
-        <button tuiAsideItem type="button">
-          <tui-icon [icon]="navigationItem.icon" />
-          <span>{{ navigationItem.label }}</span>
-        </button>
+        <ngKitty-navigation-item [item]="navigationItem" />
       }
     </nav>
   </section>
