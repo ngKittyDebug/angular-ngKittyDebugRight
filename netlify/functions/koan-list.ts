@@ -37,9 +37,9 @@ const koanList = async (request: Request): Promise<Response> => {
 
     const list = await getKoanList(getKoansDirectory(), files);
 
-    const koanList: Partial<KoanListItem>[] = list.toSorted(sortByKoanNumber);
+    const sortedList: Partial<KoanListItem>[] = list.toSorted(sortByKoanNumber);
 
-    Object.assign(cache, { koanList });
+    Object.assign(cache, { koanList: sortedList });
 
     return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
   } catch (error) {
