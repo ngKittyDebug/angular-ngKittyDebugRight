@@ -1,8 +1,12 @@
-name: 'coverage'
+name: coverage
 
 on:
-  push:
-    branches: [develop, main]
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: coverage-badge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -10,9 +14,15 @@ jobs:
 
     permissions:
       contents: write
+      pull-requests: read
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -36,10 +46,12 @@ jobs:
           label: coverage
           jsonPath: total.lines.pct
 
-      - name: Add badges to repository
+      - name: Commit coverage badge
+        env:
+          HUSKY: '0'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -f badges/
-          git diff --staged --quiet || git commit -m "docs: update coverage badges"
-          git push
+          git diff --staged --quiet || git commit --no-verify -m "docs: update coverage badges [skip ci]"
+          git push --no-verify origin "HEAD:${{ github.event.pull_request.head.ref }}"
