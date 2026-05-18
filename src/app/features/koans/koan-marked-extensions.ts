@@ -25,7 +25,7 @@ function blockTag(tag: string, cssClass: KoanTokenType, seal = '') {
     level: 'block' as const,
     start: (source: string) => source.indexOf(open),
     tokenizer(source: string): KoanToken | undefined {
-      const match = new RegExp(tagRegExp).exec(source);
+      const match = tagRegExp.exec(source);
 
       if (!match) {
         return undefined;
