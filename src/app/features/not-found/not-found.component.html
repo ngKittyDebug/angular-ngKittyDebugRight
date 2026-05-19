@@ -1,27 +1,29 @@
-<div class="candle">
-  <img src="assets/404.png" alt="candle" />
-</div>
-<div class="content">
-  <p class="error-code">404</p>
-  <p class="error-title">page not found</p>
-  <div class="wisdom-block">
-    <p class="wisdom-label">[ wisdom of the machine spirit ]</p>
-    <p class="wisdom-quote">"The page you seek has ascended to a higher deploy."</p>
-    <div class="stats">
-      <p class="stats-item">stats : void</p>
-      <span class="stats-divider"> | </span>
-      <p class="stats-item">uptime : ∞</p>
-      <span class="stats-divider"> | </span>
-      <p class="stats-item">bugs : 404</p>
-    </div>
+<ng-container *transloco="let t">
+  <div class="candle">
+    <img src="assets/404.png" alt="candle" />
   </div>
-  <button tuiButton type="button" appearance="secondary" iconStart="@tui.zap" (click)="onClick()">
-    return to main
-  </button>
-</div>
-<span class="corner top-left"></span>
-<span class="corner bottom-left"></span>
-<span class="corner top-right"></span>
-<span class="corner bottom-right"></span>
+  <div class="content">
+    <p class="error-code">{{ t('notFound.error-code') }}</p>
+    <p class="error-title">{{ t('notFound.error-title') }}</p>
+    <div class="wisdom-block">
+      <p class="wisdom-label">[ {{ t('notFound.wisdom-label') }} ]</p>
+      <p class="wisdom-quote">"{{ t('notFound.wisdom-quote') }}"</p>
+      <div class="stats">
+        <p class="stats-item">{{ t('notFound.stats') }}</p>
+        <span class="stats-divider"> | </span>
+        <p class="stats-item">{{ t('notFound.uptime') }}</p>
+        <span class="stats-divider"> | </span>
+        <p class="stats-item">{{ t('notFound.bug') }}</p>
+      </div>
+    </div>
+    <button tuiButton type="button" appearance="secondary" iconStart="@tui.zap" (click)="onClick()">
+      {{ t('notFound.button') }}
+    </button>
+  </div>
+  <span class="corner top-left"></span>
+  <span class="corner bottom-left"></span>
+  <span class="corner top-right"></span>
+  <span class="corner bottom-right"></span>
 
-<tui-icon icon="@tui.battery-charging" class="charge" />
+  <tui-icon icon="@tui.battery-charging" class="charge" />
+</ng-container>

@@ -2,6 +2,7 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { NotFoundComponent } from './not-found.component';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -9,7 +10,16 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotFoundComponent],
+      imports: [
+        NotFoundComponent,
+        TranslocoTestingModule.forRoot({
+          langs: { en: {}, ru: {} },
+          translocoConfig: {
+            availableLangs: ['ru', 'en'],
+            defaultLang: 'ru',
+          },
+        }),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotFoundComponent);

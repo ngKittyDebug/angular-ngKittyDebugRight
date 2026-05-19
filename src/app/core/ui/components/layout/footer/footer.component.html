@@ -1,23 +1,23 @@
-<footer class="footer">
+<footer class="footer" *transloco="let t">
   <a href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight" target="_blank" rel="noopener noreferrer">
-    [ REPOSITORY ]
+    [ {{ t('footer.repository') }} ]
   </a>
 
   <div class="content">
     <span class="prompt"><</span>
-    <span class="text"> made with paws, use at own risk </span>
+    <span class="text"> {{ t('footer.text') }} </span>
     <span class="prompt">></span>
   </div>
 
   <div class="authors">
-    <a href="https://github.com/dashque" target="_blank" rel="noopener noreferrer">Dasha</a>
+    <a href="https://github.com/dashque" target="_blank" rel="noopener noreferrer">{{ t('footer.dasha') }}</a>
 
     <span class="divider">//</span>
 
-    <a href="https://github.com/alena1409" target="_blank" rel="noopener noreferrer">Alena</a>
+    <a href="https://github.com/alena1409" target="_blank" rel="noopener noreferrer">{{ t('footer.alena') }}</a>
 
     <span class="divider">//</span>
 
-    <a href="https://github.com/kozochkina82" target="_blank" rel="noopener noreferrer">Nadya</a>
+    <a href="https://github.com/kozochkina82" target="_blank" rel="noopener noreferrer">{{ t('footer.nadya') }}</a>
   </div>
 </footer>
