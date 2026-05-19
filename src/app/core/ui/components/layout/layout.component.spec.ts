@@ -1,6 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-
+import { provideRouter } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from '@core/services/layout/layout.service';
 import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
@@ -14,7 +14,7 @@ describe('LayoutComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [LayoutComponent],
-      providers: [{ provide: LayoutService, useValue: layoutServiceMock }],
+      providers: [{ provide: LayoutService, useValue: layoutServiceMock }, provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LayoutComponent);
