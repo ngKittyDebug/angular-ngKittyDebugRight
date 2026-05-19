@@ -1,0 +1,18 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#D4AF37" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <!-- шестеренка -->
+    <circle cx="128" cy="128" r="64"/>
+    <path d="M128 32V64"/>
+    <path d="M128 192V224"/>
+    <path d="M32 128H64"/>
+    <path d="M192 128H224"/>
+
+    <path d="M64 64L84 84"/>
+    <path d="M172 172L192 192"/>
+    <path d="M64 192L84 172"/>
+    <path d="M172 84L192 64"/>
+
+    <!-- молния -->
+    <path d="M144 56L96 136H128L112 200L160 120H128L144 56Z" fill="#D4AF37" stroke="none"/>
+  </g>
+</svg>
