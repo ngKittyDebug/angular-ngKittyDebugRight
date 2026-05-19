@@ -1,7 +1,11 @@
 import { provideTaiga } from '@taiga-ui/core';
 import type { ApplicationConfig } from '@angular/core';
-import { isDevMode, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { isDevMode, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, inject,
+  provideAppInitializer, } from '@angular/core';
+
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+
+import { AuthService } from '@core/services/auth/auth.service';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -25,5 +29,6 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
+    provideAppInitializer(() => inject(AuthService).initialize()),
   ],
 };
