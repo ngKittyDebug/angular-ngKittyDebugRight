@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { getAllKoanFiles, getKoansDirectory, isKoanFrontmatter, parseFrontmatter } from './shared/koan-utilities';
-import { isGETRequest, jsonError } from './shared/http';
+import { isGETRequest, jsonError, jsonResponse } from './shared/http';
 
 interface KoanListItem {
   number: number;
@@ -23,7 +23,7 @@ const koanList = async (request: Request): Promise<Response> => {
   }
 
   if (cache.koanList.length > 0) {
-    return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
+    return jsonResponse(cache.koanList, LIST_CACHE_CONTROL);
   }
 
   try {
@@ -37,7 +37,7 @@ const koanList = async (request: Request): Promise<Response> => {
 
     cache.koanList = list.toSorted(sortByKoanNumber);
 
-    return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
+    return jsonResponse(cache.koanList, LIST_CACHE_CONTROL);
   } catch (error) {
     console.error('koan-list failed', error);
 
