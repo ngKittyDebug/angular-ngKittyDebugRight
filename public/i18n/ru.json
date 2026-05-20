@@ -1,9 +1,19 @@
 {
+  "sidebar": {
+    "navigation": "НАВИГАЦИЯ"
+  },
   "footer": {
     "repository": "РЕПОЗИТОРИЙ",
     "text": "Сделано лапками, используйте на свой страх и риск",
     "dasha": "Даша",
     "alena": "Алёна",
     "nadya": "Надя"
+  },
+  "navigation-items": {
+    "tarot": "Таро",
+    "shrift": "Исповедь",
+    "runes": "Руны",
+    "horoscope": "Гороскоп",
+    "chronicle": "Хроника"
   }
 }
