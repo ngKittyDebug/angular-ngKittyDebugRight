@@ -1,7 +1,12 @@
 import { readdir } from 'node:fs/promises';
 import { vi } from 'vitest';
 
-import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from '../../../functions/shared/koan-utilities';
+import {
+  assertIsKoanFrontmatter,
+  getAllKoanFiles,
+  getKoansDirectory,
+  parseFrontmatter,
+} from '../../../functions/shared/koan-utilities';
 
 vi.mock('node:fs/promises');
 
@@ -102,6 +107,37 @@ describe('koan utilities', () => {
 
           expect(frontmatter).toEqual({});
         });
+      });
+    });
+  });
+
+  describe('assertIsKoanFrontmatter', () => {
+    const validFrontmatter = {
+      number: 1,
+      title: 'Заголовок',
+      slug: '001-slug',
+      category: 'javascript',
+      tags: ['a', 'b'],
+      source: 'Источник',
+    };
+
+    describe('Happy Path', () => {
+      it('не должен бросать на полном корректном frontmatter', () => {
+        expect(() => assertIsKoanFrontmatter(validFrontmatter)).not.toThrow();
+      });
+    });
+
+    describe('Negative Cases', () => {
+      it('должен бросить, если number не конечное число', () => {
+        expect(() => assertIsKoanFrontmatter({ ...validFrontmatter, number: Number.NaN })).toThrow();
+      });
+
+      it('должен бросить при отсутствии обязательного строкового поля', () => {
+        expect(() => assertIsKoanFrontmatter({ ...validFrontmatter, source: undefined })).toThrow();
+      });
+
+      it('должен бросить, если tags не массив', () => {
+        expect(() => assertIsKoanFrontmatter({ ...validFrontmatter, tags: undefined })).toThrow();
       });
     });
   });

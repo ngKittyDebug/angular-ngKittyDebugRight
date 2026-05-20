@@ -31,6 +31,26 @@ export function parseFrontmatter(raw: string): ParsedKoan {
   return { frontmatter, body };
 }
 
+// Frontmatter comes from raw .mdx files, so `parseFrontmatter` honestly returns a
+// `Partial`. This narrows it to a fully-populated `KoanFrontmatter`, throwing on
+// malformed content (surfaces a bad .mdx at test/deploy time instead of leaking
+// `NaN`/`undefined` into responses).
+export function assertIsKoanFrontmatter(frontmatter: Partial<KoanFrontmatter>): asserts frontmatter is KoanFrontmatter {
+  const { number, title, slug, category, tags, source } = frontmatter;
+
+  if (typeof number !== 'number' || !Number.isFinite(number)) {
+    throw new Error('Invalid koan frontmatter: "number" must be a finite number');
+  }
+
+  if (!title || !slug || !category || !source) {
+    throw new Error('Invalid koan frontmatter: "title", "slug", "category" and "source" are required');
+  }
+
+  if (!Array.isArray(tags)) {
+    throw new Error('Invalid koan frontmatter: "tags" must be an array');
+  }
+}
+
 function splitRaw(raw: string): { frontmatterBlock: string; body: string } {
   const parts = raw.split(/^---\s*$/m);
 
