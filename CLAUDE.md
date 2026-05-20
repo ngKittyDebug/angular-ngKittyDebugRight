@@ -79,3 +79,5 @@ Optional but recommended for non-trivial changes:
 - Manual smoke on `pnpm dev` (`netlify dev`) for anything that calls `/.netlify/functions/*` — `pnpm start` alone won't exercise the backend.
 
 When committing or opening a PR: use Conventional Commit type (`feat|fix|chore|refactor|docs|style|perf|test|build|ci|revert`), keep the subject ≤72 chars, and verify the branch name matches `^(chore|feat|fix|docs|style|refactor|perf)\/[a-z0-9-]+[_-][a-z0-9-]+$` (validated by `validate-branch-name`).
+
+**Branching & PR base**: always branch off `develop`, and open PRs **against `develop`** (not `main`). `main` is the release branch and merges into it come from `develop` only.
