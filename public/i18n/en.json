@@ -1,9 +1,9 @@
 {
   "footer": {
+    "repository": "REPOSITORY",
     "text": "Made with paws, use at own risk",
     "dasha": "Dasha",
     "alena": "Alena",
-    "nadya": "Nadya",
-    "repository": "REPOSITORY"
+    "nadya": "Nadya"
   }
 }

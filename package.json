@@ -16,7 +16,9 @@
     "format": "prettier src --check",
     "format:fix": "prettier src -w",
     "typecheck": "tsc -b --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "i18n:extract": "transloco-keys-manager extract",
+    "i18n:find": "transloco-keys-manager find"
   },
   "private": true,
   "type": "module",
@@ -33,6 +35,7 @@
     "@commitlint/config-angular": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
     "@eslint/js": "^10.0.1",
+    "@jsverse/transloco-keys-manager": "^8.1.0",
     "@netlify-builder/deploy": "^5.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@vitest/coverage-v8": "^4.1.5",
