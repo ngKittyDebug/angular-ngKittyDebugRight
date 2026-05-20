@@ -99,6 +99,23 @@ describe('koan-random', () => {
         expect(response.status).toBe(500);
       });
 
+      it('должен вернуть 400 при exclude с недопустимыми символами', async () => {
+        const koanRandom = await importKoanRandom();
+
+        const response = await koanRandom(buildRequest('?exclude=../../etc/passwd'));
+
+        expect(response.status).toBe(400);
+        expect(readdir).not.toHaveBeenCalled();
+      });
+
+      it('должен вернуть 400 при слишком длинном exclude', async () => {
+        const koanRandom = await importKoanRandom();
+
+        const response = await koanRandom(buildRequest(`?exclude=${'a'.repeat(101)}`));
+
+        expect(response.status).toBe(400);
+      });
+
       it('должен вернуть 405 при не-GET методе', async () => {
         const koanRandom = await importKoanRandom();
 
