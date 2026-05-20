@@ -1,15 +1,15 @@
+import { vi } from 'vitest';
+
 import { noop } from './noop';
 
-describe('noop tests', () => {
-  test.each`
-    value             | expected
-    ${undefined}      | ${undefined}
-    ${''}             | ${undefined}
-    ${{ foo: 'bar' }} | ${undefined}
-    ${'whatever'}     | ${undefined}
-  `("noop('$value') returns $expected", ({ value, expected }) => {
-    const noOperation = vitest.fn().mockImplementation(noop);
+describe('noop', () => {
+  describe('Happy Path', () => {
+    it.each([[undefined], [''], [{ foo: 'bar' }], ['whatever']])('должен вернуть undefined для входа %p', (value) => {
+      const noOperation = vi.fn().mockImplementation(noop);
 
-    expect(noOperation(value)).toBe(expected);
+      const result = noOperation(value);
+
+      expect(result).toBeUndefined();
+    });
   });
 });
