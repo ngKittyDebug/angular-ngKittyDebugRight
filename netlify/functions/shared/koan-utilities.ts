@@ -1,13 +1,32 @@
 import { join } from 'node:path';
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
+
+export const KOAN_FILE_EXTENSION = '.mdx';
+
+const SLUG_PATTERN = /^[0-9a-z-]+$/;
+const SLUG_MAX_LENGTH = 100;
 
 export const getKoansDirectory = () => join(process.cwd(), 'public', 'koans');
 
-export const getAllKoanFiles = async (): Promise<string[]> => {
-  const koansDirectory = getKoansDirectory();
-  const allFiles = await readdir(koansDirectory);
+export const isValidSlug = (value: string): boolean => value.length <= SLUG_MAX_LENGTH && SLUG_PATTERN.test(value);
 
-  return allFiles.filter((f) => f.endsWith('.mdx'));
+export const toKoanFileName = (slug: string): string => `${slug}${KOAN_FILE_EXTENSION}`;
+
+export const getAllKoanFiles = async (): Promise<string[]> => {
+  const allFiles = await readdir(getKoansDirectory());
+
+  return allFiles.filter((f) => f.endsWith(KOAN_FILE_EXTENSION));
+};
+
+// Koan files are bundled with the deployment and do not change at runtime, so the
+// file list is cached for the lifetime of a warm function instance and shared by
+// the get/random endpoints.
+let cachedKoanFiles: Nullable<string[]> = null;
+
+export const getCachedKoanFiles = async (): Promise<string[]> => {
+  cachedKoanFiles ??= await getAllKoanFiles();
+
+  return cachedKoanFiles;
 };
 
 interface KoanFrontmatter {
@@ -54,6 +73,21 @@ export function assertIsKoanFrontmatter(frontmatter: Partial<KoanFrontmatter>): 
   if (!isKoanFrontmatter(frontmatter)) {
     throw new Error('Invalid koan frontmatter');
   }
+}
+
+export interface Koan extends KoanFrontmatter {
+  body: string;
+}
+
+// Reads and parses a single koan file, throwing on malformed content. Used by the
+// get/random endpoints, where a bad koan should surface as an error.
+export async function readKoanFile(file: string): Promise<Koan> {
+  const raw = await readFile(join(getKoansDirectory(), file), 'utf-8');
+  const { frontmatter, body } = parseFrontmatter(raw);
+
+  assertIsKoanFrontmatter(frontmatter);
+
+  return { ...frontmatter, body };
 }
 
 function splitRaw(raw: string): { frontmatterBlock: string; body: string } {
