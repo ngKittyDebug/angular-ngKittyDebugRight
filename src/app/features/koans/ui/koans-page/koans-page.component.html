@@ -42,11 +42,11 @@
       class="kp-search"
       type="search"
       placeholder="искать по тексту, тегу, источнику…"
-      [value]="store.query()"
+      [value]="facade.query()"
       (input)="onQueryInput($event)"
       aria-label="Поиск по коанам"
     />
-    @if (store.query()) {
+    @if (facade.query()) {
       <button class="kp-search-clear" type="button" (click)="onClearQuery()" aria-label="Очистить">✕</button>
     }
   </div>
@@ -56,10 +56,10 @@
       class="kp-icon-btn"
       type="button"
       (click)="onToggleTheme()"
-      [attr.aria-label]="store.koanTheme() === 'sumi' ? 'Светлая тема' : 'Тёмная тема'"
-      [title]="store.koanTheme() === 'sumi' ? 'Тема: sumi (тёмная)' : 'Тема: washi (светлая)'"
+      [attr.aria-label]="facade.koanTheme() === 'sumi' ? 'Светлая тема' : 'Тёмная тема'"
+      [title]="facade.koanTheme() === 'sumi' ? 'Тема: sumi (тёмная)' : 'Тема: washi (светлая)'"
     >
-      @if (store.koanTheme() === 'sumi') {
+      @if (facade.koanTheme() === 'sumi') {
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
           <circle cx="8" cy="8" r="3" />
           <path
@@ -80,7 +80,7 @@
   </div>
 </header>
 
-@if (store.error(); as error) {
+@if (facade.error(); as error) {
   <p class="kp-error" role="alert">{{ error }}</p>
 }
 
@@ -101,17 +101,17 @@
 
   <nav id="koans-nav" class="kp-sidebar" [class.kp-sidebar--collapsed]="!listOpen()" aria-label="Список коанов">
     <ngKitty-koan-list
-      [groups]="store.groupedList()"
-      [categoryCounts]="store.categoryCounts()"
-      [activeCategory]="store.activeCategory()"
-      [tagCounts]="store.tagCounts()"
-      [activeTags]="store.activeTags()"
-      [readSet]="store.readSet()"
-      [selectedSlug]="store.selectedKoan()?.slug ?? null"
-      [totalCount]="store.koanList().length"
-      [filteredCount]="store.filteredList().length"
-      [loading]="store.loadingList()"
-      [query]="store.query()"
+      [groups]="facade.groupedList()"
+      [categoryCounts]="facade.categoryCounts()"
+      [activeCategory]="facade.activeCategory()"
+      [tagCounts]="facade.tagCounts()"
+      [activeTags]="facade.activeTags()"
+      [readSet]="facade.readSet()"
+      [selectedSlug]="facade.selectedKoan()?.slug ?? null"
+      [totalCount]="facade.koanList().length"
+      [filteredCount]="facade.filteredList().length"
+      [loading]="facade.loadingList()"
+      [query]="facade.query()"
       (koanSelect)="onKoanSelect($event)"
       (categoryToggle)="onCategoryToggle($event)"
       (tagToggle)="onTagToggle($event)"
@@ -120,8 +120,8 @@
 
   <main id="koans-main" class="kp-reader-wrap" tabindex="-1">
     <ngKitty-koan-reader
-      [koan]="store.selectedKoan()"
-      [loading]="store.loadingSelected()"
+      [koan]="facade.selectedKoan()"
+      [loading]="facade.loadingSelected()"
       [hasPrev]="hasPrev()"
       [hasNext]="hasNext()"
       (tagClick)="onTagToggle($event)"
