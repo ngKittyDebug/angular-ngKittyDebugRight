@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
+import { KoanListFixture } from '@features/koans/data/fixtures/koan-list.fixture';
 import { KoansStore } from './koans.store';
 
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';

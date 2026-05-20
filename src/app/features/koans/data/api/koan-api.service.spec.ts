@@ -2,7 +2,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
+import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
+import { KoanListFixture } from '@features/koans/data/fixtures/koan-list.fixture';
 import { KoanApiService } from './koan-api.service';
 
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';

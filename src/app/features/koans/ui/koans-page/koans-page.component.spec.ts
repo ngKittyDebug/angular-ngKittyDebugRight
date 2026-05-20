@@ -11,7 +11,8 @@ import { KoansPersistenceService } from '@features/koans/data/services/koans-per
 import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
 import { KoansStore } from '@features/koans/data/store/koans.store';
 import { koanHeadingExtension, koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
-import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
+import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
+import { KoanListFixture } from '@features/koans/data/fixtures/koan-list.fixture';
 import { KoansPageComponent } from './koans-page.component';
 
 import type { ComponentFixture } from '@angular/core/testing';

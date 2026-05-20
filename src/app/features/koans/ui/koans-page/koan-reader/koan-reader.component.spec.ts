@@ -3,7 +3,7 @@ import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 import { vi } from 'vitest';
 
 import { koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
-import { KoanFixture } from '@features/koans/data/mocks/koan.fixture';
+import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
 import { KoanReaderComponent } from './koan-reader.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
