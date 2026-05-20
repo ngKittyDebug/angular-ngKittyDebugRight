@@ -1,29 +1,27 @@
-<ng-container>
-  <div class="candle">
-    <img src="assets/404.png" alt="candle" />
-  </div>
-  <div class="content">
-    <p class="error-code">{{ 'notFound.error-code' | transloco }}</p>
-    <p class="error-title">{{ 'notFound.error-title' | transloco }}</p>
-    <div class="wisdom-block">
-      <p class="wisdom-label">[ {{ 'notFound.wisdom-label' | transloco }} ]</p>
-      <p class="wisdom-quote">"{{ 'notFound.wisdom-quote' | transloco }}"</p>
-      <div class="stats">
-        <p class="stats-item">{{ 'notFound.stats' | transloco }}</p>
-        <span class="stats-divider"> | </span>
-        <p class="stats-item">{{ 'notFound.uptime' | transloco }}</p>
-        <span class="stats-divider"> | </span>
-        <p class="stats-item">{{ 'notFound.bug' | transloco }}</p>
-      </div>
+<div class="candle">
+  <img src="assets/404.png" alt="candle" />
+</div>
+<div class="content">
+  <p class="error-code">{{ 'notFound.error-code' | transloco }}</p>
+  <p class="error-title">{{ 'notFound.error-title' | transloco }}</p>
+  <div class="wisdom-block">
+    <p class="wisdom-label">[ {{ 'notFound.wisdom-label' | transloco }} ]</p>
+    <p class="wisdom-quote">"{{ 'notFound.wisdom-quote' | transloco }}"</p>
+    <div class="stats">
+      <p class="stats-item">{{ 'notFound.stats' | transloco }}</p>
+      <span class="stats-divider"> | </span>
+      <p class="stats-item">{{ 'notFound.uptime' | transloco }}</p>
+      <span class="stats-divider"> | </span>
+      <p class="stats-item">{{ 'notFound.bug' | transloco }}</p>
     </div>
-    <button tuiButton type="button" appearance="secondary" iconStart="@tui.zap" (click)="onClick()">
-      {{ 'notFound.button' | transloco }}
-    </button>
   </div>
-  <span class="corner top-left"></span>
-  <span class="corner bottom-left"></span>
-  <span class="corner top-right"></span>
-  <span class="corner bottom-right"></span>
+  <button tuiButton type="button" appearance="secondary" iconStart="@tui.zap" (click)="onClick()">
+    {{ 'notFound.button' | transloco }}
+  </button>
+</div>
+<span class="corner top-left"></span>
+<span class="corner bottom-left"></span>
+<span class="corner top-right"></span>
+<span class="corner bottom-right"></span>
 
-  <tui-icon icon="@tui.battery-charging" class="charge" />
-</ng-container>
+<tui-icon icon="@tui.battery-charging" class="charge" />
