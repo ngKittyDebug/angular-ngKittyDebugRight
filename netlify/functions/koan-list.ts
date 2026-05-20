@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
+import { assertIsKoanFrontmatter, getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
 import { isGETRequest, jsonError } from './shared/http';
 
 interface KoanListItem {
@@ -15,7 +15,7 @@ const LIST_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
 
 // Koan files are bundled with the deployment and not change at runtime, so the
 // parsed list is cached for the lifetime of a warm function instance.
-const cache: { koanList: Partial<KoanListItem>[] } = { koanList: [] };
+const cache: { koanList: KoanListItem[] } = { koanList: [] };
 
 const koanList = async (request: Request): Promise<Response> => {
   if (!isGETRequest(request)) {
@@ -45,17 +45,19 @@ const koanList = async (request: Request): Promise<Response> => {
   }
 };
 
-function sortByKoanNumber(a: Partial<KoanListItem>, b: Partial<KoanListItem>): number {
-  return (a.number ?? Infinity) - (b.number ?? Infinity);
+function sortByKoanNumber(a: KoanListItem, b: KoanListItem): number {
+  return a.number - b.number;
 }
 
-function getKoanList(directory: string, files: string[]) {
+function getKoanList(directory: string, files: string[]): Promise<KoanListItem[]> {
   return Promise.all(
     files.map((file) =>
       readFile(join(directory, file), 'utf-8').then((raw) => {
-        const {
-          frontmatter: { number, title, slug, category, tags },
-        } = parseFrontmatter(raw);
+        const { frontmatter } = parseFrontmatter(raw);
+
+        assertIsKoanFrontmatter(frontmatter);
+
+        const { number, title, slug, category, tags } = frontmatter;
 
         return { number, title, slug, category, tags };
       })

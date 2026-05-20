@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
+import { assertIsKoanFrontmatter, getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
 import { isGETRequest, jsonError } from './shared/http';
 
 const SLUG_PATTERN = /^[0-9a-z-]+$/;
@@ -38,10 +38,11 @@ const koanRandom = async (request: Request): Promise<Response> => {
 
     const file = pool[Math.floor(Math.random() * pool.length)];
     const raw = await readFile(join(koansDirectory, file), 'utf-8');
-    const {
-      frontmatter: { number, title, slug, category, tags, source },
-      body,
-    } = parseFrontmatter(raw);
+    const { frontmatter, body } = parseFrontmatter(raw);
+
+    assertIsKoanFrontmatter(frontmatter);
+
+    const { number, title, slug, category, tags, source } = frontmatter;
 
     return Response.json(
       { number, title, slug, category, tags, source, body },
