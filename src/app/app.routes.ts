@@ -10,6 +10,10 @@ export const routes: Routes = [
         path: 'koans',
         loadChildren: () => import('@features/koans/koans.routes').then((feature) => feature.KOANS_ROUTES),
       },
+      {
+        path: '**',
+        loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),
+      },
     ],
   },
 ];

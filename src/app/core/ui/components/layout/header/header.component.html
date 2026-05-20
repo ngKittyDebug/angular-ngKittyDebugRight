@@ -1,0 +1,21 @@
+<header tuiHeader="h2" appearance="primary">
+  <div class="header-box">
+    <button appearance="primary" size="s" tuiButton type="button" [style.border-radius.%]="100">
+      <tui-icon icon="@tui.moon" />
+    </button>
+    <hgroup tuiTitle>
+      <h2 class="header-title">
+        {{ title }}
+      </h2>
+      <p tuiSubtitle class="header-subtitle">
+        {{ subtitle }}
+      </p>
+    </hgroup>
+    <div class="header-buttons">
+      <button appearance="primary" size="s" tuiButton type="button">
+        <tui-icon icon="@tui.languages" />
+        ru
+      </button>
+    </div>
+  </div>
+</header>

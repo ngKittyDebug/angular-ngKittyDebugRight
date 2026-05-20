@@ -1,0 +1,22 @@
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.nav-item.active,
+.nav-item.active:hover,
+.nav-item.active:active,
+.nav-item.active:focus-visible {
+  background: rgb(0 0 0 / 8%);
+  font-weight: 600;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}

@@ -1,0 +1,1 @@
+export const LAYOUT_MOBILE_MAX_WIDTH_PX = 768;

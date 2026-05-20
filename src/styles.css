@@ -63,6 +63,8 @@
   --koan-question: var(--warning);
   --koan-source: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
   --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-oxanium: 'Oxanium', sans-serif;
 }
 
 :root,
@@ -136,6 +138,8 @@
   --koan-question: var(--warning);
   --koan-source: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
   --koan-action: color-mix(in srgb, var(--tui-text-primary) 70%, transparent);
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-oxanium: 'Oxanium', sans-serif;
 }
 
 * {
