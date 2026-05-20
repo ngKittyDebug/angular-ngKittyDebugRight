@@ -1,28 +1,26 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
-import { jsonError } from './shared/http';
+import { isGETRequest, jsonError } from './shared/http';
 
 interface KoanListItem {
   number: number;
   title: string;
   slug: string;
-  category?: string;
-  tags?: string[];
+  category: string;
+  tags: string[];
 }
+
+const LIST_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
 
 // Koan files are bundled with the deployment and not change at runtime, so the
 // parsed list is cached for the lifetime of a warm function instance.
-const cache = {
-  koanList: [],
-} satisfies { koanList: Partial<KoanListItem>[] };
+const cache: { koanList: Partial<KoanListItem>[] } = { koanList: [] };
 
 const koanList = async (request: Request): Promise<Response> => {
-  if (request.method !== 'GET') {
+  if (!isGETRequest(request)) {
     return jsonError(405, 'Method not allowed');
   }
-
-  const LIST_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
 
   if (cache.koanList.length > 0) {
     return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
@@ -37,9 +35,7 @@ const koanList = async (request: Request): Promise<Response> => {
 
     const list = await getKoanList(getKoansDirectory(), files);
 
-    const sortedList: Partial<KoanListItem>[] = list.toSorted(sortByKoanNumber);
-
-    Object.assign(cache, { koanList: sortedList });
+    cache.koanList = list.toSorted(sortByKoanNumber);
 
     return Response.json(cache.koanList, { headers: { 'Cache-Control': LIST_CACHE_CONTROL } });
   } catch (error) {

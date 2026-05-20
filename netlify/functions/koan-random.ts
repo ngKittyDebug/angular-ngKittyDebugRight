@@ -1,19 +1,18 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
-import { jsonError } from './shared/http';
+import { isGETRequest, jsonError } from './shared/http';
 
 const SLUG_PATTERN = /^[0-9a-z-]+$/;
 const SLUG_MAX_LENGTH = 100;
+const RANDOM_CACHE_CONTROL = 'no-store';
 
 // Koan files are bundled with the deployment and not change at runtime, so the
 // file list is cached for the lifetime of a warm function instance.
-const cache = {
-  files: [] as string[],
-} satisfies { files: string[] };
+const cache: { files: string[] } = { files: [] };
 
 const koanRandom = async (request: Request): Promise<Response> => {
-  if (request.method !== 'GET') {
+  if (!isGETRequest(request)) {
     return jsonError(405, 'Method not allowed');
   }
 
@@ -28,7 +27,7 @@ const koanRandom = async (request: Request): Promise<Response> => {
     const koansDirectory = getKoansDirectory();
 
     if (cache.files.length === 0) {
-      Object.assign(cache, { files: await getAllKoanFiles() });
+      cache.files = await getAllKoanFiles();
     }
 
     const pool = exclude ? cache.files.filter((f) => f !== `${exclude}.mdx`) : cache.files;
@@ -47,7 +46,7 @@ const koanRandom = async (request: Request): Promise<Response> => {
     return Response.json(
       { number, title, slug, category, tags, source, body },
       {
-        headers: { 'Cache-Control': 'no-store' },
+        headers: { 'Cache-Control': RANDOM_CACHE_CONTROL },
       }
     );
   } catch (error) {
