@@ -8,6 +8,9 @@ import importPlugin from 'eslint-plugin-import-x';
 
 export default tseslint.config(
   {
+    ignores: ['.planning/'],
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       ecmaVersion: 2024,
@@ -17,7 +20,9 @@ export default tseslint.config(
       sourceType: 'module',
       parser: tseslint.parser,
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['*.config.ts'],
+        },
       },
     },
     extends: [
@@ -135,6 +140,7 @@ export default tseslint.config(
           fixture: 'off',
           token: 'off',
           facade: 'off',
+          store: 'off',
         },
       ],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
