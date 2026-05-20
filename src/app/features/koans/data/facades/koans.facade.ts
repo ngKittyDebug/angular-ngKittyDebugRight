@@ -9,6 +9,7 @@ import { KoansPersistenceService } from '@features/koans/data/services/koans-per
 import { KoansStore } from '@features/koans/data/store/koans.store';
 
 import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanTheme } from '@features/koans/data/models/koan-theme.model';
 
 @Injectable()
 export class KoansFacade {
@@ -129,7 +130,7 @@ export class KoansFacade {
     this.persistence.saveReadSet(this.store.readSet());
   }
 
-  public setKoanTheme(theme: 'sumi' | 'washi'): void {
+  public setKoanTheme(theme: KoanTheme): void {
     this.store.setKoanTheme(theme);
     this.persistence.saveTheme(theme);
   }

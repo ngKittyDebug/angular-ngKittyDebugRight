@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import type { KoanTheme } from '@features/koans/data/models/koan-theme.model';
+
 @Injectable({ providedIn: 'root' })
 export class KoansPersistenceService {
   private readonly READ_KEY = 'koan-read';
@@ -19,11 +21,11 @@ export class KoansPersistenceService {
     localStorage.setItem(this.READ_KEY, JSON.stringify([...readSet]));
   }
 
-  public loadTheme(): 'sumi' | 'washi' {
+  public loadTheme(): KoanTheme {
     return localStorage.getItem(this.THEME_KEY) === 'washi' ? 'washi' : 'sumi';
   }
 
-  public saveTheme(theme: 'sumi' | 'washi'): void {
+  public saveTheme(theme: KoanTheme): void {
     localStorage.setItem(this.THEME_KEY, theme);
   }
 }
