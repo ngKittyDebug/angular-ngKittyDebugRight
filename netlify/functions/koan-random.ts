@@ -3,6 +3,9 @@ import { join } from 'node:path';
 import { getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
 import { jsonError } from './shared/http';
 
+const SLUG_PATTERN = /^[0-9a-z-]+$/;
+const SLUG_MAX_LENGTH = 100;
+
 // Koan files are bundled with the deployment and do not change at runtime.
 let filesCache: string[] | null = null;
 
@@ -13,6 +16,10 @@ const koanRandom = async (request: Request): Promise<Response> => {
 
   const url = new URL(request.url);
   const exclude = url.searchParams.get('exclude');
+
+  if (exclude && (exclude.length > SLUG_MAX_LENGTH || !SLUG_PATTERN.test(exclude))) {
+    return jsonError(400, 'Invalid exclude parameter');
+  }
 
   try {
     const koansDirectory = getKoansDirectory();
