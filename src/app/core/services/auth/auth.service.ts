@@ -1,4 +1,4 @@
-import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, inject, Injectable, isDevMode, signal } from '@angular/core';
 import type { AuthProvider, CallbackResult, SignupData, User } from '@netlify/identity';
 import * as netlifyIdentity from '@netlify/identity';
 
@@ -16,12 +16,18 @@ export class AuthService {
   public readonly isAuthenticated = computed(() => this._user() !== null);
 
   public async initialize() {
-    const callbackResult = await netlifyIdentity.handleAuthCallback();
+    try {
+      const callbackResult = await netlifyIdentity.handleAuthCallback();
 
-    this._lastCallbackResult.set(callbackResult);
+      this._lastCallbackResult.set(callbackResult);
 
-    if (callbackResult?.user) {
-      this._user.set(callbackResult.user);
+      if (callbackResult?.user) {
+        this._user.set(callbackResult.user);
+      }
+    } catch (error: unknown) {
+      if (isDevMode()) {
+        console.warn('[AuthService] OAuth callback skipped or failed', error);
+      }
     }
 
     await netlifyIdentity.hydrateSession();
@@ -93,7 +99,7 @@ export class AuthService {
     this.loginWithProvider('google');
   }
 
-  public async requestPasswordRecovery(email: string): Promise<void> {
+  public async requestPasswordRecovery(email: string) {
     await netlifyIdentity.requestPasswordRecovery(email);
   }
 
