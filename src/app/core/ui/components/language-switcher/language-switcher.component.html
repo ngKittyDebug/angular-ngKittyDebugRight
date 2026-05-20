@@ -1,0 +1,13 @@
+<button
+  appearance="primary"
+  iconStart="@tui.languages"
+  size="s"
+  tuiButton
+  tuiButtonSelect
+  type="button"
+  [ngModel]="currentLang()"
+  (ngModelChange)="onChangeLanguage($event)"
+>
+  {{ currentLang() }}
+  <tui-data-list-wrapper *tuiDropdown [items]="languageList" />
+</button>

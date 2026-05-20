@@ -1,0 +1,19 @@
+{
+  "sidebar": {
+    "navigation": "NAVIGATION"
+  },
+  "footer": {
+    "repository": "REPOSITORY",
+    "text": "Made with paws, use at own risk",
+    "dasha": "Dasha",
+    "alena": "Alena",
+    "nadya": "Nadya"
+  },
+  "navigation-items": {
+    "tarot": "Tarot",
+    "shrift": "Shrift",
+    "runes": "Runes",
+    "horoscope": "Horoscope",
+    "chronicle": "Chronicle"
+  }
+}
