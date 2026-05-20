@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { assertIsKoanFrontmatter, getAllKoanFiles, getKoansDirectory, parseFrontmatter } from './shared/koan-utilities';
+import { getAllKoanFiles, getKoansDirectory, isKoanFrontmatter, parseFrontmatter } from './shared/koan-utilities';
 import { isGETRequest, jsonError } from './shared/http';
 
 interface KoanListItem {
@@ -51,17 +51,11 @@ function sortByKoanNumber(a: KoanListItem, b: KoanListItem): number {
 
 function getKoanList(directory: string, files: string[]): Promise<KoanListItem[]> {
   return Promise.all(
-    files.map((file) =>
-      readFile(join(directory, file), 'utf-8').then((raw) => {
-        const { frontmatter } = parseFrontmatter(raw);
-
-        assertIsKoanFrontmatter(frontmatter);
-
-        const { number, title, slug, category, tags } = frontmatter;
-
-        return { number, title, slug, category, tags };
-      })
-    )
+    files.map((file) => readFile(join(directory, file), 'utf-8').then((raw) => parseFrontmatter(raw).frontmatter))
+  ).then((entries) =>
+    entries
+      .filter(isKoanFrontmatter)
+      .map(({ number, title, slug, category, tags }) => ({ number, title, slug, category, tags }))
   );
 }
 
