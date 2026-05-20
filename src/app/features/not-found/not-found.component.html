@@ -1,23 +1,23 @@
-<ng-container *transloco="let t">
+<ng-container>
   <div class="candle">
     <img src="assets/404.png" alt="candle" />
   </div>
   <div class="content">
-    <p class="error-code">{{ t('notFound.error-code') }}</p>
-    <p class="error-title">{{ t('notFound.error-title') }}</p>
+    <p class="error-code">{{ 'notFound.error-code' | transloco }}</p>
+    <p class="error-title">{{ 'notFound.error-title' | transloco }}</p>
     <div class="wisdom-block">
-      <p class="wisdom-label">[ {{ t('notFound.wisdom-label') }} ]</p>
-      <p class="wisdom-quote">"{{ t('notFound.wisdom-quote') }}"</p>
+      <p class="wisdom-label">[ {{ 'notFound.wisdom-label' | transloco }} ]</p>
+      <p class="wisdom-quote">"{{ 'notFound.wisdom-quote' | transloco }}"</p>
       <div class="stats">
-        <p class="stats-item">{{ t('notFound.stats') }}</p>
+        <p class="stats-item">{{ 'notFound.stats' | transloco }}</p>
         <span class="stats-divider"> | </span>
-        <p class="stats-item">{{ t('notFound.uptime') }}</p>
+        <p class="stats-item">{{ 'notFound.uptime' | transloco }}</p>
         <span class="stats-divider"> | </span>
-        <p class="stats-item">{{ t('notFound.bug') }}</p>
+        <p class="stats-item">{{ 'notFound.bug' | transloco }}</p>
       </div>
     </div>
     <button tuiButton type="button" appearance="secondary" iconStart="@tui.zap" (click)="onClick()">
-      {{ t('notFound.button') }}
+      {{ 'notFound.button' | transloco }}
     </button>
   </div>
   <span class="corner top-left"></span>
