@@ -2,7 +2,7 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
-import { TranslocoTestingModule } from '@jsverse/transloco';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -10,16 +10,7 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FooterComponent,
-        TranslocoTestingModule.forRoot({
-          langs: { en: {}, ru: {} },
-          translocoConfig: {
-            availableLangs: ['ru', 'en'],
-            defaultLang: 'ru',
-          },
-        }),
-      ],
+      imports: [FooterComponent, TranslocoTestingMock],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);

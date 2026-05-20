@@ -1,23 +1,14 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
-import { TranslocoTestingModule } from '@jsverse/transloco';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
 
 describe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HeaderComponent,
-        TranslocoTestingModule.forRoot({
-          langs: { en: {}, ru: {} },
-          translocoConfig: {
-            availableLangs: ['ru', 'en'],
-            defaultLang: 'ru',
-          },
-        }),
-      ],
+      imports: [HeaderComponent, TranslocoTestingMock],
     }).compileComponents();
     fixture = TestBed.createComponent(HeaderComponent);
     fixture.detectChanges();

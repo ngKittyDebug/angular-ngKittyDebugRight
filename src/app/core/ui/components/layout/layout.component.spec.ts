@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from '@core/services/layout/layout.service';
 import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
-import { TranslocoTestingModule } from '@jsverse/transloco';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -14,16 +14,7 @@ describe('LayoutComponent', () => {
     vi.clearAllMocks();
 
     await TestBed.configureTestingModule({
-      imports: [
-        LayoutComponent,
-        TranslocoTestingModule.forRoot({
-          langs: { en: {}, ru: {} },
-          translocoConfig: {
-            availableLangs: ['ru', 'en'],
-            defaultLang: 'ru',
-          },
-        }),
-      ],
+      imports: [LayoutComponent, TranslocoTestingMock],
       providers: [{ provide: LayoutService, useValue: layoutServiceMock }, provideRouter([])],
     }).compileComponents();
 
