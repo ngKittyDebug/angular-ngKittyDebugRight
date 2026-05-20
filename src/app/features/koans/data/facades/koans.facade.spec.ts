@@ -212,17 +212,17 @@ describe('KoansFacade', () => {
       facade.setKoanTheme('washi');
 
       expect(facade.koanTheme()).toBe('washi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenCalledWith('washi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(1, 'washi');
     });
 
     it('toggleKoanTheme должен переключать sumi ↔ washi и сохранять', () => {
       facade.toggleKoanTheme();
       expect(facade.koanTheme()).toBe('washi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenLastCalledWith('washi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(1, 'washi');
 
       facade.toggleKoanTheme();
       expect(facade.koanTheme()).toBe('sumi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenLastCalledWith('sumi');
+      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(2, 'sumi');
     });
   });
 });
