@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan.model';
+import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
 
-import type { KoanCategory, KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan.model';
+import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
 
 const VISIBLE_TAG_COUNT = 18;
 const OTHER_META = { label: 'Прочее', kanji: '他' } as const;

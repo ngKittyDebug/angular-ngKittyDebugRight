@@ -5,7 +5,8 @@ import { TestBed } from '@angular/core/testing';
 import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoanApiService } from './koan-api.service';
 
-import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
+import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 describe('KoanApiService', () => {
   let service: KoanApiService;

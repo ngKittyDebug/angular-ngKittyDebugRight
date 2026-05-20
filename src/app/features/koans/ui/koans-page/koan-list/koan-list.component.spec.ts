@@ -4,7 +4,8 @@ import { vi } from 'vitest';
 import { KoanListComponent } from './koan-list.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
-import type { KoanCategory, KoanGroup } from '@features/koans/data/models/koan.model';
+import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanGroup } from '@features/koans/data/models/koan-group.model';
 
 const GROUPS: readonly KoanGroup[] = [
   {

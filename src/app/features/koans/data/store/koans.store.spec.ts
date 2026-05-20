@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { KoanListFixture } from '@features/koans/data/mocks/koan.fixture';
 import { KoansStore } from './koans.store';
 
-import type { KoanListItemModel } from '@features/koans/data/models/koan.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
 
 const koanListWithMeta: KoanListItemModel[] = [
   { number: 1, title: 'Async операция', slug: 'koan-1', category: 'javascript', tags: ['promises', 'async'] },

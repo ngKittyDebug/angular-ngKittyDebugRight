@@ -1,4 +1,5 @@
-import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
+import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 export const KoanBodyFixture: string = [
   '# Коан №1 — «О пустоте аргумента»',

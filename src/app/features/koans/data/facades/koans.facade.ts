@@ -8,7 +8,7 @@ import { resolveKoanError } from '@features/koans/data/api/koan-errors';
 import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
 import { KoansStore } from '@features/koans/data/store/koans.store';
 
-import type { KoanCategory } from '@features/koans/data/models/koan.model';
+import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
 
 @Injectable()
 export class KoansFacade {

@@ -1,15 +1,12 @@
 import { computed } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan.model';
+import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
 
-import type {
-  KoanCategory,
-  KoanGroup,
-  KoanGroupCategory,
-  KoanListItemModel,
-  KoanModel,
-} from '@features/koans/data/models/koan.model';
+import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
+import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 interface KoansState {
   randomKoan: KoanModel | null;

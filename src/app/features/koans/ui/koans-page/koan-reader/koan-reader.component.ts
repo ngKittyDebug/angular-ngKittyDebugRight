@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } from '@angular/core';
 import { MarkdownComponent } from 'ngx-markdown';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan.model';
+import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
 
 import type { ElementRef } from '@angular/core';
-import type { KoanCategory, KoanModel } from '@features/koans/data/models/koan.model';
+import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 @Component({
   selector: 'ngKitty-koan-reader',

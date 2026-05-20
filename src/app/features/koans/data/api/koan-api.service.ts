@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import type { Observable } from 'rxjs';
 import { of, tap } from 'rxjs';
 
-import type { KoanListItemModel, KoanModel } from '@features/koans/data/models/koan.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
+import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 @Injectable({ providedIn: 'root' })
 export class KoanApiService {
