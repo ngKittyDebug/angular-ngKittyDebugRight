@@ -6,8 +6,11 @@ import { jsonError } from './shared/http';
 const SLUG_PATTERN = /^[0-9a-z-]+$/;
 const SLUG_MAX_LENGTH = 100;
 
-// Koan files are bundled with the deployment and do not change at runtime.
-let filesCache: string[] | null = null;
+// Koan files are bundled with the deployment and not change at runtime, so the
+// file list is cached for the lifetime of a warm function instance.
+const cache = {
+  files: [] as string[],
+} satisfies { files: string[] };
 
 const koanGet = async (request: Request): Promise<Response> => {
   if (request.method !== 'GET') {
@@ -15,7 +18,7 @@ const koanGet = async (request: Request): Promise<Response> => {
   }
 
   const url = new URL(request.url);
-  const slug = url.searchParams.get('slug');
+  const slug: Nullable<string> = url.searchParams.get('slug');
 
   if (!slug) {
     return jsonError(400, 'Missing slug parameter');
@@ -31,8 +34,12 @@ const koanGet = async (request: Request): Promise<Response> => {
 
   try {
     const koansDirectory = getKoansDirectory();
-    const files = filesCache ?? (filesCache = await getAllKoanFiles());
-    const fileName = files.find((f) => f === `${slug}.mdx`);
+
+    if (cache.files.length === 0) {
+      Object.assign(cache, { files: await getAllKoanFiles() });
+    }
+
+    const fileName = cache.files.find((f) => f === `${slug}.mdx`);
 
     if (!fileName) {
       return jsonError(404, 'Koan not found');

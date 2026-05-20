@@ -1,4 +1,4 @@
 {
   "extends": "../functions/tsconfig.json",
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "../../src/app/shared/utility-types.d.ts"]
 }
