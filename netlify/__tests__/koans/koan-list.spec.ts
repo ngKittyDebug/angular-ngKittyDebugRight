@@ -1,6 +1,7 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 import { buildRawKoan } from '../koan-raw.fixture';
+import { mockKoanFiles } from '../readdir.mock';
 import { noop } from 'rxjs';
 
 vi.mock('node:fs/promises');
@@ -19,7 +20,7 @@ describe('koan-list', () => {
   describe('Happy Path', () => {
     describe('Коаны существуют', () => {
       it('должен вернуть 200 и список, отсортированный по number', async () => {
-        vi.mocked(readdir).mockResolvedValue(['002-b.mdx', '001-a.mdx'] as never);
+        mockKoanFiles(['002-b.mdx', '001-a.mdx']);
         vi.mocked(readFile).mockImplementation((path) =>
           Promise.resolve(String(path).includes('002') ? buildRawKoan(2, '002-b') : buildRawKoan(1, '001-a'))
         );
@@ -33,7 +34,7 @@ describe('koan-list', () => {
       });
 
       it('должен пробрасывать category и tags из frontmatter', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
+        mockKoanFiles(['001-a.mdx']);
         vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
         const koanList = await importKoanList();
 
@@ -49,7 +50,7 @@ describe('koan-list', () => {
       });
 
       it('должен вернуть Cache-Control: public, max-age=300, stale-while-revalidate=3600', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
+        mockKoanFiles(['001-a.mdx']);
         vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
         const koanList = await importKoanList();
 
@@ -59,7 +60,7 @@ describe('koan-list', () => {
       });
 
       it('должен кешировать список и не перечитывать файлы при повторном вызове', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
+        mockKoanFiles(['001-a.mdx']);
         vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
         const koanList = await importKoanList();
 
@@ -74,7 +75,7 @@ describe('koan-list', () => {
   describe('Negative Cases', () => {
     describe('Коанов нет или чтение упало', () => {
       it('должен вернуть 404, если .mdx файлов нет', async () => {
-        vi.mocked(readdir).mockResolvedValue([] as never);
+        mockKoanFiles([]);
         const koanList = await importKoanList();
 
         const response = await koanList(new Request('https://example.com/.netlify/functions/koan-list'));
@@ -84,7 +85,7 @@ describe('koan-list', () => {
 
       it('должен вернуть 500 при сбое чтения файла', async () => {
         vi.spyOn(console, 'error').mockImplementation(noop);
-        vi.mocked(readdir).mockResolvedValue(['001-a.mdx'] as never);
+        mockKoanFiles(['001-a.mdx']);
         vi.mocked(readFile).mockRejectedValue(new Error('disk error'));
         const koanList = await importKoanList();
 

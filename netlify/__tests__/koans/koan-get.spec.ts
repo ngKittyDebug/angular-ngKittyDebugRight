@@ -1,7 +1,8 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 
 import { RAW_KOAN_FIXTURE } from '../koan-raw.fixture';
+import { mockKoanFiles } from '../readdir.mock';
 import { noop } from 'rxjs';
 
 vi.mock('node:fs/promises');
@@ -20,7 +21,7 @@ describe('koan-get', () => {
   describe('Happy Path', () => {
     describe('Slug валиден и коан существует', () => {
       it('должен вернуть 200 и разобранный коан', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanGet = await importKoanGet();
 
@@ -32,7 +33,7 @@ describe('koan-get', () => {
       });
 
       it('должен пробрасывать category, tags и source из frontmatter', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanGet = await importKoanGet();
 
@@ -47,7 +48,7 @@ describe('koan-get', () => {
       });
 
       it('должен вернуть Cache-Control: public, max-age=3600, immutable', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanGet = await importKoanGet();
 
@@ -86,7 +87,7 @@ describe('koan-get', () => {
       });
 
       it('должен вернуть 404, если коан не найден', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         const koanGet = await importKoanGet();
 
         const response = await koanGet(buildRequest('?slug=999-nesushchestvuet'));
@@ -96,7 +97,7 @@ describe('koan-get', () => {
 
       it('должен вернуть 500 при сбое чтения файла', async () => {
         vi.spyOn(console, 'error').mockImplementation(noop);
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockRejectedValue(new Error('disk error'));
         const koanGet = await importKoanGet();
 

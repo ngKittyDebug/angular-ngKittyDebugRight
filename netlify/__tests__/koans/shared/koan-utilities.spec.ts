@@ -1,6 +1,6 @@
-import { readdir } from 'node:fs/promises';
 import { vi } from 'vitest';
 
+import { mockKoanFiles } from '../../readdir.mock';
 import {
   assertIsKoanFrontmatter,
   getAllKoanFiles,
@@ -37,7 +37,7 @@ describe('koan utilities', () => {
   describe('getAllKoanFiles', () => {
     describe('Happy Path', () => {
       it('должен вернуть только .mdx файлы', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001.mdx', 'readme.txt', '002.mdx'] as never);
+        mockKoanFiles(['001.mdx', 'readme.txt', '002.mdx']);
 
         const files = await getAllKoanFiles();
 
@@ -47,7 +47,7 @@ describe('koan utilities', () => {
 
     describe('Edge Cases', () => {
       it('должен вернуть пустой массив, если .mdx файлов нет', async () => {
-        vi.mocked(readdir).mockResolvedValue(['readme.txt'] as never);
+        mockKoanFiles(['readme.txt']);
 
         const files = await getAllKoanFiles();
 

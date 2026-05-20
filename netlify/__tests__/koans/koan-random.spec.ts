@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 
 import { RAW_KOAN_FIXTURE } from '../koan-raw.fixture';
+import { mockKoanFiles } from '../readdir.mock';
 import { noop } from 'rxjs';
 
 vi.mock('node:fs/promises');
@@ -20,7 +21,7 @@ describe('koan-random', () => {
   describe('Happy Path', () => {
     describe('Коаны существуют', () => {
       it('должен вернуть 200 и разобранный коан', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanRandom = await importKoanRandom();
 
@@ -32,7 +33,7 @@ describe('koan-random', () => {
       });
 
       it('должен пробрасывать category, tags и source из frontmatter', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanRandom = await importKoanRandom();
 
@@ -47,7 +48,7 @@ describe('koan-random', () => {
       });
 
       it('должен вернуть Cache-Control: no-store', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanRandom = await importKoanRandom();
 
@@ -57,7 +58,7 @@ describe('koan-random', () => {
       });
 
       it('должен исключить текущий коан при наличии параметра exclude', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx', '002-b.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx', '002-b.mdx']);
         vi.mocked(readFile).mockResolvedValue(RAW_KOAN_FIXTURE);
         const koanRandom = await importKoanRandom();
 
@@ -71,7 +72,7 @@ describe('koan-random', () => {
   describe('Negative Cases', () => {
     describe('Коанов нет или чтение упало', () => {
       it('должен вернуть 404, если .mdx файлов нет', async () => {
-        vi.mocked(readdir).mockResolvedValue([] as never);
+        mockKoanFiles([]);
         const koanRandom = await importKoanRandom();
 
         const response = await koanRandom(buildRequest());
@@ -80,7 +81,7 @@ describe('koan-random', () => {
       });
 
       it('должен вернуть 404, если все коаны исключены через exclude', async () => {
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         const koanRandom = await importKoanRandom();
 
         const response = await koanRandom(buildRequest('?exclude=001-o-pustote-argumenta'));
@@ -90,7 +91,7 @@ describe('koan-random', () => {
 
       it('должен вернуть 500 при сбое чтения файла', async () => {
         vi.spyOn(console, 'error').mockImplementation(noop);
-        vi.mocked(readdir).mockResolvedValue(['001-o-pustote-argumenta.mdx'] as never);
+        mockKoanFiles(['001-o-pustote-argumenta.mdx']);
         vi.mocked(readFile).mockRejectedValue(new Error('disk error'));
         const koanRandom = await importKoanRandom();
 
