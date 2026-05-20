@@ -1,7 +1,7 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
-import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;

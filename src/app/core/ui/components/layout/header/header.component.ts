@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiHeader } from '@taiga-ui/layout';
-import { LanguageSwitcherComponent } from '../../language-switcher/language-switcher.component';
+import { LanguageSwitcherComponent } from '@core/ui/components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'ngKitty-header',

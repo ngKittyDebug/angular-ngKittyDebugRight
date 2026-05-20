@@ -2,7 +2,7 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { NotFoundComponent } from './not-found.component';
-import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;

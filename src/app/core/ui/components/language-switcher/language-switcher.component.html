@@ -5,9 +5,9 @@
   tuiButton
   tuiButtonSelect
   type="button"
-  [(ngModel)]="value"
+  [ngModel]="currentLang()"
   (ngModelChange)="onChangeLanguage($event)"
 >
-  {{ value }}
-  <tui-data-list-wrapper *tuiDropdown new [items]="languages" />
+  {{ currentLang() }}
+  <tui-data-list-wrapper *tuiDropdown new [items]="languageList" />
 </button>

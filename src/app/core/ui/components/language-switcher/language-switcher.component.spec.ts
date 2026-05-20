@@ -1,9 +1,9 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { LanguageSwitcherComponent } from './language-switcher.component';
 import { TranslocoService } from '@jsverse/transloco';
-import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { LanguageSwitcherComponent } from './language-switcher.component';
 
 describe('LanguageSwitcherComponent', () => {
   let component: LanguageSwitcherComponent;
@@ -35,8 +35,12 @@ describe('LanguageSwitcherComponent', () => {
       const newLang = 'en';
 
       component.onChangeLanguage(newLang);
-      expect(mockTranslocoService.setActiveLang).toHaveBeenCalledWith(newLang);
-      expect(component.currentLang).toBe(newLang);
+      fixture.detectChanges();
+
+      const button: HTMLButtonElement | null = fixture.nativeElement.querySelector('button');
+
+      expect(mockTranslocoService.setActiveLang).toHaveBeenNthCalledWith(1, newLang);
+      expect(button?.textContent).toContain(newLang);
     });
 
     it('должен быть инициализирован текущим языком из сервиса.', async () => {
