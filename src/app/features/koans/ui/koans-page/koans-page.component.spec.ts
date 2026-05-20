@@ -15,11 +15,12 @@ import { KoanFixture, KoanListFixture } from '@features/koans/data/mocks/koan.fi
 import { KoansPageComponent } from './koans-page.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
+import type { MockInstance } from 'vitest';
 
 describe('KoansPageComponent', () => {
   let fixture: ComponentFixture<KoansPageComponent>;
   let element: HTMLElement;
-  let navigateSpy: ReturnType<typeof vi.fn>;
+  let navigateSpy: MockInstance<Router['navigate']>;
 
   beforeEach(async () => {
     KoanApiServiceMock.getRandomKoan.mockReturnValue(of(KoanFixture));
@@ -45,8 +46,7 @@ describe('KoansPageComponent', () => {
 
     const router = TestBed.inject(Router);
 
-    navigateSpy = vi.fn().mockResolvedValue(true);
-    router.navigate = navigateSpy as unknown as Router['navigate'];
+    navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
     fixture = TestBed.createComponent(KoansPageComponent);
     element = fixture.nativeElement as HTMLElement;
