@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TuiButton, TuiTitle } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiHeader } from '@taiga-ui/layout';
 import { LanguageSwitcherComponent } from '../../language-switcher/language-switcher.component';
 
 @Component({
   selector: 'ngKitty-header',
-  imports: [TuiTitle, TuiHeader, TuiButton, LanguageSwitcherComponent],
+  imports: [TuiTitle, TuiHeader, TuiButton, LanguageSwitcherComponent, TuiIcon],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
