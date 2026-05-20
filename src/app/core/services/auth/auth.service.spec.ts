@@ -69,6 +69,40 @@ describe('AuthService', () => {
         expect(netlifyIdentityMock.onAuthChange).toHaveBeenCalledTimes(1);
       });
     });
+
+    describe('Ошибка OAuth-callback', () => {
+      beforeEach(() => {
+        netlifyIdentityMock.handleAuthCallback.mockRejectedValue(new Error('No OAuth callback'));
+        netlifyIdentityMock.getUser.mockResolvedValue(null);
+      });
+
+      it('должен вызвать hydrateSession', async () => {
+        await service.initialize();
+
+        expect(netlifyIdentityMock.hydrateSession).toHaveBeenCalledTimes(1);
+      });
+
+      it('должен подписаться на изменения авторизации', async () => {
+        await service.initialize();
+
+        expect(netlifyIdentityMock.onAuthChange).toHaveBeenCalledTimes(1);
+      });
+
+      it('должен загрузить пользователя после ошибки callback', async () => {
+        await service.initialize();
+
+        expect(netlifyIdentityMock.getUser).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('Ошибка hydrateSession', () => {
+      it('должен пробросить ошибку hydrateSession', async () => {
+        netlifyIdentityMock.handleAuthCallback.mockResolvedValue(null);
+        netlifyIdentityMock.hydrateSession.mockRejectedValue(new Error('Network error'));
+
+        await expect(service.initialize()).rejects.toThrow('Network error');
+      });
+    });
   });
 
   describe('Вход по email и паролю', () => {
