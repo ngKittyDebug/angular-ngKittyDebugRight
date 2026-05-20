@@ -76,7 +76,7 @@ describe('AuthService', () => {
       netlifyIdentityMock.login.mockResolvedValue(userFixture);
     });
 
-    it('должен начать загрузку ', async () => {
+    it('должен начать загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
       await service.login(emailFixture, passwordFixture);
@@ -90,7 +90,7 @@ describe('AuthService', () => {
       expect(service.user()).toEqual(userFixture);
     });
 
-    it('должен завершить загрузку ', async () => {
+    it('должен завершить загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
       await service.login(emailFixture, passwordFixture);
@@ -140,7 +140,7 @@ describe('AuthService', () => {
       netlifyIdentityMock.login.mockResolvedValue(userFixture);
     });
 
-    it('должен начать загрузку ', async () => {
+    it('должен начать загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
       await service.login(emailFixture, passwordFixture);
@@ -165,7 +165,7 @@ describe('AuthService', () => {
       expect(service.user()).toBeNull();
     });
 
-    it('должен завершить загрузку ', async () => {
+    it('должен завершить загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
       await service.login(emailFixture, passwordFixture);
