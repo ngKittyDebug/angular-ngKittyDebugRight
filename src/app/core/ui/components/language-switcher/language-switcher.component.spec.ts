@@ -2,7 +2,8 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { LanguageSwitcherComponent } from './language-switcher.component';
-import { TranslocoService, TranslocoTestingModule } from '@jsverse/transloco';
+import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing.mock/transloco-testing.mock';
 
 describe('LanguageSwitcherComponent', () => {
   let component: LanguageSwitcherComponent;
@@ -16,16 +17,7 @@ describe('LanguageSwitcherComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        LanguageSwitcherComponent,
-        TranslocoTestingModule.forRoot({
-          langs: { en: {}, ru: {} },
-          translocoConfig: {
-            availableLangs: ['ru', 'en'],
-            defaultLang: 'ru',
-          },
-        }),
-      ],
+      imports: [LanguageSwitcherComponent, TranslocoTestingMock],
       providers: [{ provide: TranslocoService, useValue: mockTranslocoService }],
     }).compileComponents();
 
