@@ -32,22 +32,27 @@ export function parseFrontmatter(raw: string): ParsedKoan {
 }
 
 // Frontmatter comes from raw .mdx files, so `parseFrontmatter` honestly returns a
-// `Partial`. This narrows it to a fully-populated `KoanFrontmatter`, throwing on
-// malformed content (surfaces a bad .mdx at test/deploy time instead of leaking
-// `NaN`/`undefined` into responses).
-export function assertIsKoanFrontmatter(frontmatter: Partial<KoanFrontmatter>): asserts frontmatter is KoanFrontmatter {
+// `Partial`. This type guard reports whether it is fully populated and valid — used
+// to skip malformed koans in the list and to back the assertion below.
+export function isKoanFrontmatter(frontmatter: Partial<KoanFrontmatter>): frontmatter is KoanFrontmatter {
   const { number, title, slug, category, tags, source } = frontmatter;
 
-  if (typeof number !== 'number' || !Number.isFinite(number)) {
-    throw new Error('Invalid koan frontmatter: "number" must be a finite number');
-  }
+  return (
+    typeof number === 'number' &&
+    Number.isFinite(number) &&
+    !!title &&
+    !!slug &&
+    !!category &&
+    !!source &&
+    Array.isArray(tags)
+  );
+}
 
-  if (!title || !slug || !category || !source) {
-    throw new Error('Invalid koan frontmatter: "title", "slug", "category" and "source" are required');
-  }
-
-  if (!Array.isArray(tags)) {
-    throw new Error('Invalid koan frontmatter: "tags" must be an array');
+// Narrows a single koan, throwing on malformed content. Used by get/random where a
+// bad requested koan should surface as an error rather than be silently dropped.
+export function assertIsKoanFrontmatter(frontmatter: Partial<KoanFrontmatter>): asserts frontmatter is KoanFrontmatter {
+  if (!isKoanFrontmatter(frontmatter)) {
+    throw new Error('Invalid koan frontmatter');
   }
 }
 

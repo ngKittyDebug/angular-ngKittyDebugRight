@@ -33,6 +33,23 @@ describe('koan-list', () => {
         expect(body.map((item: { number: number }) => item.number)).toEqual([1, 2]);
       });
 
+      it('должен пропустить битый коан и вернуть только валидные', async () => {
+        mockKoanFiles(['001-a.mdx', '002-broken.mdx']);
+        vi.mocked(readFile).mockImplementation((path) =>
+          Promise.resolve(
+            String(path).includes('002') ? '---\ntitle: "без number"\n---\n\nтело' : buildRawKoan(1, '001-a')
+          )
+        );
+        const koanList = await importKoanList();
+
+        const response = await koanList(GET);
+        const body = await response.json();
+
+        expect(response.status).toBe(200);
+        expect(body).toHaveLength(1);
+        expect(body[0].slug).toBe('001-a');
+      });
+
       it('должен пробрасывать category и tags из frontmatter', async () => {
         mockKoanFiles(['001-a.mdx']);
         vi.mocked(readFile).mockResolvedValue(buildRawKoan(1, '001-a'));
