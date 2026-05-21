@@ -4,26 +4,33 @@
   tuiForm="m"
   class="form"
   aria-labelledby="login-title"
+  [style.max-width.rem]="32"
   [formGroup]="loginForm"
 >
   <header tuiHeader>
-    <h2 tuiTitle>Login form</h2>
+    <h2 tuiTitle>{{ 'login.title' | transloco }}</h2>
   </header>
 
-  <tui-textfield>
-    <label tuiLabel for="email">Email</label>
+  <tui-textfield iconStart="@tui.user">
+    <label tuiLabel for="email">{{ 'login.email' | transloco }}</label>
     <input formControlName="email" placeholder="john@wick.com" tuiInput type="email" id="email" />
   </tui-textfield>
+  <tui-error [error]="getInputError('email')" />
 
   <tui-textfield iconStart="@tui.lock">
-    <label tuiLabel for="password">password</label>
+    <label tuiLabel for="password">{{ 'login.password' | transloco }}</label>
     <input id="password" formControlName="password" placeholder="Aa88888" tuiInput />
     <tui-icon tuiPassword />
   </tui-textfield>
+  <tui-error [error]="getInputError('password')" />
 
-  <footer>
-    <button appearance="secondary" tuiButton type="button">гугл</button>
-    <button appearance="secondary" tuiButton type="button">хуюгл</button>
-    <button tuiButton type="submit">Submit</button>
+  <footer class="footer">
+    <button tuiButton type="submit" [disabled]="loginForm.invalid">{{ 'login.submit' | transloco }}</button>
+
+    <span class="divider"></span>
+
+    <button appearance="secondary" tuiButton type="button">{{ 'login.google' | transloco }}</button>
+    <button appearance="secondary" tuiButton type="button">{{ 'login.github' | transloco }}</button>
+    <a routerLink="/register" class="link">{{ 'login.register' | transloco }}</a>
   </footer>
 </form>
