@@ -7,6 +7,12 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'chronicles',
+        loadComponent: () =>
+          import('./core/ui/components/pages/chronicles/chronicles.component').then((c) => c.ChroniclesComponent),
+      },
+
+      {
         path: '**',
         loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),
       },
