@@ -8,9 +8,9 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'chronicles',
+        path: 'chronicle',
         loadComponent: () =>
-          import('./core/ui/components/pages/chronicles/chronicles.component').then((c) => c.ChroniclesComponent),
+          import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
       },
 
       {

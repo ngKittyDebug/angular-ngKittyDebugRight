@@ -25,6 +25,6 @@ export const NAVIGATION_ITEM_LIST = [
   {
     icon: '@tui.book-open',
     label: marker('navigation-items.chronicle'),
-    url: '/chronicles',
+    url: '/chronicle',
   },
 ] as const satisfies NavigationItem[];
