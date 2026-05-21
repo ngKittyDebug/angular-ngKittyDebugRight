@@ -134,6 +134,47 @@
 
 * {
   box-sizing: border-box;
+  cursor: url('/assets/1.png'), auto;
+}
+
+a,
+button,
+[role='button'],
+input,
+label,
+select,
+summary,
+.t-clickable {
+  cursor: url('/assets/2.png'), pointer;
+}
+
+a:hover,
+button:hover,
+[role='button']:hover,
+input:hover,
+label:hover,
+select:hover,
+summary:hover,
+.t-clickable:hover {
+  cursor: url('/assets/2.png'), pointer;
+}
+
+a:active,
+button:active,
+[role='button']:active,
+input:active,
+label:active,
+select:active,
+summary:active,
+.t-clickable:active {
+  cursor: url('/assets/3.png'), pointer;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
 }
 
 html,
@@ -164,7 +205,6 @@ button[tuiButton][data-appearance='primary'] {
   font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: capitalize;
-  cursor: pointer;
   overflow: hidden;
   transition: 0.25s ease all;
   box-shadow: var(--primary-shadow);
@@ -174,6 +214,35 @@ button[tuiButton][data-appearance='primary']:hover,
 button[tuiButton][data-appearance='primary']:active {
   color: var(--accent-soft);
   background-image: var(--bg-primary-hover-btn);
+}
+
+button[tuiButton]:disabled {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgb(20 27 31 /85%) 0,
+    rgb(53 55 56 /85%) 1px,
+    rgb(20 27 31 /85%) 1px,
+    rgb(53 55 56 /85%) 2px,
+    rgb(20 27 31 /85%) 3px
+  );
+  border: #000;
+  color: #000;
+  box-shadow: none;
+}
+
+button[tuiButton]:disabled:hover {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgb(20 27 31 /85%) 0,
+    rgb(53 55 56 /85%) 1px,
+    rgb(20 27 31 /85%) 1px,
+    rgb(53 55 56 /85%) 2px,
+    rgb(20 27 31 /85%) 3px
+  );
+  border: #000;
+  color: #000;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 button[tuiButton][data-appearance='secondary'] {
@@ -186,7 +255,6 @@ button[tuiButton][data-appearance='secondary'] {
   font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: capitalize;
-  cursor: pointer;
   overflow: hidden;
   transition: 0.25s ease all;
   box-shadow: var(--secondary-shadow);
