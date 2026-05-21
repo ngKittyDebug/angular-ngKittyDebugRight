@@ -10,13 +10,12 @@
 
   <div class="content">
     <ng-content />
+    <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
+      <div tuiAvatar="@tui.user"></div>
+      <div class="user-info">
+        <div class="name">RandomUser</div>
+        <div class="role">Moscow</div>
+      </div>
+    </a>
   </div>
-  <a class="profile-card" routerLink="/profile" routerLinkActive="active">
-    <img src="assets/avatar.png" alt="avatar" width="50" />
-
-    <div class="user-info">
-      <div class="name">Techno Priest</div>
-      <div class="role">Moskow</div>
-    </div>
-  </a>
 </aside>
