@@ -8,6 +8,11 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'shrift',
+        loadComponent: () => import('./features/shrift/shrift.component').then((c) => c.ShriftComponent),
+        providers: [provideTranslocoScope('shrift')],
+      },
+      {
         path: '**',
         loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),
         providers: [provideTranslocoScope('not-found')],
