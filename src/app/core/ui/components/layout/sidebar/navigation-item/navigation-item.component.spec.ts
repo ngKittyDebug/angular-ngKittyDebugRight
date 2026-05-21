@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { NavigationItemComponent } from './navigation-item.component';
 import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('NavigationItemComponent', () => {
   let component: NavigationItemComponent;
@@ -10,7 +11,7 @@ describe('NavigationItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavigationItemComponent],
+      imports: [NavigationItemComponent, TranslocoTestingMock],
       providers: [provideRouter([])],
     }).compileComponents();
 
