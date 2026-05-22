@@ -1,7 +1,15 @@
 import { provideTaiga } from '@taiga-ui/core';
 import type { ApplicationConfig } from '@angular/core';
-import { isDevMode, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  inject,
+  isDevMode,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+
+import { AuthService } from '@core/services/auth/auth.service';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -13,8 +21,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(),
     provideTaiga(),
+    provideAppInitializer(() => inject(AuthService).initialize()),
+    provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: ['en', 'ru'],

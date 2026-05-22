@@ -3,6 +3,7 @@
 } @else {
   <div class="kl-scroll">
     <section class="kl-section">
+      <!-- TODO AR  вынести в отдельный компонент -->
       <div class="kl-label">
         <span>{{ 'koans.label-section' | transloco }}</span>
         <span class="kl-label-kanji">部</span>
@@ -35,6 +36,8 @@
     </section>
 
     @if (tagCounts().length > 0) {
+      <!-- TODO AR  вынести в отдельный компонент -->
+      <!-- TODO AR  при клик на Все - он разворачивается, не скроллинга  -->
       <section class="kl-section">
         <div class="kl-label">
           <span>{{ 'koans.label-tags' | transloco }}</span>
@@ -48,7 +51,11 @@
           }
           @if (hiddenTagCount() > 0) {
             <button type="button" class="kl-tag kl-tag-more" (click)="toggleTagsExpanded()">
-              {{ tagsExpanded() ? '— меньше' : '+' + hiddenTagCount() }}
+              @if (tagsExpanded()) {
+                {{ 'koans.tags-collapse' | transloco }}
+              } @else {
+                {{ 'koans.tags-expand' | transloco: { count: hiddenTagCount() } }}
+              }
             </button>
           }
         </div>
@@ -56,6 +63,7 @@
     }
 
     <section class="kl-section kl-section--list">
+      <!-- TODO AR  вынести в отдельный компонент -->
       <div class="kl-label kl-label--inset">
         <span>{{ 'koans.label-scrolls' | transloco }}</span>
         <span class="kl-label-kanji">巻 · {{ filteredCount() }}</span>
@@ -63,9 +71,9 @@
 
       @if (filteredCount() === 0) {
         <p class="kl-empty">
-          Ничего не найдено
+          {{ 'koans.search-no-results' | transloco }}
           @if (query()) {
-            <span> по «{{ query() }}»</span>
+            <span>{{ 'koans.search-by-query' | transloco: { query: query() } }}</span>
           }
           .
         </p>
@@ -92,7 +100,7 @@
                       <span class="kl-item-title">{{ item.title }}</span>
                       <span
                         class="kl-item-seal"
-                        [attr.aria-label]="readSet().has(item.slug) ? 'прочитано' : null"
+                        [attr.aria-label]="readSet().has(item.slug) ? ('koans.item-read' | transloco) : null"
                       ></span>
                     </button>
                   </li>
