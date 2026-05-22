@@ -81,3 +81,33 @@ Optional but recommended for non-trivial changes:
 When committing or opening a PR: use Conventional Commit type (`feat|fix|chore|refactor|docs|style|perf|test|build|ci|revert`), keep the subject ≤72 chars, and verify the branch name matches `^(chore|feat|fix|docs|style|refactor|perf)\/[a-z0-9-]+[_-][a-z0-9-]+$` (validated by `validate-branch-name`).
 
 **Branching & PR base**: always branch off `develop`, and open PRs **against `develop`** (not `main`). `main` is the release branch and merges into it come from `develop` only.
+
+## i18n (transloco)
+
+Translation files live in `public/i18n/ru.json` and `public/i18n/en.json`. Always update both files together.
+
+**Key namespacing** — feature-scoped keys are nested under a feature name; shared navigation under `navigation-items`:
+
+```
+"koans.sign-btn"          // feature-scoped label
+"koans.sign-btn-title"    // feature-scoped tooltip
+"navigation-items.koans"  // nav label
+```
+
+**Usage patterns:**
+
+- Text content in templates: `{{ 'key' | transloco }}` — requires `TranslocoModule` in component `imports`
+- Attribute bindings: `[title]="'key' | transloco"`, `[attr.aria-label]="'key' | transloco"`
+- Static strings in TS config arrays (e.g. `navigation-item-list.config.ts`): wrap with `marker('key')` from `@jsverse/transloco-keys-manager/marker` so the keys-manager extractor picks them up
+
+**UI copy voice — «delulu-church» tone:**
+
+The app has a mystical-absurdist, zen-koan voice. UI strings should be allegorical and oblique — never literal instructions ("Click here to do X"). Use scroll/fate/cosmos/void metaphors, dry dark humour, and a hint of the inevitable. The keyboard shortcut `(R)` is kept in tooltips as a bare technical aside — it doesn't need to fit the prose.
+
+Established phrase pairs (RU → EN) as a register reference:
+| Key | RU | EN |
+|-----|----|----|
+| `koans.sign-btn` | Дай знак | Give a sign |
+| `koans.sign-btn-title` | Воззвать к неведомому (R) | Invoke the unknown (R) |
+| `koans.empty-hint` | Свиток пуст. Узри мудрость веков — или найди её сам. | The scroll is empty. Behold the wisdom of ages — or seek it yourself. |
+| `navigation-items.koans` | Коаны | Koans |

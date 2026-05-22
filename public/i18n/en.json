@@ -11,6 +11,7 @@
   },
   "koans": {
     "sign-btn": "Give a sign",
+    "sign-btn-title": "Invoke the unknown (R)",
     "empty-hint": "The scroll is empty. Behold the wisdom of ages — or seek it yourself."
   },
   "navigation-items": {

@@ -52,7 +52,7 @@
   </div>
 
   <div class="kp-header-actions">
-    <button class="kp-sign-btn" type="button" (click)="onRandom()" title="Случайный коан (R)">
+    <button class="kp-sign-btn" type="button" (click)="onRandom()" [title]="'koans.sign-btn-title' | transloco">
       <span class="kp-kanji">兆</span>
       {{ 'koans.sign-btn' | transloco }}
     </button>
