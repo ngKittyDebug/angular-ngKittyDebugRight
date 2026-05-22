@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./features/login/login.component').then((c) => c.LoginComponent),
+        loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login')],
       },
       {
