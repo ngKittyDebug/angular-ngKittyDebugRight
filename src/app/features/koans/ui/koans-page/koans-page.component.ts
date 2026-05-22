@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { distinctUntilChanged, filter, map, startWith } from 'rxjs';
 
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoanListComponent } from './koan-list/koan-list.component';
@@ -36,6 +36,7 @@ export class KoansPageComponent implements OnInit {
     { initialValue: null }
   );
 
+  private readonly transloco = inject(TranslocoService);
   protected readonly facade = inject(KoansFacade);
   protected readonly slug = input<Nullable<string>>(null);
   protected readonly listOpen = signal(true);
@@ -110,6 +111,7 @@ export class KoansPageComponent implements OnInit {
   }
 
   protected onQueryInput(event: Event): void {
+    // TODO AR debounce
     this.facade.setQuery((event.target as HTMLInputElement).value);
   }
 
@@ -153,10 +155,9 @@ export class KoansPageComponent implements OnInit {
   protected async onShare(): Promise<void> {
     try {
       await navigator.clipboard.writeText(globalThis.location.href);
-      // TODO AR add translation
-      this.showToast('Ссылка скопирована — пусть пройдёт по сетям');
+      this.showToast(this.transloco.translate('koans.toast-copied'));
     } catch {
-      this.showToast('Не удалось скопировать ссылку');
+      this.showToast(this.transloco.translate('koans.toast-copy-failed'));
     }
   }
 

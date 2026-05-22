@@ -41,10 +41,10 @@
     <input
       class="kp-search"
       type="search"
-      placeholder="искать по тексту, тегу, источнику…"
+      [placeholder]="'koans.search-placeholder' | transloco"
       [value]="facade.query()"
       (input)="onQueryInput($event)"
-      aria-label="Поиск по коанам"
+      [attr.aria-label]="'koans.search-label' | transloco"
     />
     @if (facade.query()) {
       <button class="kp-search-clear" type="button" (click)="onClearQuery()" aria-label="Очистить">✕</button>
@@ -72,9 +72,9 @@
     (click)="onToggleList()"
   >
     @if (listOpen()) {
-      Скрыть список
+      {{ 'koans.list-hide' | transloco }}
     } @else {
-      Список коанов
+      {{ 'koans.list-show' | transloco }}
     }
   </button>
 

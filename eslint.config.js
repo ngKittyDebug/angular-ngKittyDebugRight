@@ -127,6 +127,7 @@ export default tseslint.config(
       'import/extensions': [
         'error',
         {
+          json: 'always',
           ts: 'never',
           config: 'off',
           routes: 'off',

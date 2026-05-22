@@ -25,7 +25,18 @@
     "error-generic": "Свиток недоступен. Мастер велит подождать и попробовать снова.",
     "segment-master": "Мастер",
     "segment-student": "Ученик",
-    "segment-question": "С чем ты уйдёшь"
+    "segment-question": "С чем ты уйдёшь",
+    "tags-expand": "+{{ count }}",
+    "tags-collapse": "— меньше",
+    "search-no-results": "Ничего не найдено",
+    "search-by-query": " по «{{ query }}»",
+    "item-read": "прочитано",
+    "search-placeholder": "искать по тексту, тегу, источнику…",
+    "search-label": "Поиск по коанам",
+    "list-hide": "Скрыть список",
+    "list-show": "Список коанов",
+    "toast-copied": "Ссылка скопирована — пусть пройдёт по сетям",
+    "toast-copy-failed": "Не удалось скопировать ссылку"
   },
   "navigation-items": {
     "tarot": "Таро",

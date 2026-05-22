@@ -25,7 +25,18 @@
     "error-generic": "The scroll is unavailable. The master bids you wait and try again.",
     "segment-master": "Master",
     "segment-student": "Student",
-    "segment-question": "Before you depart"
+    "segment-question": "Before you depart",
+    "tags-expand": "+{{ count }}",
+    "tags-collapse": "— less",
+    "search-no-results": "Nothing found",
+    "search-by-query": " for «{{ query }}»",
+    "item-read": "read",
+    "search-placeholder": "search by text, tag, source…",
+    "search-label": "Search the koans",
+    "list-hide": "Hide list",
+    "list-show": "Koan list",
+    "toast-copied": "Link copied — may it travel the networks",
+    "toast-copy-failed": "Could not copy the link"
   },
   "navigation-items": {
     "tarot": "Tarot",
