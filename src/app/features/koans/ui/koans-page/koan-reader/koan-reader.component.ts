@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } from '@angular/core';
+import { TranslocoModule } from '@jsverse/transloco';
 import { MarkdownComponent } from 'ngx-markdown';
 
 import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
@@ -9,7 +10,7 @@ import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 @Component({
   selector: 'ngKitty-koan-reader',
-  imports: [MarkdownComponent],
+  imports: [TranslocoModule, MarkdownComponent],
   templateUrl: './koan-reader.component.html',
   styleUrl: './koan-reader.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

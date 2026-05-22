@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, input, si
 import type { OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
+import { TranslocoModule } from '@jsverse/transloco';
+
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoanListComponent } from './koan-list/koan-list.component';
 import { KoanReaderComponent } from './koan-reader/koan-reader.component';
@@ -11,7 +13,7 @@ const TOAST_VISIBLE_MS = 2000;
 
 @Component({
   selector: 'ngKitty-koans-page',
-  imports: [RouterLink, KoanListComponent, KoanReaderComponent],
+  imports: [RouterLink, TranslocoModule, KoanListComponent, KoanReaderComponent],
   templateUrl: './koans-page.component.html',
   styleUrl: './koans-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

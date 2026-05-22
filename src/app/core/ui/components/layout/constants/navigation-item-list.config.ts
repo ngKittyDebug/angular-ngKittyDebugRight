@@ -29,7 +29,7 @@ export const NAVIGATION_ITEM_LIST = [
   },
   {
     icon: '@tui.infinity',
-    label: 'Коаны',
+    label: marker('navigation-items.koans'),
     url: '/koans',
   },
 ] as const satisfies NavigationItem[];

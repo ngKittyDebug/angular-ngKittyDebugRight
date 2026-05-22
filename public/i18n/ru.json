@@ -9,11 +9,16 @@
     "alena": "Алёна",
     "nadya": "Надя"
   },
+  "koans": {
+    "sign-btn": "Дай знак",
+    "empty-hint": "Свиток пуст. Узри мудрость веков — или найди её сам."
+  },
   "navigation-items": {
     "tarot": "Таро",
     "shrift": "Исповедь",
     "runes": "Руны",
     "horoscope": "Гороскоп",
-    "chronicle": "Хроника"
+    "chronicle": "Хроника",
+    "koans": "Коаны"
   }
 }

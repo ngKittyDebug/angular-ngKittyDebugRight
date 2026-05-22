@@ -9,11 +9,16 @@
     "alena": "Alena",
     "nadya": "Nadya"
   },
+  "koans": {
+    "sign-btn": "Give a sign",
+    "empty-hint": "The scroll is empty. Behold the wisdom of ages — or seek it yourself."
+  },
   "navigation-items": {
     "tarot": "Tarot",
     "shrift": "Shrift",
     "runes": "Runes",
     "horoscope": "Horoscope",
-    "chronicle": "Chronicle"
+    "chronicle": "Chronicle",
+    "koans": "Koans"
   }
 }
