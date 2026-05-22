@@ -4,31 +4,34 @@ import { readdir, readFile } from 'node:fs/promises';
 import matter from 'gray-matter';
 
 export const KOAN_FILE_EXTENSION = '.mdx';
+export const SUPPORTED_LANGS = ['ru', 'en'] as const;
+export type KoanLang = (typeof SUPPORTED_LANGS)[number];
 
 const SLUG_PATTERN = /^[0-9a-z-]+$/;
 const SLUG_MAX_LENGTH = 100;
 
-export const getKoansDirectory = () => join(process.cwd(), 'public', 'koans');
+export const isValidLang = (value: string): value is KoanLang => (SUPPORTED_LANGS as readonly string[]).includes(value);
+
+export const getKoansDirectory = (lang: KoanLang) => join(process.cwd(), 'public', 'koans', lang);
 
 export const isValidSlug = (value: string): boolean => value.length <= SLUG_MAX_LENGTH && SLUG_PATTERN.test(value);
 
 export const toKoanFileName = (slug: string): string => `${slug}${KOAN_FILE_EXTENSION}`;
 
-export const getAllKoanFiles = async (): Promise<string[]> => {
-  const allFiles = await readdir(getKoansDirectory());
+export const getAllKoanFiles = async (lang: KoanLang): Promise<string[]> => {
+  const allFiles = await readdir(getKoansDirectory(lang));
 
   return allFiles.filter((f) => f.endsWith(KOAN_FILE_EXTENSION));
 };
 
 // Koan files are bundled with the deployment and do not change at runtime, so the
-// file list is cached for the lifetime of a warm function instance and shared by
-// the get/random endpoints.
-let cachedKoanFiles: Nullable<string[]> = null;
+// file list is cached per language for the lifetime of a warm function instance.
+const cachedKoanFiles: Partial<Record<KoanLang, string[]>> = {};
 
-export const getCachedKoanFiles = async (): Promise<string[]> => {
-  cachedKoanFiles ??= await getAllKoanFiles();
+export const getCachedKoanFiles = async (lang: KoanLang): Promise<string[]> => {
+  cachedKoanFiles[lang] ??= await getAllKoanFiles(lang);
 
-  return cachedKoanFiles;
+  return cachedKoanFiles[lang]!;
 };
 
 interface KoanFrontmatter {
@@ -87,8 +90,8 @@ export interface Koan extends KoanFrontmatter {
 
 // Reads and parses a single koan file, throwing on malformed content. Used by the
 // get/random endpoints, where a bad koan should surface as an error.
-export async function readKoanFile(file: string): Promise<Koan> {
-  const raw = await readFile(join(getKoansDirectory(), file), 'utf-8');
+export async function readKoanFile(file: string, lang: KoanLang): Promise<Koan> {
+  const raw = await readFile(join(getKoansDirectory(lang), file), 'utf-8');
   const { frontmatter, body } = parseFrontmatter(raw);
 
   assertIsKoanFrontmatter(frontmatter);

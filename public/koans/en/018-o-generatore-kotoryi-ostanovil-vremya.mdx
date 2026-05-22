@@ -1,0 +1,41 @@
+---
+number: 18
+title: "On the Generator that Stopped Time"
+slug: "018-o-generatore-kotoryi-ostanovil-vremya"
+category: "JavaScript"
+kanji: "言"
+tags: ["voluntary-pause", "spring-awaits"]
+source: "Monastery of Ennyo-ji, 1801 CE"
+---
+
+# Koan №18 — "On the Generator that Stopped Time"
+
+<Source>Found inside a mechanical clock at Ennyo-ji monastery, 1801 CE. The clock had stopped. The master disassembled the mechanism — inside, a scroll wound onto the spring. The clock had run on this scroll for eighty years.</Source>
+
+```js
+function* monastery() {
+  yield 'morning'
+  yield 'afternoon'
+  yield 'evening'
+}
+
+const day = monastery()
+day.next() // { value: 'morning', done: false }
+day.next() // { value: 'afternoon', done: false }
+```
+
+<Student>"Master, the function stopped mid-word. And waits."</Student>
+
+<Master>"It did not stop. It yielded control."</Master>
+
+<Student>"But it is frozen!"</Student>
+
+<Master>"Snow is frozen. A generator is paused. The difference: snow does not wait for your .next(). The generator — waits."</Master>
+
+<Student>"Who decides when to continue?"</Student>
+
+<Master>"The one who holds the iterator. Not the function. The function surrendered its will — voluntarily."</Master>
+
+<Haiku>The spring is wound. The clock waits. Time belongs to the one who holds the key.</Haiku>
+
+<Question>A generator surrenders control outward. It does not decide when to continue — that is decided by the one holding the iterator. If a function surrendered its will to the caller — is that trust or helplessness? And how many generators in your code have frozen forever, because no one called .next()?</Question>

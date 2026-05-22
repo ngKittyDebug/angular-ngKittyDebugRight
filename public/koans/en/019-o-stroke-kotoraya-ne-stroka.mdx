@@ -1,0 +1,43 @@
+---
+number: 19
+title: "On the String that is Not a String"
+slug: "019-o-stroke-kotoraya-ne-stroka"
+category: "JavaScript"
+kanji: "言"
+tags: ["language-within-language", "form-survived-the-fire"]
+source: "Monastery of Kofuku-ji, 1850 CE"
+---
+
+# Koan №19 — "On the String that is Not a String"
+
+<Source>Written on incense wrapping at Kofuku-ji monastery, 1850 CE. The incense burned. The wrapping did not. The master said: "The contents vanished. The form remained. That is a template literal."</Source>
+
+```js
+const name = 'monk'
+const greeting = `Greetings, ${name}`
+
+// But also:
+const html = String.raw`<div class="${name}"></div>`
+```
+
+<Student>"Master, this is simply a convenient string with substitution."</Student>
+
+<Master>"And if I tell you that a string is a function call?"</Master>
+
+<Student>"A string — is a function?"</Student>
+
+```js
+function zen(strings, ...values) {
+  return strings.raw[0] + values[0].toUpperCase()
+}
+
+zen`Hello, ${'world'}`  // 'Hello, WORLD'
+```
+
+<Master>"Tagged template. The function before the backticks is the tag. It receives the string parts and substitutions separately. html\`...\`, css\`...\`, gql\`...\` — these are languages within the language."</Master>
+
+<Student>"A string became a language..."</Student>
+
+<Haiku>The wrapping is empty. But the form — is a language.</Haiku>
+
+<Question>Tagged templates turn a string literal into a function call. The string ceases to be data and becomes a language within a language. If backticks can create an embedded DSL — where is the boundary between a string, code, and a language?</Question>

@@ -1,0 +1,42 @@
+---
+number: 21
+title: "On the Event that Did Not Bubble"
+slug: "021-o-sobytii-kotoroe-ne-vsplilo"
+category: "JavaScript"
+kanji: "言"
+tags: ["shore-in-ignorance", "child-hid-from-parent"]
+source: "Monastery of Nanzen-ji, 1923 CE"
+---
+
+# Koan №21 — "On the Event that Did Not Bubble"
+
+<Source>A fragment of birch bark found in the wall of the zendo at Nanzen-ji monastery during the earthquake of 1923 CE. The wall cracked from bottom to top. Master Kozan pointed to the crack and said: "Bubbling." Then pointed to the ceiling: "But someone called stopPropagation."</Source>
+
+```js
+document.querySelector('.outer').addEventListener('click', () => {
+  console.log('outer')
+})
+
+document.querySelector('.inner').addEventListener('click', (e) => {
+  e.stopPropagation()
+  console.log('inner')
+})
+```
+
+<Action>The student clicked the inner element. Saw only: "inner"</Action>
+
+<Student>"Master, the outer did not know. The event was stopped."</Student>
+
+<Master>"Who stopped it?"</Master>
+
+<Student>"The inner element."</Student>
+
+<Master>"The child decided that the parent should not know. Are you certain that is wisdom?"</Master>
+
+<Action>The master threw a stone into the pond. Rings spread toward the shores.</Action>
+
+<Master>"An event is born at the point of impact. It bubbles upward — like rings on water. stopPropagation is the hand that stops the rings. If you stopped the event — you took responsibility for all who wanted to hear."</Master>
+
+<Haiku>The stone fell. Rings stopped. The shore — in ignorance.</Haiku>
+
+<Question>stopPropagation stops not only those you know. Most calls to stopPropagation in production are not a conscious choice, but a panicked bandage. When you stop bubbling — are you solving the problem or hiding it from those above?</Question>

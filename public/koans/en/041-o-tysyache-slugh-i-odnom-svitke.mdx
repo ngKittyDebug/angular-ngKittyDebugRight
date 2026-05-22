@@ -1,0 +1,43 @@
+---
+number: 41
+title: "On a Thousand Servants and One Scroll"
+slug: "041-o-tysyache-slugh-i-odnom-svitke"
+category: "Angular"
+kanji: "骨"
+tags: ["forty-two-kings", "single-source-of-truth"]
+source: "Server of Kasuga Taisha shrine, 2026 CE"
+---
+
+# Koan №41 — "On a Thousand Servants and One Scroll"
+
+<Action>Extracted from the node_modules of an abandoned Angular project discovered on the server of Kasuga Taisha shrine, 2026 CE. The folder weighed 2.3 gigabytes. Inside node_modules — another node_modules. Master Hideo said: "A fractal of suffering." He ran ng serve. The laptop caught fire. The master extinguished it with the book "Angular in Action." It finally proved useful.</Action>
+
+<Action>The student arrived with dark circles under his eyes.</Action>
+
+<Student>"Master, I have forty-two services."</Student>
+
+<Master>"Why?"</Master>
+
+<Student>"Each component holds its own state. UserService knows the user. CartService knows the cart. AuthService knows the token..."</Student>
+
+<Master>"Do they know each other?"</Master>
+
+<Student>"CartService injects AuthService. NotificationService injects UserService and CartService. SettingsService injects everyone."</Student>
+
+<Master>"Draw it."</Master>
+
+<Action>The student drew for ten minutes. Arrows went in every direction.</Action>
+
+<Master>"They were good servants. But you made each one — a little king. A kingdom of forty-two kings is a civil war with async pipe."</Master>
+
+<Student>"Then I need a store?"</Student>
+
+<Master>"Forty-two rivers. Muddying one lake. Dig a well."</Master>
+
+<Student>"A centralized store — is that a silver bullet?"</Student>
+
+<Master>"No. But a single source of truth is easier to debug than forty-two sources of opinion. If you cannot answer 'where does the user's state live right now' — who owns your application: you or the web?"</Master>
+
+<Haiku>Forty-two rivers. One lake. One well.</Haiku>
+
+<Question>A service in Angular is not a store. When there are two services — that is convenience. When forty-two — that is a distributed system without logs and without hope. Where does your application's state live?</Question>

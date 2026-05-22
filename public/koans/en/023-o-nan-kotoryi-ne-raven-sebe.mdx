@@ -1,0 +1,37 @@
+---
+number: 23
+title: "On NaN, Which Is Not Equal to Itself"
+slug: "023-o-nan-kotoryi-ne-raven-sebe"
+category: "JavaScript"
+kanji: "言"
+tags: ["self-denying", "scar-instead-of-number"]
+source: "Temple of Kencho-ji, 1953 CE"
+---
+
+# Koan №23 — "On NaN, Which Is Not Equal to Itself"
+
+<Source>Carved on the bottom of a copper alms bowl, Kencho-ji temple, 1953 CE. The bowl had been passed from hand to hand for three hundred years. The inscription was found when the bowl rusted through. Master Asahina said: "At last it has become transparent."</Source>
+
+```js
+NaN === NaN   // false
+```
+
+<Action>The master struck the student with a stick.</Action>
+
+<Master>"Why do you not ask?"</Master>
+
+<Student>"Because any question about this will be foolish."</Student>
+
+<Master>"At last — wisdom."</Master>
+
+<Action>Long silence.</Action>
+
+<Master>"NaN is not a value. It is an admission of failure. parseInt('stone'). Math.sqrt(-1). You asked for a number — and the world could not answer. NaN is a scar where a number should have been."</Master>
+
+<Student>"How do I check if something is NaN?"</Student>
+
+<Master>"Number.isNaN(). Not bare isNaN() — it lies. Only Number.isNaN() tells the truth."</Master>
+
+<Haiku>A thing without a name. Not equal to itself. Present — and absent.</Haiku>
+
+<Question>NaN is the only entity in JS that denies its own existence. When did you last check the result of a mathematical operation?</Question>

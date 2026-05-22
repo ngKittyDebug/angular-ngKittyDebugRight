@@ -1,0 +1,42 @@
+---
+number: 17
+title: "On the Observer that Changes"
+slug: "017-o-nablyudatele-kotoryi-izmenyaet"
+category: "JavaScript"
+kanji: "言"
+tags: ["quantum-observer", "mirror-with-intention"]
+source: "Monastery of Daigo-ji, 1756 CE"
+---
+
+# Koan №17 — "On the Observer that Changes"
+
+<Source>Found behind a mirror in the abbot's chambers at Daigo-ji monastery, 1756 CE. The mirror was hung in 1603. Behind it — a scroll and a note: "You look into the mirror — the mirror looks into you. Proxy."</Source>
+
+```js
+const monk = { enlightened: false }
+
+const observed = new Proxy(monk, {
+  get(target, key) {
+    console.log(`someone reads ${key}`)
+    return target[key]
+  }
+})
+
+observed.enlightened // 'someone reads enlightened'
+```
+
+<Student>"Master, I created an object that knows about every touch."</Student>
+
+<Master>"It knows. But did it change from being observed?"</Master>
+
+<Student>"No. The values are the same."</Student>
+
+<Master>"In classical physics — no. In quantum — observation changes the result. Proxy lets you be a quantum observer. You can not only see — you can intercept, alter, forbid."</Master>
+
+<Student>"Vue 3 is built on Proxy?"</Student>
+
+<Master>"And Angular Signals. And MobX. Reactivity is a Proxy with intention."</Master>
+
+<Haiku>The mirror watches. The monk changes. Or does he not?</Haiku>
+
+<Question>Vue 3 is built on Proxy. Every reactive property — under observation. If the framework watches every touch on data — do the data remain free? And in a reactive world, does an object exist that no one is watching?</Question>

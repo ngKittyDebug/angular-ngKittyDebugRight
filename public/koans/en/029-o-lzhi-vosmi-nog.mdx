@@ -1,0 +1,32 @@
+---
+number: 29
+title: "On the Lie of Eight Legs"
+slug: "029-o-lzhi-vosmi-nog"
+category: "JavaScript"
+kanji: "言"
+tags: ["emptiness-condemned", "eight-legs-of-lies"]
+source: "Bay of Matsushima, 2017 CE"
+---
+
+# Koan №29 — "On the Lie of Eight Legs"
+
+<Source>Extracted from the shell of a crab caught in Matsushima bay, 2017 CE. A fisherman brought it to Zuigan-ji temple. The abbot read it. Turned pale. Said: "The crab knew JavaScript." The crab was released.</Source>
+
+```js
+const falsies = [0, '', null, undefined, NaN, false, -0, 0n]
+falsies.filter(Boolean)  // []
+```
+
+<Student>"Master, I gathered eight values. All are falsy."</Student>
+
+<Action>The master raised an empty bowl.</Action>
+
+<Master>"The bowl exists. The bowl is empty. Is it false?"</Master>
+
+<Action>The student was silent.</Action>
+
+<Master>"Zero is a number meaning 'nothing.' An empty string is a string that is silent. JavaScript does not distinguish 'empty' from 'false.' For it, silence is a lie. But you — are human. You must distinguish."</Master>
+
+<Haiku>Eight crab legs. Not one carries truth. The crab walks on.</Haiku>
+
+<Question>Eight falsy values are not lies. They are empty, zero, undefined. JavaScript called them lies because it needed binaryness. If an empty bowl is false — does the type system describe reality, or create its own?</Question>

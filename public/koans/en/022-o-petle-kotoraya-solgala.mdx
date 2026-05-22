@@ -1,0 +1,41 @@
+---
+number: 22
+title: "On the Loop that Lied"
+slug: "022-o-petle-kotoraya-solgala"
+category: "JavaScript"
+kanji: "言"
+tags: ["five-fives", "one-candle-for-all"]
+source: "Temple of Tenryu-ji, 1934 CE"
+---
+
+# Koan №22 — "On the Loop that Lied"
+
+<Source>Discovered in incense ash on the altar of Tenryu-ji temple, 1934 CE. The ash lay in rings — five coils. A novice read them as for. Master Seki read them as closure. Both were right. Both were wrong.</Source>
+
+```js
+for (var i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0)
+}
+// 5 5 5 5 5
+```
+
+<Student>"Master, I expected 0 1 2 3 4. I received five fives."</Student>
+
+<Master>"You received the truth."</Master>
+
+<Action>The master placed one candle on the table.</Action>
+
+<Master>"var — one candle. One variable for the entire loop. Five callbacks look at it. When they finally open their eyes — the candle has already burned down to five."</Master>
+
+```js
+for (let i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0)
+}
+// 0 1 2 3 4
+```
+
+<Master>"let — five candles. Each iteration lights its own. var lives in the function. let lives in the block. Each iteration has its own life."</Master>
+
+<Haiku>Five callbacks. One candle. Five fives on the floor.</Haiku>
+
+<Question>A closure closes over not a value — it closes over a variable. The variable changes. Do you see the moment of creation or the moment of execution?</Question>

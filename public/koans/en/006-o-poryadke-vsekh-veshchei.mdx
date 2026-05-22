@@ -1,0 +1,37 @@
+---
+number: 6
+title: "On the Order of All Things"
+slug: "006-o-poryadke-vsekh-veshchei"
+category: "JavaScript"
+kanji: "言"
+tags: ["the-master-does-not-listen", "the-servant-endures-silence"]
+source: "Temple of Kinkaku-ji, 1378 CE"
+---
+
+# Koan №6 — "On the Order of All Things"
+
+<Source>From a sealed chest in Kinkaku-ji temple, 1378 CE. Master Josetsu dictated it to his student before death. The student disobeyed and added a setTimeout.</Source>
+
+```js
+console.log('1')
+setTimeout(() => console.log('2'), 0)
+console.log('3')
+```
+
+<Student>"Master, I set zero milliseconds. Zero! An instant. Why does 2 arrive last?"</Student>
+
+<Action>The master poured tea into three cups. He served the first and third immediately. The second he placed on a tray and handed to the servant. The servant circled the room and returned the cup to the table.</Action>
+
+<Student>"But why?! It was ready at once!"</Student>
+
+<Master>"Zero does not mean 'now.' Zero means 'after all who are already here.' You asked for an instant, but sent the request through a servant. The servant will not enter while the master is still speaking."</Master>
+
+<Student>"Is the Event Loop the servant?"</Student>
+
+<Action>The master finished his tea.</Action>
+
+<Master>"The call stack is the master. While it speaks — no one enters. Not a promise. Not a timer. Not the user's cry. The master is deaf to everything but himself."</Master>
+
+<Haiku>The master falls silent. The servant enters. The cup — on the table.</Haiku>
+
+<Question>setTimeout(fn, 0) is not "run now." It is "run when the master is free." If the master never falls silent — the servant will never enter.</Question>

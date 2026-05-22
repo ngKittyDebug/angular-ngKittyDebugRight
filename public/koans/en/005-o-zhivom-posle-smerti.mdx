@@ -1,0 +1,45 @@
+---
+number: 5
+title: "On the Living after Death"
+slug: "005-o-zhivom-posle-smerti"
+category: "JavaScript"
+kanji: "言"
+tags: ["ghost-that-is-loved", "life-after-the-stack"]
+source: "Ryoan-ji, 1343 CE"
+---
+
+# Koan №5 — "On the Living after Death"
+
+<Source>A scroll recovered from the ashes of the Ryoan-ji monastery, 1343 CE. Nun Setsu-ni found it in the rock garden, between the third and fourth stone. No one knows who placed it there.</Source>
+
+```js
+function temple() {
+  let candle = 0
+  return function() { return ++candle }
+}
+
+const pray = temple()
+pray() // 1
+pray() // 2
+pray() // 3
+```
+
+<Student>"Master, temple() has finished. The stack is cleared. The context is dead. But the candle burns."</Student>
+
+<Action>The master looked at the flame.</Action>
+
+<Master>"Who told you that completion is death?"</Master>
+
+<Student>"But... the garbage collector..."</Student>
+
+<Master>"The garbage collector takes what has been forgotten. And this candle — is remembered. The inner function remembers. While someone remembers — the thing lives."</Master>
+
+<Student>"Then a closure is memory?"</Student>
+
+<Action>The master extinguished the candle on the table. Smoke rose.</Action>
+
+<Master>"A closure is a ghost that refused to leave, because it is still loved."</Master>
+
+<Haiku>The temple burned. The monk departed. But in the palms — warm air.</Haiku>
+
+<Question>A closure holds not a value — but a bond to the place where the value was born. If a variable lives only because someone references it — how does JavaScript's memory differ from human memory? And what will happen when the last reference is lost?</Question>

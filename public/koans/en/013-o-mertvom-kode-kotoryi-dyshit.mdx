@@ -1,0 +1,46 @@
+---
+number: 13
+title: "On the Dead Code that Breathes"
+slug: "013-o-mertvom-kode-kotoryi-dyshit"
+category: "JavaScript"
+kanji: "言"
+tags: ["ghost-seen-by-all", "parser-knows-runtime-does-not"]
+source: "Temple of Eihe-ji, 1603 CE"
+---
+
+# Koan №13 — "On the Dead Code that Breathes"
+
+<Source>Carved on the back of a wooden memorial tablet bearing the names of deceased monks, Eihe-ji temple, 1603 CE. Abbot Genro carved it at night. In the morning he pretended the tablet had always been that way.</Source>
+
+```js
+function koan() {
+  return 'light'
+  console.log('darkness')
+}
+```
+
+<Student>"Master, the line after return — dead code. It will never execute."</Student>
+
+<Master>"Never?"</Master>
+
+<Student>"The interpreter will not reach it. It does not exist."</Student>
+
+<Action>The master took a brush and wrote a poem on paper. Then turned the sheet over and wrote another on the back.</Action>
+
+<Master>"Read it."</Master>
+
+<Action>The student read the first.</Action>
+
+<Master>"And the second?"</Master>
+
+<Student>"You must turn the sheet over."</Student>
+
+<Master>"But you know it is there. Code after return does not execute — but it occupies bytes. Lives in the AST. The parser saw it. The linter mourns it. The minifier will bury it."</Master>
+
+<Student>"So dead code... exists?"</Student>
+
+<Master>"It exists for all except the runtime. Like a ghost — seen by everyone, acknowledged by no one."</Master>
+
+<Haiku>A poem on the back. The runtime will not turn the page.</Haiku>
+
+<Question>Dead code passes parsing, occupies space in the bundle, is read by human eyes. It does not execute — but it influences. If code will never run, but slows the build, confuses the developer, bloats the file — is it truly dead?</Question>

@@ -1,0 +1,41 @@
+---
+number: 16
+title: "On the Symbol that Cannot be Named"
+slug: "016-o-simvole-kotorogo-nelzya-nazvat"
+category: "JavaScript"
+kanji: "言"
+tags: ["key-without-a-name", "born-unique"]
+source: "Temple of Chison-in, 1711 CE"
+---
+
+# Koan №16 — "On the Symbol that Cannot be Named"
+
+<Source>Found inside the bronze bell of Chison-in temple, 1711 CE. The bell had sounded out of tune for forty years. When it was recast — a scroll was found inside. The master remarked: "The right place for a name that cannot be repeated."</Source>
+
+```js
+const s = Symbol('koan')
+const t = Symbol('koan')
+
+s === t   // false
+s.toString()  // 'Symbol(koan)'
+```
+
+<Student>"Master, I gave them the same name. Why are they not equal?"</Student>
+
+<Action>The master pointed to two monks in identical robes.</Action>
+
+<Master>"Both wear grey. Both are shaved. Both are called 'monk.' Are they one person?"</Master>
+
+<Student>"No, but..."</Student>
+
+<Master>"Description is not essence. 'koan' is a note tied to a collar. Every Symbol() is born unique. Like every breath."</Master>
+
+<Student>"What is the use of uniqueness without the ability to compare?"</Student>
+
+<Action>The master drew a key from his pocket — without an inscription.</Action>
+
+<Master>"This key opens one lock. The key has no name. The lock has no name. But they know each other. A Symbol is a key. Not a name."</Master>
+
+<Haiku>Two monks. One robe. Different fates.</Haiku>
+
+<Question>A string is public. Anyone can write the same name and gain access. A symbol is private by nature. If two keys look the same but open different doors — what determines identity: appearance or origin?</Question>

@@ -1,0 +1,48 @@
+---
+number: 30
+title: "On the Living Object Frozen Twice"
+slug: "030-o-zhivom-objekte-zamorozili-dvazhdy"
+category: "JavaScript"
+kanji: "言"
+tags: ["ice-over-living-water", "illusion-of-immutability"]
+source: "Monastery of Koyasan, winter 2024 CE"
+---
+
+# Koan №30 — "On the Living Object Frozen Twice"
+
+<Source>Written in frost on the window of the server room at Koyasan monastery, winter 2024 CE. By morning it had melted. The admin managed a screenshot. The screenshot is stored in /dev/null. The master said: "The right place."</Source>
+
+```js
+const config = Object.freeze({
+  db: { host: 'localhost', port: 5432 },
+  cache: true
+})
+
+config.cache = false      // silently ignored
+config.db.host = 'prod'   // works!
+```
+
+<Action>The master carried a bowl of water into the frost. The surface froze. He pierced the ice with a finger — water below.</Action>
+
+<Master>"Object.freeze — the first ice. The surface. Top-level keys — untouchable. But the nested object is a reference. You froze the pointer — not the room it points to."</Master>
+
+<Student>"Then I will freeze deeper!"</Student>
+
+```js
+function deepFreeze(obj) {
+  Object.values(obj).forEach(val => {
+    if (typeof val === 'object') deepFreeze(val)
+  })
+  return Object.freeze(obj)
+}
+```
+
+<Master>"Good. And now — a circular reference."</Master>
+
+<Student>"Infinite recursion..."</Student>
+
+<Master>"You wanted to freeze the world. But the world references itself."</Master>
+
+<Haiku>Ice on top. Water inside. The frost cannot reach the bottom.</Haiku>
+
+<Question>Object.freeze freezes the surface. If immutability is only on top — is it immutability or an illusion of control? And how many layers must you freeze for the system to be truly predictable?</Question>

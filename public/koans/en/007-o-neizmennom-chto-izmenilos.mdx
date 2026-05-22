@@ -1,0 +1,37 @@
+---
+number: 7
+title: "On the Unchanging that Changed"
+slug: "007-o-neizmennom-chto-izmenilos"
+category: "JavaScript"
+kanji: "言"
+tags: ["the-oath-is-not-about-stone", "name-without-body"]
+source: "Garden of Saiho-ji, 1402 CE"
+---
+
+# Koan №7 — "On the Unchanging that Changed"
+
+<Source>Carved into a stone slab at the entrance to the Saiho-ji garden, 1402 CE. Master Ikkyū chiseled it after an argument with a student who had "figured out const."</Source>
+
+```js
+const wall = [1, 2, 3]
+wall.push(4)     // [1, 2, 3, 4]
+wall = [5]       // TypeError
+```
+
+<Student>"Master, I declared the wall immutable! But someone placed a stone upon it — and the wall accepted it!"</Student>
+
+<Action>The master pointed to the monastery wall.</Action>
+
+<Master>"This wall has stood here for three hundred years. It has moss, cracks, bird nests. Is it the same wall?"</Master>
+
+<Student>"Yes... but it has changed."</Student>
+
+<Master>"const did not promise that the wall would remain clean. It promised that you would not put another wall in its place. The name is bound to the stone. The stone — is free."</Master>
+
+<Student>"Then how do I freeze the stone?!"</Student>
+
+<Master>"Object.freeze(). But consider — frozen water does not flow. A frozen object does not live. Do you want reliability or death?"</Master>
+
+<Haiku>The wall stands. Moss grows. The name — the same. The stone — different.</Haiku>
+
+<Question>Object.freeze() freezes shallowly — nested objects remain alive. If immutability is only on the surface — is it immutability at all? And how many layers must you freeze to say: "this will truly not change"?</Question>

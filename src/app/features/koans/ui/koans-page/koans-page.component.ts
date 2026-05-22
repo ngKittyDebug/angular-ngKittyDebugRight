@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { distinctUntilChanged, filter, map, startWith } from 'rxjs';
+import { distinctUntilChanged, filter, map, skip, startWith } from 'rxjs';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
@@ -60,6 +60,17 @@ export class KoansPageComponent implements OnInit {
   });
 
   constructor() {
+    this.transloco.langChanges$.pipe(skip(1), takeUntilDestroyed()).subscribe(() => {
+      this.facade.loadKoanList();
+      this.facade.loadCategories();
+
+      const currentSlug = this.facade.selectedKoan()?.slug;
+
+      if (currentSlug) {
+        this.facade.selectKoan(currentSlug);
+      }
+    });
+
     effect(() => {
       const next = this.slug() ?? this.routeSlug();
 

@@ -1,0 +1,38 @@
+---
+number: 27
+title: "On the Loop that Does Not Iterate"
+slug: "027-o-tsikle-kotoryi-ne-perebiraet"
+category: "JavaScript"
+kanji: "言"
+tags: ["keys-instead-of-values", "ancestors-uninvited"]
+source: "Village of Uji, 2003 CE"
+---
+
+# Koan №27 — "On the Loop that Does Not Iterate"
+
+<Source>Found inside a shakuhachi bamboo flute belonging to a komuso monk, village of Uji, 2003 CE. The flute had not sounded for forty years. The master cut the bamboo — inside, a paper. On it — for...in and a warning.</Source>
+
+```js
+const path = ['stone', 'river', 'temple']
+
+for (const step in path) {
+  console.log(step)
+}
+// '0', '1', '2'
+```
+
+<Student>"Master, I got the steps. But... they are strings?"</Student>
+
+<Master>"You got names, not things. for...in gives keys. For it this is an object with fields '0', '1', '2'."</Master>
+
+```js
+Array.prototype.curse = 'inheritance'
+for (const step in path) { console.log(step) }
+// '0', '1', '2', 'curse'
+```
+
+<Master>"for...in walks all enumerable properties. Its own — and inherited. You called only companions. The ancestors' dead arrived too."</Master>
+
+<Haiku>The flute was silent forty years. Inside — words about foreign keys.</Haiku>
+
+<Question>for...in and for...of sound similar. The first iterates keys, the second — values. Do you know which one you need?</Question>

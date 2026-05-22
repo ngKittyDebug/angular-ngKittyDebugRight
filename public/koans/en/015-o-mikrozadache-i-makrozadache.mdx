@@ -1,0 +1,37 @@
+---
+number: 15
+title: "On the Microtask and the Macrotask"
+slug: "015-o-mikrozadache-i-makrozadache"
+category: "JavaScript"
+kanji: "言"
+tags: ["tyranny-of-priorities", "bottomless-queue"]
+source: "Monastery of Tofuku-ji, 1720 CE"
+---
+
+# Koan №15 — "On the Microtask and the Macrotask"
+
+<Source>Found in the duty roster of Tofuku-ji monastery, 1720 CE. Between lines about sweeping — a column of task priorities. Master Hakuin added it in red ink. The monks decided it was decoration.</Source>
+
+```js
+console.log('1')
+setTimeout(() => console.log('2'), 0)
+Promise.resolve().then(() => console.log('3'))
+console.log('4')
+// 1, 4, 3, 2
+```
+
+<Student>"Master, the promise completed faster than the timer. But both were ready at the same moment."</Student>
+
+<Master>"Ready — does not mean equal. There is a queue of urgent tasks. And there is a queue of ordinary ones."</Master>
+
+<Student>"Microtasks and macrotasks?"</Student>
+
+<Master>"After each task from the ordinary queue — the Event Loop drains the urgent queue completely. The promise entered the urgent queue. setTimeout — the ordinary. Urgent always precedes ordinary."</Master>
+
+<Student>"Then promises are always faster?"</Student>
+
+<Master>"A promise that spawns a promise that spawns a promise — can block rendering forever. Priority without measure becomes tyranny."</Master>
+
+<Haiku>Urgent — first. But the urgent queue is bottomless.</Haiku>
+
+<Question>Microtasks have priority — but priority without measure becomes tyranny. If a promise spawns a promise, and that one spawns the next, the Event Loop will never reach rendering, never reach the user. What is more dangerous — a task that waits too long, or a task that does not know how to stop?</Question>

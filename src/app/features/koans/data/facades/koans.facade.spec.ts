@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, Subject, throwError } from 'rxjs';
 import { vi } from 'vitest';
+import { TranslocoService } from '@jsverse/transloco';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
@@ -24,6 +25,7 @@ describe('KoansFacade', () => {
         KoansFacade,
         { provide: KoanApiService, useValue: KoanApiServiceMock },
         { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
+        { provide: TranslocoService, useValue: { getActiveLang: () => 'ru' } },
       ],
     });
 

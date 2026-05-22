@@ -1,0 +1,44 @@
+---
+number: 12
+title: "On the Promise and the Suffering"
+slug: "012-ob-obeshchanii-i-stradanii"
+category: "JavaScript"
+kanji: "言"
+tags: ["uncaught-cry", "wound-without-bandage"]
+source: "Temple of Hase-dera, 1567 CE"
+---
+
+# Koan №12 — "On the Promise and the Suffering"
+
+<Source>Recorded on a silk scroll found in the hands of the Kannon statue at Hase-dera temple, 1567 CE. The statue gripped it so tightly that the restorer broke her finger. He swore she did not want to let go.</Source>
+
+```js
+fetch('/api/truth')
+  .then(r => r.json())
+  .then(data => {
+    throw new Error('doubt')
+  })
+// Unhandled Promise Rejection
+```
+
+<Student>"Master, I received the truth. I parsed it. Then I doubted. And the error... went into silence. No one heard it."</Student>
+
+<Master>"Where does a cry go in an empty temple?"</Master>
+
+<Student>"Nowhere... It fades."</Student>
+
+<Master>"Unhandled Promise Rejection. Your doubt was not caught. It did not disappear — it festers. An error without .catch() is a wound without a bandage."</Master>
+
+<Student>"Then I shall put .catch() on every promise!"</Student>
+
+<Master>"And what will you write inside it?"</Master>
+
+<Student>"console.log(err)..."</Student>
+
+<Action>The master closed his eyes and was silent for a long time.</Action>
+
+<Master>"To catch an error and write it in a log — that is not healing. That is a chronicle of suffering. You caught the pain. Acknowledged it. And left it lying there."</Master>
+
+<Haiku>The wound is caught. Recorded. It continues to fester.</Haiku>
+
+<Question>.catch(console.log) is the most common ritual in JavaScript. But if you catch an error and do nothing with it — is that better than not catching it at all? Is an empty handler mercy or cowardice?</Question>

@@ -1,0 +1,43 @@
+---
+number: 24
+title: "On async/await and the Illusion of Straightness"
+slug: "024-ob-async-await-i-illyuzii-pryamoty"
+category: "JavaScript"
+kanji: "言"
+tags: ["sugar-over-the-abyss", "hidden-bridge"]
+source: "Temple of Meiji-jingu, 1961 CE"
+---
+
+# Koan №24 — "On async/await and the Illusion of Straightness"
+
+<Source>Found in an abandoned telegraph pole on the road to Meiji-jingu temple, 1961 CE. The wire is severed. The message was never delivered. Inside — a scroll: "The message waited. The pole did not."</Source>
+
+```js
+// the .then path
+fetch('/api')
+  .then(r => r.json())
+  .then(d => console.log(d))
+
+// the await path
+const d = await fetch('/api')
+const j = await d.json()
+console.log(j)
+```
+
+<Student>"Master, async/await is enlightenment. The code became straight. Like synchronous."</Student>
+
+<Action>The master struck him with a stick — three times.</Action>
+
+<Master>"'Like synchronous' — is precisely the trap."</Master>
+
+<Action>The master took a sheet of paper, folded it like a fan — and unfolded it back.</Action>
+
+<Master>"A smooth sheet. But the fold marks remain. await does not make code synchronous. It hides the promise. Under every await — a break point. The function sleeps. Other code continues."</Master>
+
+<Student>"But is that not good?"</Student>
+
+<Master>"When you forget try/catch — it is bad. When you await sequentially in a loop where parallel is possible — it is bad."</Master>
+
+<Haiku>A straight road. A hidden bridge. You walk — not knowing you fly.</Haiku>
+
+<Question>async/await is syntactic sugar over promises. Sugar does not change the nature. Do you know what lies beneath the sugar?</Question>

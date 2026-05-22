@@ -11,7 +11,7 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = ["public/koans/*.mdx"]
+  included_files = ["public/koans/**/*.mdx"]
 
 [[redirects]]
   from = "/*"

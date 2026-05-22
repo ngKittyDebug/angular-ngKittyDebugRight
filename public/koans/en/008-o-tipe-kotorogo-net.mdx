@@ -1,0 +1,45 @@
+---
+number: 8
+title: "On the Type that Does Not Exist"
+slug: "008-o-tipe-kotorogo-net"
+category: "JavaScript"
+kanji: "言"
+tags: ["bug-become-karma", "void-with-an-address"]
+source: "Temple of Byodo-in, 1053 CE"
+---
+
+# Koan №8 — "On the Type that Does Not Exist"
+
+<Source>Discovered in 1991 during the restoration of Byodo-in temple. The parchment dated to 1053 CE — the year of construction. The architect placed it between the beams of the Phoenix Hall. On the back — typeof null.</Source>
+
+```js
+typeof null   // 'object'
+```
+
+<Action>The student sat motionless for three days. Then he asked.</Action>
+
+<Action>The master did not answer. He took an empty bowl and placed it on the table.</Action>
+
+<Master>"What is on the table?"</Master>
+
+<Student>"A bowl."</Student>
+
+<Master>"What is in the bowl?"</Master>
+
+<Student>"Nothing."</Student>
+
+<Master>"But you said 'bowl.' You gave nothing a shape. You placed emptiness on the table. Now the emptiness occupies space. It has a type. It has an address in memory. That is null."</Master>
+
+<Student>"So it is not an error?"</Student>
+
+<Action>The master finally smiled.</Action>
+
+<Master>"It is an error. It is twenty-nine years old. It was found in the first ten days of creation. But a million temples have been built on this foundation. Correct it — and they will crumble."</Master>
+
+<Student>"A bug that became law..."</Student>
+
+<Master>"Call it karma."</Master>
+
+<Haiku>Empty bowl on the table. Inside — nothing. Type — object.</Haiku>
+
+<Question>Brendan Eich created JavaScript in ten days. typeof null is not a design choice. It is exhaustion that became a standard. How many such "typeof null" moments exist in your own code — decisions made in haste, now too costly to correct?</Question>

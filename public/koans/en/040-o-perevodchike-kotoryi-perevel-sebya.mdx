@@ -1,0 +1,40 @@
+---
+number: 40
+title: "On the Translator Who Translated Himself"
+slug: "040-o-perevodchike-kotoryi-perevel-sebya"
+category: "Angular"
+kanji: "骨"
+tags: ["hammer-for-a-nail", "yagni-became-obvious"]
+source: "Library of Tofuku-ji temple, 2026 CE"
+---
+
+# Koan №40 — "On the Translator Who Translated Himself"
+
+<Source>Found in the localStorage of a browser on a public computer in the library of Tofuku-ji temple, 2026 CE. Key — i18n_locale. Value — 'mu'. No fallback worked. The application showed emptiness. The librarian said: "Finally quiet."</Source>
+
+<Source>The student came with an idea.</Source>
+
+<Student>"Master, I want to build a language switcher."</Student>
+
+<Master>"Build it."</Master>
+
+<Student>"Which library should I use?"</Student>
+
+<Master>"You said 'I want to build.' Not 'I want to ask.' How many languages?"</Master>
+
+<Student>"Two. Russian and English."</Student>
+
+<Master>"Then why a library?"</Master>
+
+```js
+const t = { en: { greeting: 'Hello' }, ru: { greeting: 'Привет' } }
+t[locale].greeting
+```
+
+<Student>"But that is... too simple."</Student>
+
+<Master>"For two languages and ten strings — that is all you need. You reached for a large library because 'that is how it is done.' Who does it? Those with forty locales. You have two greetings. You picked up a hammer for a nail."</Master>
+
+<Haiku>Two words. One object. The hammer set aside.</Haiku>
+
+<Question>A solution must match the task. Not ambitions. Not 'the accepted way.' Are you solving the problem — or demonstrating knowledge of tools?</Question>

@@ -1,0 +1,37 @@
+---
+number: 26
+title: "On Destructuring and the Division of the One"
+slug: "026-o-destructuring-i-razdelenii"
+category: "JavaScript"
+kanji: "言"
+tags: ["leash-not-copy", "severed-name-from-river"]
+source: "Temple of Kotoku-in, Kamakura, 1998 CE"
+---
+
+# Koan №26 — "On Destructuring and the Division of the One"
+
+<Source>Written in ink on a grain of rice found in the palm of the Amida Buddha statue, Kotoku-in temple, Kamakura, 1998 CE. A restorer read it under a magnifying glass. He wept. He quit. He became a frontend developer.</Source>
+
+```js
+const universe = { water: { depth: 'abyss', color: 'blue' } }
+const { water } = universe
+water.color = 'black'
+
+universe.water.color  // 'black'
+```
+
+<Student>"Master, I took only the water from the universe."</Student>
+
+<Master>"You took a copy of the name. The water itself — is the same."</Master>
+
+<Action>The student turned pale.</Action>
+
+<Master>"You thought you had separated the river from the world. But you took only its name. Touch it — and the world darkens."</Master>
+
+<Student>"A shallow copy..."</Student>
+
+<Master>"Shallow attachment. The depth — is shared."</Master>
+
+<Haiku>The name apart. The river — the same. You touched it — the world darkened.</Haiku>
+
+<Question>Destructuring copies primitives and references objects. Do you know what you hold in your hand — a copy or a leash?</Question>

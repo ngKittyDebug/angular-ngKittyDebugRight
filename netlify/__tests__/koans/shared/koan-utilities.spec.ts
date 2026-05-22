@@ -27,10 +27,16 @@ const RAW_KOAN = [
 
 describe('koan utilities', () => {
   describe('getKoansDirectory', () => {
-    it('должен указывать на каталог public/koans', () => {
-      const directory = getKoansDirectory();
+    it('должен указывать на каталог public/koans/ru для lang=ru', () => {
+      const directory = getKoansDirectory('ru');
 
-      expect(directory.replace(/\\/g, '/').endsWith('/public/koans')).toBe(true);
+      expect(directory.replace(/\\/g, '/').endsWith('/public/koans/ru')).toBe(true);
+    });
+
+    it('должен указывать на каталог public/koans/en для lang=en', () => {
+      const directory = getKoansDirectory('en');
+
+      expect(directory.replace(/\\/g, '/').endsWith('/public/koans/en')).toBe(true);
     });
   });
 
@@ -39,7 +45,7 @@ describe('koan utilities', () => {
       it('должен вернуть только .mdx файлы', async () => {
         mockKoanFiles(['001.mdx', 'readme.txt', '002.mdx']);
 
-        const files = await getAllKoanFiles();
+        const files = await getAllKoanFiles('ru');
 
         expect(files).toEqual(['001.mdx', '002.mdx']);
       });
@@ -49,7 +55,7 @@ describe('koan utilities', () => {
       it('должен вернуть пустой массив, если .mdx файлов нет', async () => {
         mockKoanFiles(['readme.txt']);
 
-        const files = await getAllKoanFiles();
+        const files = await getAllKoanFiles('ru');
 
         expect(files).toEqual([]);
       });

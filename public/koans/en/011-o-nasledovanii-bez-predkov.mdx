@@ -1,0 +1,37 @@
+---
+number: 11
+title: "On Inheritance Without Ancestors"
+slug: "011-o-nasledovanii-bez-predkov"
+category: "JavaScript"
+kanji: "言"
+tags: ["falling-bead", "borrowed-wisdom"]
+source: "Mount Hiei, 1521 CE"
+---
+
+# Koan №11 — "On Inheritance Without Ancestors"
+
+<Source>A fragment found in the hollow of a thousand-year-old cryptomeria on Mount Hiei, 1521 CE. Monk Jakunen hid it from the abbot, who forbade speaking of prototypes, calling them "chains of samsara."</Source>
+
+```js
+const parent = { wisdom: 42 }
+const child = Object.create(parent)
+
+child.wisdom      // 42
+child.hasOwnProperty('wisdom')  // false
+```
+
+<Student>"Master, the child possesses wisdom. But says the wisdom is not its own."</Student>
+
+<Master>"At last — an honest child."</Master>
+
+<Action>The master removed his prayer beads and hung them on a nail. Below the nail — a shelf. Below the shelf — a table. Below the table — the floor.</Action>
+
+<Master>"Drop a bead. Where will it fall?"</Master>
+
+<Student>"Onto the shelf. If there is no shelf — onto the table. If there is no table — onto the floor."</Student>
+
+<Master>"The prototype chain. A property falls downward until it finds support. If there is no support — undefined. A bead in the void."</Master>
+
+<Haiku>The bead falls. Shelf. Table. Floor. Beyond — sky below.</Haiku>
+
+<Question>An object owns only what it created itself. Everything else is inheritance. Do you know what in you is yours, and what is another's? And at what moment does the inherited become one's own?</Question>

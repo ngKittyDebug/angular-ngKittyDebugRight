@@ -1,0 +1,39 @@
+---
+number: 14
+title: "On the Lie that Became Order"
+slug: "014-o-lzhi-kotoraya-stala-poryadkom"
+category: "JavaScript"
+kanji: "言"
+tags: ["quiet-betrayal", "whose-order"]
+source: "Monastery of Nanzen-ji, 1644 CE"
+---
+
+# Koan №14 — "On the Lie that Became Order"
+
+<Source>Discovered in the sorting ledger of Nanzen-ji monastery, 1644 CE. The monks divided rice by weight. A novice applied an algorithm. The rice was distributed alphabetically. No one noticed for three months.</Source>
+
+```js
+[10, 9, 2, 21, 3].sort()
+// [10, 2, 21, 3, 9]
+```
+
+<Student>"Master, I asked to sort numbers. It sorted strings."</Student>
+
+<Master>"You asked 'sort.' You did not say — what exactly."</Master>
+
+<Student>"But these are numbers!"</Student>
+
+<Master>"For you — numbers. For .sort() without an argument — sequences of characters. It does what it knows, not what you meant."</Master>
+
+<Student>"Then I must pass a comparator function?"</Student>
+
+```js
+[10, 9, 2, 21, 3].sort((a, b) => a - b)
+// [2, 3, 9, 10, 21]
+```
+
+<Master>"Now you speak its language. You explained — what 'greater' means. Without explanation — it was guessing."</Master>
+
+<Haiku>Numbers in a row. But whose order?</Haiku>
+
+<Question>.sort() without an argument is one of the quietest betrayals in JavaScript. It does not break. It does not cry out. It simply does the wrong thing. If a function behaves predictably, but not as you expected — who was wrong: the function, or the one who did not read its nature?</Question>

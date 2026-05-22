@@ -1,0 +1,40 @@
+---
+number: 28
+title: "On the Comma that Gave Birth"
+slug: "028-o-zapyatoi-kotoraya-rodila"
+category: "JavaScript"
+kanji: "言"
+tags: ["the-last-of-three-answers", "operator-without-alibi"]
+source: "Temple of Engaku-ji, 2011 CE"
+---
+
+# Koan №28 — "On the Comma that Gave Birth"
+
+<Source>Scraped from a katana blade kept in the tokonoma of Engaku-ji temple, 2011 CE. The sword had not been drawn for two hundred years. When drawn — code appeared on the steel. The swordsmith was the first programmer. Or the last.</Source>
+
+```js
+const x = (1, 2, 3)
+console.log(x)  // 3
+```
+
+<Student>"Master, I passed three numbers. I received one."</Student>
+
+<Master>"You used the comma operator. The quietest operator in the language. It evaluates everything — and returns the last."</Master>
+
+```js
+for (let i = 0, j = 10; i < 5; i++, j--) {
+  // i grows, j shrinks
+}
+```
+
+<Master>"Here the comma is a servant. It lets two expressions live in one place. Harmless."</Master>
+
+```js
+const result = (doSomething(), getValue())
+```
+
+<Master>"And here — an assassin. The side effect is executed. Forgotten. Only the result remains. You will hide an API call in a comma. A mutation. And no one will notice — because no one watches the comma."</Master>
+
+<Haiku>Three monks entered. The last one — is the answer.</Haiku>
+
+<Question>The minifier loves the comma operator — it compresses code. But code that is easy to compress is easy to hide. If behavior is hidden in syntactic sugar that no one reads — does it exist for those who maintain the code after you?</Question>

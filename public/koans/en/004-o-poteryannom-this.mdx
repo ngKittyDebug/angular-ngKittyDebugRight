@@ -1,0 +1,43 @@
+---
+number: 4
+title: "On the Lost this"
+slug: "004-o-poteryannom-this"
+category: "JavaScript"
+kanji: "言"
+tags: ["ronin-without-a-lord", "loyalty-of-birthplace"]
+source: "Mountain Monastery of Koya-san, 1287 CE"
+---
+
+# Koan №4 — "On the Lost this"
+
+<Source>From the diaries of the hermit Fujiwara-no-Scopu, 1287 CE. Mountain Monastery of Koya-san. Written with a brush soaked in the tears of an intern.</Source>
+
+```js
+const monk = {
+  name: 'Keisaku',
+  speak() { return this.name }
+}
+
+const fn = monk.speak
+fn()  // undefined
+```
+
+<Student>"Master! The monk knows his name. But when I removed his speech from his body — he forgot who he was."</Student>
+
+<Action>The master was silent for a long time.</Action>
+
+<Master>"Tear the heart from the chest of a warrior. Will it still beat for his lord?"</Master>
+
+<Student>"No..."</Student>
+
+<Master>"this is not memory. It is loyalty. It exists only within service. A method torn from an object is a ronin. It serves window. Or no one."</Master>
+
+<Student>"Then .bind() is an oath of loyalty?"</Student>
+
+<Action>The master gave a slight nod.</Action>
+
+<Master>"And an arrow function is a monk who never left the temple. He has no this of his own. He is bound forever to the place where he was born."</Master>
+
+<Haiku>A sword without a hand. Whose loyalty now? It lies in the grass.</Haiku>
+
+<Question>An arrow function does not lose this, because it never possessed it. Can you lose what you never had? And which is freer — one bound forever, or one who binds anew with every call?</Question>

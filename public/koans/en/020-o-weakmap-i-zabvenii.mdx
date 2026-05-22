@@ -1,0 +1,40 @@
+---
+number: 20
+title: "On WeakMap and Forgetting"
+slug: "020-o-weakmap-i-zabvenii"
+category: "JavaScript"
+kanji: "言"
+tags: ["weak-embrace", "memory-hygiene"]
+source: "Monastery of Shokoku-ji, 1891 CE"
+---
+
+# Koan №20 — "On WeakMap and Forgetting"
+
+<Source>Found in the correspondence archive of Shokoku-ji monastery, 1891 CE. A letter never sent. The addressee had died. The letter was kept out of respect. Master Sesshu read it forty years later and said: "A WeakRef to a person."</Source>
+
+```js
+const cache = new WeakMap()
+let user = { name: 'monk' }
+
+cache.set(user, { lastSeen: Date.now() })
+
+user = null
+// the object { name: 'monk' } may be collected by GC
+// the WeakMap entry disappears with it
+```
+
+<Student>"Master, Map holds its key tightly. WeakMap — weakly. Why?"</Student>
+
+<Master>"Map is an archive. It remembers everything. Even what is no longer needed. An object keyed in a Map will never be collected — as long as the Map lives."</Master>
+
+<Student>"A memory leak?"</Student>
+
+<Master>"Attachment is the cause of leaks. WeakMap holds loosely. If the object is needed nowhere else — WeakMap releases it without warning. Without mourning."</Master>
+
+<Student>"That is cruel."</Student>
+
+<Master>"That is hygiene."</Master>
+
+<Haiku>A letter kept. The addressee died. WeakMap would have let go.</Haiku>
+
+<Question>Map holds strong references — an object cannot be collected while the Map remembers it. WeakMap holds loosely — and releases without warning. If attachment is the cause of memory leaks, and forgetting is the cure — what is more humane: to remember everything and suffocate, or to release and live lighter?</Question>
