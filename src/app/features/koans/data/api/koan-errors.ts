@@ -1,7 +1,9 @@
+import { marker } from '@jsverse/transloco-keys-manager/marker';
+
 export const KOAN_ERRORS = {
-  network: 'Связь с монастырём прервана. Проверьте соединение.',
-  notFound: 'Этого коана нет в свитках.',
-  generic: 'Свиток недоступен. Мастер велит подождать и попробовать снова.',
+  network: marker('koans.error-network'),
+  notFound: marker('koans.error-not-found'),
+  generic: marker('koans.error-generic'),
 } as const;
 
 export function resolveKoanError(status: number): string {

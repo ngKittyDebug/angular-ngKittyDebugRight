@@ -112,7 +112,7 @@ describe('KoansFacade', () => {
 
         facade.selectKoan('any-slug');
 
-        expect(facade.error()).toBe('Связь с монастырём прервана. Проверьте соединение.');
+        expect(facade.error()).toBe('koans.error-network');
       });
 
       it('должен выставить сообщение «нет в свитках» при status === 404 в selectKoan', () => {
@@ -122,7 +122,7 @@ describe('KoansFacade', () => {
 
         facade.selectKoan('any-slug');
 
-        expect(facade.error()).toBe('Этого коана нет в свитках.');
+        expect(facade.error()).toBe('koans.error-not-found');
       });
 
       it('должен выставить сообщение о сети при status === 0 в loadRandomKoan', () => {
@@ -132,7 +132,7 @@ describe('KoansFacade', () => {
 
         facade.loadRandomKoan(null);
 
-        expect(facade.error()).toBe('Связь с монастырём прервана. Проверьте соединение.');
+        expect(facade.error()).toBe('koans.error-network');
       });
     });
   });

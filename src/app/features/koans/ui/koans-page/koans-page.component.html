@@ -60,7 +60,7 @@
 </header>
 
 @if (facade.error(); as error) {
-  <p class="kp-error" role="alert">{{ error }}</p>
+  <p class="kp-error" role="alert">{{ error | transloco }}</p>
 }
 
 <div class="kp-body">
