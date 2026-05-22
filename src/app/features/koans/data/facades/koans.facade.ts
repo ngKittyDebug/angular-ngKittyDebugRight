@@ -5,7 +5,7 @@ import { catchError, EMPTY, Subject, switchMap, tap } from 'rxjs';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { resolveKoanError } from '@features/koans/data/api/koan-errors';
-import { KoanCategoryService } from '@features/koans/data/services/koan-category.service';
+import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
 import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
 import { KoansStore } from '@features/koans/data/store/koans.store';
 
@@ -126,12 +126,12 @@ export class KoansFacade {
     this.selectKoan$.next(slug);
   }
 
-  public setQuery(query: string): void {
-    this.store.setQuery(query);
+  public clearSelectedKoan(): void {
+    this.store.clearSelectedKoan();
   }
 
-  public setCategory(category: Nullable<string>): void {
-    this.store.setCategory(category);
+  public setQuery(query: string): void {
+    this.store.setQuery(query);
   }
 
   public toggleCategory(category: Nullable<string>): void {

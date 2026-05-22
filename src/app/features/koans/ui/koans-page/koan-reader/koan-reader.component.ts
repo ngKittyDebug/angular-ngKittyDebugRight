@@ -1,8 +1,17 @@
-import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } from '@angular/core';
-import { TranslocoModule } from '@jsverse/transloco';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { MarkdownComponent } from 'ngx-markdown';
 
-import type { ElementRef } from '@angular/core';
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
@@ -15,6 +24,15 @@ import type { KoanModel } from '@features/koans/data/models/koan.model';
 })
 export class KoanReaderComponent {
   private readonly regionRef = viewChild<ElementRef<HTMLElement>>('readerRegion');
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly transloco = inject(TranslocoService);
+  private readonly labelMaster = toSignal(this.transloco.selectTranslate('koans.segment-master'), { initialValue: '' });
+  private readonly labelStudent = toSignal(this.transloco.selectTranslate('koans.segment-student'), {
+    initialValue: '',
+  });
+  private readonly labelQuestion = toSignal(this.transloco.selectTranslate('koans.segment-question'), {
+    initialValue: '',
+  });
 
   public readonly koan = input<Nullable<KoanModel>>(null);
   public readonly categories = input<readonly KoanCategoryMeta[]>([]);
@@ -31,6 +49,14 @@ export class KoanReaderComponent {
     effect(() => {
       this.koan();
       this.regionRef()?.nativeElement.scrollTo?.({ top: 0, behavior: 'instant' });
+    });
+
+    effect(() => {
+      const element = this.host.nativeElement;
+
+      element.style.setProperty('--koan-label-master', `"${this.labelMaster()}"`);
+      element.style.setProperty('--koan-label-student', `"${this.labelStudent()}"`);
+      element.style.setProperty('--koan-label-question', `"${this.labelQuestion()}"`);
     });
   }
 

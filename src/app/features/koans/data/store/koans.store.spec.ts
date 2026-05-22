@@ -36,7 +36,7 @@ describe('KoansStore', () => {
 
     it('должен фильтровать по activeCategory', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('Angular');
+      store.toggleCategory('Angular');
 
       expect(store.filteredList()).toHaveLength(1);
       expect(store.filteredList()[0].slug).toBe('koan-3');
@@ -74,7 +74,7 @@ describe('KoansStore', () => {
 
     it('должен отражать изменения filteredList', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('JavaScript');
+      store.toggleCategory('JavaScript');
 
       const groups = store.groupedList();
 
@@ -134,7 +134,7 @@ describe('KoansStore', () => {
 
     it('должен опираться на полный koanList, а не на filteredList', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('JavaScript');
+      store.toggleCategory('JavaScript');
 
       expect(store.categoryCounts().get('Angular')).toBe(1);
     });

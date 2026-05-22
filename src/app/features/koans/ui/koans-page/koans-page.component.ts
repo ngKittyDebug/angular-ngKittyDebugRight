@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { distinctUntilChanged, filter, map, startWith } from 'rxjs';
 
 import { TranslocoModule } from '@jsverse/transloco';
 
@@ -13,7 +15,7 @@ const TOAST_VISIBLE_MS = 2000;
 
 @Component({
   selector: 'ngKitty-koans-page',
-  imports: [RouterLink, TranslocoModule, KoanListComponent, KoanReaderComponent],
+  imports: [RouterLink, RouterOutlet, TranslocoModule, KoanListComponent, KoanReaderComponent],
   templateUrl: './koans-page.component.html',
   styleUrl: './koans-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +25,17 @@ const TOAST_VISIBLE_MS = 2000;
 })
 export class KoansPageComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly routeSlug = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      startWith(null),
+      map(() => this.route.firstChild?.snapshot?.paramMap.get('slug') ?? null),
+      distinctUntilChanged()
+    ),
+    { initialValue: null }
+  );
+
   protected readonly facade = inject(KoansFacade);
   protected readonly slug = input<Nullable<string>>(null);
   protected readonly listOpen = signal(true);
@@ -47,10 +60,13 @@ export class KoansPageComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      const next = this.slug();
+      const next = this.slug() ?? this.routeSlug();
 
       if (next) {
         this.facade.selectKoan(next);
+      } else {
+        this.facade.clearSelectedKoan();
+        this.listOpen.set(true);
       }
     });
 
@@ -61,9 +77,9 @@ export class KoansPageComponent implements OnInit {
         return;
       }
 
-      const timer = window.setTimeout(() => this.facade.markRead(koan.slug), READ_DWELL_MS);
+      const timer = globalThis.setTimeout(() => this.facade.markRead(koan.slug), READ_DWELL_MS);
 
-      onCleanup(() => window.clearTimeout(timer));
+      onCleanup(() => globalThis.clearTimeout(timer));
     });
 
     effect((onCleanup) => {
@@ -83,8 +99,8 @@ export class KoansPageComponent implements OnInit {
         }
       };
 
-      window.addEventListener('keydown', handler);
-      onCleanup(() => window.removeEventListener('keydown', handler));
+      globalThis.addEventListener('keydown', handler);
+      onCleanup(() => globalThis.removeEventListener('keydown', handler));
     });
   }
 
@@ -136,7 +152,8 @@ export class KoansPageComponent implements OnInit {
 
   protected async onShare(): Promise<void> {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(globalThis.location.href);
+      // TODO AR add translation
       this.showToast('Ссылка скопирована — пусть пройдёт по сетям');
     } catch {
       this.showToast('Не удалось скопировать ссылку');
@@ -161,6 +178,6 @@ export class KoansPageComponent implements OnInit {
 
   private showToast(message: string): void {
     this.toastMessage.set(message);
-    window.setTimeout(() => this.toastMessage.set(null), TOAST_VISIBLE_MS);
+    globalThis.setTimeout(() => this.toastMessage.set(null), TOAST_VISIBLE_MS);
   }
 }

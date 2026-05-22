@@ -133,6 +133,9 @@ export const KoansStore = signalStore(
     setSelectedKoan(selectedKoan: KoanModel): void {
       patchState(store, { selectedKoan, loadingSelected: false });
     },
+    clearSelectedKoan(): void {
+      patchState(store, { selectedKoan: null });
+    },
     setCategories(categories: KoanCategoryMeta[]): void {
       patchState(store, { categories, loadingCategories: false });
     },
@@ -162,9 +165,6 @@ export const KoansStore = signalStore(
 
     setQuery(query: string): void {
       patchState(store, { query });
-    },
-    setCategory(activeCategory: Nullable<string>): void {
-      patchState(store, { activeCategory });
     },
     toggleCategory(category: Nullable<string>): void {
       patchState(store, { activeCategory: store.activeCategory() === category ? null : category });

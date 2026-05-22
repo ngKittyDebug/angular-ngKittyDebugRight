@@ -217,10 +217,23 @@
   }
 
   .segment.master::before {
+    content: var(--koan-label-master, 'Мастер');
+    display: block;
+    margin-bottom: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+    opacity: 0.75;
+  }
+
+  .segment.master::after {
     content: '';
     position: absolute;
-    top: 8px;
-    bottom: 8px;
+    top: 0;
+    bottom: 0;
     left: 0;
     width: 2px;
     background: var(--accent-primary);
@@ -234,10 +247,23 @@
   }
 
   .segment.student::before {
+    content: var(--koan-label-student, 'Ученик');
+    display: block;
+    margin-bottom: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--tui-text-primary) 45%, transparent);
+    opacity: 0.85;
+  }
+
+  .segment.student::after {
     content: '';
     position: absolute;
-    top: 8px;
-    bottom: 8px;
+    top: 0;
+    bottom: 0;
     left: 0;
     width: 2px;
     background: var(--accent-secondary);
@@ -274,6 +300,18 @@
     color: var(--tui-text-primary);
     font-size: 15.5px;
     line-height: 1.7;
+  }
+
+  .segment.question::before {
+    content: var(--koan-label-question, 'С чем ты уйдёшь');
+    display: block;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--tui-text-primary) 40%, transparent);
   }
 
   .question-mark {

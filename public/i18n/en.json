@@ -22,7 +22,10 @@
     "btn-share": "Copy link",
     "error-network": "The monastery is unreachable. Check your connection.",
     "error-not-found": "This koan is not among the scrolls.",
-    "error-generic": "The scroll is unavailable. The master bids you wait and try again."
+    "error-generic": "The scroll is unavailable. The master bids you wait and try again.",
+    "segment-master": "Master",
+    "segment-student": "Student",
+    "segment-question": "Before you depart"
   },
   "navigation-items": {
     "tarot": "Tarot",
