@@ -4,10 +4,11 @@ import { TuiAvatar } from '@taiga-ui/kit';
 import { RouterLink } from '@angular/router';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 import { NavigationItemComponent } from '@core/ui/components/layout/sidebar/navigation-item/navigation-item.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'ngKitty-sidebar',
-  imports: [TuiAsideComponent, NavigationItemComponent, TuiAvatar, RouterLink],
+  imports: [TuiAsideComponent, NavigationItemComponent, TuiAvatar, RouterLink, TranslocoModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

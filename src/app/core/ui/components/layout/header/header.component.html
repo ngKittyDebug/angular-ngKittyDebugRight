@@ -1,5 +1,8 @@
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
+    <button appearance="primary" size="s" tuiButton type="button" [style.border-radius.%]="100">
+      <tui-icon icon="@tui.moon" />
+    </button>
     <hgroup tuiTitle>
       <h2 class="header-title">
         {{ title }}
@@ -9,20 +12,7 @@
       </p>
     </hgroup>
     <div class="header-buttons">
-      <button appearance="primary" size="s" tuiButton type="button">
-        <tui-icon icon="@tui.languages" />
-        ru
-      </button>
-      <button
-        appearance="primary"
-        iconStart="@tui.moon"
-        size="s"
-        tuiIconButton
-        type="button"
-        [style.border-radius.%]="100"
-      >
-        dark
-      </button>
+      <ngKitty-language-switcher />
     </div>
   </div>
 </header>
