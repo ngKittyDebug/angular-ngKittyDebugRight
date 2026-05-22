@@ -1,10 +1,10 @@
 @if (loading()) {
-  <p class="kl-status" aria-live="polite">Свитки разворачиваются…</p>
+  <p class="kl-status" aria-live="polite">{{ 'koans.list-loading' | transloco }}</p>
 } @else {
   <div class="kl-scroll">
     <section class="kl-section">
       <div class="kl-label">
-        <span>Раздел</span>
+        <span>{{ 'koans.label-section' | transloco }}</span>
         <span class="kl-label-kanji">部</span>
       </div>
       <ul class="kl-cat-list">
@@ -37,7 +37,7 @@
     @if (tagCounts().length > 0) {
       <section class="kl-section">
         <div class="kl-label">
-          <span>Метки</span>
+          <span>{{ 'koans.label-tags' | transloco }}</span>
           <span class="kl-label-kanji">標</span>
         </div>
         <div class="kl-tag-chips">
@@ -57,7 +57,7 @@
 
     <section class="kl-section kl-section--list">
       <div class="kl-label kl-label--inset">
-        <span>Свитки</span>
+        <span>{{ 'koans.label-scrolls' | transloco }}</span>
         <span class="kl-label-kanji">巻 · {{ filteredCount() }}</span>
       </div>
 

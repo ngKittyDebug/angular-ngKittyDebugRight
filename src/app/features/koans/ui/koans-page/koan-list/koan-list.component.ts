@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { TranslocoModule } from '@jsverse/transloco';
 
 import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
 
@@ -10,6 +11,7 @@ const OTHER_META = { label: 'Прочее', kanji: '他' } as const;
 
 @Component({
   selector: 'ngKitty-koan-list',
+  imports: [TranslocoModule],
   templateUrl: './koan-list.component.html',
   styleUrl: './koan-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

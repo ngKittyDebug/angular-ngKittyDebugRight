@@ -12,7 +12,11 @@
   "koans": {
     "sign-btn": "Give a sign",
     "sign-btn-title": "Invoke the unknown (R)",
-    "empty-hint": "The scroll is empty. Behold the wisdom of ages — or seek it yourself."
+    "empty-hint": "The scroll is empty. Behold the wisdom of ages — or seek it yourself.",
+    "list-loading": "The scrolls unfurl…",
+    "label-section": "Section",
+    "label-tags": "Tags",
+    "label-scrolls": "Scrolls"
   },
   "navigation-items": {
     "tarot": "Tarot",
