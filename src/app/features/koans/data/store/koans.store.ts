@@ -2,7 +2,7 @@ import { computed } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
-import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
+import type { KoanGroup } from '@features/koans/data/models/koan-group.model';
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
@@ -39,10 +39,10 @@ const initialState: KoansState = {
 };
 
 function groupByCategory(list: KoanListItemModel[], knownOrder: readonly string[]): KoanGroup[] {
-  const map = new Map<KoanGroupCategory, KoanListItemModel[]>();
+  const map = new Map<string, KoanListItemModel[]>();
 
   for (const item of list) {
-    const key: KoanGroupCategory = item.category ?? 'other';
+    const key: string = item.category ?? 'other';
     const group = map.get(key);
 
     if (group) {
@@ -52,7 +52,7 @@ function groupByCategory(list: KoanListItemModel[], knownOrder: readonly string[
     }
   }
 
-  const order: KoanGroupCategory[] = [
+  const order: string[] = [
     ...knownOrder.filter((c) => c !== 'other'),
     ...[...map.keys()].filter((c) => c !== 'other' && !knownOrder.includes(c)),
     'other',
@@ -81,11 +81,8 @@ export const KoansStore = signalStore(
         if (tags.size > 0 && !k.tags?.some((t) => tags.has(t))) {
           return false;
         }
-        if (q && !k.title.toLowerCase().includes(q)) {
-          return false;
-        }
 
-        return true;
+        return !(q && !k.title.toLowerCase().includes(q));
       });
     });
 

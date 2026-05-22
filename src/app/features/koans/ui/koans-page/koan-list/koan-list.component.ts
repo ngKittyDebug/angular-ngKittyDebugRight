@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 import { TranslocoModule } from '@jsverse/transloco';
 
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
-import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
+import type { KoanGroup } from '@features/koans/data/models/koan-group.model';
 
 const VISIBLE_TAG_COUNT = 18;
 const OTHER_META = { label: 'Прочее', kanji: '他' } as const;
@@ -42,7 +42,7 @@ export class KoanListComponent {
 
   protected readonly hiddenTagCount = computed(() => Math.max(0, this.tagCounts().length - VISIBLE_TAG_COUNT));
 
-  protected groupMeta(group: KoanGroupCategory): { label: string; kanji: string } {
+  protected groupMeta(group: string): { label: string; kanji: string } {
     if (group === 'other') {
       return OTHER_META;
     }
