@@ -33,6 +33,11 @@ describe('KoanReaderComponent', () => {
     describe('Коан выбран', () => {
       beforeEach(() => {
         fixture.componentRef.setInput('koan', KoanFixture);
+        fixture.componentRef.setInput('categories', [
+          { id: 'javascript', label: 'JavaScript', kanji: '言' },
+          { id: 'angular', label: 'Angular', kanji: '骨' },
+          { id: 'philosophy', label: 'Философия', kanji: '道' },
+        ]);
         fixture.detectChanges();
       });
 

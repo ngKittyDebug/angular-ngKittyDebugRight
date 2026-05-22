@@ -24,9 +24,9 @@ const TOAST_VISIBLE_MS = 2000;
 export class KoansPageComponent implements OnInit {
   private readonly router = inject(Router);
   protected readonly facade = inject(KoansFacade);
-  protected readonly slug = input<string | null>(null);
+  protected readonly slug = input<Nullable<string>>(null);
   protected readonly listOpen = signal(true);
-  protected readonly toastMessage = signal<string | null>(null);
+  protected readonly toastMessage = signal<Nullable<string>>(null);
 
   protected readonly currentIndex = computed(() => {
     const current = this.facade.selectedKoan()?.slug;
@@ -68,7 +68,7 @@ export class KoansPageComponent implements OnInit {
 
     effect((onCleanup) => {
       const handler = (event: KeyboardEvent): void => {
-        const target = event.target as HTMLElement | null;
+        const target = event.target as Nullable<HTMLElement>;
 
         if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
           return;
@@ -89,6 +89,7 @@ export class KoansPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.facade.loadCategories();
     this.facade.loadKoanList();
   }
 

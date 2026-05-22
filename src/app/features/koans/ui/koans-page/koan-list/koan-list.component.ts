@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
-
-import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
 
 const VISIBLE_TAG_COUNT = 18;
@@ -18,11 +16,12 @@ const OTHER_META = { label: 'Прочее', kanji: '他' } as const;
 })
 export class KoanListComponent {
   public readonly groups = input<readonly KoanGroup[]>([]);
-  public readonly categoryCounts = input<ReadonlyMap<KoanCategory, number>>(new Map());
-  public readonly activeCategory = input<KoanCategory | null>(null);
+  public readonly categories = input<readonly KoanCategoryMeta[]>([]);
+  public readonly categoryCounts = input<ReadonlyMap<string, number>>(new Map());
+  public readonly activeCategory = input<Nullable<string>>(null);
   public readonly tagCounts = input<readonly (readonly [string, number])[]>([]);
   public readonly activeTags = input<ReadonlySet<string>>(new Set());
-  public readonly selectedSlug = input<string | null>(null);
+  public readonly selectedSlug = input<Nullable<string>>(null);
   public readonly readSet = input<ReadonlySet<string>>(new Set());
   public readonly totalCount = input<number>(0);
   public readonly filteredCount = input<number>(0);
@@ -30,10 +29,9 @@ export class KoanListComponent {
   public readonly loading = input<boolean>(false);
 
   public readonly koanSelect = output<string>();
-  public readonly categoryToggle = output<KoanCategory | null>();
+  public readonly categoryToggle = output<Nullable<string>>();
   public readonly tagToggle = output<string>();
 
-  protected readonly categoryMeta = KOAN_CATEGORIES;
   protected readonly tagsExpanded = signal(false);
 
   protected readonly visibleTags = computed(() => {
@@ -49,7 +47,7 @@ export class KoanListComponent {
       return OTHER_META;
     }
 
-    const meta = KOAN_CATEGORIES.find((c) => c.id === group);
+    const meta = this.categories().find((c) => c.id === group);
 
     return meta ?? { label: group, kanji: '·' };
   }
@@ -62,7 +60,7 @@ export class KoanListComponent {
     this.koanSelect.emit(slug);
   }
 
-  protected onCategory(category: KoanCategory | null): void {
+  protected onCategory(category: Nullable<string>): void {
     this.categoryToggle.emit(category);
   }
 

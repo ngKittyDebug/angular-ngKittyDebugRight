@@ -61,7 +61,7 @@ describe('koan-list', () => {
         expect(body[0]).toMatchObject({
           number: 1,
           slug: '001-a',
-          category: 'javascript',
+          category: 'JavaScript',
           tags: ['arguments', 'undefined'],
         });
       });

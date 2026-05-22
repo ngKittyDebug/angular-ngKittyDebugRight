@@ -1,7 +1,6 @@
-import type { KoanCategory } from './koan-category.model';
 import type { KoanListItemModel } from './koan-list-item.model';
 
-export type KoanGroupCategory = KoanCategory | 'other';
+export type KoanGroupCategory = string;
 
 export interface KoanGroup {
   readonly category: KoanGroupCategory;

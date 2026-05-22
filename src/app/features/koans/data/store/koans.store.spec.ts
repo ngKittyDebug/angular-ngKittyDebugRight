@@ -6,9 +6,9 @@ import { KoansStore } from './koans.store';
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
 
 const koanListWithMeta: KoanListItemModel[] = [
-  { number: 1, title: 'Async операция', slug: 'koan-1', category: 'javascript', tags: ['promises', 'async'] },
-  { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'javascript', tags: ['closures'] },
-  { number: 3, title: 'О сигналах', slug: 'koan-3', category: 'angular', tags: ['signals', 'state'] },
+  { number: 1, title: 'Async операция', slug: 'koan-1', category: 'JavaScript', tags: ['promises', 'async'] },
+  { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'JavaScript', tags: ['closures'] },
+  { number: 3, title: 'О сигналах', slug: 'koan-3', category: 'Angular', tags: ['signals', 'state'] },
 ];
 
 describe('KoansStore', () => {
@@ -36,7 +36,7 @@ describe('KoansStore', () => {
 
     it('должен фильтровать по activeCategory', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('angular');
+      store.setCategory('Angular');
 
       expect(store.filteredList()).toHaveLength(1);
       expect(store.filteredList()[0].slug).toBe('koan-3');
@@ -65,8 +65,8 @@ describe('KoansStore', () => {
       const groups = store.groupedList();
 
       expect(groups).toHaveLength(2);
-      const jsGroup = groups.find((g) => g.category === 'javascript');
-      const ngGroup = groups.find((g) => g.category === 'angular');
+      const jsGroup = groups.find((g) => g.category === 'JavaScript');
+      const ngGroup = groups.find((g) => g.category === 'Angular');
 
       expect(jsGroup?.items).toHaveLength(2);
       expect(ngGroup?.items).toHaveLength(1);
@@ -74,34 +74,48 @@ describe('KoansStore', () => {
 
     it('должен отражать изменения filteredList', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('javascript');
+      store.setCategory('JavaScript');
 
       const groups = store.groupedList();
 
       expect(groups).toHaveLength(1);
-      expect(groups[0].category).toBe('javascript');
+      expect(groups[0].category).toBe('JavaScript');
       expect(groups[0].items).toHaveLength(2);
     });
 
-    it('должен сохранять порядок KOAN_CATEGORIES (javascript → angular → philosophy)', () => {
+    it('должен сохранять порядок categories из store (javascript → angular → philosophy)', () => {
+      store.setCategories([
+        { id: 'JavaScript', label: 'JavaScript', kanji: '言' },
+        { id: 'Angular', label: 'Angular', kanji: '骨' },
+        { id: 'Философия', label: 'Философия', kanji: '道' },
+      ]);
       store.setKoanList([
-        { number: 1, title: 'A', slug: 'a', category: 'philosophy' },
-        { number: 2, title: 'B', slug: 'b', category: 'javascript' },
-        { number: 3, title: 'C', slug: 'c', category: 'angular' },
+        { number: 1, title: 'A', slug: 'a', category: 'Философия' },
+        { number: 2, title: 'B', slug: 'b', category: 'JavaScript' },
+        { number: 3, title: 'C', slug: 'c', category: 'Angular' },
       ]);
 
-      expect(store.groupedList().map((g) => g.category)).toEqual(['javascript', 'angular', 'philosophy']);
+      expect(store.groupedList().map((g) => g.category)).toEqual(['JavaScript', 'Angular', 'Философия']);
+    });
+
+    it('должен использовать порядок вхождения если categories пусты', () => {
+      store.setKoanList([
+        { number: 1, title: 'A', slug: 'a', category: 'Философия' },
+        { number: 2, title: 'B', slug: 'b', category: 'JavaScript' },
+      ]);
+
+      expect(store.groupedList().map((g) => g.category)).toEqual(['Философия', 'JavaScript']);
     });
 
     it('должен сложить коаны без category в группу "other" в конце', () => {
       store.setKoanList([
-        { number: 1, title: 'A', slug: 'a', category: 'javascript' },
+        { number: 1, title: 'A', slug: 'a', category: 'JavaScript' },
         { number: 2, title: 'B', slug: 'b' },
       ]);
 
       const groups = store.groupedList();
 
-      expect(groups.map((g) => g.category)).toEqual(['javascript', 'other']);
+      expect(groups.map((g) => g.category)).toEqual(['JavaScript', 'other']);
       expect(groups[1].items[0].slug).toBe('b');
     });
   });
@@ -112,26 +126,26 @@ describe('KoansStore', () => {
 
       const counts = store.categoryCounts();
 
-      expect(counts.get('javascript')).toBe(2);
-      expect(counts.get('angular')).toBe(1);
-      expect(counts.get('philosophy')).toBeUndefined();
+      expect(counts.get('JavaScript')).toBe(2);
+      expect(counts.get('Angular')).toBe(1);
+      expect(counts.get('Философия')).toBeUndefined();
       expect(counts.size).toBe(2);
     });
 
     it('должен опираться на полный koanList, а не на filteredList', () => {
       store.setKoanList(koanListWithMeta);
-      store.setCategory('javascript');
+      store.setCategory('JavaScript');
 
-      expect(store.categoryCounts().get('angular')).toBe(1);
+      expect(store.categoryCounts().get('Angular')).toBe(1);
     });
   });
 
   describe('tagCounts', () => {
     it('должен агрегировать теги и сортировать по частоте, затем алфавитно', () => {
       store.setKoanList([
-        { number: 1, title: 'A', slug: 'a', category: 'javascript', tags: ['promises', 'async'] },
-        { number: 2, title: 'B', slug: 'b', category: 'javascript', tags: ['promises'] },
-        { number: 3, title: 'C', slug: 'c', category: 'angular', tags: ['signals'] },
+        { number: 1, title: 'A', slug: 'a', category: 'JavaScript', tags: ['promises', 'async'] },
+        { number: 2, title: 'B', slug: 'b', category: 'JavaScript', tags: ['promises'] },
+        { number: 3, title: 'C', slug: 'c', category: 'Angular', tags: ['signals'] },
       ]);
 
       expect(store.tagCounts()).toEqual([
@@ -144,18 +158,18 @@ describe('KoansStore', () => {
 
   describe('toggleCategory', () => {
     it('должен установить категорию при первом вызове и сбросить при повторном с тем же значением', () => {
-      store.toggleCategory('javascript');
-      expect(store.activeCategory()).toBe('javascript');
+      store.toggleCategory('JavaScript');
+      expect(store.activeCategory()).toBe('JavaScript');
 
-      store.toggleCategory('javascript');
+      store.toggleCategory('JavaScript');
       expect(store.activeCategory()).toBeNull();
     });
 
     it('должен переключиться на другую категорию без промежуточного сброса', () => {
-      store.toggleCategory('javascript');
-      store.toggleCategory('angular');
+      store.toggleCategory('JavaScript');
+      store.toggleCategory('Angular');
 
-      expect(store.activeCategory()).toBe('angular');
+      expect(store.activeCategory()).toBe('Angular');
     });
   });
 

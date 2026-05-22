@@ -5,27 +5,33 @@ import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-
 import { KoanListComponent } from './koan-list.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
-import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanGroup } from '@features/koans/data/models/koan-group.model';
 
 const GROUPS: readonly KoanGroup[] = [
   {
-    category: 'javascript',
+    category: 'JavaScript',
     items: [
-      { number: 1, title: 'Async операция', slug: 'koan-1', category: 'javascript' },
-      { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'javascript' },
+      { number: 1, title: 'Async операция', slug: 'koan-1', category: 'JavaScript' },
+      { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'JavaScript' },
     ],
   },
   {
-    category: 'angular',
-    items: [{ number: 3, title: 'О сигналах', slug: 'koan-3', category: 'angular' }],
+    category: 'Angular',
+    items: [{ number: 3, title: 'О сигналах', slug: 'koan-3', category: 'Angular' }],
   },
 ];
 
-const CATEGORY_COUNTS: ReadonlyMap<KoanCategory, number> = new Map([
-  ['javascript', 2],
-  ['angular', 1],
+const CATEGORY_COUNTS: ReadonlyMap<string, number> = new Map([
+  ['JavaScript', 2],
+  ['Angular', 1],
 ]);
+
+const CATEGORIES: readonly KoanCategoryMeta[] = [
+  { id: 'JavaScript', label: 'JavaScript', kanji: '言' },
+  { id: 'Angular', label: 'Angular', kanji: '骨' },
+  { id: 'Философия', label: 'Философия', kanji: '道' },
+];
 
 const TAG_COUNTS: readonly (readonly [string, number])[] = [
   ['promises', 3],
@@ -48,6 +54,7 @@ describe('KoanListComponent', () => {
   describe('Happy Path', () => {
     beforeEach(() => {
       fixture.componentRef.setInput('groups', GROUPS);
+      fixture.componentRef.setInput('categories', CATEGORIES);
       fixture.componentRef.setInput('categoryCounts', CATEGORY_COUNTS);
       fixture.componentRef.setInput('tagCounts', TAG_COUNTS);
       fixture.componentRef.setInput('totalCount', 3);
@@ -82,7 +89,7 @@ describe('KoanListComponent', () => {
     });
 
     it('должен пометить активную категорию через is-on', () => {
-      fixture.componentRef.setInput('activeCategory', 'angular');
+      fixture.componentRef.setInput('activeCategory', 'Angular');
       fixture.detectChanges();
 
       const active = element.querySelector<HTMLButtonElement>('.kl-cat-btn.is-on');
@@ -134,7 +141,7 @@ describe('KoanListComponent', () => {
 
       element.querySelector<HTMLButtonElement>('.kl-cat-btn')?.click();
 
-      expect(spy).toHaveBeenCalledWith('javascript');
+      expect(spy).toHaveBeenCalledWith('JavaScript');
     });
 
     it('должен эмитить categoryToggle с null при клике по «Все»', () => {

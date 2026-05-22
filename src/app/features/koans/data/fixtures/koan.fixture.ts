@@ -7,7 +7,7 @@ export const KoanFixture: KoanModel = {
   title: 'О пустоте аргумента',
   slug: '001-o-pustote-argumenta',
   body: KoanBodyFixture,
-  category: 'javascript',
+  category: 'JavaScript',
   tags: ['arguments', 'undefined', 'functions'],
   source: 'Монастырь Мацуо-дэра, 1174 г.',
 };

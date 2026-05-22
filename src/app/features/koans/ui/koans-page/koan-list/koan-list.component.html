@@ -8,7 +8,7 @@
         <span class="kl-label-kanji">部</span>
       </div>
       <ul class="kl-cat-list">
-        @for (meta of categoryMeta; track meta.id) {
+        @for (meta of categories(); track meta.id) {
           @if (categoryCounts().get(meta.id); as count) {
             <li>
               <button

@@ -81,6 +81,7 @@
   <nav id="koans-nav" class="kp-sidebar" [class.kp-sidebar--collapsed]="!listOpen()" aria-label="Список коанов">
     <ngKitty-koan-list
       [groups]="facade.groupedList()"
+      [categories]="facade.categories()"
       [categoryCounts]="facade.categoryCounts()"
       [activeCategory]="facade.activeCategory()"
       [tagCounts]="facade.tagCounts()"
@@ -100,6 +101,7 @@
   <main id="koans-main" class="kp-reader-wrap" tabindex="-1">
     <ngKitty-koan-reader
       [koan]="facade.selectedKoan()"
+      [categories]="facade.categories()"
       [loading]="facade.loadingSelected()"
       [hasPrev]="hasPrev()"
       [hasNext]="hasNext()"

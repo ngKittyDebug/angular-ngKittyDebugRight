@@ -1,11 +1,9 @@
-import type { KoanCategory } from './koan-category.model';
-
 export interface KoanModel {
   number: number;
   title: string;
   slug: string;
   body: string;
-  category?: KoanCategory;
+  category?: string;
   tags?: string[];
   source?: string;
 }

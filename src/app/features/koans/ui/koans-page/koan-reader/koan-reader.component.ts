@@ -2,10 +2,8 @@ import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } 
 import { TranslocoModule } from '@jsverse/transloco';
 import { MarkdownComponent } from 'ngx-markdown';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
-
 import type { ElementRef } from '@angular/core';
-import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 @Component({
@@ -18,7 +16,8 @@ import type { KoanModel } from '@features/koans/data/models/koan.model';
 export class KoanReaderComponent {
   private readonly regionRef = viewChild<ElementRef<HTMLElement>>('readerRegion');
 
-  public readonly koan = input<KoanModel | null>(null);
+  public readonly koan = input<Nullable<KoanModel>>(null);
+  public readonly categories = input<readonly KoanCategoryMeta[]>([]);
   public readonly loading = input<boolean>(false);
   public readonly hasPrev = input<boolean>(false);
   public readonly hasNext = input<boolean>(false);
@@ -35,12 +34,12 @@ export class KoanReaderComponent {
     });
   }
 
-  protected categoryLabel(id: KoanCategory | undefined): string | null {
+  protected categoryLabel(id: Nullable<string>): Nullable<string> {
     if (!id) {
       return null;
     }
 
-    return KOAN_CATEGORIES.find((c) => c.id === id)?.label ?? id;
+    return this.categories().find((c) => c.id === id)?.label ?? id;
   }
 
   protected padNumber(n: number): string {

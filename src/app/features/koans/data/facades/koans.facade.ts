@@ -5,19 +5,20 @@ import { catchError, EMPTY, Subject, switchMap, tap } from 'rxjs';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { resolveKoanError } from '@features/koans/data/api/koan-errors';
+import { KoanCategoryService } from '@features/koans/data/services/koan-category.service';
 import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
 import { KoansStore } from '@features/koans/data/store/koans.store';
-
-import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
 
 @Injectable()
 export class KoansFacade {
   private readonly store = inject(KoansStore);
   private readonly api = inject(KoanApiService);
+  private readonly categoryService = inject(KoanCategoryService);
   private readonly persistence = inject(KoansPersistenceService);
-  private readonly randomKoan$ = new Subject<string | null>();
+  private readonly randomKoan$ = new Subject<Nullable<string>>();
   private readonly koanList$ = new Subject<void>();
   private readonly selectKoan$ = new Subject<string>();
+  private readonly categories$ = new Subject<void>();
 
   public readonly randomKoan = this.store.randomKoan;
   public readonly koanList = this.store.koanList;
@@ -29,11 +30,13 @@ export class KoansFacade {
   public readonly loadingRandom = this.store.loadingRandom;
   public readonly loadingList = this.store.loadingList;
   public readonly loadingSelected = this.store.loadingSelected;
+  public readonly loadingCategories = this.store.loadingCategories;
   public readonly error = this.store.error;
   public readonly query = this.store.query;
   public readonly activeCategory = this.store.activeCategory;
   public readonly activeTags = this.store.activeTags;
   public readonly readSet = this.store.readSet;
+  public readonly categories = this.store.categories;
 
   constructor() {
     this.store.setReadSet(this.persistence.loadReadSet());
@@ -88,14 +91,35 @@ export class KoansFacade {
         takeUntilDestroyed()
       )
       .subscribe();
+
+    this.categories$
+      .pipe(
+        tap(() => this.store.startLoadingCategories()),
+        switchMap(() =>
+          this.categoryService.getCategories().pipe(
+            tap((categories) => this.store.setCategories(categories)),
+            catchError((error: HttpErrorResponse) => {
+              this.store.setError(resolveKoanError(error.status), 'categories');
+
+              return EMPTY;
+            })
+          )
+        ),
+        takeUntilDestroyed()
+      )
+      .subscribe();
   }
 
-  public loadRandomKoan(exclude: string | null): void {
+  public loadRandomKoan(exclude: Nullable<string>): void {
     this.randomKoan$.next(exclude);
   }
 
   public loadKoanList(): void {
     this.koanList$.next();
+  }
+
+  public loadCategories(): void {
+    this.categories$.next();
   }
 
   public selectKoan(slug: string): void {
@@ -106,11 +130,11 @@ export class KoansFacade {
     this.store.setQuery(query);
   }
 
-  public setCategory(category: KoanCategory | null): void {
+  public setCategory(category: Nullable<string>): void {
     this.store.setCategory(category);
   }
 
-  public toggleCategory(category: KoanCategory | null): void {
+  public toggleCategory(category: Nullable<string>): void {
     this.store.toggleCategory(category);
   }
 
@@ -127,7 +151,7 @@ export class KoansFacade {
     this.persistence.saveReadSet(this.store.readSet());
   }
 
-  public pickRandomFromFiltered(): string | null {
+  public pickRandomFromFiltered(): Nullable<string> {
     const current = this.store.selectedKoan()?.slug ?? null;
     const list = this.store.filteredList();
     const others = list.filter((k) => k.slug !== current);

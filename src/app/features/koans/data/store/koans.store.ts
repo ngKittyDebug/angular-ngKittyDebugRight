@@ -1,25 +1,25 @@
 import { computed } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
-import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model';
-
-import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
+import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 interface KoansState {
-  randomKoan: KoanModel | null;
+  randomKoan: Nullable<KoanModel>;
   koanList: KoanListItemModel[];
-  selectedKoan: KoanModel | null;
+  selectedKoan: Nullable<KoanModel>;
   loadingRandom: boolean;
   loadingList: boolean;
   loadingSelected: boolean;
-  error: string | null;
+  loadingCategories: boolean;
+  error: Nullable<string>;
   query: string;
-  activeCategory: KoanCategory | null;
+  activeCategory: Nullable<string>;
   activeTags: ReadonlySet<string>;
   readSet: ReadonlySet<string>;
+  categories: KoanCategoryMeta[];
 }
 
 const initialState: KoansState = {
@@ -29,16 +29,16 @@ const initialState: KoansState = {
   loadingRandom: false,
   loadingList: false,
   loadingSelected: false,
+  loadingCategories: false,
   error: null,
   query: '',
   activeCategory: null,
   activeTags: new Set(),
   readSet: new Set(),
+  categories: [],
 };
 
-const GROUP_ORDER: readonly KoanGroupCategory[] = [...KOAN_CATEGORIES.map((c) => c.id), 'other'];
-
-function groupByCategory(list: KoanListItemModel[]): KoanGroup[] {
+function groupByCategory(list: KoanListItemModel[], knownOrder: readonly string[]): KoanGroup[] {
   const map = new Map<KoanGroupCategory, KoanListItemModel[]>();
 
   for (const item of list) {
@@ -52,15 +52,23 @@ function groupByCategory(list: KoanListItemModel[]): KoanGroup[] {
     }
   }
 
-  return GROUP_ORDER.filter((c) => map.has(c)).map((category) => ({
-    category,
-    items: map.get(category) ?? [],
-  }));
+  const order: KoanGroupCategory[] = [
+    ...knownOrder.filter((c) => c !== 'other'),
+    ...[...map.keys()].filter((c) => c !== 'other' && !knownOrder.includes(c)),
+    'other',
+  ];
+
+  return order
+    .filter((c) => map.has(c))
+    .map((category) => ({
+      category,
+      items: map.get(category) ?? [],
+    }));
 }
 
 export const KoansStore = signalStore(
   withState<KoansState>(initialState),
-  withComputed(({ koanList, query, activeCategory, activeTags }) => {
+  withComputed(({ koanList, query, activeCategory, activeTags, categories }) => {
     const filteredList = computed(() => {
       const q = query().trim().toLowerCase();
       const cat = activeCategory();
@@ -83,10 +91,15 @@ export const KoansStore = signalStore(
 
     return {
       filteredList,
-      groupedList: computed(() => groupByCategory(filteredList())),
+      groupedList: computed(() =>
+        groupByCategory(
+          filteredList(),
+          categories().map((c) => c.id)
+        )
+      ),
 
-      categoryCounts: computed<ReadonlyMap<KoanCategory, number>>(() => {
-        const out = new Map<KoanCategory, number>();
+      categoryCounts: computed<ReadonlyMap<string, number>>(() => {
+        const out = new Map<string, number>();
 
         for (const k of koanList()) {
           if (k.category) {
@@ -120,6 +133,9 @@ export const KoansStore = signalStore(
     setSelectedKoan(selectedKoan: KoanModel): void {
       patchState(store, { selectedKoan, loadingSelected: false });
     },
+    setCategories(categories: KoanCategoryMeta[]): void {
+      patchState(store, { categories, loadingCategories: false });
+    },
 
     startLoadingRandom(): void {
       patchState(store, { loadingRandom: true, error: null });
@@ -130,23 +146,27 @@ export const KoansStore = signalStore(
     startLoadingSelected(): void {
       patchState(store, { loadingSelected: true, error: null });
     },
+    startLoadingCategories(): void {
+      patchState(store, { loadingCategories: true, error: null });
+    },
 
-    setError(error: string, target: 'random' | 'list' | 'selected'): void {
+    setError(error: string, target: 'random' | 'list' | 'selected' | 'categories'): void {
       patchState(store, {
         error,
         loadingRandom: target === 'random' ? false : store.loadingRandom(),
         loadingList: target === 'list' ? false : store.loadingList(),
         loadingSelected: target === 'selected' ? false : store.loadingSelected(),
+        loadingCategories: target === 'categories' ? false : store.loadingCategories(),
       });
     },
 
     setQuery(query: string): void {
       patchState(store, { query });
     },
-    setCategory(activeCategory: KoanCategory | null): void {
+    setCategory(activeCategory: Nullable<string>): void {
       patchState(store, { activeCategory });
     },
-    toggleCategory(category: KoanCategory | null): void {
+    toggleCategory(category: Nullable<string>): void {
       patchState(store, { activeCategory: store.activeCategory() === category ? null : category });
     },
     toggleTag(tag: string): void {

@@ -36,6 +36,7 @@ interface KoanFrontmatter {
   title: string;
   slug: string;
   category: string;
+  kanji?: string;
   tags: string[];
   source: string;
 }

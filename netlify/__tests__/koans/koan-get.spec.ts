@@ -41,7 +41,7 @@ describe('koan-get', () => {
         const body = await response.json();
 
         expect(body).toMatchObject({
-          category: 'javascript',
+          category: 'JavaScript',
           tags: ['arguments', 'undefined'],
           source: 'Монастырь Мацуо-дэра',
         });
