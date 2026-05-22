@@ -77,3 +77,30 @@
 .stats-name {
   color: var(--tui-text-primary);
 }
+
+.divider {
+  border-radius: 1rem;
+  background-color: var(--tui-status-negative-pale);
+  height: 1vh;
+  margin: 0.5rem;
+}
+
+.achievements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.achieve-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--tui-status-warning-pale);
+  border: 1px solid var(--warning);
+}
