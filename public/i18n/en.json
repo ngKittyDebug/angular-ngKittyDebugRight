@@ -16,7 +16,10 @@
     "list-loading": "The scrolls unfurl…",
     "label-section": "Section",
     "label-tags": "Tags",
-    "label-scrolls": "Scrolls"
+    "label-scrolls": "Scrolls",
+    "btn-prev": "Previous",
+    "btn-next": "Next",
+    "btn-share": "Copy link"
   },
   "navigation-items": {
     "tarot": "Tarot",

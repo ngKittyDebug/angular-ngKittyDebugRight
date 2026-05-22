@@ -16,7 +16,10 @@
     "list-loading": "Свитки разворачиваются…",
     "label-section": "Раздел",
     "label-tags": "Метки",
-    "label-scrolls": "Свитки"
+    "label-scrolls": "Свитки",
+    "btn-prev": "Предыдущий",
+    "btn-next": "Следующий",
+    "btn-share": "Скопировать ссылку"
   },
   "navigation-items": {
     "tarot": "Таро",
