@@ -13,6 +13,7 @@ import { KoansStore } from '@features/koans/data/store/koans.store';
 import { koanHeadingExtension, koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
 import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
 import { KoanListFixture } from '@features/koans/data/fixtures/koan-list.fixture';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { KoansPageComponent } from './koans-page.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
@@ -29,7 +30,7 @@ describe('KoansPageComponent', () => {
     KoanApiServiceMock.getKoan.mockReturnValue(of(KoanFixture));
 
     await TestBed.configureTestingModule({
-      imports: [KoansPageComponent],
+      imports: [KoansPageComponent, TranslocoTestingMock],
       providers: [
         provideRouter([]),
         KoansStore,

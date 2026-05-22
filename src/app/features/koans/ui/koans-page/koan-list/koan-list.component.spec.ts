@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { KoanListComponent } from './koan-list.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
@@ -38,7 +39,7 @@ describe('KoanListComponent', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [KoanListComponent] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [KoanListComponent, TranslocoTestingMock] }).compileComponents();
     fixture = TestBed.createComponent(KoanListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement as HTMLElement;
@@ -170,7 +171,7 @@ describe('KoanListComponent', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(element.querySelector('.kl-status')?.textContent).toContain('Свитки разворачиваются');
+      expect(element.querySelector('.kl-status')).toBeTruthy();
       expect(element.querySelector('.kl-list')).toBeNull();
     });
 

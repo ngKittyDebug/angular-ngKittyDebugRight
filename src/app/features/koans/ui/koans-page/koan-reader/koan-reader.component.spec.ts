@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 
 import { koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
 import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { KoanReaderComponent } from './koan-reader.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
@@ -15,7 +16,7 @@ describe('KoanReaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KoanReaderComponent],
+      imports: [KoanReaderComponent, TranslocoTestingMock],
       providers: [
         provideMarkdown({
           markedExtensions: [{ provide: MARKED_EXTENSIONS, useValue: koanMarkedExtensions, multi: true }],
@@ -132,7 +133,6 @@ describe('KoanReaderComponent', () => {
 
       expect(empty).toBeTruthy();
       expect(empty?.querySelector('.kr-empty-kanji')?.textContent).toBe('空');
-      expect(empty?.textContent).toContain('Дай знак');
     });
 
     it('должен показать индикатор загрузки', () => {
