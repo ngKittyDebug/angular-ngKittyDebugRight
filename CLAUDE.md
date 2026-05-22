@@ -10,8 +10,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The full inventory lives in `README.md`. Non-obvious ones:
 
-- `pnpm start` — `ng serve -o` (frontend only, calls to `/.netlify/functions/*` will 404).
-- `pnpm dev` — `netlify dev`, runs both Angular dev server and Netlify Functions locally. Use this when touching anything that hits `/.netlify/functions/koan-*`.
+- `pnpm start` — `ng serve -o` (frontend only, calls to `/.netlify/functions/*` will 404). Serves on `http://localhost:4200`.
+- `pnpm dev` — `netlify dev`, runs both Angular dev server and Netlify Functions locally. **Serves on `http://localhost:8888`** — use this URL when doing visual checks. Use this when touching anything that hits `/.netlify/functions/koan-*`.
 - `pnpm test` — Angular Vitest runner (jsdom). Single-file: `pnpm test -- --include='**/koans.facade.spec.ts'`.
 - `pnpm test:functions` — runs the **separate** Netlify functions suite (`vitest.netlify.config.ts`, node env, root = `netlify/__tests__`). Frontend and backend tests do not share a config.
 - `pnpm typecheck` — `tsc -b --noEmit` (project references, not a plain `tsc`).

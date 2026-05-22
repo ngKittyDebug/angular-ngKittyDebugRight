@@ -157,11 +157,17 @@ body {
   overflow-x: hidden;
 }
 
+tui-root {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .t-root-content {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   height: 100%;
+  overflow: hidden;
 }
 
 button[tuiButton][data-appearance='primary'] {
