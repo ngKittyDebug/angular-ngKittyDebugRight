@@ -1,0 +1,21 @@
+<tui-textfield>
+  <label for="a" tuiLabel>{{ 'shrift.title' | transloco }}</label>
+  <textarea
+    placeholder="Placeholder"
+    tuiTextarea
+    id="a"
+    [formControl]="control"
+    [limit]="100"
+    [max]="100"
+    [min]="3"
+  ></textarea>
+</tui-textfield>
+<label tuiLabel>
+  {{ 'shrift.label' | transloco }}
+  <tui-textfield tuiChevron tuiTextfieldSize="m" [tuiTextfieldCleaner]="false">
+    <input placeholder="I am placeholder" tuiSelect [(ngModel)]="value" />
+
+    <tui-data-list-wrapper *tuiDropdown [items]="severities" />
+  </tui-textfield>
+</label>
+<button tuiButton type="button" (click)="control.setValue('Short text')">{{ 'shrift.confess' | transloco }}</button>

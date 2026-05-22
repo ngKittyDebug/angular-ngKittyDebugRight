@@ -15,5 +15,8 @@
     "runes": "Руны",
     "horoscope": "Гороскоп",
     "chronicle": "Хроника"
+  },
+  " shrift": {
+    "title": "Missing value for ' shrift.title'"
   }
 }

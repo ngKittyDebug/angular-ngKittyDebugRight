@@ -1,10 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ShriftItemComponent } from './components/shrift-item/shrift-item.component';
+import { Sins } from './mocs/sins-data';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { ConfessComponent } from './components/confess/confess.component';
+import type { Sin } from './models/sin.model';
 
 @Component({
   selector: 'ngKitty-shrift',
-  imports: [],
+  imports: [ShriftItemComponent, ConfessComponent, TranslocoPipe],
   templateUrl: './shrift.component.html',
   styleUrl: './shrift.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShriftComponent {}
+export class ShriftComponent {
+  protected readonly sinsData: Sin[] = Sins;
+  protected readonly translocoService = inject(TranslocoService);
+}

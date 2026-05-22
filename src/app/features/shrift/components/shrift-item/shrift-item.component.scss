@@ -1,0 +1,53 @@
+:host {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--accent-primary);
+
+  @media (width <= 768px) {
+    flex-direction: column;
+    padding: 0.25rem;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media (width <= 768px) {
+    justify-content: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+}
+
+.level,
+.status {
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  min-width: 100px;
+  text-align: center;
+}
+
+.level.critical,
+.status.none {
+  border-color: var(--critical);
+  color: var(--critical);
+}
+
+.level.medium,
+.status.half {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.level.low,
+.status.full {
+  border-color: var(--earth);
+  color: var(--earth);
+}

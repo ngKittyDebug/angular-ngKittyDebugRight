@@ -1,0 +1,9 @@
+<p class="title">{{ title() }}</p>
+
+<div class="actions">
+  <div [class]="'status ' + status()">{{ statusLabel() }}</div>
+  <div [class]="'level ' + severity()">{{ severityLabel() }}</div>
+  <button tuiButton type="button" appearance="outline" size="xs" (click)="clicked.emit()">
+    {{ 'shrift.button-itm' | transloco }}
+  </button>
+</div>
