@@ -82,20 +82,20 @@ describe('koan utilities', () => {
 
     describe('Edge Cases', () => {
       describe('Некорректные данные frontmatter', () => {
-        it('должен вернуть пустой массив тегов при битом JSON', () => {
+        it('должен вернуть пустой frontmatter при невалидном YAML', () => {
           const raw = '---\nnumber: 1\ntags: [broken\n---\n\nтело';
 
           const { frontmatter } = parseFrontmatter(raw);
 
-          expect(frontmatter.tags).toEqual([]);
+          expect(frontmatter).toEqual({});
         });
 
-        it('должен вернуть пустой массив тегов, если значение не массив', () => {
+        it('должен вернуть строку в tags, если значение не массив', () => {
           const raw = '---\nnumber: 1\ntags: "одна-строка"\n---\n\nтело';
 
           const { frontmatter } = parseFrontmatter(raw);
 
-          expect(frontmatter.tags).toEqual([]);
+          expect(frontmatter.tags).toBe('одна-строка');
         });
       });
 

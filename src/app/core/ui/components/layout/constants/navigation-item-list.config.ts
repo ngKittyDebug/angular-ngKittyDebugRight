@@ -1,29 +1,30 @@
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
+import { marker } from '@jsverse/transloco-keys-manager/marker';
 
 export const NAVIGATION_ITEM_LIST = [
   {
     icon: '@tui.sparkles',
-    label: 'Таро',
+    label: marker('navigation-items.tarot'),
     url: '/tarot',
   },
   {
     icon: '@tui.scroll',
-    label: 'Исповедь',
+    label: marker('navigation-items.shrift'),
     url: '/shrift',
   },
   {
     icon: '@tui.flame',
-    label: 'Руны CI/CD',
+    label: marker('navigation-items.runes'),
     url: '/runes',
   },
   {
     icon: '@tui.sun',
-    label: 'Гороскоп',
+    label: marker('navigation-items.horoscope'),
     url: '/horoscope',
   },
   {
     icon: '@tui.book-open',
-    label: 'Хроники',
+    label: marker('navigation-items.chronicle'),
     url: '/chronicle',
   },
   {
