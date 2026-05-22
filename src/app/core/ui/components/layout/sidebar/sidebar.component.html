@@ -10,5 +10,19 @@
 
   <div class="content">
     <ng-content />
+    <!-- <a class="profile-card">
+      <div tuiAvatar="@tui.user" size="m"></div>
+      <div class="user-info">
+        <div class="name">Hello, Guest!</div>
+        <div class="role"><a href="#">log in</a> | <a href="#">register</a></div>
+      </div>
+    </a> -->
+    <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
+      <div tuiAvatar="@tui.user" size="m"></div>
+      <div class="user-info">
+        <div class="name">RandomUser</div>
+        <div class="role">Moscow</div>
+      </div>
+    </a>
   </div>
 </aside>
