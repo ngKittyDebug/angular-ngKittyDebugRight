@@ -17,7 +17,7 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('должен инициализироваться', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { TuiAsideComponent } from '@taiga-ui/layout';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { RouterLink } from '@angular/router';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
@@ -7,7 +8,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'ngKitty-sidebar',
-  imports: [NavigationItemComponent, TranslocoModule, TuiAvatar, RouterLink],
+  imports: [TuiAsideComponent, TranslocoModule, NavigationItemComponent, TuiAvatar, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
