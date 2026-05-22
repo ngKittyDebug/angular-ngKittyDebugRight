@@ -207,23 +207,4 @@ describe('KoansFacade', () => {
       expect(result).toBeNull();
     });
   });
-
-  describe('Theme persistence', () => {
-    it('setKoanTheme должен сохранять выбор через persistence', () => {
-      facade.setKoanTheme('washi');
-
-      expect(facade.koanTheme()).toBe('washi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(1, 'washi');
-    });
-
-    it('toggleKoanTheme должен переключать sumi ↔ washi и сохранять', () => {
-      facade.toggleKoanTheme();
-      expect(facade.koanTheme()).toBe('washi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(1, 'washi');
-
-      facade.toggleKoanTheme();
-      expect(facade.koanTheme()).toBe('sumi');
-      expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenNthCalledWith(2, 'sumi');
-    });
-  });
 });

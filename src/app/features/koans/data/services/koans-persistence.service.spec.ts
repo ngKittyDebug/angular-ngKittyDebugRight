@@ -47,24 +47,4 @@ describe('KoansPersistenceService', () => {
       expect(restored.has('koan-c')).toBe(true);
     });
   });
-
-  describe('loadTheme', () => {
-    it('должен вернуть "sumi" по умолчанию', () => {
-      expect(service.loadTheme()).toBe('sumi');
-    });
-
-    it('должен вернуть "washi" если сохранено', () => {
-      localStorage.setItem('koan-theme', 'washi');
-
-      expect(service.loadTheme()).toBe('washi');
-    });
-  });
-
-  describe('saveTheme / loadTheme round-trip', () => {
-    it('должен сохранить и восстановить тему', () => {
-      service.saveTheme('washi');
-
-      expect(service.loadTheme()).toBe('washi');
-    });
-  });
 });

@@ -168,14 +168,4 @@ describe('KoansStore', () => {
       expect(store.activeTags().size).toBe(0);
     });
   });
-
-  describe('toggleKoanTheme', () => {
-    it('должен переключать sumi ↔ washi', () => {
-      expect(store.koanTheme()).toBe('sumi');
-      store.toggleKoanTheme();
-      expect(store.koanTheme()).toBe('washi');
-      store.toggleKoanTheme();
-      expect(store.koanTheme()).toBe('sumi');
-    });
-  });
 });

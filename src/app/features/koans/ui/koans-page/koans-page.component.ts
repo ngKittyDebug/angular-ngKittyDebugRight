@@ -17,7 +17,6 @@ const TOAST_VISIBLE_MS = 2000;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'koans-page',
-    '[attr.data-koan-theme]': 'facade.koanTheme()',
   },
 })
 export class KoansPageComponent implements OnInit {
@@ -114,10 +113,6 @@ export class KoansPageComponent implements OnInit {
 
   protected onToggleList(): void {
     this.listOpen.update((open) => !open);
-  }
-
-  protected onToggleTheme(): void {
-    this.facade.toggleKoanTheme();
   }
 
   protected onRandom(): void {

@@ -62,12 +62,11 @@ describe('KoansPageComponent', () => {
         expect(KoanApiServiceMock.getRandomKoan).not.toHaveBeenCalled();
       });
 
-      it('должен выставить data-koan-theme на host через store.koanTheme()', () => {
+      it('должен иметь класс koans-page на host', () => {
         fixture.detectChanges();
 
         const host = fixture.debugElement.nativeElement as HTMLElement;
 
-        expect(host.getAttribute('data-koan-theme')).toBe('sumi');
         expect(host.classList).toContain('koans-page');
       });
 
@@ -100,18 +99,6 @@ describe('KoansPageComponent', () => {
         const store = TestBed.inject(KoansFacade);
 
         expect(store.query()).toBe('async');
-      });
-
-      it('должен переключить тему по клику на icon-кнопку и сохранить через persistence', () => {
-        const themeButton = element.querySelector<HTMLButtonElement>('.kp-icon-btn');
-
-        themeButton?.click();
-        fixture.detectChanges();
-
-        const host = fixture.debugElement.nativeElement as HTMLElement;
-
-        expect(host.getAttribute('data-koan-theme')).toBe('washi');
-        expect(KoansPersistenceServiceMock.saveTheme).toHaveBeenCalledWith('washi');
       });
 
       it('кнопка «Дай знак» должна навигировать на случайный slug из filteredList', () => {

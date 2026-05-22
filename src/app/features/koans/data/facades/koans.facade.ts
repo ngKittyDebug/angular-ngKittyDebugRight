@@ -9,7 +9,6 @@ import { KoansPersistenceService } from '@features/koans/data/services/koans-per
 import { KoansStore } from '@features/koans/data/store/koans.store';
 
 import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
-import type { KoanTheme } from '@features/koans/data/models/koan-theme.model';
 
 @Injectable()
 export class KoansFacade {
@@ -35,11 +34,9 @@ export class KoansFacade {
   public readonly activeCategory = this.store.activeCategory;
   public readonly activeTags = this.store.activeTags;
   public readonly readSet = this.store.readSet;
-  public readonly koanTheme = this.store.koanTheme;
 
   constructor() {
     this.store.setReadSet(this.persistence.loadReadSet());
-    this.store.setKoanTheme(this.persistence.loadTheme());
 
     this.randomKoan$
       .pipe(
@@ -128,15 +125,6 @@ export class KoansFacade {
   public markRead(slug: string): void {
     this.store.markRead(slug);
     this.persistence.saveReadSet(this.store.readSet());
-  }
-
-  public setKoanTheme(theme: KoanTheme): void {
-    this.store.setKoanTheme(theme);
-    this.persistence.saveTheme(theme);
-  }
-
-  public toggleKoanTheme(): void {
-    this.setKoanTheme(this.store.koanTheme() === 'sumi' ? 'washi' : 'sumi');
   }
 
   public pickRandomFromFiltered(): string | null {

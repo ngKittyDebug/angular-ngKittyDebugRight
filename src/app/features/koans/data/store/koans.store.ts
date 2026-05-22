@@ -6,7 +6,6 @@ import { KOAN_CATEGORIES } from '@features/koans/data/models/koan-category.model
 import type { KoanCategory } from '@features/koans/data/models/koan-category.model';
 import type { KoanGroup, KoanGroupCategory } from '@features/koans/data/models/koan-group.model';
 import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
-import type { KoanTheme } from '@features/koans/data/models/koan-theme.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
 
 interface KoansState {
@@ -21,7 +20,6 @@ interface KoansState {
   activeCategory: KoanCategory | null;
   activeTags: ReadonlySet<string>;
   readSet: ReadonlySet<string>;
-  koanTheme: KoanTheme;
 }
 
 const initialState: KoansState = {
@@ -36,7 +34,6 @@ const initialState: KoansState = {
   activeCategory: null,
   activeTags: new Set(),
   readSet: new Set(),
-  koanTheme: 'sumi',
 };
 
 const GROUP_ORDER: readonly KoanGroupCategory[] = [...KOAN_CATEGORIES.map((c) => c.id), 'other'];
@@ -173,12 +170,6 @@ export const KoansStore = signalStore(
     },
     setReadSet(readSet: ReadonlySet<string>): void {
       patchState(store, { readSet });
-    },
-    setKoanTheme(koanTheme: KoanTheme): void {
-      patchState(store, { koanTheme });
-    },
-    toggleKoanTheme(): void {
-      patchState(store, { koanTheme: store.koanTheme() === 'sumi' ? 'washi' : 'sumi' });
     },
   }))
 );
