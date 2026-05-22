@@ -104,3 +104,27 @@
   background-color: var(--tui-status-warning-pale);
   border: 1px solid var(--warning);
 }
+
+.zodiac-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--warning);
+  margin: 0 0.5rem;
+  gap: 1rem;
+}
+
+.zodiac-description {
+  font-size: 1rem;
+  color: var(--dark-text);
+  margin: 0;
+}
+
+.zodiac-title {
+  font-size: 2rem;
+  color: var(--water);
+  margin: 0;
+}
