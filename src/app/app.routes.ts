@@ -34,6 +34,11 @@ export const routes: Routes = [
           ),
         providers: [provideTranslocoScope('register'), RegisterPageFacade],
       },
+      { path: 'profile',
+        loadComponent: () => import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+        providers: [provideTranslocoScope('profile')],
+      },
+
       {
         path: '**',
         loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),
