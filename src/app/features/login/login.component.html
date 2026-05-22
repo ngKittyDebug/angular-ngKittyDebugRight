@@ -6,12 +6,9 @@
   aria-labelledby="login-title"
   [style.max-width.rem]="32"
   [formGroup]="loginForm"
+  (submit)="onSubmit()"
 >
-  <header tuiHeader>
-    <h2 tuiTitle>{{ 'login.title' | transloco }}</h2>
-  </header>
-
-  <tui-textfield iconStart="@tui.user">
+  <tui-textfield iconStart="@tui.mail">
     <label tuiLabel for="email">{{ 'login.email' | transloco }}</label>
     <input formControlName="email" placeholder="john@wick.com" tuiInput type="email" id="email" />
   </tui-textfield>
@@ -25,12 +22,32 @@
   <tui-error [error]="getInputError('password')" />
 
   <footer class="footer">
-    <button tuiButton type="submit" [disabled]="loginForm.invalid">{{ 'login.submit' | transloco }}</button>
+    <button tuiButton type="submit" [disabled]="loginForm.invalid">
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'login.submit' | transloco }}
+      }
+    </button>
 
     <span class="divider"></span>
 
-    <button appearance="secondary" tuiButton type="button">{{ 'login.google' | transloco }}</button>
-    <button appearance="secondary" tuiButton type="button">{{ 'login.github' | transloco }}</button>
+    <button appearance="secondary" tuiButton type="button" (click)="loginWithGoogle()">
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'login.google' | transloco }}
+      }
+    </button>
+
+    <button appearance="secondary" tuiButton type="button" (click)="loginWithGithub()">
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'login.github' | transloco }}
+      }
+    </button>
+    <button appearance="secondary" tuiButton type="button" (click)="logout()">logout</button>
     <a routerLink="/register" class="link">{{ 'login.register' | transloco }}</a>
   </footer>
 </form>
