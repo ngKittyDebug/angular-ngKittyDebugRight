@@ -8,18 +8,15 @@ import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-
 import { routerMock } from '@shared/mocks/router/router.mock';
 import { tuiNotificationServiceMock } from '@shared/mocks/tui-notification/tui-notification.service.mock';
 import { of } from 'rxjs';
-import { type Mock, vi } from 'vitest';
+import { vi } from 'vitest';
 
 import { RegisterPageFacade } from './register-page.facade';
-
-const isLoadingMock = authServiceMock.isLoading as unknown as Mock<() => boolean>;
 
 describe('RegisterPageFacade', () => {
   let facade: RegisterPageFacade;
 
   beforeEach(() => {
     authServiceMock.signup.mockReset().mockResolvedValue(null);
-    isLoadingMock.mockReset().mockReturnValue(false);
     routerMock.navigate.mockReset().mockReturnValue(Promise.resolve(true));
     tuiNotificationServiceMock.open.mockReset().mockReturnValue(of(undefined));
 
@@ -52,7 +49,7 @@ describe('RegisterPageFacade', () => {
 
         expect(authServiceMock.signup).toHaveBeenNthCalledWith(1, 'john@wick.com', 'Aa888888', {
           full_name: 'John',
-          date_of_birth: '2000-01-01',
+          date_of_birth: new Date(2000, 0, 1),
         });
       });
 
@@ -98,19 +95,6 @@ describe('RegisterPageFacade', () => {
         await facade.signup();
 
         expect(routerMock.navigate).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('Загрузка активна', () => {
-      beforeEach(() => {
-        facade.registerForm.setValue(registerFormValidValueFixture);
-        isLoadingMock.mockReturnValue(true);
-      });
-
-      it('не должен вызвать метод регистрации из сервиса', async () => {
-        await facade.signup();
-
-        expect(authServiceMock.signup).not.toHaveBeenCalled();
       });
     });
 

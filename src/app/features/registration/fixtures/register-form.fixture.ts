@@ -5,5 +5,5 @@ export const registerFormFixture = new FormGroup({
   email: new FormControl('', { nonNullable: true }),
   password: new FormControl('', { nonNullable: true }),
   passwordConfirmation: new FormControl('', { nonNullable: true }),
-  dateOfBirth: new FormControl('', { nonNullable: true }),
+  dateOfBirth: new FormControl<Date | null>(null),
 });

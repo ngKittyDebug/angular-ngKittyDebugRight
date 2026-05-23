@@ -5,5 +5,5 @@ export interface RegisterForm {
   email: FormControl<string>;
   password: FormControl<string>;
   passwordConfirmation: FormControl<string>;
-  dateOfBirth: FormControl<string>;
+  dateOfBirth: FormControl<Date | null>;
 }

@@ -9,7 +9,7 @@
   tuiForm="m"
   class="form"
   [style.max-width.rem]="48"
-  (submit)="registerPageFacade.signup()"
+  (submit)="$event.preventDefault(); registerPageFacade.signup()"
 >
   <tui-textfield>
     <label tuiLabel for="name">{{ 'register.form.labels.name' | transloco }}</label>
@@ -52,7 +52,7 @@
     } @else if (passwordControlErrors?.['minlength']; as minlengthError) {
       <tui-error [error]="validationErrors.minLength | transloco: minlengthError" />
     } @else if (passwordControlErrors?.['pattern']) {
-      <tui-error [error]="validationErrors.emailPattern | transloco" />
+      <tui-error [error]="validationErrors.passwordPattern | transloco" />
     }
   }
 
@@ -70,13 +70,13 @@
     } @else if (passwordConfirmationControlErrors?.['minlength']; as minlengthError) {
       <tui-error [error]="validationErrors.minLength | transloco: minlengthError" />
     } @else if (passwordConfirmationControlErrors?.['pattern']) {
-      <tui-error [error]="validationErrors.emailPattern | transloco" />
+      <tui-error [error]="validationErrors.passwordPattern | transloco" />
     } @else if (passwordConfirmationControlErrors?.['confirmPasswordError']; as confirmPasswordError) {
       <tui-error [error]="confirmPasswordError | transloco" />
     }
   }
 
-  <tui-textfield iconStart="@tui.lock">
+  <tui-textfield iconStart="@tui.calendar">
     <label tuiLabel for="dateOfBirth">{{ 'register.form.labels.date_of_birth' | transloco }}</label>
     <input id="dateOfBirth" [formControl]="dateOfBirthControl" tuiInputDate />
     <tui-calendar *tuiDropdown />

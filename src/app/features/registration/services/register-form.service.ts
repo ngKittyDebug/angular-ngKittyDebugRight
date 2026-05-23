@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { PASSWORD_PATTERN } from '@shared/patterns/password-pattern';
 import { EMAIL_PATTERN } from '@shared/patterns/email-pattern';
 import { passwordConfirmationValidator } from '@shared/validators/password-confirmation.validator';
+import type { RegisterForm } from '@features/registration/models/register-form.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class RegisterFormService {
   }
 
   private createFormInstance() {
-    return this.fb.group(
+    return this.fb.group<RegisterForm>(
       {
         name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(30)]),
         email: this.fb.nonNullable.control('', [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
@@ -32,7 +33,7 @@ export class RegisterFormService {
           Validators.maxLength(15),
           Validators.pattern(PASSWORD_PATTERN),
         ]),
-        dateOfBirth: this.fb.nonNullable.control('', [Validators.required]),
+        dateOfBirth: this.fb.control(null, [Validators.required]),
       },
       { validators: passwordConfirmationValidator('password', 'passwordConfirmation') }
     );

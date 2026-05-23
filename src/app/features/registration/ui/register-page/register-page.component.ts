@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
-import { TuiInputDate, TuiInputPin, TuiPassword } from '@taiga-ui/kit';
+import { TuiInputDate, tuiInputDateOptionsProvider, TuiInputPin, TuiPassword } from '@taiga-ui/kit';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
   TuiButton,
@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
+import { TuiDay } from '@taiga-ui/cdk';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,9 +32,17 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
     TuiForm,
     TuiErrorComponent,
     ReactiveFormsModule,
-    TuiInputDate,
+    ...TuiInputDate,
   ],
-  providers: [tuiLoaderOptionsProvider({ size: 'm' })],
+  providers: [
+    tuiLoaderOptionsProvider({ size: 'm' }),
+    tuiInputDateOptionsProvider({
+      valueTransformer: {
+        fromControlValue: (value: Date | null): TuiDay | null => value && TuiDay.fromUtcNativeDate(value),
+        toControlValue: (value: TuiDay | null): Date | null => value?.toUtcNativeDate() || null,
+      },
+    }),
+  ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })

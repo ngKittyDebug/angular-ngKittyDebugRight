@@ -26,7 +26,7 @@ describe('RegisterPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('должен инициализирвоаться', () => {
+  it('должен инициализироваться', () => {
     expect(component).toBeTruthy();
   });
 });

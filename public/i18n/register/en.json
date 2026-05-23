@@ -10,5 +10,10 @@
   },
   "actions": {
     "submit": "Register"
+  },
+  "notifications": {
+    "success": "Initiation complete — access granted!",
+    "success-title": "The Sacred Repository welcomes the newly ordained!",
+    "failure": "Registration failed. Perhaps the void rejected your offering."
   }
 }

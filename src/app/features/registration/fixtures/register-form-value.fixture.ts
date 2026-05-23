@@ -6,5 +6,5 @@ export const registerFormValidValueFixture = {
   email: 'john@wick.com',
   password: 'Aa888888',
   passwordConfirmation: 'Aa888888',
-  dateOfBirth: '2000-01-01',
-} as const satisfies ExtractFormControl<RegisterForm>;
+  dateOfBirth: new Date(2000, 0, 1),
+} satisfies ExtractFormControl<RegisterForm>;

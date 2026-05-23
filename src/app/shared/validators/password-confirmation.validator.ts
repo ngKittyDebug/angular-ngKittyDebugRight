@@ -18,7 +18,6 @@ export const passwordConfirmationValidator = (controlName: string, matchingContr
     if (control.value === matchingControl.value) {
       matchingControl.setErrors(null);
     } else {
-      console.log('confirmPasswordError есть');
       matchingControl.setErrors({
         confirmPasswordError: VALIDATION_ERRORS_DICT.passwordConfirmation,
       });
