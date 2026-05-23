@@ -7,7 +7,6 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
-
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { AuthService } from '@core/services/auth/auth.service';
@@ -23,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideTaiga(),
+    provideAppInitializer(() => inject(AuthService).initialize()),
     provideHttpClient(),
     provideTransloco({
       config: {

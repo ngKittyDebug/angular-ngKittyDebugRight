@@ -9,8 +9,10 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'profile',
-        component: ProfileComponent,
+        path: 'chronicle',
+        loadComponent: () =>
+          import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
+        providers: [provideTranslocoScope('chronicle')],
       },
       {
         path: 'login',
