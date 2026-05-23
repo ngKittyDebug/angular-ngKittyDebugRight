@@ -96,7 +96,7 @@ describe('KoanReaderComponent', () => {
       it('кнопки prev/next disabled когда hasPrev/hasNext = false', () => {
         fixture.detectChanges();
 
-        const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-btn');
+        const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-nav button');
 
         expect(previousButton.disabled).toBe(true);
         expect(nextButton.disabled).toBe(true);
@@ -115,8 +115,8 @@ describe('KoanReaderComponent', () => {
         component.next.subscribe(nextSpy);
         component.share.subscribe(shareSpy);
 
-        const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-btn');
-        const shareButton = element.querySelector<HTMLButtonElement>('.kr-share-btn');
+        const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-nav button');
+        const shareButton = element.querySelector<HTMLButtonElement>('.kr-foot > button');
 
         previousButton.click();
         nextButton.click();

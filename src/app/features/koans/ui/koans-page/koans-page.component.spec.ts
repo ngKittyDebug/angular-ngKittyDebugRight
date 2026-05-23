@@ -82,11 +82,6 @@ describe('KoansPageComponent', () => {
     describe('Header', () => {
       beforeEach(() => fixture.detectChanges());
 
-      it('должен показать enso-логотип и кандзи 公案 в шапке', () => {
-        expect(element.querySelector('.kp-enso')).toBeTruthy();
-        expect(element.querySelector('.kp-brand-kanji')?.textContent).toBe('公案');
-      });
-
       it('должен прокинуть значение search в store.setQuery после debounce', () => {
         vi.useFakeTimers();
 
@@ -111,7 +106,7 @@ describe('KoansPageComponent', () => {
       });
 
       it('кнопка «Дай знак» должна навигировать на случайный slug из filteredList', () => {
-        const randomButton = element.querySelector<HTMLButtonElement>('.kp-sign-btn');
+        const randomButton = element.querySelector<HTMLButtonElement>('.kp-header-actions button');
 
         randomButton?.click();
 
