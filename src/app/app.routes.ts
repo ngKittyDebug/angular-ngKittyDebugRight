@@ -12,7 +12,10 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
       },
-
+      {
+        path: 'login',
+        loadComponent: () => import('./features/login/login.component').then((c) => c.LoginComponent),
+      },
       {
         path: '**',
         loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),

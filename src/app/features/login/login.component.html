@@ -1,0 +1,29 @@
+<form
+  tuiAppearance="floating"
+  tuiCardLarge
+  tuiForm="m"
+  class="form"
+  aria-labelledby="login-title"
+  [formGroup]="loginForm"
+>
+  <header tuiHeader>
+    <h2 tuiTitle>Login form</h2>
+  </header>
+
+  <tui-textfield>
+    <label tuiLabel for="email">Email</label>
+    <input formControlName="email" placeholder="john@wick.com" tuiInput type="email" id="email" />
+  </tui-textfield>
+
+  <tui-textfield iconStart="@tui.lock">
+    <label tuiLabel for="password">password</label>
+    <input id="password" formControlName="password" placeholder="Aa88888" tuiInput />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+
+  <footer>
+    <button appearance="secondary" tuiButton type="button">гугл</button>
+    <button appearance="secondary" tuiButton type="button">хуюгл</button>
+    <button tuiButton type="submit">Submit</button>
+  </footer>
+</form>

@@ -1,7 +1,12 @@
 import { provideTaiga } from '@taiga-ui/core';
 import type { ApplicationConfig } from '@angular/core';
-import { isDevMode, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, inject,
-  provideAppInitializer, } from '@angular/core';
+import {
+  inject,
+  isDevMode,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
