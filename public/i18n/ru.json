@@ -1,8 +1,4 @@
 {
-  "auth_providers": {
-    "google": "Войти с Google",
-    "github": "Войти с GitHub"
-  },
   "navigation-items": {
     "login": "Войти",
     "tarot": "Таро",
@@ -35,6 +31,13 @@
       "success": "Доступ дарован!",
       "success-title": "Священный репозиторий приветствует тебя!",
       "failure": "Ошибка входа. Возможно, ты разгневал древний legacy."
+    }
+  },
+  "login": {
+    "success": "Missing value for 'login.success'",
+    "success-title": "Missing value for 'login.success-title'",
+    "error": {
+      "text": "Missing value for 'login.error.text'"
     }
   }
 }

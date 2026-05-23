@@ -4,7 +4,7 @@ import { TuiInputPin, TuiPassword } from '@taiga-ui/kit';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
   TuiButton,
-  TuiDateFormat,
+  TuiErrorComponent,
   TuiIcon,
   TuiInputDirective,
   TuiLoader,
@@ -29,7 +29,7 @@ import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
     FormField,
     TuiCardLarge,
     TuiForm,
-    TuiDateFormat,
+    TuiErrorComponent,
   ],
   providers: [tuiLoaderOptionsProvider({ size: 'm' })],
   templateUrl: './register-page.component.html',

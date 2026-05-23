@@ -1,8 +1,4 @@
 {
-  "auth_providers": {
-    "google": "Login with Google",
-    "github": "Login with GitHub"
-  },
   "navigation-items": {
     "login": "Login",
     "tarot": "Tarot",
@@ -35,6 +31,13 @@
       "success": "Access granted!",
       "success-title": "The Sacred Repository welcomes you!",
       "failure": "Login failed. Perhaps you angered the ancient legacy."
+    }
+  },
+  "login": {
+    "success": "Missing value for 'login.success'",
+    "success-title": "Missing value for 'login.success-title'",
+    "error": {
+      "text": "Missing value for 'login.error.text'"
     }
   }
 }
