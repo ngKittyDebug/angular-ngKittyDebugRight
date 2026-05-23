@@ -1,38 +1,35 @@
-import type { FieldContext, SchemaPath, SchemaPathRules } from '@angular/forms/signals';
-import { passwordConfirmationValidator } from '@shared/validators/password-confirmation.validator';
+import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
-import { describe } from 'vitest';
+import { passwordConfirmationValidator } from '@shared/validators/password-confirmation.validator';
 
 describe('passwordConfirmationValidator', () => {
-  const passwordField = {} as SchemaPath<string, SchemaPathRules.Supported>;
+  const formGroup: UntypedFormGroup = new UntypedFormGroup({
+    password: new FormControl(''),
+    confirmPassword: new FormControl(''),
+  });
+  const validator = passwordConfirmationValidator('password', 'confirmPassword');
 
-  const createContext = (password: string, confirmation: string): FieldContext<string> => {
-    return {
-      value: () => confirmation,
-      valueOf: () => password,
-    } as unknown as FieldContext<string>;
-  };
+  it('должен возвращать null, если оба поля password и confirmPassword равны null', () => {
+    expect(validator(formGroup)).toBeNull();
+  });
 
-  const validate = passwordConfirmationValidator(passwordField);
+  it('должен возвращать ошибку в поле confirmPassword, если пароли не совпадают', () => {
+    formGroup.controls['password'].setValue('Test1234');
+    formGroup.controls['confirmPassword'].setValue('Test12345');
 
-  describe('Пароли совпадают', () => {
-    it('должен возвращать undefined', () => {
-      expect(validate(createContext('Test1234', 'Test1234'))).toBeNull();
+    validator(formGroup);
+
+    expect(formGroup.controls['confirmPassword'].errors).toEqual({
+      confirmPasswordError: VALIDATION_ERRORS_DICT.passwordConfirmation,
     });
   });
 
-  describe('Оба пароля пустые', () => {
-    it('должен возвращать undefined', () => {
-      expect(validate(createContext('', ''))).toBeNull();
-    });
-  });
+  it('должен возвращать null в поле confirmPassword, если пароли совпадают', () => {
+    formGroup.controls['password'].setValue('Test1234');
+    formGroup.controls['confirmPassword'].setValue('Test1234');
 
-  describe('Пароли не совпадают', () => {
-    it('должен возвращать ошибку', () => {
-      expect(validate(createContext('Test1234', 'Test12345'))).toEqual({
-        kind: 'passwordConfirmation',
-        message: VALIDATION_ERRORS_DICT.passwordConfirmation,
-      });
-    });
+    validator(formGroup);
+
+    expect(formGroup.controls['confirmPassword'].errors).toBeNull();
   });
 });

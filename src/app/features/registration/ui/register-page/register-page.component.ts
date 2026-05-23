@@ -11,8 +11,9 @@ import {
   tuiLoaderOptionsProvider,
 } from '@taiga-ui/core';
 import { RouterLink } from '@angular/router';
-import { FormField } from '@angular/forms/signals';
 import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,17 +27,18 @@ import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
     TuiLoader,
     RouterLink,
     TuiIcon,
-    FormField,
     TuiCardLarge,
     TuiForm,
     TuiErrorComponent,
+    ReactiveFormsModule,
   ],
   providers: [tuiLoaderOptionsProvider({ size: 'm' })],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })
 export class RegisterPageComponent {
-  public readonly registerPageFacade = inject(RegisterPageFacade);
-  public readonly form = this.registerPageFacade.registerForm;
-  public readonly isLoading = this.registerPageFacade.isLoading;
+  protected readonly registerPageFacade = inject(RegisterPageFacade);
+  protected readonly form = this.registerPageFacade.registerForm;
+  protected readonly isLoading = this.registerPageFacade.isLoading;
+  protected readonly validationErrors = VALIDATION_ERRORS_DICT;
 }

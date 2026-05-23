@@ -1,24 +1,29 @@
-import type {
-  FieldContext,
-  FieldValidator,
-  SchemaPath,
-  SchemaPathRules,
-  ValidationError,
-} from '@angular/forms/signals';
+import { type AbstractControl, isFormGroup, type ValidationErrors, type ValidatorFn } from '@angular/forms';
 import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
 
-/* Валидатор signal forms: подтверждение пароля должно совпадать с полем password */
-export const passwordConfirmationValidator = (
-  passwordField: SchemaPath<string, SchemaPathRules.Supported>
-): FieldValidator<string> => {
-  return (context: FieldContext<string>): ValidationError.WithoutFieldTree | null => {
-    if (context.valueOf(passwordField) === context.value()) {
+/* Валидатор для подтверждения правильности введенного пароля */
+export const passwordConfirmationValidator = (controlName: string, matchingControlName: string): ValidatorFn => {
+  return (abstractControl: AbstractControl): ValidationErrors | null => {
+    if (!isFormGroup(abstractControl)) {
       return null;
     }
 
-    return {
-      kind: 'passwordConfirmation',
-      message: VALIDATION_ERRORS_DICT.passwordConfirmation,
-    };
+    const control = abstractControl.controls[controlName];
+    const matchingControl = abstractControl.controls[matchingControlName];
+
+    if (control.value === null && matchingControl.value === null) {
+      return null;
+    }
+
+    if (control.value === matchingControl.value) {
+      matchingControl.setErrors(null);
+    } else {
+      console.log('confirmPasswordError есть');
+      matchingControl.setErrors({
+        confirmPasswordError: VALIDATION_ERRORS_DICT.passwordConfirmation,
+      });
+    }
+
+    return null;
   };
 };

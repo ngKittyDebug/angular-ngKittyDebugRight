@@ -13,15 +13,15 @@ export class RegisterPageFacade {
   private readonly notifications = inject(TuiNotificationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
-  public readonly registerForm = inject(RegisterFormService).form;
+  public readonly registerForm = inject(RegisterFormService).registerForm;
   public readonly isLoading = this.authService.isLoading;
 
   public async signup() {
-    if (this.registerForm().invalid() || this.isLoading()) {
+    if (this.registerForm.invalid || this.isLoading()) {
       return;
     }
 
-    const { email, password, name, dateOfBirth } = this.registerForm().value();
+    const { email, password, name, dateOfBirth } = this.registerForm.getRawValue();
 
     try {
       await this.authService.signup(email, password, { full_name: name, date_of_birth: dateOfBirth });
@@ -40,6 +40,8 @@ export class RegisterPageFacade {
           'negative'
         );
       }
+    } finally {
+      this.registerForm.reset();
     }
   }
 
