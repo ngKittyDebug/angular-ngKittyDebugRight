@@ -3,13 +3,14 @@ import { TestBed } from '@angular/core/testing';
 
 import { RegisterPageComponent } from './register-page.component';
 
-describe('RegiaterPageComponent', () => {
+describe('RegisterPageComponent', () => {
   let component: RegisterPageComponent;
   let fixture: ComponentFixture<RegisterPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegisterPageComponent],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterPageComponent);
@@ -17,7 +18,7 @@ describe('RegiaterPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('должен инициализирвоаться', () => {
     expect(component).toBeTruthy();
   });
 });
