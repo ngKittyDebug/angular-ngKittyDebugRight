@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { TuiButton } from '@taiga-ui/core';
 import { MarkdownComponent } from 'ngx-markdown';
 
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
@@ -19,7 +20,7 @@ import { KoanDividerComponent } from '@features/koans/ui/koan-divider/koan-divid
 
 @Component({
   selector: 'ngKitty-koan-reader',
-  imports: [TranslocoModule, MarkdownComponent, KoanDividerComponent],
+  imports: [TranslocoModule, TuiButton, MarkdownComponent, KoanDividerComponent],
   templateUrl: './koan-reader.component.html',
   styleUrl: './koan-reader.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

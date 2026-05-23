@@ -1,31 +1,6 @@
 <a href="#koans-main" class="skip-link">Перейти к тексту коана</a>
 
 <header class="kp-header">
-  <a routerLink="/koans" class="kp-brand" aria-label="К списку коанов">
-    <svg class="kp-enso" viewBox="0 0 40 40" aria-hidden="true">
-      <defs>
-        <linearGradient id="kp-enso-stroke" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="var(--k-ink-strong)" stop-opacity="0.95" />
-          <stop offset="60%" stop-color="var(--k-ink)" stop-opacity="0.9" />
-          <stop offset="92%" stop-color="var(--k-ink)" stop-opacity="0.5" />
-          <stop offset="100%" stop-color="var(--k-ink)" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M 33 14 C 38 24, 30 35, 19 34 C 8 33, 4 22, 9 13 C 14 4, 26 4, 31 11"
-        stroke="url(#kp-enso-stroke)"
-        stroke-width="2.6"
-        stroke-linecap="round"
-        fill="none"
-      />
-      <circle cx="34" cy="12" r="1.6" fill="var(--k-vermillion)" />
-    </svg>
-    <span class="kp-brand-stack">
-      <span class="kp-brand-kanji">公案</span>
-      <span class="kp-brand-name">Коаны</span>
-    </span>
-  </a>
-
   <div class="kp-search-wrap">
     <svg
       class="kp-search-icon"
@@ -52,8 +27,15 @@
   </div>
 
   <div class="kp-header-actions">
-    <button class="kp-sign-btn" type="button" (click)="onRandom()" [title]="'koans.sign-btn-title' | transloco">
-      <span class="kp-kanji">兆</span>
+    <button
+      tuiButton
+      type="button"
+      appearance="primary"
+      size="s"
+      iconStart="@tui.sparkles"
+      (click)="onRandom()"
+      [title]="'koans.sign-btn-title' | transloco"
+    >
       {{ 'koans.sign-btn' | transloco }}
     </button>
   </div>

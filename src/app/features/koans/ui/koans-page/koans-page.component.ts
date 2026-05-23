@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, map, skip, startWith, Subject } from 'rxjs';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { TuiButton } from '@taiga-ui/core';
 
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoanListComponent } from './koan-list/koan-list.component';
@@ -16,7 +17,7 @@ const SEARCH_DEBOUNCE_MS = 300;
 
 @Component({
   selector: 'ngKitty-koans-page',
-  imports: [RouterLink, RouterOutlet, TranslocoModule, KoanListComponent, KoanReaderComponent],
+  imports: [RouterOutlet, TranslocoModule, TuiButton, KoanListComponent, KoanReaderComponent],
   templateUrl: './koans-page.component.html',
   styleUrl: './koans-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

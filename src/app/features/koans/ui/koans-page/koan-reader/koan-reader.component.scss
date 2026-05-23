@@ -76,16 +76,10 @@
     content: '';
     position: absolute;
     top: 6px;
-    bottom: 6px;
+    bottom: 0;
     left: -36px;
     width: 2px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--tui-text-primary) 8%,
-      var(--tui-text-primary) 92%,
-      transparent 100%
-    );
+    background: linear-gradient(180deg, transparent 0%, var(--tui-text-primary) 8%, var(--tui-text-primary) 100%);
     opacity: 0.65;
   }
 }
@@ -138,7 +132,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
+}
+
+.kr-intro-divider {
+  margin-bottom: 24px;
 }
 
 .kr-tag {
@@ -396,7 +394,7 @@
 /* ─── Footer ─────────────────────────────────────────────── */
 
 .kr-divider {
-  margin-top: 56px;
+  margin-top: 24px;
 }
 
 .kr-foot {
@@ -411,63 +409,6 @@
 .kr-foot-nav {
   display: flex;
   gap: 6px;
-}
-
-.kr-foot-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: transparent;
-  border: 1px solid var(--tui-border-normal);
-  color: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
-  font: inherit;
-  font-size: 13px;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    opacity 0.15s ease;
-
-  &:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-
-  &:hover:not(:disabled) {
-    border-color: color-mix(in srgb, var(--tui-text-primary) 65%, transparent);
-    color: var(--tui-text-primary);
-  }
-
-  svg {
-    width: 12px;
-    height: 12px;
-  }
-}
-
-.kr-share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: transparent;
-  border: 0;
-  color: color-mix(in srgb, var(--tui-text-primary) 50%, transparent);
-  font: inherit;
-  font-size: 12px;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition: color 0.15s ease;
-
-  &:hover {
-    color: var(--accent-primary);
-  }
-
-  svg {
-    width: 12px;
-    height: 12px;
-  }
 }
 
 @media (width <= 920px) {

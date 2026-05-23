@@ -34,6 +34,8 @@
         </div>
       }
 
+      <ngKitty-koan-divider class="kr-intro-divider" />
+
       <div class="kr-segments">
         <markdown [data]="k.body" />
       </div>
@@ -41,26 +43,30 @@
       <ngKitty-koan-divider class="kr-divider" />
       <footer class="kr-foot">
         <div class="kr-foot-nav">
-          <button type="button" class="kr-foot-btn" [disabled]="!hasPrev()" (click)="onPrev()">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-              <path d="M10 3l-5 5 5 5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="s"
+            iconStart="@tui.chevron-left"
+            [disabled]="!hasPrev()"
+            (click)="onPrev()"
+          >
             {{ 'koans.btn-prev' | transloco }}
           </button>
-          <button type="button" class="kr-foot-btn" [disabled]="!hasNext()" (click)="onNext()">
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="s"
+            iconEnd="@tui.chevron-right"
+            [disabled]="!hasNext()"
+            (click)="onNext()"
+          >
             {{ 'koans.btn-next' | transloco }}
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-              <path d="M6 3l5 5-5 5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
           </button>
         </div>
-        <button type="button" class="kr-share-btn" (click)="onShare()">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-            <path
-              d="M6.5 9.5l3-3M4 8.5l-1 1a2 2 0 0 0 2.8 2.8l1-1M12 7.5l1-1a2 2 0 0 0-2.8-2.8l-1 1"
-              stroke-linecap="round"
-            />
-          </svg>
+        <button tuiButton type="button" appearance="outline" size="s" iconStart="@tui.copy" (click)="onShare()">
           {{ 'koans.btn-share' | transloco }}
         </button>
       </footer>
