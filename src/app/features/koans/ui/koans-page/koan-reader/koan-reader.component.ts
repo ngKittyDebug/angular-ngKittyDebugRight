@@ -6,6 +6,7 @@ import {
   inject,
   input,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -24,6 +25,8 @@ import { KoanDividerComponent } from '@features/koans/ui/koan-divider/koan-divid
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KoanReaderComponent {
+  private static readonly LOADING_DELAY_MS = 300;
+
   private readonly regionRef = viewChild<ElementRef<HTMLElement>>('readerRegion');
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly transloco = inject(TranslocoService);
@@ -43,6 +46,8 @@ export class KoanReaderComponent {
   public readonly next = output<void>();
   public readonly share = output<void>();
 
+  protected readonly showLoader = signal(false);
+
   constructor() {
     effect(() => {
       this.koan();
@@ -54,6 +59,20 @@ export class KoanReaderComponent {
 
       element.style.setProperty('--koan-label-master', `"${this.labelMaster()}"`);
       element.style.setProperty('--koan-label-student', `"${this.labelStudent()}"`);
+    });
+
+    effect((onCleanup) => {
+      if (!this.loading()) {
+        this.showLoader.set(false);
+
+        return;
+      }
+
+      const timer = setTimeout(() => {
+        this.showLoader.set(true);
+      }, KoanReaderComponent.LOADING_DELAY_MS);
+
+      onCleanup(() => clearTimeout(timer));
     });
   }
 

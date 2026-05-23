@@ -140,13 +140,31 @@ describe('KoanReaderComponent', () => {
       expect(empty?.querySelector('.kr-empty-kanji')?.textContent).toBe('空');
     });
 
-    it('должен показать индикатор загрузки', () => {
+    it('не должен показывать индикатор загрузки мгновенно', () => {
+      vi.useFakeTimers();
+
       fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+
+      expect(element.querySelector('.kr-status')).toBeNull();
+
+      vi.useRealTimers();
+    });
+
+    it('должен показать индикатор загрузки после 300мс', () => {
+      vi.useFakeTimers();
+
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+
+      vi.advanceTimersByTime(300);
       fixture.detectChanges();
 
       const status = element.querySelector('.kr-status');
 
       expect(status?.textContent).toContain('Свиток разворачивается');
+
+      vi.useRealTimers();
     });
   });
 });

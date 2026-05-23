@@ -7,7 +7,7 @@
 </span>
 
 <section #readerRegion class="kr-region" aria-label="Текст коана" tabindex="-1">
-  @if (loading()) {
+  @if (showLoader()) {
     <p class="kr-status">Свиток разворачивается…</p>
   } @else if (koan(); as k) {
     <article class="kr-article" aria-labelledby="kr-title">

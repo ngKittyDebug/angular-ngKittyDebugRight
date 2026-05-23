@@ -221,6 +221,8 @@
 }
 
 .kp-sidebar {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   background: color-mix(in srgb, var(--tui-background-base) 60%, transparent);
   border-right: 1px solid var(--tui-border-normal);
