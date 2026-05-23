@@ -11,6 +11,7 @@ export const routes: Routes = [
         path: 'chronicle',
         loadComponent: () =>
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
+        providers: [provideTranslocoScope('chronicle')],
       },
       {
         path: 'login',
