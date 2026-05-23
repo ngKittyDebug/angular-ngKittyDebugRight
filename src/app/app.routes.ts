@@ -8,6 +8,12 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'chronicle',
+        loadComponent: () =>
+          import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
+        providers: [provideTranslocoScope('chronicle')],
+      },
+      {
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login')],
