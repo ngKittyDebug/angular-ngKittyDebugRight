@@ -24,12 +24,12 @@ export class RegisterFormService {
     required(password, { message: VALIDATION_ERRORS_DICT.required });
     // TODO переиспользовать паттерн из логина shared/patterns password-pattern.ts
     pattern(password, / /, { message: VALIDATION_ERRORS_DICT.passwordPattern });
-    minLength(password, 5, { message: VALIDATION_ERRORS_DICT.minLength });
+    minLength(password, 8, { message: VALIDATION_ERRORS_DICT.minLength });
     maxLength(password, 15, { message: VALIDATION_ERRORS_DICT.maxLength });
     required(passwordConfirmation, { message: VALIDATION_ERRORS_DICT.required });
     // TODO переиспользовать паттерн из логина shared/patterns password-pattern.ts
     pattern(passwordConfirmation, / /, { message: VALIDATION_ERRORS_DICT.passwordPattern });
-    minLength(passwordConfirmation, 5, { message: VALIDATION_ERRORS_DICT.minLength });
+    minLength(passwordConfirmation, 8, { message: VALIDATION_ERRORS_DICT.minLength });
     maxLength(passwordConfirmation, 15, { message: VALIDATION_ERRORS_DICT.maxLength });
     required(dateOfBirth, { message: VALIDATION_ERRORS_DICT.required });
   });
