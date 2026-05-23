@@ -4,6 +4,12 @@
     <input [formField]="form.name" placeholder="aboba" tuiInput id="name" />
   </tui-textfield>
 
+  @if (form.name().touched() && form.name().invalid()) {
+    @if (form.name().errors().at(0); as error) {
+      <tui-error [error]="error.message | transloco: error" />
+    }
+  }
+
   <tui-textfield iconStart="@tui.mail">
     <label tuiLabel for="email">{{ 'register.form.labels.email' | transloco }}</label>
     <input [formField]="form.email" placeholder="john@wick.com" tuiInput type="email" id="email" />

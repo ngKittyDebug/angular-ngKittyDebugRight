@@ -24,13 +24,13 @@ export class RegisterFormService {
     required(email, { message: VALIDATION_ERRORS_DICT.required });
     pattern(email, EMAIL_PATTERN, { message: VALIDATION_ERRORS_DICT.emailPattern });
     required(password, { message: VALIDATION_ERRORS_DICT.required });
-    pattern(password, PASSWORD_PATTERN, { message: VALIDATION_ERRORS_DICT.passwordPattern });
     minLength(password, 8, { message: VALIDATION_ERRORS_DICT.minLength });
     maxLength(password, 15, { message: VALIDATION_ERRORS_DICT.maxLength });
+    pattern(password, PASSWORD_PATTERN, { message: VALIDATION_ERRORS_DICT.passwordPattern });
     required(passwordConfirmation, { message: VALIDATION_ERRORS_DICT.required });
-    pattern(passwordConfirmation, PASSWORD_PATTERN, { message: VALIDATION_ERRORS_DICT.passwordPattern });
     minLength(passwordConfirmation, 8, { message: VALIDATION_ERRORS_DICT.minLength });
     maxLength(passwordConfirmation, 15, { message: VALIDATION_ERRORS_DICT.maxLength });
+    pattern(passwordConfirmation, PASSWORD_PATTERN, { message: VALIDATION_ERRORS_DICT.passwordPattern });
     validate(passwordConfirmation, passwordConfirmationValidator(password));
     required(dateOfBirth, { message: VALIDATION_ERRORS_DICT.required });
   });

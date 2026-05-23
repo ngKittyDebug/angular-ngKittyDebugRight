@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 import { RegisterFormService } from '@features/registration/services/register-form.service';
 import { Router } from '@angular/router';
@@ -13,25 +13,22 @@ export class RegisterPageFacade {
   private readonly notifications = inject(TuiNotificationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
-  private readonly _isLoading = signal(false);
   public readonly registerForm = inject(RegisterFormService).form;
-  public readonly isLoading = this._isLoading.asReadonly();
+  public readonly isLoading = this.authService.isLoading;
 
   public async signup() {
-    if (this.registerForm().invalid() || this._isLoading()) {
+    if (this.registerForm().invalid() || this.isLoading()) {
       return;
     }
 
-    this._isLoading.set(true);
-
-    const { email, password, ...restRegisterData } = this.registerForm().value();
+    const { email, password, name, dateOfBirth } = this.registerForm().value();
 
     try {
-      await this.authService.signup(email, password, restRegisterData);
+      await this.authService.signup(email, password, { full_name: name, date_of_birth: dateOfBirth });
 
       void this.showNotification(
-        this.translocoService.translate('notifications.login.success'),
-        this.translocoService.translate('notifications.login.success-title'),
+        this.translocoService.translate('register.notifications.success'),
+        this.translocoService.translate('register.notifications.success-title'),
         'positive'
       );
       void this.router.navigate(['/']);
@@ -39,27 +36,11 @@ export class RegisterPageFacade {
       if (error instanceof Error) {
         void this.showNotification(
           error.message,
-          this.translocoService.translate('notifications.login.failure'),
+          this.translocoService.translate('register.notifications.failure'),
           'negative'
         );
       }
-    } finally {
-      this._isLoading.set(false);
     }
-  }
-
-  public loginWithGithub() {
-    if (this._isLoading()) {
-      return;
-    }
-    this.authService.loginWithGithub();
-  }
-
-  public loginWithGoogle() {
-    if (this._isLoading()) {
-      return;
-    }
-    this.authService.loginWithGoogle();
   }
 
   private showNotification(message: string, label: string, appearance: 'positive' | 'negative') {
