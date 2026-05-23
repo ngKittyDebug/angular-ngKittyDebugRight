@@ -29,19 +29,5 @@
     "email_pattern": "This sigil doesn't look like email. Check the address.",
     "password_pattern": "Temple cipher: at least 8 characters — one uppercase, one lowercase, one digit. Latin letters and digits only, no spaces.",
     "password_confirmation": "The mantras do not match — repeat the cipher exactly."
-  },
-  "notifications": {
-    "login": {
-      "success": "Access granted!",
-      "success-title": "The Sacred Repository welcomes you!",
-      "failure": "Login failed. Perhaps you angered the ancient legacy."
-    }
-  },
-  "login": {
-    "success": "Missing value for 'login.success'",
-    "success-title": "Missing value for 'login.success-title'",
-    "error": {
-      "text": "Missing value for 'login.error.text'"
-    }
   }
 }

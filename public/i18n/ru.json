@@ -29,19 +29,5 @@
     "email_pattern": "Печать не похожа на email. Проверьте адрес.",
     "password_pattern": "Церковный шифр: от 8 символов — заглавная и строчная латиница, цифра. Без пробелов, только буквы и цифры.",
     "password_confirmation": "Мантры не совпадают — повторите шифр точно."
-  },
-  "notifications": {
-    "login": {
-      "success": "Доступ дарован!",
-      "success-title": "Священный репозиторий приветствует тебя!",
-      "failure": "Ошибка входа. Возможно, ты разгневал древний legacy."
-    }
-  },
-  "login": {
-    "success": "Missing value for 'login.success'",
-    "success-title": "Missing value for 'login.success-title'",
-    "error": {
-      "text": "Missing value for 'login.error.text'"
-    }
   }
 }

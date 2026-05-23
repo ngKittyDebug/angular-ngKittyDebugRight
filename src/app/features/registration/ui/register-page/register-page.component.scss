@@ -35,6 +35,18 @@
   --tui-radius-l: 0rem;
   --tui-radius-m: 0rem;
   --tui-radius-s: 0rem;
+
+  [tuiLabel] {
+    color: var(--accent-primary-soft);
+  }
+
+  [tuiCardLarge] tui-textfield::before {
+    color: var(--accent-primary);
+  }
+
+  [tuiCardLarge] tui-icon {
+    color: var(--accent-primary);
+  }
 }
 
 .footer {
