@@ -14,10 +14,11 @@ import { MarkdownComponent } from 'ngx-markdown';
 
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
+import { KoanDividerComponent } from '@features/koans/ui/koan-divider/koan-divider.component';
 
 @Component({
   selector: 'ngKitty-koan-reader',
-  imports: [TranslocoModule, MarkdownComponent],
+  imports: [TranslocoModule, MarkdownComponent, KoanDividerComponent],
   templateUrl: './koan-reader.component.html',
   styleUrl: './koan-reader.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,9 +29,6 @@ export class KoanReaderComponent {
   private readonly transloco = inject(TranslocoService);
   private readonly labelMaster = toSignal(this.transloco.selectTranslate('koans.segment-master'), { initialValue: '' });
   private readonly labelStudent = toSignal(this.transloco.selectTranslate('koans.segment-student'), {
-    initialValue: '',
-  });
-  private readonly labelQuestion = toSignal(this.transloco.selectTranslate('koans.segment-question'), {
     initialValue: '',
   });
 
@@ -56,7 +54,6 @@ export class KoanReaderComponent {
 
       element.style.setProperty('--koan-label-master', `"${this.labelMaster()}"`);
       element.style.setProperty('--koan-label-student', `"${this.labelStudent()}"`);
-      element.style.setProperty('--koan-label-question', `"${this.labelQuestion()}"`);
     });
   }
 

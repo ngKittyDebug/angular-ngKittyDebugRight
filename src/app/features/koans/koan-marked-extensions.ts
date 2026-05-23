@@ -14,9 +14,14 @@ function renderInline(text: string): string {
   return DOMPurify.sanitize(marked.parseInline(text) as string);
 }
 
-const QUESTION_SEAL = '<span class="question-mark" aria-hidden="true">問</span>';
+function escapeHtml(string_: string): string {
+  return string_.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
-function blockTag(tag: string, cssClass: KoanTokenType, seal = '') {
+const QUESTION_SEAL = '<span class="question-mark" aria-hidden="true">問</span>';
+const KOAN_HR = '<div class="koan-hr" aria-hidden="true"><span>☯</span></div>';
+
+function blockTag(tag: string, cssClass: KoanTokenType, seal = '', prefix = '', suffix = '') {
   const open = `<${tag}>`;
   const tagRegExp = new RegExp(String.raw`^<${tag}>([\s\S]*?)<\/${tag}>`);
 
@@ -34,7 +39,7 @@ function blockTag(tag: string, cssClass: KoanTokenType, seal = '') {
       return { type: cssClass, raw: match[0], text: match[1].trim() };
     },
     renderer(token: Tokens.Generic): string {
-      return `<p class="segment ${cssClass}">${seal}${renderInline((token as KoanToken).text)}</p>\n`;
+      return `${prefix}<p class="segment ${cssClass}">${seal}${renderInline((token as KoanToken).text)}</p>\n${suffix}`;
     },
   };
 }
@@ -45,9 +50,17 @@ export const koanMarkedExtensions: MarkedExtension = {
     blockTag('Student', 'student'),
     blockTag('Source', 'source'),
     blockTag('Action', 'action'),
-    blockTag('Haiku', 'haiku'),
-    blockTag('Question', 'question', QUESTION_SEAL),
+    blockTag('Haiku', 'haiku', '', `${KOAN_HR}\n`),
+    blockTag('Question', 'question', QUESTION_SEAL, `${KOAN_HR}\n`),
   ],
+  renderer: {
+    code({ text, lang }: Tokens.Code): string {
+      const content = escapeHtml(text);
+      const langAttribute = lang ? ` class="language-${lang}"` : '';
+
+      return `<pre><code${langAttribute}>${content}</code></pre>\n${KOAN_HR}\n`;
+    },
+  },
 };
 
 export const koanHeadingExtension: MarkedExtension = {

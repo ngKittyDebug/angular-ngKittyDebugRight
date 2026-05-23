@@ -217,16 +217,17 @@
   }
 
   .segment.master::before {
-    content: var(--koan-label-master, 'Мастер');
-    display: block;
-    margin-bottom: 3px;
+    content: var(--koan-label-master, 'Мастер') ': ';
+    display: inline;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     font-style: normal;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent-primary);
-    opacity: 0.75;
+    opacity: 0.9;
+    vertical-align: baseline;
   }
 
   .segment.master::after {
@@ -247,16 +248,17 @@
   }
 
   .segment.student::before {
-    content: var(--koan-label-student, 'Ученик');
-    display: block;
-    margin-bottom: 3px;
+    content: var(--koan-label-student, 'Ученик') ': ';
+    display: inline;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     font-style: normal;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--tui-text-primary) 45%, transparent);
-    opacity: 0.85;
+    opacity: 0.95;
+    vertical-align: baseline;
   }
 
   .segment.student::after {
@@ -269,20 +271,29 @@
     background: var(--accent-secondary);
   }
 
+  .segment.master + .segment.master,
+  .segment.student + .segment.student {
+    margin-top: -6px;
+  }
+
+  .segment.master + .segment.student,
+  .segment.student + .segment.master {
+    margin-top: 0;
+  }
+
   .segment.action {
-    position: relative;
-    padding-left: 22px;
-    color: color-mix(in srgb, var(--tui-text-primary) 50%, transparent);
-    font-size: 14.5px;
+    padding-left: 0;
+    color: color-mix(in srgb, var(--tui-text-primary) 40%, transparent);
+    font-size: 13.5px;
     font-style: italic;
+    text-align: center;
+    letter-spacing: 0.01em;
   }
 
   .segment.haiku {
-    margin: 12px 0;
+    margin: 0;
     padding: 18px 22px;
     background: var(--tui-background-base-alt);
-    border-top: 1px solid var(--tui-border-normal);
-    border-bottom: 1px solid var(--tui-border-normal);
     color: var(--tui-text-primary);
     font-family: 'Noto Serif JP', 'Noto Serif', serif;
     font-size: 17px;
@@ -294,24 +305,18 @@
   }
 
   .segment.question {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--tui-border-normal);
+    margin-top: 0;
+    padding-top: 0;
     color: var(--tui-text-primary);
     font-size: 15.5px;
     line-height: 1.7;
   }
 
-  .segment.question::before {
-    content: var(--koan-label-question, 'С чем ты уйдёшь');
-    display: block;
-    margin-bottom: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-style: normal;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--tui-text-primary) 40%, transparent);
+  .koan-hr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
   }
 
   .question-mark {
@@ -336,7 +341,7 @@
      Optional: drop ngx-highlightjs/PrismJS in to colorize tokens. */
   pre {
     position: relative;
-    margin: 8px -8px;
+    margin: 8px 0;
     padding: 16px 22px;
     overflow-x: auto;
     background: var(--tui-background-base-alt);
@@ -363,17 +368,36 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* Bullet for action segments — kept as top-level under ::ng-deep to satisfy
-     no-descending-specificity against the (less specific) `pre::before` above. */
+  /* Action stage-direction marker — static inline em-dash, no absolute positioning. */
   .segment.action::before {
-    content: '•';
-    position: absolute;
-    left: 6px;
-    color: color-mix(in srgb, var(--tui-text-primary) 35%, transparent);
+    content: '— ';
+    position: static;
+    left: auto;
+    color: color-mix(in srgb, var(--tui-text-primary) 25%, transparent);
+  }
+
+  /* koan-hr lines — mirrors KoanDividerComponent styles for markdown-generated dividers. */
+  .koan-hr::before,
+  .koan-hr::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--tui-border-normal);
+  }
+
+  .koan-hr span {
+    flex-shrink: 0;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    color: color-mix(in srgb, var(--tui-text-primary) 30%, transparent);
   }
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */
+
+.kr-divider {
+  margin-top: 56px;
+}
 
 .kr-foot {
   display: flex;
@@ -381,9 +405,7 @@
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 56px;
-  padding-top: 22px;
-  border-top: 1px solid var(--tui-border-normal);
+  margin-top: 22px;
 }
 
 .kr-foot-nav {
