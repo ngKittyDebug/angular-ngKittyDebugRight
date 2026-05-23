@@ -141,6 +141,7 @@ export default tseslint.config(
           token: 'off',
           facade: 'off',
           store: 'off',
+          dictionary: 'off',
         },
       ],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
