@@ -32,6 +32,9 @@ importers:
       '@ngrx/signals':
         specifier: ^21.1.0
         version: 21.1.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
+      '@netlify/identity':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@taiga-ui/addon-doc':
         specifier: ^5.5.0
         version: 5.5.0(a7dd30829ef30adcb336b59af9c43f4d)
@@ -1935,6 +1938,9 @@ packages:
   '@netlify/local-functions-proxy@2.0.3':
     resolution: {integrity: sha512-siVwmrp7Ow+7jLALi6jXOja4Y4uHMMgOLLQMgd+OZ1TESOstrJvkUisJEDAc9hx7u0v/B0mh5g1g1huiH3uS3A==}
     engines: {node: '>=18.14.0'}
+  '@netlify/identity@1.1.0':
+    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
+    engines: {node: '>=22'}
 
   '@netlify/open-api@2.53.0':
     resolution: {integrity: sha512-CcIhcB+XzY77nze7vLTdxkqS/uX5DXleo3adE8H+M7TapLX6GTXp5qMIsq8bAuHy5eGw0ijRrAnSUmkOP4DM2w==}
@@ -4959,6 +4965,8 @@ packages:
 
   graceful-fs@4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+  gotrue-js@1.0.1:
+    resolution: {integrity: sha512-ZynwwM4bEo2y5yNWO3/Ynbx1AvQz9ONJSM9tB1jpooAvDPevGdvgeFP3NwM59FAlkd0szSkQRAhjINMkJSDfAQ==}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -10092,6 +10100,9 @@ snapshots:
       '@netlify/local-functions-proxy-openbsd-x64': 1.1.1
       '@netlify/local-functions-proxy-win32-ia32': 1.1.1
       '@netlify/local-functions-proxy-win32-x64': 1.1.1
+  '@netlify/identity@1.1.0':
+    dependencies:
+      gotrue-js: 1.0.1
 
   '@netlify/open-api@2.53.0': {}
 
@@ -13390,6 +13401,7 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.10: {}
+  gotrue-js@1.0.1: {}
 
   graceful-fs@4.2.11: {}
 
