@@ -24,10 +24,10 @@ export class LoginPageFacade {
     }
     this.isLoading.set(true);
 
-    const data = this.loginForm.getRawValue();
+    const { email, password } = this.loginForm.getRawValue();
 
     try {
-      await this.authService.login(data.email, data.password);
+      await this.authService.login(email, password);
       await this.showNotifications(
         this.translocoService.translate('login.success'),
         this.translocoService.translate('login.successTitle'),
@@ -43,30 +43,18 @@ export class LoginPageFacade {
     }
   }
 
-  public async loginWithGithub() {
-    this.isLoading.set(true);
-    try {
-      await this.authService.loginWithGithub();
-    } catch (error) {
-      if (error instanceof Error) {
-        this.showNotifications(error.message, this.translocoService.translate('login.error.githubLogin'), 'negative');
-      }
-    } finally {
-      this.isLoading.set(false);
+  public loginWithGithub() {
+    if (this.isLoading()) {
+      return;
     }
+    this.authService.loginWithGithub();
   }
 
-  public async loginWithGoogle() {
-    this.isLoading.set(true);
-    try {
-      await this.authService.loginWithGoogle();
-    } catch (error) {
-      if (error instanceof Error) {
-        this.showNotifications(error.message, this.translocoService.translate('login.error.googleLogin'), 'negative');
-      }
-    } finally {
-      this.isLoading.set(false);
+  public loginWithGoogle() {
+    if (this.isLoading()) {
+      return;
     }
+    this.authService.loginWithGoogle();
   }
 
   private showNotifications(message: string, label: string, appearance: string) {
