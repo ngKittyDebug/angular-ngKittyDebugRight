@@ -1,9 +1,1 @@
-{
-  "validation_errors": {
-    "required": "The void rejects emptiness — fill this field.",
-    "max_length": "Too long for the parish scroll. Shorten it.",
-    "min_length": "Your secret mantra is too short for initiation (at least 5 characters).",
-    "email_pattern": "This sigil doesn't look like email. Check the address.",
-    "password_pattern": "The cipher doesn't match temple rules. Try another password."
-  }
-}
+{}
