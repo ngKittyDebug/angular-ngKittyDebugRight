@@ -134,7 +134,7 @@
 
 * {
   box-sizing: border-box;
-  cursor: url('/assets/1.png'), auto;
+  cursor: url('/assets/cursor-default.png'), auto;
 }
 
 a,
@@ -145,7 +145,7 @@ label,
 select,
 summary,
 .t-clickable {
-  cursor: url('/assets/2.png'), pointer;
+  cursor: url('/assets/cursor-pointer.png'), pointer;
 }
 
 a:hover,
@@ -156,7 +156,7 @@ label:hover,
 select:hover,
 summary:hover,
 .t-clickable:hover {
-  cursor: url('/assets/2.png'), pointer;
+  cursor: url('/assets/cursor-pointer.png'), pointer;
 }
 
 a:active,
@@ -167,7 +167,7 @@ label:active,
 select:active,
 summary:active,
 .t-clickable:active {
-  cursor: url('/assets/3.png'), pointer;
+  cursor: url('/assets/cursor-active.png'), pointer;
 }
 
 button:disabled,
@@ -216,20 +216,7 @@ button[tuiButton][data-appearance='primary']:active {
   background-image: var(--bg-primary-hover-btn);
 }
 
-button[tuiButton]:disabled {
-  background-image: repeating-linear-gradient(
-    180deg,
-    rgb(20 27 31 /85%) 0,
-    rgb(53 55 56 /85%) 1px,
-    rgb(20 27 31 /85%) 1px,
-    rgb(53 55 56 /85%) 2px,
-    rgb(20 27 31 /85%) 3px
-  );
-  border: #000;
-  color: #000;
-  box-shadow: none;
-}
-
+button[tuiButton]:disabled,
 button[tuiButton]:disabled:hover {
   background-image: repeating-linear-gradient(
     180deg,
@@ -239,7 +226,7 @@ button[tuiButton]:disabled:hover {
     rgb(53 55 56 /85%) 2px,
     rgb(20 27 31 /85%) 3px
   );
-  border: #000;
+  border: 1px solid #000;
   color: #000;
   box-shadow: none;
   cursor: not-allowed;
