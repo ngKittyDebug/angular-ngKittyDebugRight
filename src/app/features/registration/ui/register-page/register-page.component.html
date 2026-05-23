@@ -1,1 +1,84 @@
-<p>regiater-page works!</p>
+<form tuiCardLarge tuiForm="m" class="form" [style.max-width.rem]="48" (submit)="registerPageFacade.signup()">
+  <tui-textfield>
+    <label tuiLabel for="name">{{ 'register.form.labels.name' | transloco }}</label>
+    <input [formField]="form.name" placeholder="aboba" tuiInput id="name" />
+  </tui-textfield>
+
+  <tui-textfield iconStart="@tui.mail">
+    <label tuiLabel for="email">{{ 'register.form.labels.email' | transloco }}</label>
+    <input [formField]="form.email" placeholder="john@wick.com" tuiInput type="email" id="email" />
+  </tui-textfield>
+  <!--  @if (form.email().invalid()) {-->
+  <!--    <tui-error [error]="form.email().errors() | transloco" />-->
+  <!--  }-->
+
+  <!--  @if (emailControl.errors?.['pattern'] && emailControl.touched) {-->
+  <!--    <tui-error [error]="'login.error.email-pattern' | transloco" />-->
+  <!--  }-->
+
+  <tui-textfield iconStart="@tui.lock">
+    <label tuiLabel for="password">{{ 'register.form.labels.password' | transloco }}</label>
+    <input id="password" [formField]="form.password" placeholder="Aa88888" tuiInput />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+  <!--  @if (passwordControl.errors?.['required'] && passwordControl.touched) {-->
+  <!--    <tui-error [error]="'login.error.required' | transloco" />-->
+  <!--  }-->
+
+  <!--  @if (passwordControl.errors?.['pattern'] && passwordControl.touched) {-->
+  <!--    <tui-error [error]="'login.error.password-pattern' | transloco" />-->
+  <!--  }-->
+
+  <tui-textfield iconStart="@tui.lock">
+    <label tuiLabel for="passwordConfirmation">{{ 'register.form.labels.password_confirmation' | transloco }}</label>
+    <input id="passwordConfirmation" [formField]="form.passwordConfirmation" placeholder="Aa88888" tuiInput />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+
+  <tui-textfield iconStart="@tui.lock">
+    <label tuiLabel for="dateOfBirth">{{ 'register.form.labels.date_of_birth' | transloco }}</label>
+    <input id="dateOfBirth" [formField]="form.dateOfBirth" tuiInput />
+    <tui-icon />
+  </tui-textfield>
+
+  <footer class="footer">
+    <button tuiButton type="submit" [disabled]="form().invalid || isLoading()">
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'register.actions.submit' | transloco }}
+      }
+    </button>
+
+    <span class="divider"></span>
+
+    <button
+      appearance="secondary"
+      tuiButton
+      type="button"
+      (click)="registerPageFacade.loginWithGoogle()"
+      [disabled]="isLoading()"
+    >
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'auth_providers.google' | transloco }}
+      }
+    </button>
+
+    <button
+      appearance="secondary"
+      tuiButton
+      type="button"
+      (click)="registerPageFacade.loginWithGithub()"
+      [disabled]="isLoading()"
+    >
+      @if (isLoading()) {
+        <tui-loader />
+      } @else {
+        {{ 'auth_providers.github' | transloco }}
+      }
+    </button>
+    <a routerLink="/login" class="link">{{ 'navigation-items.login' | transloco }}</a>
+  </footer>
+</form>

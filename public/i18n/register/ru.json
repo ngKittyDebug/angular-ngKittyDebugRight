@@ -1,1 +1,14 @@
-{}
+{
+  "form": {
+    "labels": {
+      "name": "Имя",
+      "email": "Почта",
+      "password": "Пароль",
+      "password_confirmation": "Подтвердите пароль",
+      "date_of_birth": "Дата рождения"
+    }
+  },
+  "actions": {
+    "submit": "Зарегистрироваться"
+  }
+}

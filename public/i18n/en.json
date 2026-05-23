@@ -1,4 +1,17 @@
 {
+  "auth_providers": {
+    "google": "Login with Google",
+    "github": "Login with GitHub"
+  },
+  "navigation-items": {
+    "login": "Login",
+    "tarot": "Tarot",
+    "shrift": "Shrift",
+    "runes": "Runes",
+    "horoscope": "Horoscope",
+    "chronicle": "Chronicle",
+    "register": "Register"
+  },
   "sidebar": {
     "navigation": "NAVIGATION"
   },
@@ -17,13 +30,11 @@
     "password_pattern": "Temple cipher: at least 8 characters — one uppercase, one lowercase, one digit. Latin letters and digits only, no spaces.",
     "password_confirmation": "The mantras do not match — repeat the cipher exactly."
   },
-  "navigation-items": {
-    "tarot": "Tarot",
-    "shrift": "Shrift",
-    "runes": "Runes",
-    "horoscope": "Horoscope",
-    "chronicle": "Chronicle",
-    "login": "Login",
-    "register": "Register"
+  "notifications": {
+    "login": {
+      "success": "Access granted!",
+      "success-title": "The Sacred Repository welcomes you!",
+      "failure": "Login failed. Perhaps you angered the ancient legacy."
+    }
   }
 }

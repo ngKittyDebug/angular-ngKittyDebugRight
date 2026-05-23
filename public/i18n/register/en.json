@@ -1,1 +1,14 @@
-{}
+{
+  "form": {
+    "labels": {
+      "name": "Name'",
+      "email": "Password",
+      "password": "Email",
+      "password_confirmation": "Password confirmation",
+      "date_of_birth": "Date of birth"
+    }
+  },
+  "actions": {
+    "submit": "Register"
+  }
+}
