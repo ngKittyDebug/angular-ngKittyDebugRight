@@ -17,8 +17,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login')],
       },
-      { path: 'profile',
-        loadComponent: () => import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
 
