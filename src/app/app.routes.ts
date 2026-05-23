@@ -9,6 +9,11 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'login',
+        loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
+        providers: [provideTranslocoScope('login')],
+      },
+      {
         path: 'register',
         loadComponent: () =>
           import('@features/registration/ui/register-page/register-page.component').then(
