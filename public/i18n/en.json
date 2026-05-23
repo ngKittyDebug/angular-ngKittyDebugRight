@@ -14,6 +14,8 @@
     "shrift": "Shrift",
     "runes": "Runes",
     "horoscope": "Horoscope",
-    "chronicle": "Chronicle"
+    "chronicle": "Chronicle",
+    "login": "Login",
+    "register": "Register"
   }
 }
