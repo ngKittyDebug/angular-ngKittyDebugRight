@@ -80,7 +80,13 @@
     bottom: 0;
     left: -36px;
     width: 2px;
-    background: linear-gradient(180deg, transparent 0%, var(--tui-text-primary) 8%, var(--tui-text-primary) 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--tui-text-primary) 8%,
+      var(--tui-text-primary) 92%,
+      transparent 100%
+    );
     opacity: 0.65;
   }
 }
