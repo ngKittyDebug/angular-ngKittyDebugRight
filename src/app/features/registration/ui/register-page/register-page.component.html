@@ -78,8 +78,8 @@
 
   <tui-textfield iconStart="@tui.lock">
     <label tuiLabel for="dateOfBirth">{{ 'register.form.labels.date_of_birth' | transloco }}</label>
-    <input id="dateOfBirth" [formControl]="dateOfBirthControl" tuiInput />
-    <tui-icon />
+    <input id="dateOfBirth" [formControl]="dateOfBirthControl" tuiInputDate />
+    <tui-calendar *tuiDropdown />
   </tui-textfield>
 
   @if (dateOfBirthControl.touched && dateOfBirthControl.invalid) {

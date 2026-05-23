@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
-import { TuiInputPin, TuiPassword } from '@taiga-ui/kit';
+import { TuiInputDate, TuiInputPin, TuiPassword } from '@taiga-ui/kit';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
   TuiButton,
@@ -31,6 +31,7 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
     TuiForm,
     TuiErrorComponent,
     ReactiveFormsModule,
+    TuiInputDate,
   ],
   providers: [tuiLoaderOptionsProvider({ size: 'm' })],
   templateUrl: './register-page.component.html',
