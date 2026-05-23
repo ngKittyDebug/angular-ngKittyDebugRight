@@ -7,7 +7,7 @@ describe('LoginPageFacadeService', () => {
   let service: LoginPageFacade;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [TranslocoTestingMock] });
+    TestBed.configureTestingModule({ imports: [TranslocoTestingMock], providers: [LoginPageFacade] });
     service = TestBed.inject(LoginPageFacade);
   });
 

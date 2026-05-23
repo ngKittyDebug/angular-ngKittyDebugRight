@@ -36,7 +36,7 @@ import { LoginPageFacade } from '../facades/login-page.facade';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [tuiLoaderOptionsProvider({ size: 's' })],
+  providers: [LoginPageFacade, tuiLoaderOptionsProvider({ size: 's' })],
 })
 export class LoginComponent {
   protected readonly facade = inject(LoginPageFacade);

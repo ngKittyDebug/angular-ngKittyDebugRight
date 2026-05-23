@@ -6,9 +6,7 @@ import { LoginFormService } from '../services/login-form.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LoginPageFacade {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
