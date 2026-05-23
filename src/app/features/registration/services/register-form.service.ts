@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import type { RegisterForm } from '@features/registration/models/register-form.model';
 import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
-import { form, maxLength, minLength, pattern, required } from '@angular/forms/signals';
+import { passwordConfirmationValidator } from '@shared/validators/password-confirmation.validator';
+import { form, maxLength, minLength, pattern, required, validate } from '@angular/forms/signals';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,7 @@ export class RegisterFormService {
     pattern(passwordConfirmation, / /, { message: VALIDATION_ERRORS_DICT.passwordPattern });
     minLength(passwordConfirmation, 8, { message: VALIDATION_ERRORS_DICT.minLength });
     maxLength(passwordConfirmation, 15, { message: VALIDATION_ERRORS_DICT.maxLength });
+    validate(passwordConfirmation, passwordConfirmationValidator(password));
     required(dateOfBirth, { message: VALIDATION_ERRORS_DICT.required });
   });
 }

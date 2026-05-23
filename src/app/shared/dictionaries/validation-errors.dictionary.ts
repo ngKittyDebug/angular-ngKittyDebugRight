@@ -6,4 +6,5 @@ export const VALIDATION_ERRORS_DICT = {
   minLength: marker('validation_errors.min_length'),
   emailPattern: marker('validation_errors.email_pattern'),
   passwordPattern: marker('validation_errors.password_pattern'),
+  passwordConfirmation: marker('validation_errors.password_confirmation'),
 } as const satisfies Record<string, string>;
