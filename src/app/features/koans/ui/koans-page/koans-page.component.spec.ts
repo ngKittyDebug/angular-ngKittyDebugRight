@@ -87,7 +87,9 @@ describe('KoansPageComponent', () => {
         expect(element.querySelector('.kp-brand-kanji')?.textContent).toBe('公案');
       });
 
-      it('должен прокинуть значение search в store.setQuery', () => {
+      it('должен прокинуть значение search в store.setQuery после debounce', () => {
+        vi.useFakeTimers();
+
         const input = element.querySelector<HTMLInputElement>('.kp-search');
 
         if (!input) {
@@ -99,7 +101,13 @@ describe('KoansPageComponent', () => {
 
         const store = TestBed.inject(KoansFacade);
 
+        expect(store.query()).toBe('');
+
+        vi.advanceTimersByTime(300);
+
         expect(store.query()).toBe('async');
+
+        vi.useRealTimers();
       });
 
       it('кнопка «Дай знак» должна навигировать на случайный slug из filteredList', () => {

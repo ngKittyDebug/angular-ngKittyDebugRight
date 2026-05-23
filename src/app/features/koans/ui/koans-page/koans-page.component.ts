@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, input, si
 import type { OnInit } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { distinctUntilChanged, filter, map, skip, startWith } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, skip, startWith, Subject } from 'rxjs';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
@@ -12,6 +12,7 @@ import { KoanReaderComponent } from './koan-reader/koan-reader.component';
 
 const READ_DWELL_MS = 2500;
 const TOAST_VISIBLE_MS = 2000;
+const SEARCH_DEBOUNCE_MS = 300;
 
 @Component({
   selector: 'ngKitty-koans-page',
@@ -37,6 +38,8 @@ export class KoansPageComponent implements OnInit {
   );
 
   private readonly transloco = inject(TranslocoService);
+  private readonly queryInput$ = new Subject<string>();
+
   protected readonly facade = inject(KoansFacade);
   protected readonly slug = input<Nullable<string>>(null);
   protected readonly listOpen = signal(true);
@@ -60,6 +63,10 @@ export class KoansPageComponent implements OnInit {
   });
 
   constructor() {
+    this.queryInput$
+      .pipe(debounceTime(SEARCH_DEBOUNCE_MS), distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe((query) => this.facade.setQuery(query));
+
     this.transloco.langChanges$.pipe(skip(1), takeUntilDestroyed()).subscribe(() => {
       this.facade.loadKoanList();
       this.facade.loadCategories();
@@ -122,8 +129,7 @@ export class KoansPageComponent implements OnInit {
   }
 
   protected onQueryInput(event: Event): void {
-    // TODO AR debounce
-    this.facade.setQuery((event.target as HTMLInputElement).value);
+    this.queryInput$.next((event.target as HTMLInputElement).value);
   }
 
   protected onClearQuery(): void {
