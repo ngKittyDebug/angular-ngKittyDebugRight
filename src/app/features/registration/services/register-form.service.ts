@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import type { RegisterForm } from '@features/registration/models/register-form.model';
-import { VALIDATION_ERRORS_DICT } from '@features/registration/dictionaries/validation-errors.dictionary';
+import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
 import { form, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 
 @Injectable({
