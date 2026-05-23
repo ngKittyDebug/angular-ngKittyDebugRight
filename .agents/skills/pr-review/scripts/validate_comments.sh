@@ -58,6 +58,18 @@ INVALID_FILE="/tmp/angular_pr_${PR_NUMBER}_comments_invalid.json"
 echo "[]" > "$VALID_FILE"
 echo "[]" > "$INVALID_FILE"
 
+# Check for empty bodies first — an empty body means the shell mangled the variable
+EMPTY_BODY_COUNT=$(jq '[.[] | select(.body == "" or .body == null)] | length' "$COMMENT_FILE")
+if [ "$EMPTY_BODY_COUNT" -gt 0 ]; then
+  echo ""
+  echo "ERROR: $EMPTY_BODY_COUNT comment(s) have an empty body (shell likely mangled the variable):"
+  jq -r '.[] | select(.body == "" or .body == null) | "  ✗ \(.path):\(.line)"' "$COMMENT_FILE"
+  echo ""
+  echo "Fix: write the body to a temp file with a heredoc and pass @/tmp/body.txt to post_inline_comment.sh"
+  echo "Aborting — fix empty bodies before submitting."
+  exit 1
+fi
+
 # Extract all path:line from comments and check in batch
 jq -r '.[] | .path + ":" + (.line | tostring)' "$COMMENT_FILE" | while IFS= read -r key; do
   if grep -qxF "$key" "$VALID_LINES_FILE"; then

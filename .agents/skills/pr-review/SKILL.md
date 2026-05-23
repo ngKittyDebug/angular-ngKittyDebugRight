@@ -379,12 +379,51 @@ _[jab — one ironic/wry sentence, severity-matched register from tone-examples.
 
 ### Step 3 — Post the review (batch, never one by one)
 
-1. Post replies first: `./scripts/reply_pr_comment.sh <PR_NUMBER> <COMMENT_ID> <BODY>`
-2. Stage inline comments: `./scripts/post_inline_comment.sh <PR_NUMBER> <FILE> <LINE> <BODY> [SIDE]`
+1. Post replies first: `./scripts/reply_pr_comment.sh <PR_NUMBER> <COMMENT_ID> <BODY|@FILE>`
+2. Stage inline comments: `./scripts/post_inline_comment.sh <PR_NUMBER> <FILE> <LINE> <BODY|@FILE> [SIDE]`
    - Use `RIGHT` (default) for added/modified lines
    - Use `LEFT` for commenting on deleted lines
 3. Validate staged comments: `./scripts/validate_comments.sh <PR_NUMBER>`
 4. Submit review: `./scripts/submit_pr_review.sh <PR_NUMBER> <EVENT_TYPE>`
+
+**Body encoding — mandatory rule:**
+
+Shell variable expansion mangles bodies that contain **single quotes, Cyrillic text, backticks, or `$` signs**. When a body has any of these, write it to a temp file and pass `@file`:
+
+````bash
+cat > /tmp/body_1.txt << 'EOF'
+💩 **Shit**
+
+_Пять ошибок в одном файле: camelCase ключи, 'апострофы', `backticks` и $vars._
+
+Diagnosis text here.
+
+```suggestion
+fixed code
+````
+
+[Link](https://example.com)
+EOF
+
+./scripts/post_inline_comment.sh 89 "src/foo.ts" 42 @/tmp/body_1.txt
+
+````
+
+The `<< 'EOF'` heredoc (note: quoted `'EOF'`) does not expand anything inside — single quotes, backticks, `$` signs, and Cyrillic are all passed as-is. Use a unique suffix per comment (`body_1.txt`, `body_2.txt`, etc.).
+
+For replies the same rule applies:
+```bash
+cat > /tmp/reply_1.txt << 'EOF'
+reply text with 'quotes' and кириллица
+EOF
+./scripts/reply_pr_comment.sh 89 3289667376 @/tmp/reply_1.txt
+````
+
+Short bodies without special chars can still be passed inline with single quotes:
+
+```bash
+./scripts/reply_pr_comment.sh 89 3289842336 'Добавила — зачтено.'
+```
 
 **Rules:**
 
