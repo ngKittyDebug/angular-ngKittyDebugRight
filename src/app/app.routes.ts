@@ -12,7 +12,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
       },
-
+      {
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login')],
