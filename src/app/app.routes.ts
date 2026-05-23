@@ -13,6 +13,10 @@ export const routes: Routes = [
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
       },
 
+        path: 'login',
+        loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
+        providers: [provideTranslocoScope('login')],
+      },
       {
         path: '**',
         loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent),

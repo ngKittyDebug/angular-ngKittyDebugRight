@@ -1,7 +1,7 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { TuiRootComponentMock } from '@shared/mocks/tui-root.component.mock/tui-root.component.mock';
+import { TuiRootComponentMock } from '@shared/mocks/tui-root/tui-root.component.mock';
 import { TuiRoot } from '@taiga-ui/core';
 
 describe('AppComponent', () => {
