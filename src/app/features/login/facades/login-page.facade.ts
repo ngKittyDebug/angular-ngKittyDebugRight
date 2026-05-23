@@ -26,15 +26,15 @@ export class LoginPageFacade {
 
     try {
       await this.authService.login(email, password);
-      await this.showNotifications(
+      await this.showNotification(
         this.translocoService.translate('login.success'),
-        this.translocoService.translate('login.successTitle'),
+        this.translocoService.translate('login.success-title'),
         'positive'
       );
-      await this.router.navigate(['./']);
+      await this.router.navigate(['/']);
     } catch (error) {
       if (error instanceof Error) {
-        this.showNotifications(error.message, this.translocoService.translate('login.error.text'), 'negative');
+        this.showNotification(error.message, this.translocoService.translate('login.error.text'), 'negative');
       }
     } finally {
       this.isLoading.set(false);
@@ -55,7 +55,7 @@ export class LoginPageFacade {
     this.authService.loginWithGoogle();
   }
 
-  private showNotifications(message: string, label: string, appearance: string) {
+  private showNotification(message: string, label: string, appearance: 'positive' | 'negative') {
     this.notifications
       .open(message, {
         label: label,

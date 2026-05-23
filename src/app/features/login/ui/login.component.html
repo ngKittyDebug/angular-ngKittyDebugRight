@@ -7,7 +7,6 @@
   tuiCardLarge
   tuiForm="m"
   class="form"
-  aria-labelledby="login-title"
   [style.max-width.rem]="32"
   [formGroup]="facade.loginForm"
   (submit)="facade.login()"
@@ -21,7 +20,7 @@
   }
 
   @if (emailControl.errors?.['pattern'] && emailControl.touched) {
-    <tui-error [error]="'login.error.emailPattern' | transloco" />
+    <tui-error [error]="'login.error.email-pattern' | transloco" />
   }
 
   <tui-textfield iconStart="@tui.lock">
@@ -34,7 +33,7 @@
   }
 
   @if (passwordControl.errors?.['pattern'] && passwordControl.touched) {
-    <tui-error [error]="'login.error.passwordPattern' | transloco" />
+    <tui-error [error]="'login.error.password-pattern' | transloco" />
   }
 
   <footer class="footer">
