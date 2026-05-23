@@ -1,0 +1,9 @@
+{
+  "validation_errors": {
+    "required": "Missing value for 'register.validation_errors.required'",
+    "max_length": "Missing value for 'register.validation_errors.max_length'",
+    "min_length": "Missing value for 'register.validation_errors.min_length'",
+    "email_pattern": "Missing value for 'register.validation_errors.email_pattern'",
+    "password_pattern": "Missing value for 'register.validation_errors.password_pattern'"
+  }
+}
