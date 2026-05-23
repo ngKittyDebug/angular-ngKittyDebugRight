@@ -8,6 +8,10 @@
     "chronicle": "Chronicle",
     "register": "Register"
   },
+  "header": {
+    "title": "CULT OF THE HOLY DEPLOY",
+    "subtitle": ">> Machine Spirit is unstable <<"
+  },
   "sidebar": {
     "navigation": "NAVIGATION"
   },
