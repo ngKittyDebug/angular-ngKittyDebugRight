@@ -1,10 +1,11 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from '@core/services/layout/layout.service';
 import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { activatedRouteMock } from '@shared/mocks/activated-route/activated-route.mock';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -15,7 +16,10 @@ describe('LayoutComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [LayoutComponent, TranslocoTestingMock],
-      providers: [{ provide: LayoutService, useValue: layoutServiceMock }, provideRouter([])],
+      providers: [
+        { provide: LayoutService, useValue: layoutServiceMock },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LayoutComponent);
