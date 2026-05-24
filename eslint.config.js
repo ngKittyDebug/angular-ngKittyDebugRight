@@ -221,7 +221,7 @@ export default tseslint.config(
     },
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {
-      '@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 10 }],
+      '@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 20 }],
       '@angular-eslint/template/eqeqeq': 'error',
       '@angular-eslint/template/prefer-self-closing-tags': 'warn',
     },

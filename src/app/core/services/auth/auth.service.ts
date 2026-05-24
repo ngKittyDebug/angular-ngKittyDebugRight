@@ -52,7 +52,13 @@ export class AuthService {
     this.startLoading();
 
     try {
-      const user = await netlifyIdentity.login(email, password);
+      let user = await netlifyIdentity.getUser();
+
+      if (user) {
+        throw new Error('User is already logged in');
+      }
+
+      user = await netlifyIdentity.login(email, password);
 
       this._user.set(user);
 
