@@ -3,7 +3,7 @@ export interface KoanModel {
   title: string;
   slug: string;
   body: string;
-  category?: string;
+  category: string;
   tags?: string[];
   source?: string;
 }

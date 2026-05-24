@@ -42,13 +42,12 @@ function groupByCategory(list: KoanListItemModel[], knownOrder: readonly string[
   const map = new Map<string, KoanListItemModel[]>();
 
   for (const item of list) {
-    const key: string = item.category ?? 'other';
-    const group = map.get(key);
+    const group = map.get(item.category);
 
     if (group) {
       group.push(item);
     } else {
-      map.set(key, [item]);
+      map.set(item.category, [item]);
     }
   }
 
@@ -99,9 +98,7 @@ export const KoansStore = signalStore(
         const out = new Map<string, number>();
 
         for (const k of koanList()) {
-          if (k.category) {
-            out.set(k.category, (out.get(k.category) ?? 0) + 1);
-          }
+          out.set(k.category, (out.get(k.category) ?? 0) + 1);
         }
 
         return out;

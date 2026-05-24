@@ -1,0 +1,48 @@
+<section class="kl-section kl-section--list">
+  <div class="kl-label kl-label--inset">
+    <span>{{ 'koans.label-scrolls' | transloco }}</span>
+    <span class="kl-label-kanji">巻 · {{ filteredCount() }}</span>
+  </div>
+
+  @if (filteredCount() === 0) {
+    <p class="kl-empty">
+      {{ 'koans.search-no-results' | transloco }}
+      @if (query()) {
+        <span>{{ 'koans.search-by-query' | transloco: { query: query() } }}</span>
+      }
+      .
+    </p>
+  } @else {
+    <ul class="kl-list">
+      @for (group of groups(); track group.category) {
+        <li class="kl-group">
+          <div class="kl-group-head">
+            <span class="kl-group-kanji">{{ groupMeta(group.category).kanji }}</span>
+            <span>{{ groupMeta(group.category).label }}</span>
+          </div>
+          <ul class="kl-list">
+            @for (item of group.items; track item.slug) {
+              <li>
+                <button
+                  type="button"
+                  class="kl-item"
+                  [class.is-active]="item.slug === selectedSlug()"
+                  [class.is-read]="readSet().has(item.slug)"
+                  [attr.aria-current]="item.slug === selectedSlug() ? 'true' : null"
+                  (click)="onSelect(item.slug)"
+                >
+                  <span class="kl-item-num">№{{ padNumber(item.number) }}</span>
+                  <span class="kl-item-title">{{ item.title }}</span>
+                  <span
+                    class="kl-item-seal"
+                    [attr.aria-label]="readSet().has(item.slug) ? ('koans.item-read' | transloco) : null"
+                  ></span>
+                </button>
+              </li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  }
+</section>

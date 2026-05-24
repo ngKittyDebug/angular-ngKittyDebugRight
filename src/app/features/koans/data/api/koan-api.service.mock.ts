@@ -7,4 +7,5 @@ export const KoanApiServiceMock = {
   getRandomKoan: vi.fn(),
   getKoanList: vi.fn(),
   getKoan: vi.fn(),
-} as const satisfies MockedObject<Partial<KoanApiService>>;
+  invalidate: vi.fn(),
+} as const satisfies MockedObject<Pick<KoanApiService, 'getRandomKoan' | 'getKoanList' | 'getKoan' | 'invalidate'>>;

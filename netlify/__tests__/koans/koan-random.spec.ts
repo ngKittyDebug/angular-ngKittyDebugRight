@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 
 import { RAW_KOAN_FIXTURE } from '../koan-raw.fixture';
 import { mockKoanFiles } from '../readdir.mock';
-import { noop } from 'rxjs';
+import { noop } from '../shared/test-helpers';
 
 vi.mock('node:fs/promises');
 
@@ -106,7 +106,7 @@ describe('koan-random', () => {
         const response = await koanRandom(buildRequest('?exclude=../../etc/passwd'));
 
         expect(response.status).toBe(400);
-        expect(readdir).not.toHaveBeenCalled();
+        expect(readdir).toHaveBeenCalledTimes(0);
       });
 
       it('должен вернуть 400 при слишком длинном exclude', async () => {

@@ -36,7 +36,16 @@
     "list-hide": "Скрыть список",
     "list-show": "Список коанов",
     "toast-copied": "Ссылка скопирована — пусть пройдёт по сетям",
-    "toast-copy-failed": "Не удалось скопировать ссылку"
+    "toast-copy-failed": "Не удалось скопировать ссылку",
+    "skip-link": "Перейти к тексту коана",
+    "search-clear-label": "Очистить",
+    "nav-label": "Список коанов",
+    "category-all": "Все",
+    "category-other": "Прочее",
+    "kr-region-label": "Текст коана",
+    "kr-status-loading": "Свиток разворачивается…",
+    "kr-sr-loading": "Загружается коан",
+    "kr-sr-loaded": "Загружен коан №{{ number }} — {{ title }}"
   },
   "navigation-items": {
     "tarot": "Таро",

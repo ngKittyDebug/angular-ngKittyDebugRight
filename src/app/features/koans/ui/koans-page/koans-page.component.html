@@ -1,4 +1,4 @@
-<a href="#koans-main" class="skip-link">Перейти к тексту коана</a>
+<a href="#koans-main" class="skip-link">{{ 'koans.skip-link' | transloco }}</a>
 
 <header class="kp-header">
   <div class="kp-search-wrap">
@@ -22,7 +22,14 @@
       [attr.aria-label]="'koans.search-label' | transloco"
     />
     @if (facade.query()) {
-      <button class="kp-search-clear" type="button" (click)="onClearQuery()" aria-label="Очистить">✕</button>
+      <button
+        class="kp-search-clear"
+        type="button"
+        (click)="onClearQuery()"
+        [attr.aria-label]="'koans.search-clear-label' | transloco"
+      >
+        ✕
+      </button>
     }
   </div>
 
@@ -60,7 +67,12 @@
     }
   </button>
 
-  <nav id="koans-nav" class="kp-sidebar" [class.kp-sidebar--collapsed]="!listOpen()" aria-label="Список коанов">
+  <nav
+    id="koans-nav"
+    class="kp-sidebar"
+    [class.kp-sidebar--collapsed]="!listOpen()"
+    [attr.aria-label]="'koans.nav-label' | transloco"
+  >
     <ngKitty-koan-list
       [groups]="facade.groupedList()"
       [categories]="facade.categories()"

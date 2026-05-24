@@ -107,10 +107,10 @@ describe('KoansStore', () => {
       expect(store.groupedList().map((g) => g.category)).toEqual(['Философия', 'JavaScript']);
     });
 
-    it('должен сложить коаны без category в группу "other" в конце', () => {
+    it('должен сохранить порядок "other" после остальных категорий', () => {
       store.setKoanList([
         { number: 1, title: 'A', slug: 'a', category: 'JavaScript' },
-        { number: 2, title: 'B', slug: 'b' },
+        { number: 2, title: 'B', slug: 'b', category: 'other' },
       ]);
 
       const groups = store.groupedList();
@@ -121,14 +121,13 @@ describe('KoansStore', () => {
   });
 
   describe('categoryCounts', () => {
-    it('должен считать коаны по каждой категории, игнорируя items без category', () => {
-      store.setKoanList([...koanListWithMeta, { number: 4, title: 'X', slug: 'x' }]);
+    it('должен считать коаны по каждой категории', () => {
+      store.setKoanList(koanListWithMeta);
 
       const counts = store.categoryCounts();
 
       expect(counts.get('JavaScript')).toBe(2);
       expect(counts.get('Angular')).toBe(1);
-      expect(counts.get('Философия')).toBeUndefined();
       expect(counts.size).toBe(2);
     });
 

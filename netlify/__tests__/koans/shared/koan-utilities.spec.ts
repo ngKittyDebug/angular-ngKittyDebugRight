@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 
+import { buildRawKoan } from '../../koan-raw.fixture';
 import { mockKoanFiles } from '../../readdir.mock';
 import {
   assertIsKoanFrontmatter,
@@ -10,20 +11,7 @@ import {
 
 vi.mock('node:fs/promises');
 
-const RAW_KOAN = [
-  '---',
-  'number: 1',
-  'title: "О пустоте аргумента"',
-  'slug: "001-o-pustote-argumenta"',
-  'category: "javascript"',
-  'tags: ["arguments", "undefined"]',
-  'source: "Монастырь Мацуо-дэра"',
-  '---',
-  '',
-  '# Заголовок',
-  '',
-  'Тело коана.',
-].join('\n');
+const RAW_KOAN = buildRawKoan(1, '001-o-pustote-argumenta', 'О пустоте аргумента', 'javascript', null);
 
 describe('koan utilities', () => {
   describe('getKoansDirectory', () => {
@@ -81,7 +69,7 @@ describe('koan utilities', () => {
         it('должен вернуть тело без блока frontmatter', () => {
           const { body } = parseFrontmatter(RAW_KOAN);
 
-          expect(body).toBe('# Заголовок\n\nТело коана.');
+          expect(body).toBe('# Тело коана\n\nТекст коана.');
         });
       });
     });

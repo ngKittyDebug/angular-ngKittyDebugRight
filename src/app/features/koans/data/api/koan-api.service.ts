@@ -40,6 +40,10 @@ export class KoanApiService {
       .pipe(tap((koan) => this.cache.set(key, koan)));
   }
 
+  public invalidate(): void {
+    this.cache.clear();
+  }
+
   private get lang(): string {
     return this.transloco.getActiveLang();
   }

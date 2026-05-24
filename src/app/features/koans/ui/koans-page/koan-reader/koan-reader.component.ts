@@ -16,7 +16,8 @@ import { MarkdownComponent } from 'ngx-markdown';
 
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
 import type { KoanModel } from '@features/koans/data/models/koan.model';
-import { KoanDividerComponent } from '@features/koans/ui/koan-divider/koan-divider.component';
+import { formatKoanNumber } from '@features/koans/data/utils/format-koan-number';
+import { KoanDividerComponent } from '@features/koans/ui/koans-page/koan-reader/koan-divider/koan-divider.component';
 
 @Component({
   selector: 'ngKitty-koan-reader',
@@ -86,7 +87,7 @@ export class KoanReaderComponent {
   }
 
   protected padNumber(n: number): string {
-    return String(n).padStart(3, '0');
+    return formatKoanNumber(n, 3);
   }
 
   protected onTag(tag: string): void {

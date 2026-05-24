@@ -36,7 +36,16 @@
     "list-hide": "Hide list",
     "list-show": "Koan list",
     "toast-copied": "Link copied — may it travel the networks",
-    "toast-copy-failed": "Could not copy the link"
+    "toast-copy-failed": "Could not copy the link",
+    "skip-link": "Skip to the koan text",
+    "search-clear-label": "Clear",
+    "nav-label": "Koan list",
+    "category-all": "All",
+    "category-other": "Other",
+    "kr-region-label": "Koan text",
+    "kr-status-loading": "The scroll unfurls…",
+    "kr-sr-loading": "Loading koan",
+    "kr-sr-loaded": "Loaded koan №{{ number }} — {{ title }}"
   },
   "navigation-items": {
     "tarot": "Tarot",

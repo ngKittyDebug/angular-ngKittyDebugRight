@@ -7,8 +7,10 @@ export class KoansPersistenceService {
   public loadReadSet(): ReadonlySet<string> {
     try {
       const raw = localStorage.getItem(this.READ_KEY);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      const list = Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === 'string') : [];
 
-      return new Set<string>(raw ? (JSON.parse(raw) as string[]) : []);
+      return new Set<string>(list);
     } catch {
       return new Set();
     }

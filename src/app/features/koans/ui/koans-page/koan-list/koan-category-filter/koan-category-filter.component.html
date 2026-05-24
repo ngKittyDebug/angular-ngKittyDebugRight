@@ -1,0 +1,31 @@
+<section class="kl-section">
+  <div class="kl-label">
+    <span>{{ 'koans.label-section' | transloco }}</span>
+    <span class="kl-label-kanji">部</span>
+  </div>
+  <ul class="kl-cat-list">
+    @for (meta of categories(); track meta.id) {
+      @if (categoryCounts().get(meta.id); as count) {
+        <li>
+          <button
+            type="button"
+            class="kl-cat-btn"
+            [class.is-on]="activeCategory() === meta.id"
+            (click)="onCategory(meta.id)"
+          >
+            <span class="kl-cat-dot"></span>
+            <span class="kl-cat-name">{{ meta.label }}</span>
+            <span class="kl-cat-count">{{ count }}</span>
+          </button>
+        </li>
+      }
+    }
+    <li>
+      <button type="button" class="kl-cat-btn" [class.is-on]="!activeCategory()" (click)="onCategory(null)">
+        <span class="kl-cat-dot"></span>
+        <span class="kl-cat-name">{{ 'koans.category-all' | transloco }}</span>
+        <span class="kl-cat-count">{{ totalCount() }}</span>
+      </button>
+    </li>
+  </ul>
+</section>

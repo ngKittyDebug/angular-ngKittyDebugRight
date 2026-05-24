@@ -1,14 +1,14 @@
 <span class="sr-only" aria-live="polite" aria-atomic="true">
   @if (koan(); as k) {
-    Загружен коан №{{ k.number }} — {{ k.title }}
+    {{ 'koans.kr-sr-loaded' | transloco: { number: k.number, title: k.title } }}
   } @else if (loading()) {
-    Загружается коан
+    {{ 'koans.kr-sr-loading' | transloco }}
   }
 </span>
 
-<section #readerRegion class="kr-region" aria-label="Текст коана" tabindex="-1">
+<section #readerRegion class="kr-region" [attr.aria-label]="'koans.kr-region-label' | transloco" tabindex="-1">
   @if (showLoader()) {
-    <p class="kr-status">Свиток разворачивается…</p>
+    <p class="kr-status">{{ 'koans.kr-status-loading' | transloco }}</p>
   } @else if (koan(); as k) {
     <article class="kr-article" aria-labelledby="kr-title">
       <header class="kr-meta">

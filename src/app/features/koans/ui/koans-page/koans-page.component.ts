@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, input, si
 import type { OnInit } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, map, skip, startWith, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map, skip, startWith, Subject } from 'rxjs';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TuiButton } from '@taiga-ui/core';
 
+import { KoanApiService } from '@features/koans/data/api/koan-api.service';
+import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoanListComponent } from './koan-list/koan-list.component';
 import { KoanReaderComponent } from './koan-reader/koan-reader.component';
@@ -39,6 +41,8 @@ export class KoansPageComponent implements OnInit {
   );
 
   private readonly transloco = inject(TranslocoService);
+  private readonly koanApi = inject(KoanApiService);
+  private readonly koanCategories = inject(KoanCategoryService);
   private readonly queryInput$ = new Subject<string>();
 
   protected readonly facade = inject(KoansFacade);
@@ -69,6 +73,8 @@ export class KoansPageComponent implements OnInit {
       .subscribe((query) => this.facade.setQuery(query));
 
     this.transloco.langChanges$.pipe(skip(1), takeUntilDestroyed()).subscribe(() => {
+      this.koanApi.invalidate();
+      this.koanCategories.invalidate();
       this.facade.loadKoanList();
       this.facade.loadCategories();
 
@@ -102,8 +108,9 @@ export class KoansPageComponent implements OnInit {
       onCleanup(() => globalThis.clearTimeout(timer));
     });
 
-    effect((onCleanup) => {
-      const handler = (event: KeyboardEvent): void => {
+    fromEvent<KeyboardEvent>(globalThis, 'keydown')
+      .pipe(takeUntilDestroyed())
+      .subscribe((event) => {
         const target = event.target as Nullable<HTMLElement>;
 
         if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
@@ -117,11 +124,7 @@ export class KoansPageComponent implements OnInit {
         } else if (event.key === 'r' || event.key === 'к') {
           this.onRandom();
         }
-      };
-
-      globalThis.addEventListener('keydown', handler);
-      onCleanup(() => globalThis.removeEventListener('keydown', handler));
-    });
+      });
   }
 
   public ngOnInit(): void {

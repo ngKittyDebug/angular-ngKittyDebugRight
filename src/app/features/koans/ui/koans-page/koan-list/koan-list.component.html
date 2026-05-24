@@ -2,114 +2,28 @@
   <p class="kl-status" aria-live="polite">{{ 'koans.list-loading' | transloco }}</p>
 } @else {
   <div class="kl-scroll">
-    <section class="kl-section">
-      <!-- TODO AR  вынести в отдельный компонент -->
-      <div class="kl-label">
-        <span>{{ 'koans.label-section' | transloco }}</span>
-        <span class="kl-label-kanji">部</span>
-      </div>
-      <ul class="kl-cat-list">
-        @for (meta of categories(); track meta.id) {
-          @if (categoryCounts().get(meta.id); as count) {
-            <li>
-              <button
-                type="button"
-                class="kl-cat-btn"
-                [class.is-on]="activeCategory() === meta.id"
-                (click)="onCategory(meta.id)"
-              >
-                <span class="kl-cat-dot"></span>
-                <span class="kl-cat-name">{{ meta.label }}</span>
-                <span class="kl-cat-count">{{ count }}</span>
-              </button>
-            </li>
-          }
-        }
-        <li>
-          <button type="button" class="kl-cat-btn" [class.is-on]="!activeCategory()" (click)="onCategory(null)">
-            <span class="kl-cat-dot"></span>
-            <span class="kl-cat-name">Все</span>
-            <span class="kl-cat-count">{{ totalCount() }}</span>
-          </button>
-        </li>
-      </ul>
-    </section>
+    <ngKitty-koan-category-filter
+      [categories]="categories()"
+      [categoryCounts]="categoryCounts()"
+      [activeCategory]="activeCategory()"
+      [totalCount]="totalCount()"
+      (categoryToggle)="categoryToggle.emit($event)"
+    />
 
-    @if (tagCounts().length > 0) {
-      <!-- TODO AR  вынести в отдельный компонент -->
-      <!-- TODO AR  при клик на Все - он разворачивается, не скроллинга  -->
-      <section class="kl-section">
-        <div class="kl-label">
-          <span>{{ 'koans.label-tags' | transloco }}</span>
-          <span class="kl-label-kanji">標</span>
-        </div>
-        <div class="kl-tag-chips">
-          @for (tc of visibleTags(); track tc[0]) {
-            <button type="button" class="kl-tag" [class.is-on]="activeTags().has(tc[0])" (click)="onTag(tc[0])">
-              {{ tc[0] }}
-            </button>
-          }
-          @if (hiddenTagCount() > 0) {
-            <button type="button" class="kl-tag kl-tag-more" (click)="toggleTagsExpanded()">
-              @if (tagsExpanded()) {
-                {{ 'koans.tags-collapse' | transloco }}
-              } @else {
-                {{ 'koans.tags-expand' | transloco: { count: hiddenTagCount() } }}
-              }
-            </button>
-          }
-        </div>
-      </section>
-    }
+    <ngKitty-koan-tag-cloud
+      [tagCounts]="tagCounts()"
+      [activeTags]="activeTags()"
+      (tagToggle)="tagToggle.emit($event)"
+    />
 
-    <section class="kl-section kl-section--list">
-      <!-- TODO AR  вынести в отдельный компонент -->
-      <div class="kl-label kl-label--inset">
-        <span>{{ 'koans.label-scrolls' | transloco }}</span>
-        <span class="kl-label-kanji">巻 · {{ filteredCount() }}</span>
-      </div>
-
-      @if (filteredCount() === 0) {
-        <p class="kl-empty">
-          {{ 'koans.search-no-results' | transloco }}
-          @if (query()) {
-            <span>{{ 'koans.search-by-query' | transloco: { query: query() } }}</span>
-          }
-          .
-        </p>
-      } @else {
-        <ul class="kl-list">
-          @for (group of groups(); track group.category) {
-            <li class="kl-group">
-              <div class="kl-group-head">
-                <span class="kl-group-kanji">{{ groupMeta(group.category).kanji }}</span>
-                <span>{{ groupMeta(group.category).label }}</span>
-              </div>
-              <ul class="kl-list">
-                @for (item of group.items; track item.slug) {
-                  <li>
-                    <button
-                      type="button"
-                      class="kl-item"
-                      [class.is-active]="item.slug === selectedSlug()"
-                      [class.is-read]="readSet().has(item.slug)"
-                      [attr.aria-current]="item.slug === selectedSlug() ? 'true' : null"
-                      (click)="onSelect(item.slug)"
-                    >
-                      <span class="kl-item-num">№{{ padNumber(item.number) }}</span>
-                      <span class="kl-item-title">{{ item.title }}</span>
-                      <span
-                        class="kl-item-seal"
-                        [attr.aria-label]="readSet().has(item.slug) ? ('koans.item-read' | transloco) : null"
-                      ></span>
-                    </button>
-                  </li>
-                }
-              </ul>
-            </li>
-          }
-        </ul>
-      }
-    </section>
+    <ngKitty-koan-group-list
+      [groups]="groups()"
+      [categories]="categories()"
+      [readSet]="readSet()"
+      [selectedSlug]="selectedSlug()"
+      [filteredCount]="filteredCount()"
+      [query]="query()"
+      (koanSelect)="koanSelect.emit($event)"
+    />
   </div>
 }

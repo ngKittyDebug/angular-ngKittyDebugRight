@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { vi } from 'vitest';
 import { buildRawKoan } from '../koan-raw.fixture';
 import { mockKoanFiles } from '../readdir.mock';
-import { noop } from 'rxjs';
+import { noop } from '../shared/test-helpers';
 
 vi.mock('node:fs/promises');
 

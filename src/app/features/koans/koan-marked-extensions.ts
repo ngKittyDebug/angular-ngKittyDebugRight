@@ -14,6 +14,10 @@ function renderInline(text: string): string {
   return DOMPurify.sanitize(marked.parseInline(text) as string);
 }
 
+function isKoanToken(token: Tokens.Generic): token is KoanToken {
+  return typeof (token as { text?: unknown }).text === 'string';
+}
+
 function escapeHtml(string_: string): string {
   return string_.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -39,7 +43,9 @@ function blockTag(tag: string, cssClass: KoanTokenType, seal = '', prefix = '', 
       return { type: cssClass, raw: match[0], text: match[1].trim() };
     },
     renderer(token: Tokens.Generic): string {
-      return `${prefix}<p class="segment ${cssClass}">${seal}${renderInline((token as KoanToken).text)}</p>\n${suffix}`;
+      const text = isKoanToken(token) ? token.text : '';
+
+      return `${prefix}<p class="segment ${cssClass}">${seal}${renderInline(text)}</p>\n${suffix}`;
     },
   };
 }
