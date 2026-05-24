@@ -326,6 +326,23 @@ button[tuiButton][data-appearance='flat']:active {
   color: var(--accent-primary);
 }
 
+tui-textfield::before {
+  color: var(--accent-primary);
+}
+
+tui-icon {
+  color: var(--accent-primary);
+}
+
+tui-textfield [tuiButtonX] {
+  color: var(--accent-primary);
+}
+
+tui-textfield:has([tuiInputDate])::after,
+tui-textfield:has([tuiInputDate]) tui-icon {
+  color: var(--accent-primary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   button[tuiButton] {
     transition: none;

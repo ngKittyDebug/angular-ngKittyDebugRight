@@ -28,6 +28,16 @@ export const NAVIGATION_ITEM_LIST = [
     url: '/chronicle',
   },
   {
+    icon: '@tui.log-in',
+    label: marker('navigation-items.login'),
+    url: '/login',
+  },
+  {
+    icon: '@tui.user-plus',
+    label: marker('navigation-items.register'),
+    url: '/register',
+  },
+  {
     icon: '@tui.infinity',
     label: marker('navigation-items.koans'),
     url: '/koans',
