@@ -14,8 +14,20 @@ fi
 
 PR_NUMBER="$1"
 EVENT="$2"
-BODY="${3:-}"
+BODY_ARG="${3:-}"
 COMMENT_FILE="/tmp/angular_pr_${PR_NUMBER}_comments.json"
+
+# Resolve body: @file → read from file, otherwise use as literal string
+if [[ "$BODY_ARG" == @* ]]; then
+  BODY_FILE="${BODY_ARG:1}"
+  if [ ! -f "$BODY_FILE" ]; then
+    echo "Error: body file not found: $BODY_FILE"
+    exit 1
+  fi
+  BODY="$(cat "$BODY_FILE")"
+else
+  BODY="$BODY_ARG"
+fi
 
 if ! command -v gh &> /dev/null; then
     echo "Error: gh CLI could not be found. Please install and authenticate."

@@ -379,12 +379,20 @@ _[jab — one ironic/wry sentence, severity-matched register from tone-examples.
 
 ### Step 3 — Post the review (batch, never one by one)
 
-1. Post replies first: `./scripts/reply_pr_comment.sh <PR_NUMBER> <COMMENT_ID> <BODY|@FILE>`
-2. Stage inline comments: `./scripts/post_inline_comment.sh <PR_NUMBER> <FILE> <LINE> <BODY|@FILE> [SIDE]`
+> **⚠️ Always run scripts from the project root, never from `$WORKTREE_PATH`.**
+> The worktree is checked out from the PR author's branch and may contain stale script versions.
+> Use `.agents/skills/pr-review/scripts/` relative to the **current project directory**.
+
+```bash
+SCRIPTS="$(git rev-parse --show-toplevel)/.agents/skills/pr-review/scripts"
+```
+
+1. Post replies first: `"$SCRIPTS/reply_pr_comment.sh" <PR_NUMBER> <COMMENT_ID> <BODY|@FILE>`
+2. Stage inline comments: `"$SCRIPTS/post_inline_comment.sh" <PR_NUMBER> <FILE> <LINE> <BODY|@FILE> [SIDE]`
    - Use `RIGHT` (default) for added/modified lines
    - Use `LEFT` for commenting on deleted lines
-3. Validate staged comments: `./scripts/validate_comments.sh <PR_NUMBER>`
-4. Submit review: `./scripts/submit_pr_review.sh <PR_NUMBER> <EVENT_TYPE>`
+3. Validate staged comments: `"$SCRIPTS/validate_comments.sh" <PR_NUMBER>`
+4. Submit review: `"$SCRIPTS/submit_pr_review.sh" <PR_NUMBER> <EVENT_TYPE> [BODY|@FILE]`
 
 **Body encoding — mandatory rule:**
 
