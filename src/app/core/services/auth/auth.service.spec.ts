@@ -172,7 +172,7 @@ describe('AuthService', () => {
       });
     });
 
-    describe('Signup  создал сессию', () => {
+    describe('Signup создал сессию', () => {
       it('не должен вызывать login', async () => {
         await service.signup(emailFixture, passwordFixture);
 
