@@ -6,7 +6,8 @@ import { vi } from 'vitest';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
-import { KoansFacade } from '@features/koans/data/facades/koans.facade';
+import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
+import { KoanCategoryServiceMock } from '@features/koans/data/api/koan-category.service.mock';
 import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
 import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
 import { KoansStore } from '@features/koans/data/store/koans.store';
@@ -28,14 +29,15 @@ describe('KoansPageComponent', () => {
     KoanApiServiceMock.getRandomKoan.mockReturnValue(of(KoanFixture));
     KoanApiServiceMock.getKoanList.mockReturnValue(of(KoanListFixture));
     KoanApiServiceMock.getKoan.mockReturnValue(of(KoanFixture));
+    KoanCategoryServiceMock.getCategories.mockReturnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [KoansPageComponent, TranslocoTestingMock],
       providers: [
         provideRouter([]),
         KoansStore,
-        KoansFacade,
         { provide: KoanApiService, useValue: KoanApiServiceMock },
+        { provide: KoanCategoryService, useValue: KoanCategoryServiceMock },
         { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
         provideMarkdown({
           markedExtensions: [
@@ -94,7 +96,7 @@ describe('KoansPageComponent', () => {
         input.value = 'async';
         input.dispatchEvent(new Event('input'));
 
-        const store = TestBed.inject(KoansFacade);
+        const store = TestBed.inject(KoansStore);
 
         expect(store.query()).toBe('');
 
@@ -178,7 +180,7 @@ describe('KoansPageComponent', () => {
 
         vi.advanceTimersByTime(2500);
 
-        const store = TestBed.inject(KoansFacade);
+        const store = TestBed.inject(KoansStore);
 
         expect(store.readSet().has(KoanFixture.slug)).toBe(true);
         expect(KoansPersistenceServiceMock.saveReadSet).toHaveBeenCalled();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { TuiButton } from '@taiga-ui/core';
 
 import { KoanApiService } from '@features/koans/data/api/koan-api.service';
 import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
-import { KoansFacade } from '@features/koans/data/facades/koans.facade';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 import { KoanListComponent } from './koan-list/koan-list.component';
 import { KoanReaderComponent } from './koan-reader/koan-reader.component';
 
@@ -34,43 +34,26 @@ export class KoansPageComponent implements OnInit {
   private readonly koanCategories = inject(KoanCategoryService);
   private readonly queryInput$ = new Subject<string>();
 
-  protected readonly facade = inject(KoansFacade);
+  protected readonly store = inject(KoansStore);
   protected readonly slug = input<Nullable<string>>(null);
   protected readonly listOpen = signal(true);
   protected readonly toastMessage = signal<Nullable<string>>(null);
 
-  protected readonly currentIndex = computed(() => {
-    const current = this.facade.selectedKoan()?.slug;
-
-    if (!current) {
-      return -1;
-    }
-
-    return this.facade.filteredList().findIndex((k) => k.slug === current);
-  });
-
-  protected readonly hasPrev = computed(() => this.currentIndex() > 0);
-  protected readonly hasNext = computed(() => {
-    const index = this.currentIndex();
-
-    return index >= 0 && index < this.facade.filteredList().length - 1;
-  });
-
   constructor() {
     this.queryInput$
       .pipe(debounceTime(SEARCH_DEBOUNCE_MS), distinctUntilChanged(), takeUntilDestroyed())
-      .subscribe((query) => this.facade.setQuery(query));
+      .subscribe((query) => this.store.setQuery(query));
 
     this.transloco.langChanges$.pipe(skip(1), takeUntilDestroyed()).subscribe(() => {
       this.koanApi.invalidate();
       this.koanCategories.invalidate();
-      this.facade.loadKoanList();
-      this.facade.loadCategories();
+      this.store.loadKoanList();
+      this.store.loadCategories();
 
-      const currentSlug = this.facade.selectedKoan()?.slug;
+      const currentSlug = this.store.selectedKoan()?.slug;
 
       if (currentSlug) {
-        this.facade.selectKoan(currentSlug);
+        this.store.selectKoan(currentSlug);
       }
     });
 
@@ -78,21 +61,21 @@ export class KoansPageComponent implements OnInit {
       const next = this.slug();
 
       if (next) {
-        this.facade.selectKoan(next);
+        this.store.selectKoan(next);
       } else {
-        this.facade.clearSelectedKoan();
+        this.store.clearSelectedKoan();
         this.listOpen.set(true);
       }
     });
 
     effect((onCleanup) => {
-      const koan = this.facade.selectedKoan();
+      const koan = this.store.selectedKoan();
 
       if (!koan) {
         return;
       }
 
-      const timer = globalThis.setTimeout(() => this.facade.markRead(koan.slug), READ_DWELL_MS);
+      const timer = globalThis.setTimeout(() => this.store.markRead(koan.slug), READ_DWELL_MS);
 
       onCleanup(() => globalThis.clearTimeout(timer));
     });
@@ -117,8 +100,8 @@ export class KoansPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.facade.loadCategories();
-    this.facade.loadKoanList();
+    this.store.loadCategories();
+    this.store.loadKoanList();
   }
 
   protected onQueryInput(event: Event): void {
@@ -126,15 +109,7 @@ export class KoansPageComponent implements OnInit {
   }
 
   protected onClearQuery(): void {
-    this.facade.setQuery('');
-  }
-
-  protected onCategoryToggle(category: Parameters<KoansFacade['toggleCategory']>[0]): void {
-    this.facade.toggleCategory(category);
-  }
-
-  protected onTagToggle(tag: string): void {
-    this.facade.toggleTag(tag);
+    this.store.setQuery('');
   }
 
   protected onKoanSelect(slug: string): void {
@@ -147,7 +122,7 @@ export class KoansPageComponent implements OnInit {
   }
 
   protected onRandom(): void {
-    const next = this.facade.pickRandomFromFiltered();
+    const next = this.store.pickRandomFromFiltered();
 
     if (next) {
       void this.router.navigate(['/koans', next]);
@@ -172,18 +147,10 @@ export class KoansPageComponent implements OnInit {
   }
 
   private goNeighbor(direction: -1 | 1): void {
-    const current = this.facade.selectedKoan()?.slug;
-
-    if (!current) {
-      return;
-    }
-
-    const list = this.facade.filteredList();
-    const index = list.findIndex((k) => k.slug === current);
-    const next = list[index + direction];
+    const next = this.store.pickNeighbor(direction);
 
     if (next) {
-      void this.router.navigate(['/koans', next.slug]);
+      void this.router.navigate(['/koans', next]);
     }
   }
 

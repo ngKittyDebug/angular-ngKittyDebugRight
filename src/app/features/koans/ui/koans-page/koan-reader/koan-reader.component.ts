@@ -4,7 +4,6 @@ import {
   effect,
   ElementRef,
   inject,
-  input,
   output,
   signal,
   viewChild,
@@ -14,8 +13,7 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TuiButton } from '@taiga-ui/core';
 import { MarkdownComponent } from 'ngx-markdown';
 
-import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
-import type { KoanModel } from '@features/koans/data/models/koan.model';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 import { formatKoanNumber } from '@features/koans/data/utils/format-koan-number';
 import { KoanDividerComponent } from '@features/koans/ui/koans-page/koan-reader/koan-divider/koan-divider.component';
 
@@ -37,22 +35,16 @@ export class KoanReaderComponent {
     initialValue: '',
   });
 
-  public readonly koan = input<Nullable<KoanModel>>(null);
-  public readonly categories = input<readonly KoanCategoryMeta[]>([]);
-  public readonly loading = input<boolean>(false);
-  public readonly hasPrev = input<boolean>(false);
-  public readonly hasNext = input<boolean>(false);
-
-  public readonly tagClick = output<string>();
   public readonly prev = output<void>();
   public readonly next = output<void>();
   public readonly share = output<void>();
 
+  protected readonly store = inject(KoansStore);
   protected readonly showLoader = signal(false);
 
   constructor() {
     effect(() => {
-      this.koan();
+      this.store.selectedKoan();
       this.regionRef()?.nativeElement.scrollTo?.({ top: 0, behavior: 'instant' });
     });
 
@@ -64,7 +56,7 @@ export class KoanReaderComponent {
     });
 
     effect((onCleanup) => {
-      if (!this.loading()) {
+      if (!this.store.loadingSelected()) {
         this.showLoader.set(false);
 
         return;
@@ -83,7 +75,7 @@ export class KoanReaderComponent {
       return null;
     }
 
-    return this.categories().find((c) => c.id === id)?.label ?? id;
+    return this.store.categories().find((c) => c.id === id)?.label ?? id;
   }
 
   protected padNumber(n: number): string {
@@ -91,7 +83,7 @@ export class KoanReaderComponent {
   }
 
   protected onTag(tag: string): void {
-    this.tagClick.emit(tag);
+    this.store.toggleTag(tag);
   }
 
   protected onPrev(): void {

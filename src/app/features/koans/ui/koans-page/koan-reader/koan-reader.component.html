@@ -1,7 +1,7 @@
 <span class="sr-only" aria-live="polite" aria-atomic="true">
-  @if (koan(); as k) {
+  @if (store.selectedKoan(); as k) {
     {{ 'koans.kr-sr-loaded' | transloco: { number: k.number, title: k.title } }}
-  } @else if (loading()) {
+  } @else if (store.loadingSelected()) {
     {{ 'koans.kr-sr-loading' | transloco }}
   }
 </span>
@@ -9,7 +9,7 @@
 <section #readerRegion class="kr-region" [attr.aria-label]="'koans.kr-region-label' | transloco" tabindex="-1">
   @if (showLoader()) {
     <p class="kr-status">{{ 'koans.kr-status-loading' | transloco }}</p>
-  } @else if (koan(); as k) {
+  } @else if (store.selectedKoan(); as k) {
     <article class="kr-article" aria-labelledby="kr-title">
       <header class="kr-meta">
         <span class="kr-meta-kanji">公案</span>
@@ -49,7 +49,7 @@
             appearance="primary"
             size="s"
             iconStart="@tui.chevron-left"
-            [disabled]="!hasPrev()"
+            [disabled]="!store.hasPrev()"
             (click)="onPrev()"
           >
             {{ 'koans.btn-prev' | transloco }}
@@ -60,7 +60,7 @@
             appearance="primary"
             size="s"
             iconEnd="@tui.chevron-right"
-            [disabled]="!hasNext()"
+            [disabled]="!store.hasNext()"
             (click)="onNext()"
           >
             {{ 'koans.btn-next' | transloco }}

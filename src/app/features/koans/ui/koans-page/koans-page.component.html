@@ -17,11 +17,11 @@
       class="kp-search"
       type="search"
       [placeholder]="'koans.search-placeholder' | transloco"
-      [value]="facade.query()"
+      [value]="store.query()"
       (input)="onQueryInput($event)"
       [attr.aria-label]="'koans.search-label' | transloco"
     />
-    @if (facade.query()) {
+    @if (store.query()) {
       <button
         class="kp-search-clear"
         type="button"
@@ -48,7 +48,7 @@
   </div>
 </header>
 
-@if (facade.error(); as error) {
+@if (store.error(); as error) {
   <p class="kp-error" role="alert">{{ error | transloco }}</p>
 }
 
@@ -73,37 +73,11 @@
     [class.kp-sidebar--collapsed]="!listOpen()"
     [attr.aria-label]="'koans.nav-label' | transloco"
   >
-    <ngKitty-koan-list
-      [groups]="facade.groupedList()"
-      [categories]="facade.categories()"
-      [categoryCounts]="facade.categoryCounts()"
-      [activeCategory]="facade.activeCategory()"
-      [tagCounts]="facade.tagCounts()"
-      [activeTags]="facade.activeTags()"
-      [readSet]="facade.readSet()"
-      [selectedSlug]="facade.selectedKoan()?.slug ?? null"
-      [totalCount]="facade.koanList().length"
-      [filteredCount]="facade.filteredList().length"
-      [loading]="facade.loadingList()"
-      [query]="facade.query()"
-      (koanSelect)="onKoanSelect($event)"
-      (categoryToggle)="onCategoryToggle($event)"
-      (tagToggle)="onTagToggle($event)"
-    />
+    <ngKitty-koan-list (koanSelect)="onKoanSelect($event)" />
   </nav>
 
   <main id="koans-main" class="kp-reader-wrap" tabindex="-1">
-    <ngKitty-koan-reader
-      [koan]="facade.selectedKoan()"
-      [categories]="facade.categories()"
-      [loading]="facade.loadingSelected()"
-      [hasPrev]="hasPrev()"
-      [hasNext]="hasNext()"
-      (tagClick)="onTagToggle($event)"
-      (prev)="onPrev()"
-      (next)="onNext()"
-      (share)="onShare()"
-    />
+    <ngKitty-koan-reader (prev)="onPrev()" (next)="onNext()" (share)="onShare()" />
   </main>
 </div>
 

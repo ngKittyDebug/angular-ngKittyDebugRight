@@ -1,28 +1,28 @@
-@if (loading()) {
+@if (store.loadingList()) {
   <p class="kl-status" aria-live="polite">{{ 'koans.list-loading' | transloco }}</p>
 } @else {
   <div class="kl-scroll">
     <ngKitty-koan-category-filter
-      [categories]="categories()"
-      [categoryCounts]="categoryCounts()"
-      [activeCategory]="activeCategory()"
-      [totalCount]="totalCount()"
-      (categoryToggle)="categoryToggle.emit($event)"
+      [categories]="store.categories()"
+      [categoryCounts]="store.categoryCounts()"
+      [activeCategory]="store.activeCategory()"
+      [totalCount]="store.totalCount()"
+      (categoryToggle)="onCategoryToggle($event)"
     />
 
     <ngKitty-koan-tag-cloud
-      [tagCounts]="tagCounts()"
-      [activeTags]="activeTags()"
-      (tagToggle)="tagToggle.emit($event)"
+      [tagCounts]="store.tagCounts()"
+      [activeTags]="store.activeTags()"
+      (tagToggle)="onTagToggle($event)"
     />
 
     <ngKitty-koan-group-list
-      [groups]="groups()"
-      [categories]="categories()"
-      [readSet]="readSet()"
-      [selectedSlug]="selectedSlug()"
-      [filteredCount]="filteredCount()"
-      [query]="query()"
+      [groups]="store.groupedList()"
+      [categories]="store.categories()"
+      [readSet]="store.readSet()"
+      [selectedSlug]="store.selectedSlug()"
+      [filteredCount]="store.filteredCount()"
+      [query]="store.query()"
       (koanSelect)="koanSelect.emit($event)"
     />
   </div>

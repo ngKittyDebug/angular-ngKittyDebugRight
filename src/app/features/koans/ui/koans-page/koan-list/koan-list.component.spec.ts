@@ -1,51 +1,57 @@
 import { TestBed } from '@angular/core/testing';
+import { NEVER, of } from 'rxjs';
 import { vi } from 'vitest';
 
+import { KoanApiService } from '@features/koans/data/api/koan-api.service';
+import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
+import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
+import { KoanCategoryServiceMock } from '@features/koans/data/api/koan-category.service.mock';
+import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
+import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
+import { KoansStore } from '@features/koans/data/store/koans.store';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { KoanListComponent } from './koan-list.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
 import type { KoanCategoryMeta } from '@features/koans/data/models/koan-category.model';
-import type { KoanGroup } from '@features/koans/data/models/koan-group.model';
+import type { KoanListItemModel } from '@features/koans/data/models/koan-list-item.model';
 
-const GROUPS: readonly KoanGroup[] = [
-  {
-    category: 'JavaScript',
-    items: [
-      { number: 1, title: 'Async операция', slug: 'koan-1', category: 'JavaScript' },
-      { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'JavaScript' },
-    ],
-  },
-  {
-    category: 'Angular',
-    items: [{ number: 3, title: 'О сигналах', slug: 'koan-3', category: 'Angular' }],
-  },
+const KOAN_LIST: KoanListItemModel[] = [
+  { number: 1, title: 'Async операция', slug: 'koan-1', category: 'JavaScript', tags: ['promises', 'async'] },
+  { number: 2, title: 'О замыканиях', slug: 'koan-2', category: 'JavaScript', tags: ['closures'] },
+  { number: 3, title: 'О сигналах', slug: 'koan-3', category: 'Angular', tags: ['signals'] },
 ];
 
-const CATEGORY_COUNTS: ReadonlyMap<string, number> = new Map([
-  ['JavaScript', 2],
-  ['Angular', 1],
-]);
-
-const CATEGORIES: readonly KoanCategoryMeta[] = [
+const CATEGORIES: KoanCategoryMeta[] = [
   { id: 'JavaScript', label: 'JavaScript', kanji: '言' },
   { id: 'Angular', label: 'Angular', kanji: '骨' },
   { id: 'Философия', label: 'Философия', kanji: '道' },
-];
-
-const TAG_COUNTS: readonly (readonly [string, number])[] = [
-  ['promises', 3],
-  ['signals', 2],
-  ['closures', 1],
 ];
 
 describe('KoanListComponent', () => {
   let component: KoanListComponent;
   let fixture: ComponentFixture<KoanListComponent>;
   let element: HTMLElement;
+  let store: InstanceType<typeof KoansStore>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [KoanListComponent, TranslocoTestingMock] }).compileComponents();
+    KoanApiServiceMock.getKoanList.mockReset().mockReturnValue(of(KOAN_LIST));
+    KoanApiServiceMock.getKoan.mockReset();
+    KoanCategoryServiceMock.getCategories.mockReset().mockReturnValue(of(CATEGORIES));
+    KoansPersistenceServiceMock.loadReadSet.mockReset().mockReturnValue(new Set<string>());
+    KoansPersistenceServiceMock.saveReadSet.mockReset();
+
+    await TestBed.configureTestingModule({
+      imports: [KoanListComponent, TranslocoTestingMock],
+      providers: [
+        KoansStore,
+        { provide: KoanApiService, useValue: KoanApiServiceMock },
+        { provide: KoanCategoryService, useValue: KoanCategoryServiceMock },
+        { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
+      ],
+    }).compileComponents();
+
+    store = TestBed.inject(KoansStore);
     fixture = TestBed.createComponent(KoanListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement as HTMLElement;
@@ -53,12 +59,8 @@ describe('KoanListComponent', () => {
 
   describe('Happy Path', () => {
     beforeEach(() => {
-      fixture.componentRef.setInput('groups', GROUPS);
-      fixture.componentRef.setInput('categories', CATEGORIES);
-      fixture.componentRef.setInput('categoryCounts', CATEGORY_COUNTS);
-      fixture.componentRef.setInput('tagCounts', TAG_COUNTS);
-      fixture.componentRef.setInput('totalCount', 3);
-      fixture.componentRef.setInput('filteredCount', 3);
+      store.loadCategories();
+      store.loadKoanList();
       fixture.detectChanges();
     });
 
@@ -82,14 +84,14 @@ describe('KoanListComponent', () => {
       expect(labels).not.toContain('Философия');
     });
 
-    it('должен отрендерить теги с count', () => {
+    it('должен отрендерить теги в порядке частоты', () => {
       const tags = [...element.querySelectorAll('.kl-tag:not(.kl-tag-more)')].map((b) => b.textContent?.trim());
 
-      expect(tags).toEqual(['promises', 'signals', 'closures']);
+      expect(tags).toEqual(['async', 'closures', 'promises', 'signals']);
     });
 
-    it('должен пометить активную категорию через is-on', () => {
-      fixture.componentRef.setInput('activeCategory', 'Angular');
+    it('должен пометить активную категорию через is-on после toggleCategory', () => {
+      store.toggleCategory('Angular');
       fixture.detectChanges();
 
       const active = element.querySelector<HTMLButtonElement>('.kl-cat-btn.is-on');
@@ -97,8 +99,8 @@ describe('KoanListComponent', () => {
       expect(active?.textContent).toContain('Angular');
     });
 
-    it('должен пометить активные теги через is-on', () => {
-      fixture.componentRef.setInput('activeTags', new Set(['promises']));
+    it('должен пометить активные теги через is-on после toggleTag', () => {
+      store.toggleTag('promises');
       fixture.detectChanges();
 
       const activeTag = element.querySelector<HTMLButtonElement>('.kl-tag.is-on');
@@ -107,7 +109,8 @@ describe('KoanListComponent', () => {
     });
 
     it('должен пометить выбранный slug через is-active и aria-current', () => {
-      fixture.componentRef.setInput('selectedSlug', 'koan-2');
+      KoanApiServiceMock.getKoan.mockReturnValue(of({ ...KOAN_LIST[1], body: '', source: '' }));
+      store.selectKoan('koan-2');
       fixture.detectChanges();
 
       const active = element.querySelector<HTMLButtonElement>('.kl-item.is-active[aria-current="true"]');
@@ -116,7 +119,7 @@ describe('KoanListComponent', () => {
     });
 
     it('должен пометить прочитанные slug через is-read и aria-label на печати', () => {
-      fixture.componentRef.setInput('readSet', new Set(['koan-1']));
+      store.markRead('koan-1');
       fixture.detectChanges();
 
       const read = element.querySelector<HTMLButtonElement>('.kl-item.is-read');
@@ -134,36 +137,27 @@ describe('KoanListComponent', () => {
       expect(spy).toHaveBeenCalledWith('koan-1');
     });
 
-    it('должен эмитить categoryToggle при клике по категории', () => {
-      const spy = vi.fn();
-
-      component.categoryToggle.subscribe(spy);
-
+    it('должен вызвать store.toggleCategory при клике по категории', () => {
       element.querySelector<HTMLButtonElement>('.kl-cat-btn')?.click();
 
-      expect(spy).toHaveBeenCalledWith('JavaScript');
+      expect(store.activeCategory()).toBe('JavaScript');
     });
 
-    it('должен эмитить categoryToggle с null при клике по «Все»', () => {
-      const spy = vi.fn();
-
-      component.categoryToggle.subscribe(spy);
+    it('должен сбросить категорию при клике по «Все»', () => {
+      store.toggleCategory('JavaScript');
+      fixture.detectChanges();
 
       const allButton = [...element.querySelectorAll<HTMLButtonElement>('.kl-cat-btn')].at(-1);
 
       allButton?.click();
 
-      expect(spy).toHaveBeenCalledWith(null);
+      expect(store.activeCategory()).toBeNull();
     });
 
-    it('должен эмитить tagToggle при клике по чипу', () => {
-      const spy = vi.fn();
-
-      component.tagToggle.subscribe(spy);
-
+    it('должен вызвать store.toggleTag при клике по чипу', () => {
       element.querySelector<HTMLButtonElement>('.kl-tag')?.click();
 
-      expect(spy).toHaveBeenCalledWith('promises');
+      expect(store.activeTags().size).toBe(1);
     });
 
     it('должен подставлять номер с padStart до 2 знаков', () => {
@@ -175,7 +169,8 @@ describe('KoanListComponent', () => {
 
   describe('Edge Cases', () => {
     it('должен показать индикатор загрузки и скрыть список', () => {
-      fixture.componentRef.setInput('loading', true);
+      KoanApiServiceMock.getKoanList.mockReturnValue(NEVER);
+      store.loadKoanList();
       fixture.detectChanges();
 
       expect(element.querySelector('.kl-status')).toBeTruthy();
@@ -183,12 +178,8 @@ describe('KoanListComponent', () => {
     });
 
     it('должен показать пустое сообщение с query в кавычках, если filteredCount=0', () => {
-      fixture.componentRef.setInput('groups', []);
-      fixture.componentRef.setInput('categoryCounts', new Map());
-      fixture.componentRef.setInput('tagCounts', []);
-      fixture.componentRef.setInput('totalCount', 0);
-      fixture.componentRef.setInput('filteredCount', 0);
-      fixture.componentRef.setInput('query', 'xyz');
+      store.loadKoanList();
+      store.setQuery('xyz');
       fixture.detectChanges();
 
       const empty = element.querySelector('.kl-empty');
@@ -198,9 +189,16 @@ describe('KoanListComponent', () => {
     });
 
     it('должен показать кнопку +N если тегов больше VISIBLE_TAG_COUNT', () => {
-      const manyTags: (readonly [string, number])[] = Array.from({ length: 25 }, (_, i) => [`t${i}`, 25 - i] as const);
+      const manyTaggedItems: KoanListItemModel[] = Array.from({ length: 25 }, (_, i) => ({
+        number: i + 1,
+        title: `Item ${i}`,
+        slug: `item-${i}`,
+        category: 'JavaScript',
+        tags: [`t${i}`],
+      }));
 
-      fixture.componentRef.setInput('tagCounts', manyTags);
+      KoanApiServiceMock.getKoanList.mockReturnValue(of(manyTaggedItems));
+      store.loadKoanList();
       fixture.detectChanges();
 
       const moreButton = element.querySelector('.kl-tag-more');

@@ -1,29 +1,55 @@
 import { TestBed } from '@angular/core/testing';
 import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
+import { NEVER, of } from 'rxjs';
 import { vi } from 'vitest';
 
-import { koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
+import { KoanApiService } from '@features/koans/data/api/koan-api.service';
+import { KoanApiServiceMock } from '@features/koans/data/api/koan-api.service.mock';
+import { KoanCategoryService } from '@features/koans/data/api/koan-category.service';
+import { KoanCategoryServiceMock } from '@features/koans/data/api/koan-category.service.mock';
 import { KoanFixture } from '@features/koans/data/fixtures/koan.fixture';
+import { KoanListFixture } from '@features/koans/data/fixtures/koan-list.fixture';
+import { KoansPersistenceService } from '@features/koans/data/services/koans-persistence.service';
+import { KoansPersistenceServiceMock } from '@features/koans/data/services/koans-persistence.service.mock';
+import { KoansStore } from '@features/koans/data/store/koans.store';
+import { koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { KoanReaderComponent } from './koan-reader.component';
 
 import type { ComponentFixture } from '@angular/core/testing';
 
+const CATEGORIES = [
+  { id: 'javascript', label: 'JavaScript', kanji: '言' },
+  { id: 'angular', label: 'Angular', kanji: '骨' },
+  { id: 'philosophy', label: 'Философия', kanji: '道' },
+];
+
 describe('KoanReaderComponent', () => {
   let component: KoanReaderComponent;
   let fixture: ComponentFixture<KoanReaderComponent>;
   let element: HTMLElement;
+  let store: InstanceType<typeof KoansStore>;
 
   beforeEach(async () => {
+    KoanApiServiceMock.getKoan.mockReset().mockReturnValue(of(KoanFixture));
+    KoanApiServiceMock.getKoanList.mockReset().mockReturnValue(of(KoanListFixture));
+    KoanCategoryServiceMock.getCategories.mockReset().mockReturnValue(of(CATEGORIES));
+    KoansPersistenceServiceMock.loadReadSet.mockReset().mockReturnValue(new Set<string>());
+
     await TestBed.configureTestingModule({
       imports: [KoanReaderComponent, TranslocoTestingMock],
       providers: [
+        KoansStore,
+        { provide: KoanApiService, useValue: KoanApiServiceMock },
+        { provide: KoanCategoryService, useValue: KoanCategoryServiceMock },
+        { provide: KoansPersistenceService, useValue: KoansPersistenceServiceMock },
         provideMarkdown({
           markedExtensions: [{ provide: MARKED_EXTENSIONS, useValue: koanMarkedExtensions, multi: true }],
         }),
       ],
     }).compileComponents();
 
+    store = TestBed.inject(KoansStore);
     fixture = TestBed.createComponent(KoanReaderComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement as HTMLElement;
@@ -32,12 +58,8 @@ describe('KoanReaderComponent', () => {
   describe('Happy Path', () => {
     describe('Коан выбран', () => {
       beforeEach(() => {
-        fixture.componentRef.setInput('koan', KoanFixture);
-        fixture.componentRef.setInput('categories', [
-          { id: 'javascript', label: 'JavaScript', kanji: '言' },
-          { id: 'angular', label: 'Angular', kanji: '骨' },
-          { id: 'philosophy', label: 'Философия', kanji: '道' },
-        ]);
+        store.loadCategories();
+        store.selectKoan(KoanFixture.slug);
         fixture.detectChanges();
       });
 
@@ -73,27 +95,20 @@ describe('KoanReaderComponent', () => {
         expect(source?.textContent).toContain('Монастырь Мацуо-дэра');
       });
 
-      it('должен отрендерить теги и эмитить tagClick при клике', () => {
-        const spy = vi.fn();
-
-        component.tagClick.subscribe(spy);
-
+      it('должен отрендерить теги и вызвать store.toggleTag при клике', () => {
         const tags = [...element.querySelectorAll<HTMLButtonElement>('.kr-tag')];
 
         expect(tags.map((b) => b.textContent?.trim())).toEqual(['arguments', 'undefined', 'functions']);
 
         tags[1].click();
 
-        expect(spy).toHaveBeenCalledWith('undefined');
+        expect(store.activeTags().has('undefined')).toBe(true);
       });
     });
 
     describe('Footer navigation', () => {
-      beforeEach(() => {
-        fixture.componentRef.setInput('koan', KoanFixture);
-      });
-
-      it('кнопки prev/next disabled когда hasPrev/hasNext = false', () => {
+      it('кнопки prev/next disabled когда коан вне filteredList', () => {
+        store.selectKoan(KoanFixture.slug);
         fixture.detectChanges();
 
         const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-nav button');
@@ -102,9 +117,26 @@ describe('KoanReaderComponent', () => {
         expect(nextButton.disabled).toBe(true);
       });
 
+      it('кнопки prev/next должны быть активны для среднего коана из списка', () => {
+        const middle = KoanListFixture[1];
+
+        KoanApiServiceMock.getKoan.mockReturnValue(of({ ...KoanFixture, slug: middle.slug }));
+        store.loadKoanList();
+        store.selectKoan(middle.slug);
+        fixture.detectChanges();
+
+        const [previousButton, nextButton] = element.querySelectorAll<HTMLButtonElement>('.kr-foot-nav button');
+
+        expect(previousButton.disabled).toBe(false);
+        expect(nextButton.disabled).toBe(false);
+      });
+
       it('должен эмитить prev/next/share при кликах', () => {
-        fixture.componentRef.setInput('hasPrev', true);
-        fixture.componentRef.setInput('hasNext', true);
+        const middle = KoanListFixture[1];
+
+        KoanApiServiceMock.getKoan.mockReturnValue(of({ ...KoanFixture, slug: middle.slug }));
+        store.loadKoanList();
+        store.selectKoan(middle.slug);
         fixture.detectChanges();
 
         const previousSpy = vi.fn();
@@ -131,7 +163,6 @@ describe('KoanReaderComponent', () => {
 
   describe('Edge Cases', () => {
     it('должен показать пустое состояние с кандзи 空, если коан не выбран', () => {
-      fixture.componentRef.setInput('koan', null);
       fixture.detectChanges();
 
       const empty = element.querySelector('.kr-empty');
@@ -143,7 +174,8 @@ describe('KoanReaderComponent', () => {
     it('не должен показывать индикатор загрузки мгновенно', () => {
       vi.useFakeTimers();
 
-      fixture.componentRef.setInput('loading', true);
+      KoanApiServiceMock.getKoan.mockReturnValue(NEVER);
+      store.selectKoan('any-slug');
       fixture.detectChanges();
 
       expect(element.querySelector('.kr-status')).toBeNull();
@@ -154,7 +186,8 @@ describe('KoanReaderComponent', () => {
     it('должен показать индикатор загрузки после 300мс', () => {
       vi.useFakeTimers();
 
-      fixture.componentRef.setInput('loading', true);
+      KoanApiServiceMock.getKoan.mockReturnValue(NEVER);
+      store.selectKoan('any-slug');
       fixture.detectChanges();
 
       vi.advanceTimersByTime(300);
