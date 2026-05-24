@@ -72,3 +72,50 @@ Always update `public/i18n/ru.json` **and** `public/i18n/en.json` together.
 - Templates: `{{ 'key' | transloco }}` (requires `TranslocoModule` in `imports`); attribute bindings: `[title]="'key' | transloco"`.
 - Static TS config strings: wrap with `marker('key')` from `@jsverse/transloco-keys-manager/marker` so the extractor picks them up.
 - UI copy voice: allegorical/oblique, zen-koan register — scroll/cosmos/void metaphors, dry humour; never literal instructions.
+
+## Sandbox / remote container quirks (Claude Code on the web)
+
+These only apply when the agent runs in a sandboxed remote container (web app, GitHub Action, CI). Local terminal sessions don't hit them.
+
+### `pnpm dev` (netlify dev) may fail on edge-runtime download
+
+Netlify CLI eagerly downloads its Deno edge-functions runtime even when the project has no edge functions (we don't — only `netlify/functions/`). If outbound to the deno hosting CDN is blocked you'll see:
+
+```
+Error: Download failed with status code 403
+  at prepareServer (.../netlify-cli/.../edge-functions/proxy.ts)
+```
+
+The CLI prints `Local dev server ready: http://localhost:8888` first, then dies — port 8888 never actually serves.
+
+**Workaround:** run Angular dev server alone (`pnpm start` → port 4200) and put a Node sidecar in front that bundles the netlify functions through esbuild and proxies everything else to 4200. Sidecar pattern (kept in `.planning/` if reused):
+
+```js
+// 1. Bundle each handler with createRequire banner so Node-built-ins work in ESM:
+//    esbuild --bundle --platform=node --format=esm --target=node22 \
+//            --banner:js='import {createRequire as r} from "module"; const require=r(import.meta.url);' \
+//            --outfile=<out>/<name>.mjs netlify/functions/<name>.ts
+// 2. http server on :8888: route /.netlify/functions/<name> → dynamic import of <name>.mjs,
+//    convert Node req↔Fetch Request/Response (handlers are (Request)=>Promise<Response>),
+//    everything else → proxy to http://localhost:4200.
+```
+
+The handlers use `process.cwd()` for `public/koans/*.mdx` resolution — run the sidecar from the repo root.
+
+### Browser smoke (the `run` skill)
+
+- `chromium-cli` is **not** installed in the default sandbox. Fall back to driving Playwright directly (`playwright@1.56+` ships with the container).
+- `playwright` is installed globally, not in `node_modules`, so a bare `import { chromium } from 'playwright'` won't resolve. Use `import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs'`.
+- Chromium binary lives at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`. Launch with `chromium.launch({ executablePath: '…', args: ['--no-sandbox', '--disable-dev-shm-usage'] })`.
+- Taiga UI's dropdowns (`tui-data-list-wrapper`) render in a portal — locate items with `page.locator('tui-data-list-wrapper >> text=…')`, not via the trigger's subtree.
+- Language switcher does **not** change the URL; it calls `transloco.setActiveLang(lang)`. Click the `ngKitty-language-switcher button` → pick from dropdown — don't try `/en/koans` URL prefixes.
+
+### Commit signing may fail with `missing source`
+
+`commit.gpgsign=true` is enforced via `/tmp/code-sign` → `/opt/env-runner/environment-manager code-sign`. The signing server occasionally returns 400 `{"error":{"message":"missing source"}}` for the whole session. Standard project rule still applies: never bypass with `--no-gpg-sign` unless the user explicitly authorises it.
+
+If signing is broken and the user authorises bypass, prefer producing a patch hand-off (`git diff --staged --binary > patch` + `SendUserFile`) over a local unsigned commit — the user re-creates the commit locally with their own key.
+
+### No `origin` remote in fresh clones
+
+The container clones the repo without configuring `origin`. `git push` will not work, even with a working signature. There is no automatic file sync back to the user's machine — the only outbound channel is `SendUserFile`. Plan hand-offs accordingly (a zip with patch + DONE/TODO + instructions, dropped into `.planning/`, then re-entered from the user's local terminal).
