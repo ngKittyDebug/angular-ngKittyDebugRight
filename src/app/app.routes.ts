@@ -2,6 +2,7 @@ import type { Routes } from '@angular/router';
 import { LayoutComponent } from '@core/ui/components/layout/layout.component';
 import { provideTranslocoScope } from '@jsverse/transloco';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
+import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,7 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
-        providers: [provideTranslocoScope('login')],
+        providers: [provideTranslocoScope('login'), LoginPageFacade],
       },
       {
         path: 'register',

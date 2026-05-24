@@ -37,7 +37,7 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [LoginPageFacade, tuiLoaderOptionsProvider({ size: 's' })],
+  providers: [tuiLoaderOptionsProvider({ size: 's' })],
 })
 export class LoginComponent {
   protected readonly facade = inject(LoginPageFacade);
