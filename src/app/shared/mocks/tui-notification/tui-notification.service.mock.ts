@@ -5,4 +5,4 @@ import { vi } from 'vitest';
 
 export const tuiNotificationServiceMock = {
   open: vi.fn().mockReturnValue(of(undefined)),
-} as const satisfies MockedObject<Pick<TuiNotificationService, 'open'>>;
+} as const satisfies MockedObject<Partial<TuiNotificationService>>;

@@ -40,11 +40,11 @@
     color: var(--accent-primary-soft);
   }
 
-  [tuiCardLarge] tui-textfield::before {
+  &::before {
     color: var(--accent-primary);
   }
 
-  [tuiCardLarge] tui-icon {
+  tui-icon {
     color: var(--accent-primary);
   }
 }

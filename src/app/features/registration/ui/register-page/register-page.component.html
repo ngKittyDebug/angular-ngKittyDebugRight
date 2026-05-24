@@ -3,14 +3,7 @@
 @let passwordControl = form.controls.password;
 @let passwordConfirmationControl = form.controls.passwordConfirmation;
 @let dateOfBirthControl = form.controls.dateOfBirth;
-<form
-  [formGroup]="form"
-  tuiCardLarge
-  tuiForm="m"
-  class="form"
-  [style.max-width.rem]="48"
-  (submit)="$event.preventDefault(); registerPageFacade.signup()"
->
+<form [formGroup]="form" tuiCardLarge tuiForm="m" class="form" [style.max-width.rem]="48" (submit)="onSubmit($event)">
   <tui-textfield>
     <label tuiLabel for="name">{{ 'register.form.labels.name' | transloco }}</label>
     <input [formControl]="nameControl" placeholder="aboba" tuiInput id="name" />
@@ -52,7 +45,7 @@
     } @else if (passwordControlErrors?.['minlength']; as minlengthError) {
       <tui-error [error]="validationErrors.minLength | transloco: minlengthError" />
     } @else if (passwordControlErrors?.['pattern']) {
-      <tui-error [error]="validationErrors.passwordPattern | transloco" />
+      <tui-error [error]="validationErrors.passwordPattern | transloco: passwordHints" />
     }
   }
 
@@ -70,7 +63,7 @@
     } @else if (passwordConfirmationControlErrors?.['minlength']; as minlengthError) {
       <tui-error [error]="validationErrors.minLength | transloco: minlengthError" />
     } @else if (passwordConfirmationControlErrors?.['pattern']) {
-      <tui-error [error]="validationErrors.passwordPattern | transloco" />
+      <tui-error [error]="validationErrors.passwordPattern | transloco: passwordHints" />
     } @else if (passwordConfirmationControlErrors?.['confirmPasswordError']; as confirmPasswordError) {
       <tui-error [error]="confirmPasswordError | transloco" />
     }

@@ -19,8 +19,14 @@ describe('RegisterFormService', () => {
   });
 
   describe('Получение формы', () => {
-    it('должен вернуть инстанс формы', () => {
-      expect(service.registerForm).toEqual(service['_form']);
+    it('должен вернуть инстанс формы с ожидаемыми контролами', () => {
+      expect(service.registerForm.controls).toMatchObject({
+        name: expect.anything(),
+        email: expect.anything(),
+        password: expect.anything(),
+        passwordConfirmation: expect.anything(),
+        dateOfBirth: expect.anything(),
+      });
     });
   });
 });

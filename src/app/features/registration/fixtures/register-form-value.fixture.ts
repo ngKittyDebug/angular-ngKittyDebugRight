@@ -1,5 +1,5 @@
-import type { ExtractFormControl } from '@shared/models/extract-from-control.model';
-import type { RegisterForm } from '@features/registration/models/register-form.model';
+import type { ExtractFormControl } from '@shared/models/extract-form-control.model';
+import type { RegisterFormGroup } from '@features/registration/models/register-form.model';
 
 export const registerFormValidValueFixture = {
   name: 'John',
@@ -7,4 +7,4 @@ export const registerFormValidValueFixture = {
   password: 'Aa888888',
   passwordConfirmation: 'Aa888888',
   dateOfBirth: new Date(2000, 0, 1),
-} satisfies ExtractFormControl<RegisterForm>;
+} satisfies ExtractFormControl<RegisterFormGroup>;
