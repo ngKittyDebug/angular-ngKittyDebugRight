@@ -1,4 +1,3 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 
@@ -6,14 +5,6 @@ import { KoansPageComponent } from '@features/koans/ui/koans-page/koans-page.com
 import { KoansFacade } from '@features/koans/data/facades/koans.facade';
 import { KoansStore } from '@features/koans/data/store/koans.store';
 import { koanHeadingExtension, koanMarkedExtensions } from '@features/koans/koan-marked-extensions';
-
-@Component({
-  selector: 'ngKitty-koans-outlet',
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: ':host { display: none; }',
-})
-class KoansOutletComponent {}
 
 const koansProviders = [
   KoansStore,
@@ -28,12 +19,18 @@ const koansProviders = [
 
 export const KOANS_ROUTES: Routes = [
   {
-    path: '',
+    matcher: (segments) => {
+      if (segments.length === 0) {
+        return { consumed: [] };
+      }
+
+      if (segments.length === 1) {
+        return { consumed: segments, posParams: { slug: segments[0] } };
+      }
+
+      return null;
+    },
     component: KoansPageComponent,
     providers: koansProviders,
-    children: [
-      { path: '', pathMatch: 'full', component: KoansOutletComponent },
-      { path: ':slug', component: KoansOutletComponent },
-    ],
   },
 ];

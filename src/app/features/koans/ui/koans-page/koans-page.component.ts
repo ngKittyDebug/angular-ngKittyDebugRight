@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, skip, startWith, Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, fromEvent, skip, Subject } from 'rxjs';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TuiButton } from '@taiga-ui/core';
@@ -19,7 +19,7 @@ const SEARCH_DEBOUNCE_MS = 300;
 
 @Component({
   selector: 'ngKitty-koans-page',
-  imports: [RouterOutlet, TranslocoModule, TuiButton, KoanListComponent, KoanReaderComponent],
+  imports: [TranslocoModule, TuiButton, KoanListComponent, KoanReaderComponent],
   templateUrl: './koans-page.component.html',
   styleUrl: './koans-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,17 +29,6 @@ const SEARCH_DEBOUNCE_MS = 300;
 })
 export class KoansPageComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
-  private readonly routeSlug = toSignal(
-    this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      startWith(null),
-      map(() => this.route.firstChild?.snapshot?.paramMap.get('slug') ?? null),
-      distinctUntilChanged()
-    ),
-    { initialValue: null }
-  );
-
   private readonly transloco = inject(TranslocoService);
   private readonly koanApi = inject(KoanApiService);
   private readonly koanCategories = inject(KoanCategoryService);
@@ -86,7 +75,7 @@ export class KoansPageComponent implements OnInit {
     });
 
     effect(() => {
-      const next = this.slug() ?? this.routeSlug();
+      const next = this.slug();
 
       if (next) {
         this.facade.selectKoan(next);
