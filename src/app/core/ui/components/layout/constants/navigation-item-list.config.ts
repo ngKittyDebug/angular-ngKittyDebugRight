@@ -27,14 +27,4 @@ export const NAVIGATION_ITEM_LIST = [
     label: marker('navigation-items.chronicle'),
     url: '/chronicle',
   },
-  {
-    icon: '@tui.log-in',
-    label: marker('navigation-items.login'),
-    url: '/login',
-  },
-  {
-    icon: '@tui.user-plus',
-    label: marker('navigation-items.register'),
-    url: '/register',
-  },
 ] as const satisfies NavigationItem[];

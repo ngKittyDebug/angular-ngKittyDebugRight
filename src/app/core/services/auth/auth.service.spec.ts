@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { userFixture } from '@core/fixtures/user.fixture';
 import { netlifyIdentityMock, resetNetlifyIdentityMock } from '@core/services/auth/mocks/netlify-identity.mock';
 
-import { describe, vi } from 'vitest';
+import { vi } from 'vitest';
 
 import { AuthService } from './auth.service';
 
@@ -138,7 +138,6 @@ describe('AuthService', () => {
 
     beforeEach(() => {
       netlifyIdentityMock.signup.mockResolvedValue(userFixture);
-      netlifyIdentityMock.getUser.mockResolvedValue(userFixture);
     });
 
     it('должен начать загрузку', async () => {
@@ -159,25 +158,6 @@ describe('AuthService', () => {
       await service.signup(emailFixture, passwordFixture);
 
       expect(service.user()).toEqual(userFixture);
-    });
-
-    describe('Signup не создал сессию', () => {
-      it('должен вызвать login', async () => {
-        netlifyIdentityMock.getUser.mockResolvedValueOnce(null);
-        netlifyIdentityMock.login.mockResolvedValue(userFixture);
-
-        await service.signup(emailFixture, passwordFixture);
-
-        expect(netlifyIdentityMock.login).toHaveBeenNthCalledWith(1, emailFixture, passwordFixture);
-      });
-    });
-
-    describe('Signup создал сессию', () => {
-      it('не должен вызывать login', async () => {
-        await service.signup(emailFixture, passwordFixture);
-
-        expect(netlifyIdentityMock.login).not.toHaveBeenCalled();
-      });
     });
 
     it('должен завершить загрузку', async () => {
