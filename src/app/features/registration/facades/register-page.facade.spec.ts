@@ -120,12 +120,12 @@ describe('RegisterPageFacade', () => {
         expect(routerMock.navigate).not.toHaveBeenCalled();
       });
 
-      it('должен сбросить форму', async () => {
+      it('не должен сбросить форму, чтобы не потерять введённые данные', async () => {
         const resetSpy = vi.spyOn(facade.registerForm, 'reset');
 
         await facade.signup();
 
-        expect(resetSpy).toHaveBeenCalledTimes(1);
+        expect(resetSpy).not.toHaveBeenCalled();
       });
     });
   });

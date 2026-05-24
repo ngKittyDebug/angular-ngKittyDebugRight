@@ -26,6 +26,8 @@ export class RegisterPageFacade {
     try {
       await this.authService.signup(email, password, { full_name: name, date_of_birth: dateOfBirth });
 
+      this.registerForm.reset();
+
       void this.showNotification(
         this.translocoService.translate('register.notifications.success'),
         this.translocoService.translate('register.notifications.success-title'),
@@ -40,8 +42,6 @@ export class RegisterPageFacade {
           'negative'
         );
       }
-    } finally {
-      this.registerForm.reset();
     }
   }
 
