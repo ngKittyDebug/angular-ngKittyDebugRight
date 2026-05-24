@@ -15,10 +15,16 @@ export const passwordConfirmationValidator = (controlName: string, matchingContr
       return null;
     }
 
+    const otherErrors = Object.fromEntries(
+      Object.entries(matchingControl.errors ?? {}).filter(([key]) => key !== 'confirmPasswordError')
+    );
+    const hasOtherErrors = Object.keys(otherErrors).length > 0;
+
     if (control.value === matchingControl.value) {
-      matchingControl.setErrors(null);
+      matchingControl.setErrors(hasOtherErrors ? otherErrors : null);
     } else {
       matchingControl.setErrors({
+        ...otherErrors,
         confirmPasswordError: VALIDATION_ERRORS_DICT.passwordConfirmation,
       });
     }
