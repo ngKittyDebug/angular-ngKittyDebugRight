@@ -66,7 +66,13 @@ export class AuthService {
     this.startLoading();
 
     try {
-      const user = await netlifyIdentity.signup(email, password, data);
+      await netlifyIdentity.signup(email, password, data);
+
+      let user = await netlifyIdentity.getUser();
+
+      if (!user) {
+        user = await netlifyIdentity.login(email, password);
+      }
 
       this._user.set(user);
 
