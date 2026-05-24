@@ -9,11 +9,6 @@
   </section>
 
   <div class="content">
-    <!--    TODO оставила для отладки-->
-    @if (authService.isAuthenticated()) {
-      {{ authService.user()?.email }}
-      <button tuiButton (click)="authService.logout()">вышвырнуть из церкви</button>
-    }
     <ng-content />
   </div>
 </aside>
