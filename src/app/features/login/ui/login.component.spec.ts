@@ -3,7 +3,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
-import { provideRouter } from '@angular/router';
+import { LoginPageFacade } from '@features/login/facades/login-page.facade';
+import { ActivatedRoute } from '@angular/router';
+import { activatedRouteMock } from '@shared/mocks/activated-route/activated-route.mock';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -12,7 +14,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginComponent, TranslocoTestingMock],
-      providers: [provideRouter([])],
+      providers: [{ provide: ActivatedRoute, useValue: activatedRouteMock }, LoginPageFacade],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
