@@ -28,12 +28,12 @@ export const NAVIGATION_ITEM_LIST = [
     url: '/chronicle',
   },
   {
-    icon: '@tui.ambulance',
+    icon: '@tui.log-in',
     label: marker('navigation-items.login'),
     url: '/login',
   },
   {
-    icon: '@tui.ambulance',
+    icon: '@tui.user-plus',
     label: marker('navigation-items.register'),
     url: '/register',
   },
