@@ -9,7 +9,7 @@
   class="form"
   [style.max-width.rem]="32"
   [formGroup]="facade.loginForm"
-  (submit)="facade.login()"
+  (submit)="$event.preventDefault(); facade.login()"
 >
   <tui-textfield iconStart="@tui.mail">
     <label tuiLabel for="email">{{ 'login.email' | transloco }}</label>
