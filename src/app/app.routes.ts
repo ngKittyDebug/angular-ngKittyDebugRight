@@ -10,6 +10,12 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'profile',
+        loadComponent: () =>
+          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+        providers: [provideTranslocoScope('profile')],
+      },
+      {
         path: 'chronicle',
         loadComponent: () =>
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
