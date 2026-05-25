@@ -1,0 +1,14 @@
+<aside [tuiNavigationAside]="true" class="sidebar" [class.sidebar-mobile-open]="isMobileOpen()">
+  <section class="section">
+    <p class="section-title">[ НАВИГАЦИЯ ]</p>
+    <nav class="nav" id="sidebar-nav">
+      @for (navigationItem of navigationItemList(); track navigationItem.label) {
+        <ngKitty-navigation-item [item]="navigationItem" />
+      }
+    </nav>
+  </section>
+
+  <div class="content">
+    <ng-content />
+  </div>
+</aside>

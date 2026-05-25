@@ -1,0 +1,50 @@
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { LayoutComponent } from './layout.component';
+import { LayoutService } from '@core/services/layout/layout.service';
+import { layoutServiceMock } from '@core/services/layout/layout.service.mock';
+
+describe('LayoutComponent', () => {
+  let component: LayoutComponent;
+  let fixture: ComponentFixture<LayoutComponent>;
+
+  beforeEach(async () => {
+    vi.clearAllMocks();
+
+    await TestBed.configureTestingModule({
+      imports: [LayoutComponent],
+      providers: [{ provide: LayoutService, useValue: layoutServiceMock }, provideRouter([])],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(LayoutComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  describe('Инициализация компонента', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('должен подписаться на отслеживание ширины экрана', () => {
+      expect(layoutServiceMock.watchMobileNavMediaQuery).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Переключение открытия сайдбара', () => {
+    it('должен вызывать метод сервиса', () => {
+      component.onToggleMobileNav();
+
+      expect(layoutServiceMock.onToggleMobileNav).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Закрытие сайдбара', () => {
+    it('должен вызывать метод сервиса', () => {
+      component.onCloseMobileNav();
+
+      expect(layoutServiceMock.onCloseMobileNav).toHaveBeenCalledTimes(1);
+    });
+  });
+});
