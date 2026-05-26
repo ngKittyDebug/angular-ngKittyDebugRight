@@ -34,8 +34,10 @@ export const routes: Routes = [
           ),
         providers: [provideTranslocoScope('register'), RegisterPageFacade],
       },
-      { path: 'profile',
-        loadComponent: () => import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
 
