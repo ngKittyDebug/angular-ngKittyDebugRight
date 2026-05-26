@@ -19,10 +19,8 @@ describe('authGuard', () => {
     });
   });
 
-  describe('Компонент инициализирован', () => {
-    it('должен инициализироваться', () => {
-      expect(executeGuard).toBeTruthy();
-    });
+  it('должен инициализироваться', () => {
+    expect(executeGuard).toBeTruthy();
   });
 
   describe('Пользователь авторизован', () => {
