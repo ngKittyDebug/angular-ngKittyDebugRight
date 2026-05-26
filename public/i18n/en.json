@@ -1,4 +1,13 @@
 {
+  "navigation-items": {
+    "login": "Login",
+    "tarot": "Tarot",
+    "shrift": "Shrift",
+    "runes": "Runes",
+    "horoscope": "Horoscope",
+    "chronicle": "Chronicle",
+    "register": "Register"
+  },
   "header": {
     "title": "CULT OF THE HOLY DEPLOY",
     "subtitle": ">> Machine Spirit is unstable <<"

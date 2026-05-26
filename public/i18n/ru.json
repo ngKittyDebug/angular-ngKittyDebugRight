@@ -1,4 +1,13 @@
 {
+  "navigation-items": {
+    "login": "Войти",
+    "tarot": "Таро",
+    "shrift": "Исповедь",
+    "runes": "Руны",
+    "horoscope": "Гороскоп",
+    "chronicle": "Хроника",
+    "register": "Зарегаться"
+  },
   "header": {
     "title": "КУЛЬТ СВЯТОГО ДЕПЛОЯ",
     "subtitle": ">> Дух Машины нестабилен <<"
