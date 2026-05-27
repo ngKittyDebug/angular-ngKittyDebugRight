@@ -1,14 +1,16 @@
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
-    <button appearance="primary" size="s" tuiButton type="button" [style.border-radius.%]="100">
-      <tui-icon icon="@tui.moon" />
-    </button>
+    <div class="theme-button">
+      <button appearance="primary" size="s" tuiButton type="button" [style.border-radius.%]="100">
+        <tui-icon icon="@tui.moon" />
+      </button>
+    </div>
     <hgroup tuiTitle>
       <h2 class="header-title">
-        {{ title }}
+        {{ 'header.title' | transloco }}
       </h2>
       <p tuiSubtitle class="header-subtitle">
-        {{ subtitle }}
+        {{ 'header.subtitle' | transloco }}
       </p>
     </hgroup>
     <div class="header-buttons">
