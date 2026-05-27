@@ -1,17 +1,9 @@
 export interface Sin {
   id: number;
-  text: {
-    ru: string;
-    en: string;
-  };
-  severity: string;
-  status: string;
-  severityLabel: {
-    ru: string;
-    en: string;
-  };
-  statusLabel: {
-    ru: string;
-    en: string;
-  };
+  text: string;
+  severity: Severity;
+  status: Status;
 }
+
+export type Severity = 'critical' | 'medium' | 'low';
+export type Status = 'none' | 'half' | 'full';
