@@ -2,75 +2,77 @@
   <section appearance="flat" tuiCardLarge class="user-info">
     <div tuiAvatar="@tui.user" size="xl"></div>
     <h2 class="profile-title">RandomUser</h2>
-    <span>location: Moscow</span>
+    <span>{{ 'profile.location' | transloco }} : {{ 'profile.city.moscow' | transloco }}</span>
   </section>
   <section class="user-section">
     <div class="section-title">
       <tui-icon icon="@tui.trending-up" />
-      <h3>Statistics</h3>
+      <h3>{{ 'profile.statistics' | transloco }}</h3>
     </div>
     <div class="section-container">
       <div class="stats-item">
         <span class="stats-value">0</span>
-        <span class="stats-name">Confessions</span>
+        <span class="stats-name">{{ 'profile.confessions' | transloco }}</span>
       </div>
       <div class="stats-item">
         <span class="stats-value">0</span>
-        <span class="stats-name">Writings</span>
+        <span class="stats-name">{{ 'profile.writings' | transloco }}</span>
       </div>
       <div class="stats-item">
         <span class="stats-value">0.0</span>
-        <span class="stats-name">Rate level</span>
+        <span class="stats-name">{{ 'profile.level' | transloco }}</span>
       </div>
       <div class="stats-item">
         <span class="stats-value">0</span>
-        <span class="stats-name">Days of activity</span>
+        <span class="stats-name">{{ 'profile.activity' | transloco }}</span>
       </div>
     </div>
   </section>
   <section class="user-section">
     <div class="section-title">
       <tui-icon icon="@tui.award" />
-      <h3>Achievements</h3>
+      <h3>{{ 'profile.achievements' | transloco }}</h3>
     </div>
     <div class="section-title">
-      <span class="stats-name">Unblocked: 0 from 5</span>
+      <span class="stats-name"
+        >{{ 'profile.state.unblocked' | transloco }}: 0 {{ 'profile.state.from' | transloco }} 5</span
+      >
     </div>
     <div class="divider"></div>
     <div class="achievements">
       <div class="achieve-item">
         <div class="achieve-icon"><img src="./assets/pray.svg" width="30" alt="pray" /></div>
         <div class="achieve-text">
-          <h3>First confession</h3>
-          <span class="stats-name">You confessed your first bug</span>
+          <h3>{{ 'profile.achieve.01.title' | transloco }}</h3>
+          <span class="stats-name">{{ 'profile.achieve.01.description' | transloco }}</span>
         </div>
       </div>
       <div class="achieve-item">
         <div class="achieve-icon"><img src="./assets/open-book-svgrepo-com.svg" width="35" alt="book" /></div>
         <div class="achieve-text">
-          <h3>Chronicist</h3>
-          <span class="stats-name">7 daily writings to diary</span>
+          <h3>{{ 'profile.achieve.02.title' | transloco }}</h3>
+          <span class="stats-name">{{ 'profile.achieve.02.description' | transloco }}</span>
         </div>
       </div>
       <div class="achieve-item">
         <div class="achieve-icon"><img src="./assets/happy.svg" width="30" alt="smile" /></div>
         <div class="achieve-text">
-          <h3>Happy developer</h3>
-          <span class="stats-name">The average mood rating is over 4</span>
+          <h3>{{ 'profile.achieve.03.title' | transloco }}</h3>
+          <span class="stats-name">{{ 'profile.achieve.03.description' | transloco }}</span>
         </div>
       </div>
       <div class="achieve-item">
         <div class="achieve-icon"><img src="./assets/star.svg" width="35" alt="star" /></div>
         <div class="achieve-text">
-          <h3>Regular visitor</h3>
-          <span class="stats-name">Over 30 days of activity</span>
+          <h3>{{ 'profile.achieve.04.title' | transloco }}</h3>
+          <span class="stats-name">{{ 'profile.achieve.04.description' | transloco }}</span>
         </div>
       </div>
       <div class="achieve-item">
         <div class="achieve-icon"><img src="./assets/crystal-ball.svg" width="35" alt="magic ball" /></div>
         <div class="achieve-text">
-          <h3>Penitent</h3>
-          <span class="stats-name">10 confessions</span>
+          <h3>{{ 'profile.achieve.05.title' | transloco }}</h3>
+          <span class="stats-name">{{ 'profile.achieve.05.description' | transloco }}</span>
         </div>
       </div>
     </div>
@@ -78,14 +80,14 @@
   <section class="user-section">
     <div class="section-title">
       <tui-icon icon="@tui.sparkles" />
-      <h3>Developer's Zodiac Sign</h3>
+      <h3>{{ 'profile.zodiac' | transloco }}</h3>
     </div>
     <div class="zodiac-text">
       <div class="section-title">
         <tui-icon icon="@tui.zodiac-aquarius" size="m" />
-        <h2 class="zodiac-title">Aquarius</h2>
+        <h2 class="zodiac-title">{{ 'profile.sign.title.aquarius' | transloco }}</h2>
       </div>
-      <p class="zodiac-description">Generator of unconventional solutions</p>
+      <p class="zodiac-description">{{ 'profile.sign.description.aquarius' | transloco }}</p>
     </div>
   </section>
 </div>

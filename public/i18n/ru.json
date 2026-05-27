@@ -13,7 +13,12 @@
     "subtitle": ">> Дух Машины нестабилен <<"
   },
   "sidebar": {
-    "navigation": "НАВИГАЦИЯ"
+    "navigation": "НАВИГАЦИЯ",
+    "user": {
+      "city": {
+        "moscow": "Москва"
+      }
+    }
   },
   "footer": {
     "repository": "РЕПОЗИТОРИЙ",
