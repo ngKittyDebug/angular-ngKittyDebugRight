@@ -17,19 +17,22 @@
   flex-direction: column;
   align-items: center !important;
   width: max-content !important;
+  background: inherit !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem !important;
 }
 
 .user-info span {
   margin: 0;
   padding: 0;
-  color: var(--accent-primary);
+  color: var(--light-text);
 }
 
 .profile-title {
   margin: 0;
   text-align: center;
   letter-spacing: 0.1em;
-  color: var(--tui-text-primary);
+  color: var(--accent-primary);
 }
 
 .user-section {
@@ -53,7 +56,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 0.5rem;
   width: 100%;
 }
@@ -64,7 +67,7 @@
   justify-content: flex-start;
   align-items: center;
   padding: 10px 15px;
-  background-color: var(--tui-status-warning-pale);
+  background-color: var(--light-card);
   border-radius: 1rem;
 }
 
@@ -75,12 +78,12 @@
 }
 
 .stats-name {
-  color: var(--tui-text-primary);
+  color: var(--light-text);
 }
 
 .divider {
   border-radius: 1rem;
-  background-color: var(--tui-status-negative-pale);
+  background-color: var(--divider);
   height: 1vh;
   margin: 0.5rem;
 }
@@ -101,8 +104,12 @@
   gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: var(--tui-status-warning-pale);
+  background-color: var(--dark-card);
   border: 1px solid var(--warning);
+}
+
+.achieve-text {
+  color: var(--alternative-text);
 }
 
 .zodiac-text {
@@ -125,6 +132,6 @@
 
 .zodiac-title {
   font-size: 2rem;
-  color: var(--water);
+  color: var(--alternative-light-text);
   margin: 0;
 }

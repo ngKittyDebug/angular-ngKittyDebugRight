@@ -60,6 +60,12 @@
   --font-orbitron: 'Orbitron', sans-serif;
   --font-oxanium: 'Oxanium', sans-serif;
   --dark-text: #3a0295;
+  --light-text: #7b7b7b;
+  --light-card: #41300e;
+  --dark-card: #1d1910;
+  --divider: #2d1e3a;
+  --alternative-text: #0f6652;
+  --alternative-light-text: #0fc;
 }
 
 :root,
@@ -130,6 +136,12 @@
   --font-orbitron: 'Orbitron', sans-serif;
   --font-oxanium: 'Oxanium', sans-serif;
   --dark-text: #3a0295;
+  --light-text: #7b7b7b;
+  --light-card: #41300e;
+  --dark-card: #1d1910;
+  --divider: #2d1e3a;
+  --alternative-text: #0f6652;
+  --alternative-light-text: #0fc;
 }
 
 * {
