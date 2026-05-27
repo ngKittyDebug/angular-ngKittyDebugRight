@@ -3,6 +3,7 @@ import { LayoutComponent } from '@core/ui/components/layout/layout.component';
 import { provideTranslocoScope } from '@jsverse/transloco';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
 import { LoginPageFacade } from '@features/login/facades/login-page.facade';
+import { authGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -11,12 +12,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'profile',
+        canMatch: [authGuard],
         loadComponent: () =>
           import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
       {
         path: 'chronicle',
+        canMatch: [authGuard],
         loadComponent: () =>
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
         providers: [provideTranslocoScope('chronicle')],
