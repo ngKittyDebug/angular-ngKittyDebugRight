@@ -12,14 +12,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'profile',
-        canActivate: [authGuard],
+        canMatch: [authGuard],
         loadComponent: () =>
           import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
       {
         path: 'chronicle',
-        canActivate: [authGuard],
+        canMatch: [authGuard],
         loadComponent: () =>
           import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
         providers: [provideTranslocoScope('chronicle')],
