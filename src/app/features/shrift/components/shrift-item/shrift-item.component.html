@@ -1,9 +1,12 @@
-<p class="title">{{ text() }}</p>
+<div>
+  <p class="title">{{ text() }}</p>
 
-<div class="actions">
-  <div [class]="'status ' + status()">{{ 'shrift.status.' + status() | transloco }}</div>
-  <div [class]="'level ' + severity()">{{ 'shrift.severity.' + severity() | transloco }}</div>
-  <button tuiButton type="button" appearance="outline" size="xs" (click)="clicked.emit()">
-    {{ 'shrift.button-itm' | transloco }}
-  </button>
+  <div class="actions">
+    <div [class]="'status ' + status()">{{ 'shrift.status.' + status() | transloco }}</div>
+    <div [class]="'level ' + severity()">{{ 'shrift.severity.' + severity() | transloco }}</div>
+  </div>
 </div>
+
+<button tuiButton type="button" appearance="outline" size="xs" (click)="clicked.emit()">
+  {{ 'shrift.button-itm' | transloco }}
+</button>
