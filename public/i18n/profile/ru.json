@@ -10,23 +10,23 @@
   "activity": "Дней активности",
   "achievements": "Достижения",
   "achieve": {
-    "01": {
+    "first_confession": {
       "title": "Первая исповедь",
       "description": "Признались в первом грехе"
     },
-    "02": {
+    "chronicist": {
       "title": "Хроникер",
       "description": "7 дней ведения дневника"
     },
-    "03": {
+    "good_mood": {
       "title": "Счастливый разработчик",
       "description": "Средняя оценка настроения > 4"
     },
-    "04": {
+    "regular_visitor": {
       "title": "Постоянный посетитель",
       "description": "30 дней активности"
     },
-    "05": {
+    "penitent": {
       "title": "Кающийся",
       "description": "10 исповедей"
     }

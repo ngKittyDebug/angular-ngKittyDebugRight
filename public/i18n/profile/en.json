@@ -14,23 +14,23 @@
     "from": "from"
   },
   "achieve": {
-    "01": {
+    "first_confession": {
       "title": "First confession",
       "description": "You confessed your first bug"
     },
-    "02": {
+    "chronicist": {
       "title": "Chronicist",
       "description": "7 daily writings to diary"
     },
-    "03": {
+    "good_mood": {
       "title": "Happy developer",
       "description": "The average mood rating is over 4"
     },
-    "04": {
+    "regular_visitor": {
       "title": "Regular visitor",
       "description": "Over 30 days of activity"
     },
-    "05": {
+    "penitent": {
       "title": "Penitent",
       "description": "10 confessions"
     }
