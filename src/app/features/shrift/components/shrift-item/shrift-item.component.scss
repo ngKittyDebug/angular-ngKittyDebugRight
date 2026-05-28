@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-transform: capitalize;
 
   @media (width <= 768px) {
     justify-content: center;

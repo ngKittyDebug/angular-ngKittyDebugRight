@@ -1,12 +1,12 @@
 <div>
-  <p class="title">{{ text() }}</p>
+  <ng-content select="[title]" />
 
   <div class="actions">
-    <div [class]="'status ' + status()">{{ 'shrift.status.' + status() | transloco }}</div>
-    <div [class]="'level ' + severity()">{{ 'shrift.severity.' + severity() | transloco }}</div>
+    <div [class]="statusClass()">{{ statusTransloco() | transloco }}</div>
+    <div [class]="severityClass()">{{ severityTransloco() | transloco }}</div>
   </div>
 </div>
 
 <button tuiButton type="button" appearance="outline" size="xs" (click)="clicked.emit()">
-  {{ 'shrift.button-itm' | transloco }}
+  {{ 'shrift.button-item' | transloco }}
 </button>
