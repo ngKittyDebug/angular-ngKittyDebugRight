@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ShriftItemComponent } from './components/shrift-item/shrift-item.component';
-import { Sins } from './mocs/sins-data';
+import { SINS } from './mocs/sins-data';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ConfessComponent } from './components/confess/confess.component';
 import type { Sin } from './models/sin.model';
@@ -13,6 +13,6 @@ import type { Sin } from './models/sin.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShriftComponent {
-  protected readonly sinsData: Sin[] = Sins;
+  protected readonly sinsData: Sin[] = SINS;
   protected readonly translocoService = inject(TranslocoService);
 }
