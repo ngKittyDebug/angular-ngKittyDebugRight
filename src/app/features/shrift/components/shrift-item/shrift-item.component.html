@@ -2,8 +2,8 @@
   <ng-content select="[title]" />
 
   <div class="actions">
-    <div [class]="statusClass()">{{ statusTransloco() | transloco }}</div>
-    <div [class]="severityClass()">{{ severityTransloco() | transloco }}</div>
+    <div [class]="statusClass()">{{ statusTranslateKey() | transloco }}</div>
+    <div [class]="severityClass()">{{ severityTranslateKey() | transloco }}</div>
   </div>
 </div>
 

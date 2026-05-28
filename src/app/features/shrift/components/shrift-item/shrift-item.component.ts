@@ -22,11 +22,11 @@ export class ShriftItemComponent {
     return 'level ' + this.severity();
   });
 
-  protected readonly statusTransloco = computed(() => {
+  protected readonly statusTranslateKey = computed(() => {
     return 'shrift.status.' + this.status();
   });
 
-  protected readonly severityTransloco = computed(() => {
+  protected readonly severityTranslateKey = computed(() => {
     return 'shrift.severity.' + this.severity();
   });
 }
