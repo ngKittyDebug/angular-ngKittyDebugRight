@@ -1,8 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-
-import { TranslocoTestingModule } from '@jsverse/transloco';
-
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
@@ -10,17 +8,10 @@ describe('ProfileComponent', () => {
   let fixture: ComponentFixture<ProfileComponent>;
 
   beforeEach(async () => {
+    vi.clearAllMocks();
+
     await TestBed.configureTestingModule({
-      imports: [
-        ProfileComponent,
-        TranslocoTestingModule.forRoot({
-          langs: { en: {} },
-          translocoConfig: {
-            availableLangs: ['en'],
-            defaultLang: 'en',
-          },
-        }),
-      ],
+      imports: [ProfileComponent, TranslocoTestingMock],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
