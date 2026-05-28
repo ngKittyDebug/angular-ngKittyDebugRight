@@ -13,8 +13,7 @@ export const routes: Routes = [
       {
         path: 'profile',
         canMatch: [authGuard],
-        loadComponent: () =>
-          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+        loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
       {
@@ -39,8 +38,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        loadComponent: () =>
-          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+        loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
 
