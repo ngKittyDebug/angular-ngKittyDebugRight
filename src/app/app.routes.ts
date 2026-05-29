@@ -4,6 +4,7 @@ import { provideTranslocoScope } from '@jsverse/transloco';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
 import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
+import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,7 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login'), LoginPageFacade],
+        canDeactivate: [dirtyFormGuard],
       },
       {
         path: 'register',
@@ -35,6 +37,7 @@ export const routes: Routes = [
             (c) => c.RegisterPageComponent
           ),
         providers: [provideTranslocoScope('register'), RegisterPageFacade],
+        canDeactivate: [dirtyFormGuard],
       },
       {
         path: '**',

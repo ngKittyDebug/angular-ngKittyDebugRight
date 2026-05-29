@@ -47,8 +47,8 @@ import { TuiDay } from '@taiga-ui/cdk';
   styleUrl: './register-page.component.scss',
 })
 export class RegisterPageComponent {
-  protected readonly registerPageFacade = inject(RegisterPageFacade);
-  protected readonly form = this.registerPageFacade.registerForm;
+  private readonly registerPageFacade = inject(RegisterPageFacade);
+  public readonly form = this.registerPageFacade.registerForm;
   protected readonly isLoading = this.registerPageFacade.isLoading;
   protected readonly validationErrors = VALIDATION_ERRORS_DICT;
   protected readonly passwordHints = {

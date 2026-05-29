@@ -41,5 +41,7 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
 })
 export class LoginComponent {
   protected readonly facade = inject(LoginPageFacade);
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public readonly form = this.facade.loginForm;
   protected readonly validationErrors = VALIDATION_ERRORS_DICT;
 }
