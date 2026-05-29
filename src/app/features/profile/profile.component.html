@@ -1,8 +1,10 @@
 <div class="profile">
   <section appearance="flat" tuiCardLarge class="user-info">
     <div tuiAvatar="@tui.user" size="xl"></div>
-    <h2 class="profile-title">RandomUser</h2>
-    <span>{{ 'profile.location' | transloco }} : {{ 'profile.city.moscow' | transloco }}</span>
+    @if (authService.user(); as user) {
+      <h2 class="profile-title">{{ user.userMetadata?.['full_name'] || user.email }}</h2>
+    }
+    <!-- <span>{{ 'profile.location' | transloco }} : {{ 'profile.city.moscow' | transloco }}</span> -->
   </section>
   <section class="user-section">
     <div class="section-title">

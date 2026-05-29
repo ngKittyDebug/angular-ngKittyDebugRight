@@ -4,6 +4,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { TuiAppearance, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
+import { inject } from '@angular/core';
+import { AuthService } from '@core/services/auth/auth.service';
 
 @Component({
   selector: 'ngKitty-profile',
@@ -68,4 +70,5 @@ export class ProfileComponent {
       description: 'profile.achieve.penitent.description',
     },
   ];
+  protected readonly authService = inject(AuthService);
 }
