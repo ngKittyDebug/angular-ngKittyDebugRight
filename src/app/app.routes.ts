@@ -20,9 +20,14 @@ export const routes: Routes = [
       {
         path: 'chronicle',
         canMatch: [authGuard],
-        loadComponent: () =>
-          import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
+        loadComponent: () => import('./features/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
         providers: [provideTranslocoScope('chronicle')],
+      },
+      {
+        path: 'shrift',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/shrift/shrift.component').then((c) => c.ShriftComponent),
+        providers: [provideTranslocoScope('shrift')],
       },
       {
         path: 'login',
