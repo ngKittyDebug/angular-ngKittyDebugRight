@@ -4,15 +4,24 @@
     "moscow": "Moscow"
   },
   "statistics": "Statistics",
-  "confessions": "Confessions",
-  "writings": "Writings",
-  "level": "Average level",
-  "activity": "Days of activity",
   "achievements": "Achievements",
   "state": {
     "unblocked": "Unblocked",
     "from": "from"
   },
+  "zodiac": "Developer's Zodiac sign",
+  "sign": {
+    "title": {
+      "aquarius": "Aquarius"
+    },
+    "description": {
+      "aquarius": "Generator of unconventional solutions"
+    }
+  },
+  "confessions": "Confessions",
+  "writings": "Writings",
+  "level": "Average level",
+  "activity": "Days of activity",
   "achieve": {
     "first_confession": {
       "title": "First confession",
@@ -33,15 +42,6 @@
     "penitent": {
       "title": "Penitent",
       "description": "10 confessions"
-    }
-  },
-  "zodiac": "Developer's Zodiac sign",
-  "sign": {
-    "title": {
-      "aquarius": "Aquarius"
-    },
-    "description": {
-      "aquarius": "Generator of unconventional solutions"
     }
   }
 }
