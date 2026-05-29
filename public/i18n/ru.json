@@ -35,10 +35,26 @@
     "password_pattern": "Церковный шифр: от {{ minLength }} символов — заглавная и строчная латиница, цифра. Без пробелов, только буквы и цифры.",
     "password_confirmation": "Мантры не совпадают — повторите шифр точно."
   },
+  "register": {
+    "notifications": {
+      "success": "Missing value for 'register.notifications.success'",
+      "success-title": "Missing value for 'register.notifications.success-title'",
+      "failure": "Missing value for 'register.notifications.failure'"
+    }
+  },
+  "login": {
+    "success": "Missing value for 'login.success'",
+    "success-title": "Missing value for 'login.success-title'",
+    "error": {
+      "text": "Missing value for 'login.error.text'"
+    }
+  },
   "modal": {
     "confirmation": {
       "content": "Письмена ещё не запечатаны. Покинешь алтарь сейчас — и всё несохранённое будет предано забвению.",
-      "heading": "Оставить незапечатанный обет?"
+      "heading": "Оставить незапечатанный обет?",
+      "confirm_label": "Предать забвению",
+      "cancel_label": "Остаться и запечатать"
     }
   }
 }

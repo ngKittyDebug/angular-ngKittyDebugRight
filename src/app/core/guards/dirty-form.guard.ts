@@ -16,6 +16,8 @@ export const dirtyFormGuard: CanDeactivateFn<ComponentWithForm> = (component) =>
   return modalService.openConfirmModal(
     translocoService.translate(marker('modal.confirmation.content')),
     'm',
-    translocoService.translate(marker('modal.confirmation.heading'))
+    translocoService.translate(marker('modal.confirmation.heading')),
+    translocoService.translate(marker('modal.confirmation.confirm_label')),
+    translocoService.translate(marker('modal.confirmation.cancel_label'))
   );
 };

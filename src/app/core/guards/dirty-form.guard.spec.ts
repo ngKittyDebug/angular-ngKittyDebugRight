@@ -12,7 +12,6 @@ import { routerFixture } from '@shared/mocks/router/router.fixture';
 
 describe('dirtyFormGuard', () => {
   const modalResultFixture$ = of(true);
-
   const executeGuard: CanDeactivateFn<ComponentWithForm> = (...guardParameters) =>
     TestBed.runInInjectionContext(() => dirtyFormGuard(...guardParameters));
 
@@ -29,13 +28,25 @@ describe('dirtyFormGuard', () => {
     it('должен пропустить навигацию', () => {
       const componentMock = { form: { dirty: false } } as ComponentWithForm;
 
-      expect(executeGuard(componentMock, {} as never, {} as never, {} as never)).toBe(true);
+      expect(
+        executeGuard(
+          componentMock,
+          routerFixture.activatedRouteSnapshotFixture,
+          routerFixture.routerStateFixture,
+          routerFixture.routerStateFixture
+        )
+      ).toBe(true);
     });
 
     it('не должен открывать модальное окно', () => {
       const componentMock = { form: { dirty: false } } as ComponentWithForm;
 
-      executeGuard(componentMock, {} as never, {} as never, {} as never);
+      executeGuard(
+        componentMock,
+        routerFixture.activatedRouteSnapshotFixture,
+        routerFixture.routerStateFixture,
+        routerFixture.routerStateFixture
+      );
 
       expect(modalServiceMock.openConfirmModal).not.toHaveBeenCalled();
     });
@@ -45,13 +56,20 @@ describe('dirtyFormGuard', () => {
     const componentMock = { form: { dirty: true } } as ComponentWithForm;
 
     it('должен открыть модальное окно', () => {
-      executeGuard(componentMock, {} as never, {} as never, {} as never);
+      executeGuard(
+        componentMock,
+        routerFixture.activatedRouteSnapshotFixture,
+        routerFixture.routerStateFixture,
+        routerFixture.routerStateFixture
+      );
 
       expect(modalServiceMock.openConfirmModal).toHaveBeenNthCalledWith(
         1,
         'modal.confirmation.content',
         'm',
-        'modal.confirmation.heading'
+        'modal.confirmation.heading',
+        'modal.confirmation.confirm_label',
+        'modal.confirmation.cancel_label'
       );
     });
 
