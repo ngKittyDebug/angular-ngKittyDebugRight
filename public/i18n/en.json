@@ -35,20 +35,6 @@
     "password_pattern": "Temple cipher: at least {{ minLength }} characters — one uppercase, one lowercase, one digit. Latin letters and digits only, no spaces.",
     "password_confirmation": "The mantras do not match — repeat the cipher exactly."
   },
-  "register": {
-    "notifications": {
-      "success": "Missing value for 'register.notifications.success'",
-      "success-title": "Missing value for 'register.notifications.success-title'",
-      "failure": "Missing value for 'register.notifications.failure'"
-    }
-  },
-  "login": {
-    "success": "Missing value for 'login.success'",
-    "success-title": "Missing value for 'login.success-title'",
-    "error": {
-      "text": "Missing value for 'login.error.text'"
-    }
-  },
   "modal": {
     "confirmation": {
       "content": "The scriptures are not yet sealed. Leave the altar now, and all that is unsaved shall be given to oblivion.",
