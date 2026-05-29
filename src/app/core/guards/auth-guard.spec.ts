@@ -6,7 +6,7 @@ import { AuthService } from '@core/services/auth/auth.service';
 import { routerMock } from '@shared/mocks/router/router.mock';
 import { authServiceMock } from '@core/services/auth/auth.service.mock';
 import type { MockedFunction } from 'vitest';
-import { RouterFixtures } from '@shared/mocks/router/fixtures';
+import { routerFixture } from '@shared/mocks/router/router.fixture';
 
 describe('authGuard', () => {
   const isAuthenticatedMock = authServiceMock.isAuthenticated as unknown as MockedFunction<() => boolean>;
@@ -30,14 +30,14 @@ describe('authGuard', () => {
   describe('Пользователь авторизован', () => {
     it('должен пустить по требуемому маршруту', () => {
       isAuthenticatedMock.mockResolvedValue(true);
-      expect(executeGuard(RouterFixtures.route, RouterFixtures.segments)).toBe(true);
+      expect(executeGuard(routerFixture.route, routerFixture.segments)).toBe(true);
     });
   });
 
   describe('Пользователь не авторизован', () => {
     it('должен не пустить по требуемому маршруту и редиректнуть на стораницу логин', () => {
       isAuthenticatedMock.mockReturnValue(false);
-      executeGuard(RouterFixtures.route, RouterFixtures.segments);
+      executeGuard(routerFixture.route, routerFixture.segments);
       expect(routerMock.createUrlTree).toHaveBeenNthCalledWith(1, ['/login']);
     });
   });

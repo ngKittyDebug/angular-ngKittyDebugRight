@@ -6,11 +6,5 @@
     "outDir": "./out-tsc/spec",
     "types": ["vitest/globals"]
   },
-  "include": [
-    "src/**/*.d.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.mock.ts",
-    "src/**/*.fixture.ts",
-    "src/app/shared/mocks/router/fixtures.ts"
-  ]
+  "include": ["src/**/*.d.ts", "src/**/*.spec.ts", "src/**/*.mock.ts", "src/**/*.fixture.ts"]
 }
