@@ -40,8 +40,7 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
   providers: [tuiLoaderOptionsProvider({ size: 's' })],
 })
 export class LoginComponent {
-  protected readonly facade = inject(LoginPageFacade);
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+  public readonly facade = inject(LoginPageFacade);
   public readonly form = this.facade.loginForm;
   protected readonly validationErrors = VALIDATION_ERRORS_DICT;
 }
