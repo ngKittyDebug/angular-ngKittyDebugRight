@@ -59,6 +59,13 @@
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
   --font-orbitron: 'Orbitron', sans-serif;
   --font-oxanium: 'Oxanium', sans-serif;
+  --dark-text: #3a0295;
+  --light-text: #7b7b7b;
+  --light-card: #41300e;
+  --dark-card: #1d1910;
+  --divider: #2d1e3a;
+  --alternative-text: #0f6652;
+  --alternative-light-text: #0fc;
 }
 
 :root,
@@ -128,6 +135,13 @@
   --card-glow: 0 0 18px rgb(168 85 247 / 16%), 0 0 36px rgb(255 79 216 / 8%);
   --font-orbitron: 'Orbitron', sans-serif;
   --font-oxanium: 'Oxanium', sans-serif;
+  --dark-text: #3a0295;
+  --light-text: #7b7b7b;
+  --light-card: #41300e;
+  --dark-card: #1d1910;
+  --divider: #2d1e3a;
+  --alternative-text: #0f6652;
+  --alternative-light-text: #0fc;
 }
 
 * {

@@ -13,7 +13,12 @@
     "subtitle": ">> Machine Spirit is unstable <<"
   },
   "sidebar": {
-    "navigation": "NAVIGATION"
+    "navigation": "NAVIGATION",
+    "user": {
+      "city": {
+        "moscow": "Moscow"
+      }
+    }
   },
   "footer": {
     "repository": "REPOSITORY",

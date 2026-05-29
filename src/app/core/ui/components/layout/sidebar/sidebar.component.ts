@@ -7,7 +7,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'ngKitty-sidebar',
-  imports: [NavigationItemComponent, TranslocoModule, TuiAvatar, RouterLink],
+  imports: [TranslocoModule, NavigationItemComponent, TuiAvatar, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
