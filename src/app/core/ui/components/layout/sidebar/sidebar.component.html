@@ -10,12 +10,11 @@
 
   <div class="content">
     <ng-content />
-    @if (authService.isAuthenticated()) {
+    @if (authService.user(); as user) {
       <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
         <div tuiAvatar="@tui.user" size="m"></div>
         <div class="user-info">
-          <div class="name">RandomUser</div>
-          <div class="role">{{ 'sidebar.user.city.moscow' | transloco }}</div>
+          <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
         </div>
       </a>
     } @else {
