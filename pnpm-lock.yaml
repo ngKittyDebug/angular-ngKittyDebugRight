@@ -26,33 +26,36 @@ importers:
       '@angular/router':
         specifier: ^21.2.12
         version: 21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
-      '@netlify/identity':
-        specifier: ^1.1.0
-        version: 1.1.0
       '@jsverse/transloco':
         specifier: ^8.3.0
         version: 8.3.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)(typescript@5.9.3)
+      '@netlify/identity':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@ngrx/signals':
         specifier: ^21.1.0
         version: 21.1.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@taiga-ui/addon-doc':
         specifier: ^5.5.0
-        version: 5.5.0(a7dd30829ef30adcb336b59af9c43f4d)
+        version: 5.5.0(8185e557148013b8ca960dfe24d94931)
       '@taiga-ui/cdk':
         specifier: ^5.5.0
-        version: 5.5.0(d300ef10d477a261ab44b15137110aac)
+        version: 5.5.0(73ec6d058ca62213f12153435a08e21e)
       '@taiga-ui/core':
         specifier: ^5.5.0
-        version: 5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)
+        version: 5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)
       '@taiga-ui/icons':
         specifier: ^5.5.0
         version: 5.5.0
       '@taiga-ui/kit':
         specifier: ^5.5.0
-        version: 5.5.0(c2213695b292c94d01d59d7b30734a23)
+        version: 5.5.0(a3c7af1d771f503940516f8ac1cef368)
       '@taiga-ui/layout':
         specifier: ^5.5.0
-        version: 5.5.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(d300ef10d477a261ab44b15137110aac))(@taiga-ui/core@5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02))(@taiga-ui/kit@5.5.0(c2213695b292c94d01d59d7b30734a23))(@taiga-ui/polymorpheus@5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))(rxjs@7.8.2)
+        version: 5.5.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(73ec6d058ca62213f12153435a08e21e))(@taiga-ui/core@5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d))(@taiga-ui/kit@5.5.0(a3c7af1d771f503940516f8ac1cef368))(@taiga-ui/polymorpheus@5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))(rxjs@7.8.2)
+      '@taiga-ui/polymorpheus':
+        specifier: ^5.0.1
+        version: 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       '@taiga-ui/styles':
         specifier: ^5.5.0
         version: 5.5.0(@taiga-ui/design-tokens@0.299.0)
@@ -1761,10 +1764,6 @@ packages:
   '@netlify-builder/deploy@5.0.0':
     resolution: {integrity: sha512-O90BBUvsgQtYul1o9VpvN/3l2StVzfiy4bfpqSs8JWWGoWqOF2MR8ExGaj6I88ancrn+EGUWCRvoGwLPl8rpSA==}
 
-  '@netlify/identity@1.1.0':
-    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
-    engines: {node: '>=22'}
-
   '@netlify/ai@0.4.1':
     resolution: {integrity: sha512-ETLtV/9taYrcGhszwO+BLFgFJJ2MCnJp8BwxfwV6Z/+z3SsaUG4ExC8x4xzNCdB2GPWxXrXkvR2LFNsPFSLcRA==}
     engines: {node: '>=20.6.1'}
@@ -1862,6 +1861,10 @@ packages:
   '@netlify/headers@2.1.10':
     resolution: {integrity: sha512-xih1Pf3dDpvdpBoPI+tua9WA2qTkRJeUSUIUaUtnAvRdhl959W06d09BtEWS+FtjlrCEkE/REVxD7J+SN6EpSw==}
     engines: {node: '>=20.6.1'}
+
+  '@netlify/identity@1.1.0':
+    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
+    engines: {node: '>=22'}
 
   '@netlify/images@1.3.9':
     resolution: {integrity: sha512-MM7pvY83uteO+bgG/15rHdG0cz9WXOWjd9oAUYA76ki+wrw5OCt96evvF4yJsMcAf2SZx3pauBDW6VujwKR/Ng==}
@@ -2751,8 +2754,8 @@ packages:
       '@taiga-ui/core': 5.5.0
       '@taiga-ui/polymorpheus': ^5.0.0
 
-  '@taiga-ui/polymorpheus@5.0.0':
-    resolution: {integrity: sha512-FRus7OgxYyRuETB17g1/YXYs8PAeF4x8+K4ZDfD3Ede8Vxv/XslAYZvf/Ro0wag6Uiy0kAP4bvSaIGPS1Y8Fyg==}
+  '@taiga-ui/polymorpheus@5.0.1':
+    resolution: {integrity: sha512-OpPuPjkfwZDZmLIBrjWRpSCSCjqIS8y2/ntACe8ySe17Fz8zTAj6gXP5TKqsrfla0mzWpN1A6Hz8YR6jDhV8qw==}
     peerDependencies:
       '@angular/core': '>=19.0.0'
       '@angular/platform-browser': '>=19.0.0'
@@ -10003,10 +10006,6 @@ snapshots:
       - rollup
       - supports-color
 
-  '@netlify/identity@1.1.0':
-    dependencies:
-      gotrue-js: 1.0.1
-
   '@netlify/functions@5.2.2':
     dependencies:
       '@netlify/types': 2.7.0
@@ -10030,6 +10029,10 @@ snapshots:
   '@netlify/headers@2.1.10':
     dependencies:
       '@netlify/headers-parser': 9.0.3
+
+  '@netlify/identity@1.1.0':
+    dependencies:
+      gotrue-js: 1.0.1
 
   '@netlify/images@1.3.9(@netlify/blobs@10.7.8)':
     dependencies:
@@ -10774,7 +10777,7 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
-  '@taiga-ui/addon-doc@5.5.0(a7dd30829ef30adcb336b59af9c43f4d)':
+  '@taiga-ui/addon-doc@5.5.0(8185e557148013b8ca960dfe24d94931)':
     dependencies:
       '@angular/cdk': 21.2.10(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
@@ -10783,17 +10786,17 @@ snapshots:
       '@angular/router': 21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@ng-web-apis/common': 5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2)
       '@ng-web-apis/platform': 5.2.0
-      '@taiga-ui/cdk': 5.5.0(d300ef10d477a261ab44b15137110aac)
-      '@taiga-ui/core': 5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)
-      '@taiga-ui/kit': 5.5.0(c2213695b292c94d01d59d7b30734a23)
-      '@taiga-ui/legacy': 5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(d300ef10d477a261ab44b15137110aac))(@taiga-ui/core@5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02))(@taiga-ui/polymorpheus@5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/cdk': 5.5.0(73ec6d058ca62213f12153435a08e21e)
+      '@taiga-ui/core': 5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)
+      '@taiga-ui/kit': 5.5.0(a3c7af1d771f503940516f8ac1cef368)
+      '@taiga-ui/legacy': 5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(73ec6d058ca62213f12153435a08e21e))(@taiga-ui/core@5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d))(@taiga-ui/polymorpheus@5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       '@types/markdown-it': 14.1.2
       markdown-it: 14.1.1
       ngx-highlightjs: 14.0.1(@angular/cdk@21.2.10(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2))(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       tslib: 2.8.1
 
-  '@taiga-ui/cdk@5.5.0(d300ef10d477a261ab44b15137110aac)':
+  '@taiga-ui/cdk@5.5.0(73ec6d058ca62213f12153435a08e21e)':
     dependencies:
       '@angular/cdk': 21.2.10(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
@@ -10806,7 +10809,7 @@ snapshots:
       '@ng-web-apis/screen-orientation': 5.2.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
       '@taiga-ui/event-plugins': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@taiga-ui/font-watcher': 0.6.0
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       rxjs: 7.8.2
       tslib: 2.8.1
     optionalDependencies:
@@ -10819,7 +10822,7 @@ snapshots:
       - '@types/semver'
       - chokidar
 
-  '@taiga-ui/core@5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)':
+  '@taiga-ui/core@5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -10829,10 +10832,10 @@ snapshots:
       '@ng-web-apis/common': 5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2)
       '@ng-web-apis/mutation-observer': 5.2.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))
       '@ng-web-apis/platform': 5.2.0
-      '@taiga-ui/cdk': 5.5.0(d300ef10d477a261ab44b15137110aac)
+      '@taiga-ui/cdk': 5.5.0(73ec6d058ca62213f12153435a08e21e)
       '@taiga-ui/event-plugins': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@taiga-ui/i18n': 5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       '@taiga-ui/styles': 5.5.0(@taiga-ui/design-tokens@0.299.0)
       rxjs: 7.8.2
       tslib: 2.8.1
@@ -10861,7 +10864,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@taiga-ui/kit@5.5.0(c2213695b292c94d01d59d7b30734a23)':
+  '@taiga-ui/kit@5.5.0(a3c7af1d771f503940516f8ac1cef368)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -10876,34 +10879,34 @@ snapshots:
       '@ng-web-apis/mutation-observer': 5.2.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))
       '@ng-web-apis/platform': 5.2.0
       '@ng-web-apis/resize-observer': 5.2.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))
-      '@taiga-ui/cdk': 5.5.0(d300ef10d477a261ab44b15137110aac)
-      '@taiga-ui/core': 5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)
+      '@taiga-ui/cdk': 5.5.0(73ec6d058ca62213f12153435a08e21e)
+      '@taiga-ui/core': 5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)
       '@taiga-ui/i18n': 5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ng-web-apis/common@5.2.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@types/dom-speech-recognition@0.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       '@taiga-ui/styles': 5.5.0(@taiga-ui/design-tokens@0.299.0)
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@taiga-ui/layout@5.5.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(d300ef10d477a261ab44b15137110aac))(@taiga-ui/core@5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02))(@taiga-ui/kit@5.5.0(c2213695b292c94d01d59d7b30734a23))(@taiga-ui/polymorpheus@5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))(rxjs@7.8.2)':
+  '@taiga-ui/layout@5.5.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(73ec6d058ca62213f12153435a08e21e))(@taiga-ui/core@5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d))(@taiga-ui/kit@5.5.0(a3c7af1d771f503940516f8ac1cef368))(@taiga-ui/polymorpheus@5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))(rxjs@7.8.2)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
-      '@taiga-ui/cdk': 5.5.0(d300ef10d477a261ab44b15137110aac)
-      '@taiga-ui/core': 5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)
-      '@taiga-ui/kit': 5.5.0(c2213695b292c94d01d59d7b30734a23)
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/cdk': 5.5.0(73ec6d058ca62213f12153435a08e21e)
+      '@taiga-ui/core': 5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)
+      '@taiga-ui/kit': 5.5.0(a3c7af1d771f503940516f8ac1cef368)
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@taiga-ui/legacy@5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(d300ef10d477a261ab44b15137110aac))(@taiga-ui/core@5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02))(@taiga-ui/polymorpheus@5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))':
+  '@taiga-ui/legacy@5.5.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@taiga-ui/cdk@5.5.0(73ec6d058ca62213f12153435a08e21e))(@taiga-ui/core@5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d))(@taiga-ui/polymorpheus@5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))))':
     dependencies:
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
-      '@taiga-ui/cdk': 5.5.0(d300ef10d477a261ab44b15137110aac)
-      '@taiga-ui/core': 5.5.0(018f30c3ae788a4c5b32b36d5d6f6c02)
-      '@taiga-ui/polymorpheus': 5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
+      '@taiga-ui/cdk': 5.5.0(73ec6d058ca62213f12153435a08e21e)
+      '@taiga-ui/core': 5.5.0(b85cb6fc6a80c31585d58d8e111e1d0d)
+      '@taiga-ui/polymorpheus': 5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))
       tslib: 2.8.1
 
-  '@taiga-ui/polymorpheus@5.0.0(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))':
+  '@taiga-ui/polymorpheus@5.0.1(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)))':
     dependencies:
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
       '@angular/platform-browser': 21.2.12(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
