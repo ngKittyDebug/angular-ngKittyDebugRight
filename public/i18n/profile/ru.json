@@ -4,11 +4,24 @@
     "moscow": "Москва"
   },
   "statistics": "Статистика",
+  "achievements": "Достижения",
+  "state": {
+    "unblocked": "Разблокировано",
+    "from": "из"
+  },
+  "zodiac": "Знак зодиака разработчика",
+  "sign": {
+    "title": {
+      "aquarius": "Водолей"
+    },
+    "description": {
+      "aquarius": "Генератор нестандартных решений"
+    }
+  },
   "confessions": "Исповеди",
   "writings": "Записи",
   "level": "Средний уровень",
   "activity": "Дней активности",
-  "achievements": "Достижения",
   "achieve": {
     "first_confession": {
       "title": "Первая исповедь",
@@ -29,19 +42,6 @@
     "penitent": {
       "title": "Кающийся",
       "description": "10 исповедей"
-    }
-  },
-  "state": {
-    "unblocked": "Разблокировано",
-    "from": "из"
-  },
-  "zodiac": "Знак зодиака разработчика",
-  "sign": {
-    "title": {
-      "aquarius": "Водолей"
-    },
-    "description": {
-      "aquarius": "Генератор нестандартных решений"
     }
   }
 }

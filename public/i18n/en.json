@@ -8,10 +8,6 @@
     "chronicle": "Chronicle",
     "register": "Register"
   },
-  "header": {
-    "title": "CULT OF THE HOLY DEPLOY",
-    "subtitle": ">> Machine Spirit is unstable <<"
-  },
   "sidebar": {
     "navigation": "NAVIGATION",
     "user": {
@@ -19,6 +15,10 @@
         "moscow": "Moscow"
       }
     }
+  },
+  "header": {
+    "title": "CULT OF THE HOLY DEPLOY",
+    "subtitle": ">> Machine Spirit is unstable <<"
   },
   "footer": {
     "repository": "REPOSITORY",
@@ -34,5 +34,13 @@
     "email_pattern": "This sigil doesn't look like email. Check the address.",
     "password_pattern": "Temple cipher: at least {{ minLength }} characters — one uppercase, one lowercase, one digit. Latin letters and digits only, no spaces.",
     "password_confirmation": "The mantras do not match — repeat the cipher exactly."
+  },
+  "modal": {
+    "confirmation": {
+      "content": "The scriptures are not yet sealed. Leave the altar now, and all that is unsaved shall be given to oblivion.",
+      "heading": "Abandon the unsealed vow?",
+      "confirm_label": "Cast it to oblivion",
+      "cancel_label": "Keep the vow"
+    }
   }
 }
