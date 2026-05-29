@@ -8,12 +8,10 @@ import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 export class ModalService {
   private readonly dialogs = inject(TuiDialogService);
 
-  public openModal(content: PolymorpheusContent, size: TuiSizeS | TuiSizeL, label: string) {
-    this.dialogs
-      .open(content, {
-        label,
-        size,
-      })
-      .subscribe();
+  public openConfirmModal(content: PolymorpheusContent, size: TuiSizeS | TuiSizeL, label: string) {
+    return this.dialogs.open<boolean>(content, {
+      label,
+      size,
+    });
   }
 }
