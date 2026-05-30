@@ -5,6 +5,7 @@ import { RegisterPageFacade } from '@features/registration/facades/register-page
 import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
+import { guestGuard } from '@core/guards/guest-guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,12 @@ export const routes: Routes = [
         canMatch: [authGuard],
         loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
+      },
+      {
+        path: 'main',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/main/main.component').then((c) => c.MainComponent),
+        providers: [provideTranslocoScope('main')],
       },
       {
         path: 'chronicle',
@@ -31,12 +38,14 @@ export const routes: Routes = [
       },
       {
         path: 'login',
+        canMatch: [guestGuard],
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login'), LoginPageFacade],
         canDeactivate: [dirtyFormGuard],
       },
       {
         path: 'register',
+        canMatch: [guestGuard],
         loadComponent: () =>
           import('@features/registration/ui/register-page/register-page.component').then(
             (c) => c.RegisterPageComponent

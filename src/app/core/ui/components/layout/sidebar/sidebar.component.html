@@ -17,8 +17,12 @@
           <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
         </div>
       </a>
+      <button appearance="primary" size="s" tuiButton type="button" class="exit" (click)="onLogout()">
+        <tui-icon icon="@tui.log-out" />
+        <span>{{ 'sidebar.exit' | transloco }}</span>
+      </button>
     } @else {
-      <div class="guest-block">Hello, Guest!</div>
+      <div class="guest-block">{{ 'sidebar.hello' | transloco }}</div>
     }
   </div>
 </aside>
