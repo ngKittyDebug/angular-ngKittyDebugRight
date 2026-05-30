@@ -1,17 +1,6 @@
-[dev]
-  command = "pnpm ng serve"
-  targetPort = 4200
-  autoLaunch = false
-  framework = "#custom"
-
 [build]
   command = "pnpm build"
   publish = "dist/ngKittyDebugRight/browser"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-  included_files = ["public/koans/*.mdx"]
 
 [[redirects]]
   from = "/*"

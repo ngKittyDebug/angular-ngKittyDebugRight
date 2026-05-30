@@ -1,5 +1,5 @@
-import type { ExtractFormControl } from '@shared/models/extract-form-control.model';
 import type { RegisterFormGroup } from '@features/registration/models/register-form.model';
+import type { ExtractFormControl } from '@shared/models/utility-types';
 
 export const registerFormValidValueFixture = {
   name: 'John',
