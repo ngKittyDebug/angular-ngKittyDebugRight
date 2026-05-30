@@ -108,9 +108,6 @@ importers:
       '@netlify-builder/deploy':
         specifier: ^5.0.0
         version: 5.0.0(encoding@0.1.13)
-      '@netlify/functions':
-        specifier: ^5.2.1
-        version: 5.2.2
       '@stylistic/eslint-plugin':
         specifier: ^5.10.0
         version: 5.10.0(eslint@10.3.0(jiti@2.6.1))
