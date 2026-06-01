@@ -3,11 +3,6 @@ import { marker } from '@jsverse/transloco-keys-manager/marker';
 
 export const NAVIGATION_ITEM_LIST = [
   {
-    icon: '@tui.sparkles',
-    label: marker('navigation-items.tarot'),
-    url: '/tarot',
-  },
-  {
     icon: '@tui.scroll',
     label: marker('navigation-items.shrift'),
     url: '/shrift',
