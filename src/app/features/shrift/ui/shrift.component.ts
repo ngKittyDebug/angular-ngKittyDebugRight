@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ShriftItemComponent } from './components/shrift-item/shrift-item.component';
-import { SINS } from './mocs/sins-data';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ConfessComponent } from './components/confess/confess.component';
-import type { Sin } from './models/sin.model';
+import { SINS } from '../mocs/sins-data';
+import type { Sin } from '../models/sin.model';
 
 @Component({
   selector: 'ngKitty-shrift',

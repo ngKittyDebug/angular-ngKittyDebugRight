@@ -48,7 +48,7 @@ export const routes: Routes = [
       {
         path: 'shrift',
         canMatch: [authGuard],
-        loadComponent: () => import('./features/shrift/shrift.component').then((c) => c.ShriftComponent),
+        loadComponent: () => import('./features/shrift/ui/shrift.component').then((c) => c.ShriftComponent),
         providers: [provideTranslocoScope('shrift')],
       },
       {
