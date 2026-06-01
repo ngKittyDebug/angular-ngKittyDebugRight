@@ -1,0 +1,47 @@
+.area {
+  border-radius: 0;
+}
+
+.severity {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.severity-title {
+  padding: 0;
+  color: var(--tui-text-secondary);
+  font-size: 0.95rem;
+}
+
+.severity-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.severity-option {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--accent-primary);
+  border-radius: 0;
+}
+
+.severity-option-low {
+  border-color: var(--earth);
+}
+
+.severity-option-medium {
+  border-color: var(--warning);
+}
+
+.severity-option-critical {
+  border-color: var(--critical);
+}

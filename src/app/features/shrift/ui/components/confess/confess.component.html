@@ -1,21 +1,39 @@
-<tui-textfield>
-  <label for="a" tuiLabel>{{ 'shrift.title' | transloco }}</label>
-  <textarea
-    placeholder="Placeholder"
-    tuiTextarea
-    id="a"
-    [formControl]="control"
-    [limit]="100"
-    [max]="100"
-    [min]="3"
-  ></textarea>
-</tui-textfield>
-<label tuiLabel>
-  {{ 'shrift.label' | transloco }}
-  <tui-textfield tuiChevron tuiTextfieldSize="m" [tuiTextfieldCleaner]="false">
-    <input placeholder="I am placeholder" tuiSelect [(ngModel)]="value" />
-
-    <tui-data-list-wrapper *tuiDropdown [items]="severities" />
+<form tuiCardLarge tuiForm="m" [formGroup]="confessForm" (submit)="$event.preventDefault(); shriftFacade.submit()">
+  <tui-textfield class="area">
+    <label for="area" tuiLabel>{{ 'shrift.title' | transloco }}</label>
+    <textarea
+      placeholder="Placeholder"
+      tuiTextarea
+      id="area"
+      [formControl]="confessForm.controls.text"
+      [limit]="100"
+      [max]="100"
+      [min]="3"
+    ></textarea>
   </tui-textfield>
-</label>
-<button tuiButton type="button" (click)="control.setValue('Short text')">{{ 'shrift.confess' | transloco }}</button>
+
+  <fieldset class="severity" aria-labelledby="severity-title">
+    <legend id="severity-title" class="severity-title">{{ 'shrift.label' | transloco }}</legend>
+
+    <div class="severity-options">
+      <label tuiBlock class="severity-option severity-option-low">
+        <input formControlName="severity" tuiRadio type="radio" value="low" />
+        <span tuiFade>{{ 'shrift.severity.low' | transloco }}</span>
+      </label>
+
+      <label tuiBlock class="severity-option severity-option-medium">
+        <input formControlName="severity" tuiRadio type="radio" value="medium" />
+        <span tuiFade>{{ 'shrift.severity.medium' | transloco }}</span>
+      </label>
+
+      <label tuiBlock class="severity-option severity-option-critical">
+        <input formControlName="severity" tuiRadio type="radio" value="critical" />
+        <span tuiFade>{{ 'shrift.severity.critical' | transloco }}</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <button tuiButton type="submit" [disabled]="confessForm.invalid">
+    {{ 'shrift.confess' | transloco }}
+  </button>
+</form>

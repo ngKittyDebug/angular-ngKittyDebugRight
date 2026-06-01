@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TuiButton } from '@taiga-ui/core';
-import { TuiChevron, TuiDataListWrapper, TuiSelect, TuiTextarea } from '@taiga-ui/kit';
+import { TuiButton, TuiGroup, TuiRadio } from '@taiga-ui/core';
+import { TuiBlock, TuiDataListWrapper, TuiFade, TuiSelect, TuiTextarea } from '@taiga-ui/kit';
 
 @Component({
   selector: 'ngKitty-confess',
@@ -12,16 +13,18 @@ import { TuiChevron, TuiDataListWrapper, TuiSelect, TuiTextarea } from '@taiga-u
     TuiTextarea,
     TranslocoPipe,
     FormsModule,
-    TuiChevron,
     TuiDataListWrapper,
     TuiSelect,
+    TuiBlock,
+    TuiFade,
+    TuiGroup,
+    TuiRadio,
   ],
   templateUrl: './confess.component.html',
   styleUrl: './confess.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfessComponent {
-  protected control = new FormControl('rf.cm d cdjb[ uht[f[');
-  protected severities = ['critical', 'medium', 'low'];
-  protected value = 'critical';
+  public shriftFacade = inject(ShriftPageFacade);
+  public confessForm = this.shriftFacade.confessForm;
 }
