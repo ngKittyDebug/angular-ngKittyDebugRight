@@ -1,6 +1,11 @@
 <ngKitty-header />
 <div class="layout">
-  <ngKitty-sidebar [isMobileOpen]="isMobileNavOpen()" [navigationItemList]="navigationItemList" />
+  <ngKitty-sidebar
+    [navigationItemList]="facade.filteredNavigationItems()"
+    [user]="facade.user()"
+    [isMobileOpen]="isMobileNavOpen()"
+    (logoutClicked)="facade.logout()"
+  />
   @if (isMobileNavOpen()) {
     <div class="layout-sidebar-backdrop" role="presentation" (click)="onCloseMobileNav()"></div>
   }
