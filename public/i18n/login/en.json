@@ -1,16 +1,16 @@
 {
   "email": "Email",
+  "password": "Password",
+  "submit": "Login",
+  "google": "Login with Google",
+  "github": "Login with GitHub",
+  "register": "Registration",
   "error": {
     "required": "This field is required",
     "email-pattern": "Invalid email format",
     "password-pattern": "Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number",
     "text": "Login failed. Perhaps you angered the ancient legacy."
   },
-  "password": "Password",
-  "submit": "Login",
-  "google": "Login with Google",
-  "github": "Login with GitHub",
-  "register": "Registration",
   "success": "Access granted!",
   "success-title": "The Sacred Repository welcomes you!"
 }

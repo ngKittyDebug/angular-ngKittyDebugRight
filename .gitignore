@@ -54,3 +54,4 @@ Thumbs.db
 # Local Netlify folder
 .netlify
 deno.lock
+.cursor

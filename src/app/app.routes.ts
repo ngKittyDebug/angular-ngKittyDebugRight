@@ -4,6 +4,8 @@ import { provideTranslocoScope } from '@jsverse/transloco';
 import { RegisterPageFacade } from '@features/registration/facades/register-page.facade';
 import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
+import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
+import { MainComponent } from '@features/main/main/main.component';
 
 export const routes: Routes = [
   {
@@ -11,16 +13,14 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'shrift',
-        canMatch: [authGuard],
-        loadComponent: () => import('./features/shrift/shrift.component').then((c) => c.ShriftComponent),
-        providers: [provideTranslocoScope('shrift')],
+        path: '',
+        component: MainComponent,
+        providers: [provideTranslocoScope('main')],
       },
       {
         path: 'profile',
         canMatch: [authGuard],
-        loadComponent: () =>
-          import('./core/ui/components/layout/profile/profile.component').then((c) => c.ProfileComponent),
+        loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
       },
       {
@@ -34,6 +34,7 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login'), LoginPageFacade],
+        canDeactivate: [dirtyFormGuard],
       },
       {
         path: 'register',
@@ -42,6 +43,13 @@ export const routes: Routes = [
             (c) => c.RegisterPageComponent
           ),
         providers: [provideTranslocoScope('register'), RegisterPageFacade],
+        canDeactivate: [dirtyFormGuard],
+      },
+      {
+        path: 'shrift',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/shrift/shrift.component').then((c) => c.ShriftComponent),
+        providers: [provideTranslocoScope('shrift')],
       },
       {
         path: '**',
