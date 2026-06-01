@@ -2,7 +2,7 @@
   <section class="section">
     <p class="section-title">[ {{ 'sidebar.navigation' | transloco }} ]</p>
     <nav class="nav" id="sidebar-nav">
-      @for (navigationItem of navigationItemList(); track navigationItem.label) {
+      @for (navigationItem of filteredNavigationItems(); track navigationItem.label) {
         <ngKitty-navigation-item [item]="navigationItem" />
       }
     </nav>
