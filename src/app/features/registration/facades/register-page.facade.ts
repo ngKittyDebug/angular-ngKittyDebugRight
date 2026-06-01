@@ -33,6 +33,7 @@ export class RegisterPageFacade {
         this.translocoService.translate('notifications.success-title', {}, 'register'),
         'positive'
       );
+      this.registerForm.markAsPristine();
       void this.router.navigate(['/']);
     } catch (error) {
       if (error instanceof Error) {
