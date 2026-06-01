@@ -26,15 +26,16 @@ export class LoginPageFacade {
 
     try {
       await this.authService.login(email, password);
-      await this.showNotification(
-        this.translocoService.translate('login.success'),
-        this.translocoService.translate('login.success-title'),
+      void this.showNotification(
+        this.translocoService.translate('success', {}, 'login'),
+        this.translocoService.translate('success-title', {}, 'login'),
         'positive'
       );
+      this.loginForm.markAsPristine();
       await this.router.navigate(['/']);
     } catch (error) {
       if (error instanceof Error) {
-        this.showNotification(error.message, this.translocoService.translate('login.error.text'), 'negative');
+        this.showNotification(error.message, this.translocoService.translate('error.text', {}, 'login'), 'negative');
       }
     } finally {
       this.isLoading.set(false);
