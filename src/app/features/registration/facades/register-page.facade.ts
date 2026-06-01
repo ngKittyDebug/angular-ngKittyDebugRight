@@ -29,8 +29,8 @@ export class RegisterPageFacade {
       this.registerForm.reset();
 
       void this.showNotification(
-        this.translocoService.translate('register.notifications.success'),
-        this.translocoService.translate('register.notifications.success-title'),
+        this.translocoService.translate('notifications.success', {}, 'register'),
+        this.translocoService.translate('notifications.success-title', {}, 'register'),
         'positive'
       );
       void this.router.navigate(['/']);
@@ -38,7 +38,7 @@ export class RegisterPageFacade {
       if (error instanceof Error) {
         void this.showNotification(
           error.message,
-          this.translocoService.translate('register.notifications.failure'),
+          this.translocoService.translate('notifications.failure', {}, 'register'),
           'negative'
         );
       }
