@@ -1,3 +1,18 @@
+.form {
+  --tui-radius-l: 0;
+  --tui-radius-m: 0;
+  --tui-radius-s: 0;
+
+  border-radius: 0;
+  border: 1px solid var(--tui-border-normal);
+  box-shadow: var(--primary-shadow);
+}
+
+.form[tuiCardLarge],
+.form tui-textfield {
+  border-radius: 0;
+}
+
 .area {
   border-radius: 0;
 }
@@ -13,7 +28,7 @@
 
 .severity-title {
   padding: 0;
-  color: var(--tui-text-secondary);
+  color: var(--tui-text-primary);
   font-size: 0.95rem;
 }
 

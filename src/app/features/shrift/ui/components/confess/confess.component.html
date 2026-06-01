@@ -1,4 +1,10 @@
-<form tuiCardLarge tuiForm="m" [formGroup]="confessForm" (submit)="$event.preventDefault(); shriftFacade.submit()">
+<form
+  tuiCardLarge
+  tuiForm="m"
+  [formGroup]="confessForm"
+  class="form"
+  (submit)="$event.preventDefault(); shriftFacade.submit()"
+>
   <tui-textfield class="area">
     <label for="area" tuiLabel>{{ 'shrift.title' | transloco }}</label>
     <textarea
