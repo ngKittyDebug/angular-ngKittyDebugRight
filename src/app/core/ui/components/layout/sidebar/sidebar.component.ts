@@ -32,12 +32,11 @@ export class SidebarComponent {
       return true;
     });
   });
-
+  public readonly navItemClicked = output<void>();
   protected readonly authService = inject(AuthService);
 
   protected async onLogout(): Promise<void> {
     await this.authService.logout();
     await this.router.navigate(['/login']);
   }
-  public readonly navItemClicked = output<void>();
 }
