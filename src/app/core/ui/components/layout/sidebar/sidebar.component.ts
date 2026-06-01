@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
-import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 import { NavigationItemComponent } from '@core/ui/components/layout/sidebar/navigation-item/navigation-item.component';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -12,7 +12,7 @@ import { computed } from '@angular/core';
 
 @Component({
   selector: 'ngKitty-sidebar',
-  imports: [TranslocoModule, NavigationItemComponent, TuiAvatar, RouterLink, TuiButton, TuiIcon],
+  imports: [TranslocoModule, NavigationItemComponent, TuiAvatar, RouterLink, TuiButton, TuiIcon, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,4 +39,5 @@ export class SidebarComponent {
     await this.authService.logout();
     await this.router.navigate(['/login']);
   }
+  public readonly navItemClicked = output<void>();
 }

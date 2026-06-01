@@ -6,12 +6,18 @@ import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 import { guestGuard } from '@core/guards/guest-guard';
+import { MainComponent } from '@features/main/main/main.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: '',
+        component: MainComponent,
+        providers: [provideTranslocoScope('main')],
+      },
       {
         path: 'profile',
         canMatch: [authGuard],
