@@ -18,7 +18,9 @@
       "city": {
         "moscow": "Moscow"
       }
-    }
+    },
+    "exit": "exit",
+    "hello": "Hello, Guest!"
   },
   "footer": {
     "repository": "REPOSITORY",
