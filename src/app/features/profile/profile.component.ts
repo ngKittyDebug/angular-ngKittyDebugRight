@@ -6,6 +6,7 @@ import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
 import { inject } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
+import { ProfileService } from '@core/services/profile/profile.service';
 
 @Component({
   selector: 'ngKitty-profile',
@@ -71,4 +72,6 @@ export class ProfileComponent {
     },
   ];
   protected readonly authService = inject(AuthService);
+  protected readonly profileService = inject(ProfileService);
+  protected readonly zodiacSign = this.profileService.zodiacSign;
 }
