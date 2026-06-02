@@ -5,12 +5,13 @@
   class="form"
   (submit)="$event.preventDefault(); shriftFacade.submit()"
 >
+  <p>{{ 'shrift.title' | transloco }}</p>
+  <div class="halo" aria-hidden="true"></div>
+
   <tui-textfield class="area">
-    <label for="area" tuiLabel>{{ 'shrift.title' | transloco }}</label>
     <textarea
-      placeholder="Placeholder"
+      placeholder="..."
       tuiTextarea
-      id="area"
       [formControl]="confessForm.controls.text"
       [limit]="100"
       [max]="100"

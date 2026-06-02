@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TuiButton, TuiLabel, TuiRadio, TuiTextfieldComponent } from '@taiga-ui/core';
+import { TuiButton, TuiRadio, TuiTextfieldComponent } from '@taiga-ui/core';
 import { TuiBlock, TuiFade, TuiTextarea } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
 
@@ -14,7 +14,6 @@ import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
     TuiCardLarge,
     TuiForm,
     TuiTextfieldComponent,
-    TuiLabel,
     TuiTextarea,
     TranslocoPipe,
     TuiBlock,
