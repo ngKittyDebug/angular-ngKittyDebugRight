@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ConfessComponent } from './confess.component';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
+import { ConfessFormService } from '@features/shrift/services/confess-form.service';
 
 describe('ConfessComponent', () => {
   let component: ConfessComponent;
@@ -11,6 +13,7 @@ describe('ConfessComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ConfessComponent, TranslocoTestingMock],
+      providers: [ShriftPageFacade, ConfessFormService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ConfessComponent);
@@ -18,7 +21,9 @@ describe('ConfessComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Компонент инициализирован', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
   });
 });

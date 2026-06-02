@@ -1,0 +1,46 @@
+<form
+  tuiCardLarge
+  tuiForm="m"
+  [formGroup]="confessForm"
+  class="form"
+  (submit)="$event.preventDefault(); shriftFacade.onSubmit()"
+>
+  <p>{{ 'shrift.title' | transloco }}</p>
+  <div class="halo" aria-hidden="true"></div>
+
+  <tui-textfield class="area">
+    <textarea
+      placeholder="..."
+      tuiTextarea
+      [formControl]="confessForm.controls.text"
+      [limit]="500"
+      [max]="500"
+      [min]="3"
+    ></textarea>
+  </tui-textfield>
+
+  <fieldset class="severity" aria-labelledby="severity-title">
+    <legend id="severity-title" class="severity-title">{{ 'shrift.label' | transloco }}</legend>
+
+    <div class="severity-options">
+      <label tuiBlock class="severity-option severity-option-low">
+        <input formControlName="severity" tuiRadio type="radio" value="low" />
+        <span tuiFade>{{ 'shrift.severity.low' | transloco }}</span>
+      </label>
+
+      <label tuiBlock class="severity-option severity-option-medium">
+        <input formControlName="severity" tuiRadio type="radio" value="medium" />
+        <span tuiFade>{{ 'shrift.severity.medium' | transloco }}</span>
+      </label>
+
+      <label tuiBlock class="severity-option severity-option-critical">
+        <input formControlName="severity" tuiRadio type="radio" value="critical" />
+        <span tuiFade>{{ 'shrift.severity.critical' | transloco }}</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <button tuiButton type="submit" [disabled]="confessForm.invalid">
+    {{ 'shrift.confess' | transloco }}
+  </button>
+</form>
