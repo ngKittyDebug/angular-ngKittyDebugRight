@@ -1,6 +1,10 @@
 <ngKitty-header />
 <div class="layout">
-  <ngKitty-sidebar [isMobileOpen]="isMobileNavOpen()" [navigationItemList]="navigationItemList" />
+  <ngKitty-sidebar
+    [isMobileOpen]="isMobileNavOpen()"
+    [navigationItemList]="navigationItemList"
+    (navItemClicked)="onToggleMobileNav()"
+  />
   @if (isMobileNavOpen()) {
     <div class="layout-sidebar-backdrop" role="presentation" (click)="onCloseMobileNav()"></div>
   }

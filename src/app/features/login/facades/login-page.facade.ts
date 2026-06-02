@@ -31,6 +31,7 @@ export class LoginPageFacade {
         this.translocoService.translate('success-title', {}, 'login'),
         'positive'
       );
+      this.loginForm.markAsPristine();
       await this.router.navigate(['/']);
     } catch (error) {
       if (error instanceof Error) {

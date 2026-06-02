@@ -55,3 +55,4 @@ Thumbs.db
 .netlify
 deno.lock
 .cursor
+/development-notes
