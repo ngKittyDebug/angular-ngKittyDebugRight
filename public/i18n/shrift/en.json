@@ -4,13 +4,11 @@
   "title": "No code is clean. Confess — you'll feel better. The first step to refactoring is honesty.",
   "label": "How ashamed are you?",
   "confess": "Confess",
-
   "severity": {
     "critical": "Critical",
     "medium": "Medium",
     "low": "Low"
   },
-
   "status": {
     "none": "sin not forgiven",
     "half": "partially forgiven",

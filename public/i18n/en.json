@@ -26,7 +26,6 @@
     "alena": "Alena",
     "nadya": "Nadya"
   },
-
   "validation_errors": {
     "required": "The void rejects emptiness — fill this field.",
     "max_length": "Too long for the parish scroll (max {{ requiredLength }} characters). Shorten it.",
