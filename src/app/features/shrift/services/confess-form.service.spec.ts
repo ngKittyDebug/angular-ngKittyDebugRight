@@ -12,7 +12,7 @@ describe('ConfessFormService', () => {
     service = TestBed.inject(ConfessFormService);
   });
 
-  it('should be created', () => {
+  it('должен инициализироваться', () => {
     expect(service).toBeTruthy();
   });
 });

@@ -21,7 +21,9 @@ describe('ShriftComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Компонент инициализирован', () => {
+    it('должен инициализироваться', () => {
+      expect(component).toBeTruthy();
+    });
   });
 });

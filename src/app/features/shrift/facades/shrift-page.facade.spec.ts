@@ -13,7 +13,7 @@ describe('ShriftPageFacade', () => {
     service = TestBed.inject(ShriftPageFacade);
   });
 
-  it('should be created', () => {
+  it('должен инициализироваться', () => {
     expect(service).toBeTruthy();
   });
 });
