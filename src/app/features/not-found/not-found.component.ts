@@ -14,6 +14,6 @@ export class NotFoundComponent {
   private readonly router = inject(Router);
 
   protected onClick() {
-    this.router.navigate(['/main']);
+    this.router.navigate(['/']);
   }
 }
