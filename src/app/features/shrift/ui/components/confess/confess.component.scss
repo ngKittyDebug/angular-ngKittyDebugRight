@@ -1,0 +1,140 @@
+.form {
+  --tui-radius-l: 0;
+  --tui-radius-m: 0;
+  --tui-radius-s: 0;
+
+  border-radius: 0;
+  border: 1px solid var(--tui-border-normal);
+  background:
+    radial-gradient(circle at 12% 0, color-mix(in srgb, var(--accent-secondary) 28%, transparent), transparent 34%),
+    radial-gradient(circle at 88% 100%, color-mix(in srgb, var(--accent-primary) 24%, transparent), transparent 34%),
+    linear-gradient(135deg, var(--tui-background-elevation-2), var(--tui-background-base));
+  box-shadow: var(--primary-shadow);
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--accent-primary) 10%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent-primary) 10%, transparent) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+    mask-image: radial-gradient(circle at center, #000, transparent 72%);
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    inset: auto -10% 0;
+    z-index: -1;
+    height: 35%;
+    background: linear-gradient(0deg, color-mix(in srgb, var(--accent-primary) 16%, transparent), transparent);
+    content: '';
+  }
+}
+
+.form[tuiCardLarge],
+.form tui-textfield {
+  border-radius: 0;
+}
+
+.area {
+  border-radius: 0;
+}
+
+.area textarea::placeholder {
+  color: var(--tui-text-primary);
+  opacity: 1;
+}
+
+.severity {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.severity-title {
+  padding: 0;
+  color: var(--tui-text-primary);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+}
+
+.severity-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, currentcolor 10%, transparent), transparent),
+    color-mix(in srgb, var(--tui-background-base-alt) 82%, transparent);
+  font-family: 'Courier New', monospace;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease;
+
+  &:hover,
+  &:has(input:checked) {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, currentcolor 20%, transparent), transparent),
+      color-mix(in srgb, var(--tui-background-base-alt) 68%, transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, currentcolor 26%, transparent);
+    transform: translateY(-2px);
+  }
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.severity-option {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--accent-primary);
+  border-radius: 0;
+}
+
+.severity-option-low {
+  border-color: var(--earth);
+  color: var(--earth);
+}
+
+.severity-option-medium {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.severity-option-critical {
+  border-color: var(--critical);
+  color: var(--critical);
+}
+
+.halo {
+  position: absolute;
+  top: -7rem;
+  right: clamp(-7rem, -12vw, -3rem);
+  z-index: -1;
+  width: clamp(12rem, 34vw, 22rem);
+  aspect-ratio: 1;
+  background:
+    radial-gradient(
+      circle,
+      transparent 42%,
+      color-mix(in srgb, var(--accent-secondary) 45%, transparent) 43% 46%,
+      transparent 47%
+    ),
+    conic-gradient(
+      from 45deg,
+      transparent,
+      color-mix(in srgb, var(--accent-primary) 44%, transparent),
+      transparent,
+      color-mix(in srgb, var(--accent-secondary) 34%, transparent),
+      transparent
+    );
+  filter: blur(0.2px);
+  opacity: 0.75;
+  transform: rotate(-12deg);
+}

@@ -7,6 +7,8 @@ import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 import { guestGuard } from '@core/guards/guest-guard';
 import { MainComponent } from '@features/main/main/main.component';
+import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
+import { ConfessFormService } from '@features/shrift/services/confess-form.service';
 
 export const routes: Routes = [
   {
@@ -46,6 +48,12 @@ export const routes: Routes = [
           ),
         providers: [provideTranslocoScope('register'), RegisterPageFacade],
         canDeactivate: [dirtyFormGuard],
+      },
+      {
+        path: 'shrift',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/shrift/ui/shrift.component').then((c) => c.ShriftComponent),
+        providers: [provideTranslocoScope('shrift'), ShriftPageFacade, ConfessFormService],
       },
       {
         path: '**',
