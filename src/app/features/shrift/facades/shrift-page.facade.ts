@@ -4,7 +4,7 @@ import { ConfessFormService } from '../services/confess-form.service';
 @Injectable()
 export class ShriftPageFacade {
   public readonly confessForm = inject(ConfessFormService).confessForm;
-  public submit() {
+  public onSubmit() {
     console.log('send sin');
   }
 }

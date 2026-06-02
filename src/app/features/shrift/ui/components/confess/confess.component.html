@@ -3,7 +3,7 @@
   tuiForm="m"
   [formGroup]="confessForm"
   class="form"
-  (submit)="$event.preventDefault(); shriftFacade.submit()"
+  (submit)="$event.preventDefault(); shriftFacade.onSubmit()"
 >
   <p>{{ 'shrift.title' | transloco }}</p>
   <div class="halo" aria-hidden="true"></div>
@@ -13,8 +13,8 @@
       placeholder="..."
       tuiTextarea
       [formControl]="confessForm.controls.text"
-      [limit]="100"
-      [max]="100"
+      [limit]="500"
+      [max]="500"
       [min]="3"
     ></textarea>
   </tui-textfield>
