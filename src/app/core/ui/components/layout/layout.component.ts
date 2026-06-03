@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { FooterComponent } from '@core/ui/components/layout/footer/footer.component';
@@ -13,7 +13,6 @@ import { TuiMainComponent } from '@taiga-ui/layout';
   imports: [RouterOutlet, FooterComponent, SidebarComponent, TuiButton, TuiIcon, HeaderComponent, TuiMainComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
   protected readonly layoutService = inject(LayoutService);

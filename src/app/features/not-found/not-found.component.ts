@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -8,7 +8,6 @@ import { TranslocoModule } from '@jsverse/transloco';
   imports: [TuiButton, TuiIcon, TranslocoModule],
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFoundComponent {
   private readonly router = inject(Router);

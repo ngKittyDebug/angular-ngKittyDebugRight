@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
@@ -10,7 +10,6 @@ import { TranslocoModule } from '@jsverse/transloco';
   imports: [TranslocoModule, NavigationItemComponent, TuiAvatar, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
   public readonly navigationItemList = input.required<NavigationItem[]>();
