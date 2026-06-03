@@ -1,4 +1,10 @@
 {
+  "/.netlify/functions/tarot-reading": {
+    "target": "http://localhost:8888",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
   "/.netlify": {
     "target": "https://delulu-church.netlify.app",
     "secure": true,

@@ -1,0 +1,29 @@
+import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import type { Observable } from 'rxjs';
+import { TarotRole } from '@features/main/data/api/models/role.model';
+import { TarotIntent } from '@features/main/data/api/models/intent.model';
+import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
+import { TAROT_URL } from '@features/main/data/api/tokens/tarot-url.token';
+
+@Injectable()
+export class TarotService {
+  private readonly httpClient = inject(HttpClient);
+  private readonly role = signal<TarotRole>(TarotRole.DEVOPS);
+  private readonly intent = signal<TarotIntent>(TarotIntent.FULL_RELEASE);
+  private readonly url = inject(TAROT_URL);
+
+  public loadReading(role = this.role(), intent = this.intent()): Observable<TarotResponseApi> {
+    return this.httpClient.get<TarotResponseApi>(this.url, {
+      params: { role, intent },
+    });
+  }
+
+  public setRole(role: TarotRole): void {
+    this.role.set(role);
+  }
+
+  public setIntent(intent: TarotIntent): void {
+    this.intent.set(intent);
+  }
+}
