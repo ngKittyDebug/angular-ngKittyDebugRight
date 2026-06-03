@@ -10,6 +10,48 @@ import { LayoutFacade } from './facades/layout.facade';
 
 @Component({
   selector: 'ngKitty-layout',
+  imports: [
+    RouterOutlet,
+    FooterComponent,
+    SidebarComponent,
+    TuiButton,
+    TuiIcon,
+    HeaderComponent,
+    TuiMainComponent,
+    RouterLink,
+    RouterLinkActive,
+    TranslocoPipe,
+    TuiAvatar,
+  ],
+  providers: [LayoutFacade],
+  templateUrl: './layout.component.html',
+  styleUrl: './layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class LayoutComponent {
+  protected readonly layoutService = inject(LayoutService);
+  protected readonly isMobileNavOpen = this.layoutService.isMobileNavOpen;
+  protected readonly filteredNavigationItems = this.layoutService.filteredNavigationItems;
+  protected readonly user = this.layoutService.user;
+  constructor() {
+    afterNextRender(() => {
+      this.layoutService.watchMobileNavMediaQuery();
+    });
+  }
+
+  public onCloseMobileNav() {
+    this.layoutService.onCloseMobileNav();
+  }
+
+  public onToggleMobileNav() {
+    this.layoutService.onToggleMobileNav();
+  }
+
+  public async onLogout() {
+    await this.layoutService.logout();
+  }
+}
+  selector: 'ngKitty-layout',
   imports: [RouterOutlet, FooterComponent, SidebarComponent, TuiButton, TuiIcon, HeaderComponent, TuiMainComponent],
   providers: [LayoutFacade],
   templateUrl: './layout.component.html',
