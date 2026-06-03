@@ -8,8 +8,6 @@ import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 import { MainComponent } from '@features/main/main/main.component';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';
-import { RegisterFormService } from '@features/registration/services/register-form.service';
-import { LoginFormService } from '@features/login/services/login-form.service';
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
 
 export const routes: Routes = [
@@ -40,7 +38,7 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
-        providers: [provideTranslocoScope('login'), LoginPageFacade, LoginFormService],
+        providers: [provideTranslocoScope('login'), LoginPageFacade],
         canDeactivate: [dirtyFormGuard],
         data: { preloadFor: PreloadFor.GUEST },
       },
@@ -50,7 +48,7 @@ export const routes: Routes = [
           import('@features/registration/ui/register-page/register-page.component').then(
             (c) => c.RegisterPageComponent
           ),
-        providers: [provideTranslocoScope('register'), RegisterPageFacade, RegisterFormService],
+        providers: [provideTranslocoScope('register'), RegisterPageFacade],
         canDeactivate: [dirtyFormGuard],
         data: { preloadFor: PreloadFor.GUEST },
       },
