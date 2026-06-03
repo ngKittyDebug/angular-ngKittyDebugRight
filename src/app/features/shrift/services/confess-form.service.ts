@@ -1,8 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import type { ConfessForm } from '../models/confess-form.model';
 
-@Injectable()
+@Service({
+  autoProvided: false,
+})
 export class ConfessFormService {
   private readonly fb = inject(FormBuilder);
   public readonly confessForm = this.fb.group<ConfessForm>({
