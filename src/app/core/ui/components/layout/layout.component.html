@@ -1,6 +1,25 @@
 <ngKitty-header />
 <div class="layout">
   <ngKitty-sidebar
+    [navigationItemList]="filteredNavigationItems()"
+    [isMobileOpen]="isMobileNavOpen()"
+    (navItemClicked)="onToggleMobileNav()"
+  >
+    @if (user(); as user) {
+      <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
+        <div tuiAvatar="@tui.user" size="m"></div>
+        <div class="user-info">
+          <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
+        </div>
+      </a>
+      <button appearance="primary" size="s" tuiButton type="button" class="exit" (click)="onLogout()">
+        <tui-icon icon="@tui.log-out" />
+        <span>{{ 'sidebar.exit' | transloco }}</span>
+      </button>
+    } @else {
+      <div class="guest-block">{{ 'sidebar.hello' | transloco }}</div>
+    }
+  </ngKitty-sidebar>
     [navigationItemList]="facade.filteredNavigationItems()"
     [user]="facade.user()"
     [isMobileOpen]="isMobileNavOpen()"
