@@ -7,5 +7,13 @@
     "types": []
   },
   "include": ["src/**/*.ts", "src/app/shared/models/utility-types.d.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.mock.ts"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.mock.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }
