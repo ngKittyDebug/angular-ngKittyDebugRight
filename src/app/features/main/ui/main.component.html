@@ -14,6 +14,7 @@
     <div class="tarot-cards-container">
       @for (card of response.cards; track card.position) {
         <ngKitty-card
+          class="tarot-card"
           [subtitle]="card.position_label"
           [title]="card.name"
           [description]="card.narrative"
