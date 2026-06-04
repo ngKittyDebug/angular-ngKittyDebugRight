@@ -31,6 +31,10 @@ export class MainComponent {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe();
+      .subscribe({
+        next: (data) => {
+          this.result.set(data);
+        },
+      });
   }
 }

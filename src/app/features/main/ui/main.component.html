@@ -2,7 +2,7 @@
 <section class="tarot-reading">
   <div class="tarot-actions">
     <button tuiButton type="button" appearance="primary" size="l" [disabled]="isLoading()" (click)="onDrawCards()">
-      {{ (isLoading() ? 'ui.loading' : 'ui.draw_cards') | transloco }}
+      {{ (isLoading() ? 'main.loading' : 'main.draw_cards') | transloco }}
     </button>
   </div>
 

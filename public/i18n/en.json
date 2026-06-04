@@ -20,10 +20,6 @@
     "title": "CULT OF THE HOLY DEPLOY",
     "subtitle": ">> Machine Spirit is unstable <<"
   },
-  "main": {
-    "draw_cards": "Draw cards",
-    "loading": "Invoking the Machine Spirit..."
-  },
   "footer": {
     "repository": "REPOSITORY",
     "text": "Made with paws, use at own risk",
