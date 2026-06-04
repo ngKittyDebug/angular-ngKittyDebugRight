@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TarotService } from '@features/main/data/api/services/tarot.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { JsonPipe } from '@angular/common';
@@ -8,7 +8,6 @@ import { JsonPipe } from '@angular/common';
   imports: [JsonPipe],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
   private readonly tarotService = inject(TarotService);

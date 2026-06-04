@@ -1,19 +1,21 @@
 {
   "navigation-items": {
     "login": "Войти",
+    "register": "Зарегистрироваться",
     "shrift": "Исповедь",
     "runes": "Руны",
     "horoscope": "Гороскоп",
-    "chronicle": "Хроника",
-    "register": "Зарегаться"
+    "chronicle": "Хроника"
   },
   "sidebar": {
+    "exit": "Выход",
     "navigation": "НАВИГАЦИЯ",
     "user": {
       "city": {
         "moscow": "Москва"
       }
-    }
+    },
+    "hello": "Привет, Гость!"
   },
   "header": {
     "title": "КУЛЬТ СВЯТОГО ДЕПЛОЯ",

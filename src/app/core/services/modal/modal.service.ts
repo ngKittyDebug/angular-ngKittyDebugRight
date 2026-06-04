@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { TuiDialogService, type TuiSizeL, type TuiSizeS } from '@taiga-ui/core';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ModalService {
   private readonly dialogs = inject(TuiDialogService);
 

@@ -44,7 +44,6 @@ export default tseslint.config(
       '@angular-eslint/prefer-signals': 'warn',
       '@angular-eslint/prefer-output-readonly': 'warn',
       '@angular-eslint/no-empty-lifecycle-method': 'warn',
-      '@angular-eslint/prefer-on-push-component-change-detection': 'error',
       // ts
       '@typescript-eslint/member-ordering': [
         2,

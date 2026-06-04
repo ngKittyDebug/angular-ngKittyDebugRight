@@ -1,10 +1,55 @@
-<ngKitty-header />
+<ngKitty-header>
+  @if (user()) {
+    <button appearance="primary" size="s" tuiButton type="button" class="exit" (click)="onLogout()">
+      <tui-icon [tuiTooltip]="'sidebar.exit' | transloco" icon="@tui.log-out" />
+    </button>
+  } @else {
+    <button
+      tuiButton
+      type="button"
+      appearance="primary"
+      size="s"
+      class="nav-item"
+      routerLink="login"
+      routerLinkActive="active"
+    >
+      <tui-icon [tuiTooltip]="'navigation-items.login' | transloco" icon="@tui.log-in" />
+    </button>
+    <button
+      tuiButton
+      type="button"
+      appearance="primary"
+      size="s"
+      class="nav-item"
+      routerLink="register"
+      routerLinkActive="active"
+    >
+      <tui-icon [tuiTooltip]="'navigation-items.register' | transloco" icon="@tui.user-plus" />
+    </button>
+  }
+</ngKitty-header>
+
 <div class="layout">
   <ngKitty-sidebar
-    [isMobileOpen]="isMobileNavOpen()"
     [navigationItemList]="navigationItemList"
+    [isMobileOpen]="isMobileNavOpen()"
     (navItemClicked)="onToggleMobileNav()"
-  />
+  >
+    @if (user(); as user) {
+      <a
+        class="profile-card"
+        routerLink="/profile"
+        routerLinkActive="active"
+        aria-label="Open profile"
+        (click)="onToggleMobileNav()"
+      >
+        <div tuiAvatar="@tui.user" size="m"></div>
+        <div class="user-info">
+          <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
+        </div>
+      </a>
+    }
+  </ngKitty-sidebar>
   @if (isMobileNavOpen()) {
     <div class="layout-sidebar-backdrop" role="presentation" (click)="onCloseMobileNav()"></div>
   }

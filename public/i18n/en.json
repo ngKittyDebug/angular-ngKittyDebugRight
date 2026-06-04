@@ -1,13 +1,14 @@
 {
   "navigation-items": {
     "login": "Login",
+    "register": "Register",
     "shrift": "Shrift",
     "runes": "Runes",
     "horoscope": "Horoscope",
-    "chronicle": "Chronicle",
-    "register": "Register"
+    "chronicle": "Chronicle"
   },
   "sidebar": {
+    "exit": "Exit",
     "navigation": "NAVIGATION",
     "user": {
       "city": {

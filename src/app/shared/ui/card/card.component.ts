@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 
 @Component({
@@ -6,7 +6,6 @@ import { TuiButton, TuiIcon } from '@taiga-ui/core';
   imports: [TuiIcon, TuiButton],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.tabindex]': 'isClickable() ? 0 : null',
     '(click)': 'onCardClick()',

@@ -15,6 +15,7 @@
     "target": "ES2024",
     "module": "preserve",
     "esModuleInterop": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@core/*": ["src/app/core/*"],

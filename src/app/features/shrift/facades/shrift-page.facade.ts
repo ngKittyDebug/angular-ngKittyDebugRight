@@ -1,7 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { ConfessFormService } from '../services/confess-form.service';
 
-@Injectable()
+@Service({
+  autoProvided: false,
+})
 export class ShriftPageFacade {
   public readonly confessForm = inject(ConfessFormService).confessForm;
   public onSubmit() {

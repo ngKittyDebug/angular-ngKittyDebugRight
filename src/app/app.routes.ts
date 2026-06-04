@@ -5,6 +5,7 @@ import { RegisterPageFacade } from '@features/registration/facades/register-page
 import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
+import { guestGuard } from '@core/guards/guest-guard';
 import { MainComponent } from '@features/main/main/main.component';
 import { TarotService } from '@features/main/data/api/services/tarot.service';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
@@ -31,13 +32,13 @@ export const routes: Routes = [
       {
         path: 'chronicle',
         canMatch: [authGuard],
-        loadComponent: () =>
-          import('./core/ui/components/pages/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
+        loadComponent: () => import('./features/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
         providers: [provideTranslocoScope('chronicle')],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
         path: 'login',
+        canMatch: [guestGuard],
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
         providers: [provideTranslocoScope('login'), LoginPageFacade],
         canDeactivate: [dirtyFormGuard],
@@ -45,6 +46,7 @@ export const routes: Routes = [
       },
       {
         path: 'register',
+        canMatch: [guestGuard],
         loadComponent: () =>
           import('@features/registration/ui/register-page/register-page.component').then(
             (c) => c.RegisterPageComponent

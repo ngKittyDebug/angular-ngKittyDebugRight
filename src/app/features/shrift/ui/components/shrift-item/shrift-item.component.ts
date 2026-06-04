@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { TuiButton } from '@taiga-ui/core';
 
@@ -7,7 +7,6 @@ import { TuiButton } from '@taiga-ui/core';
   imports: [TuiButton, TranslocoPipe],
   templateUrl: './shrift-item.component.html',
   styleUrl: './shrift-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShriftItemComponent {
   public readonly severity = input<string>();
