@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   TuiButton,
@@ -36,7 +36,6 @@ import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.d
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [tuiLoaderOptionsProvider({ size: 's' })],
 })
 export class LoginComponent {

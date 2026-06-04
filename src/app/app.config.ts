@@ -12,7 +12,7 @@ import { provideRouter, withComponentInputBinding, withPreloading, withViewTrans
 import { AuthService } from '@core/services/auth/auth.service';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import { UserStateStrategy } from '@core/services/preloading-strategy/user-state-strategy.service';
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding(), withViewTransitions(), withPreloading(UserStateStrategy)),
     provideTaiga(),
     provideAppInitializer(() => inject(AuthService).initialize()),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideTransloco({
       config: {
         availableLangs: ['en', 'ru'],

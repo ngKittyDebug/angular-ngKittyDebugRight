@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Service, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth/auth.service';
 import { TuiNotificationService } from '@taiga-ui/core';
@@ -6,7 +6,9 @@ import { LoginFormService } from '../services/login-form.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 
-@Injectable()
+@Service({
+  autoProvided: false,
+})
 export class LoginPageFacade {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);

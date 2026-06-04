@@ -30,14 +30,14 @@ describe('authGuard', () => {
   describe('Пользователь авторизован', () => {
     it('должен пустить по требуемому маршруту', () => {
       isAuthenticatedMock.mockResolvedValue(true);
-      expect(executeGuard(routerFixture.route, routerFixture.segments)).toBe(true);
+      expect(executeGuard(routerFixture.route, routerFixture.segments, routerFixture.currentSnapshot)).toBe(true);
     });
   });
 
   describe('Пользователь не авторизован', () => {
     it('должен не пустить по требуемому маршруту и редиректнуть на стораницу логин', () => {
       isAuthenticatedMock.mockReturnValue(false);
-      executeGuard(routerFixture.route, routerFixture.segments);
+      executeGuard(routerFixture.route, routerFixture.segments, routerFixture.currentSnapshot);
       expect(routerMock.createUrlTree).toHaveBeenNthCalledWith(1, ['/login']);
     });
   });

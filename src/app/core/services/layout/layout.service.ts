@@ -1,11 +1,9 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Service, signal } from '@angular/core';
 import { LAYOUT_MOBILE_MEDIA_QUERY } from '@core/ui/components/layout/constants/layout-mobile-media-query';
 import { AuthService } from '@core/services/auth/auth.service';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class LayoutService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { NavigationItemComponent } from '@core/ui/components/layout/sidebar/navigation-item/navigation-item.component';
 import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -8,7 +8,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
   imports: [NavigationItemComponent, TranslocoPipe],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
   public readonly navigationItemList = input.required<NavigationItem[]>();

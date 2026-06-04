@@ -1,5 +1,5 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { FooterComponent } from '@core/ui/components/layout/footer/footer.component';
 import { SidebarComponent } from '@core/ui/components/layout/sidebar/sidebar.component';
@@ -28,7 +28,6 @@ import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navig
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
   protected readonly layoutService = inject(LayoutService);

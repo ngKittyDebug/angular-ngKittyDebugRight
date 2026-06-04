@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Service } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 import { RegisterFormService } from '@features/registration/services/register-form.service';
 import { Router } from '@angular/router';
@@ -6,7 +6,9 @@ import { TuiNotificationService } from '@taiga-ui/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 
-@Injectable()
+@Service({
+  autoProvided: false,
+})
 export class RegisterPageFacade {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);

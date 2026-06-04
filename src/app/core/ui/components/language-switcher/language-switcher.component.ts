@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { FormsModule } from '@angular/forms';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
@@ -9,7 +9,6 @@ import { TuiButtonSelect, TuiDataListWrapper } from '@taiga-ui/kit';
   imports: [FormsModule, TuiButton, TuiButtonSelect, TuiDataListWrapper, TuiTextfield],
   templateUrl: './language-switcher.component.html',
   styleUrl: './language-switcher.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LanguageSwitcherComponent {
   private readonly translocoService = inject(TranslocoService);

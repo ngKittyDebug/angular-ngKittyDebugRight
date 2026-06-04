@@ -1,10 +1,8 @@
-import { computed, DestroyRef, inject, Injectable, isDevMode, signal } from '@angular/core';
+import { computed, DestroyRef, inject, isDevMode, Service, signal } from '@angular/core';
 import type { AuthProvider, CallbackResult, SignupData, User } from '@netlify/identity';
 import * as netlifyIdentity from '@netlify/identity';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly _user = signal<User | null>(null);

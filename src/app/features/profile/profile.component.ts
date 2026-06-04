@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { TuiAppearance, TuiIcon } from '@taiga-ui/core';
@@ -11,7 +11,6 @@ import { AuthService } from '@core/services/auth/auth.service';
   imports: [TuiAppearance, TuiCardLarge, TuiAvatar, TuiIcon, TranslocoPipe, NgTemplateOutlet],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
   protected readonly authService = inject(AuthService);

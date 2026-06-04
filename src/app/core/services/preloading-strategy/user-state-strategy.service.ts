@@ -1,13 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import type { PreloadingStrategy, Route } from '@angular/router';
 import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { AuthService } from '@core/services/auth/auth.service';
 import type { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class UserStateStrategy implements PreloadingStrategy {
   private readonly authService = inject(AuthService);
 
