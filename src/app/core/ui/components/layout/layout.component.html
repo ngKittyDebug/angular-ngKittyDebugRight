@@ -6,7 +6,13 @@
     (navItemClicked)="onToggleMobileNav()"
   >
     @if (user(); as user) {
-      <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
+      <a
+        class="profile-card"
+        routerLink="/profile"
+        routerLinkActive="active"
+        aria-label="Open profile"
+        (click)="onToggleMobileNav()"
+      >
         <div tuiAvatar="@tui.user" size="m"></div>
         <div class="user-info">
           <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
