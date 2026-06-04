@@ -25,6 +25,7 @@
 .header-title {
   font-family: var(--font-orbitron), serif;
   font-optical-sizing: auto;
+  font-size: 2.25rem;
   text-transform: uppercase;
   font-weight: 400;
   text-align: center;
@@ -109,7 +110,7 @@
   margin: 0;
 }
 
-@media (width <= 855px) {
+@media (width <= 768px) {
   .header-box {
     display: flex;
     flex-direction: column;
