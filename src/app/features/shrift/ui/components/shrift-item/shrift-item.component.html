@@ -1,0 +1,12 @@
+<div>
+  <ng-content select="[title]" />
+
+  <div class="actions">
+    <div [class]="statusClass()">{{ statusTranslateKey() | transloco }}</div>
+    <div [class]="severityClass()">{{ severityTranslateKey() | transloco }}</div>
+  </div>
+</div>
+
+<button tuiButton type="button" appearance="outline" size="xs" (click)="clicked.emit()">
+  {{ 'shrift.button-item' | transloco }}
+</button>

@@ -16,6 +16,8 @@ The Church of the Holy Deploy — это цифровой храм для про
 
 ## 🚀 Deployment
 
+**Production:** [https://delulu-church.netlify.app/](https://delulu-church.netlify.app/)
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/be597b1e-bdc6-4923-a2cc-0eb263412cab/deploy-status)](https://app.netlify.com/projects/delulu-church/deploys)
 
 ## 👥 Team Members

@@ -1,0 +1,13 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "submit": "Login",
+  "google": "Login with Google",
+  "github": "Login with GitHub",
+  "register": "Registration",
+  "success": "Access granted!",
+  "success-title": "The Sacred Repository welcomes you!",
+  "error": {
+    "text": "Login failed. Perhaps you angered the ancient legacy."
+  }
+}

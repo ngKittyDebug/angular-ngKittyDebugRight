@@ -1,8 +1,10 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NavigationItemComponent } from './navigation-item.component';
 import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { activatedRouteMock } from '@shared/mocks/activated-route/activated-route.mock';
 
 describe('NavigationItemComponent', () => {
   let component: NavigationItemComponent;
@@ -10,8 +12,8 @@ describe('NavigationItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavigationItemComponent],
-      providers: [provideRouter([])],
+      imports: [NavigationItemComponent, TranslocoTestingMock],
+      providers: [{ provide: ActivatedRoute, useValue: activatedRouteMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavigationItemComponent);

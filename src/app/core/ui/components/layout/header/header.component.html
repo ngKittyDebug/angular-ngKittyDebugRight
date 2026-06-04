@@ -1,28 +1,21 @@
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
+    <div class="header-buttons">
+      <button appearance="primary" class="header-action" size="s" tuiButton type="button">
+        <tui-icon icon="@tui.moon" />
+      </button>
+      <ngKitty-language-switcher />
+    </div>
     <hgroup tuiTitle>
       <h2 class="header-title">
-        {{ title }}
+        <a routerLink="/">{{ 'header.title' | transloco }}</a>
       </h2>
       <p tuiSubtitle class="header-subtitle">
-        {{ subtitle }}
+        {{ 'header.subtitle' | transloco }}
       </p>
     </hgroup>
     <div class="header-buttons">
-      <button appearance="primary" size="s" tuiButton type="button">
-        <tui-icon icon="@tui.languages" />
-        ru
-      </button>
-      <button
-        appearance="primary"
-        iconStart="@tui.moon"
-        size="s"
-        tuiIconButton
-        type="button"
-        [style.border-radius.%]="100"
-      >
-        dark
-      </button>
+      <ng-content />
     </div>
   </div>
 </header>

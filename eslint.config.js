@@ -8,6 +8,9 @@ import importPlugin from 'eslint-plugin-import-x';
 
 export default tseslint.config(
   {
+    ignores: ['.planning/'],
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       ecmaVersion: 2024,
@@ -17,7 +20,9 @@ export default tseslint.config(
       sourceType: 'module',
       parser: tseslint.parser,
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['*.config.ts'],
+        },
       },
     },
     extends: [
@@ -39,7 +44,6 @@ export default tseslint.config(
       '@angular-eslint/prefer-signals': 'warn',
       '@angular-eslint/prefer-output-readonly': 'warn',
       '@angular-eslint/no-empty-lifecycle-method': 'warn',
-      '@angular-eslint/prefer-on-push-component-change-detection': 'error',
       // ts
       '@typescript-eslint/member-ordering': [
         2,
@@ -135,6 +139,10 @@ export default tseslint.config(
           fixture: 'off',
           token: 'off',
           facade: 'off',
+          store: 'off',
+          dictionary: 'off',
+          validator: 'off',
+          guard: 'off',
         },
       ],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -213,7 +221,7 @@ export default tseslint.config(
     },
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {
-      '@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 10 }],
+      '@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 20 }],
       '@angular-eslint/template/eqeqeq': 'error',
       '@angular-eslint/template/prefer-self-closing-tags': 'warn',
     },

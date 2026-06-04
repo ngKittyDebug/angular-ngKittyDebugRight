@@ -1,0 +1,90 @@
+<div class="profile">
+  <section appearance="flat" tuiCardLarge class="user-info">
+    <div tuiAvatar="@tui.user" size="xl"></div>
+    @if (authService.user(); as user) {
+      <h2 class="profile-title">{{ user.userMetadata?.['full_name'] || user.email }}</h2>
+    }
+  </section>
+  <section class="user-section">
+    <div class="section-title">
+      <tui-icon icon="@tui.trending-up" />
+      <h3>{{ 'profile.statistics' | transloco }}</h3>
+    </div>
+    <div class="section-container">
+      @for (stat of stats; track stat.name) {
+        <ng-container
+          *ngTemplateOutlet="
+            statTemplate;
+            context: {
+              $implicit: stat.value,
+              name: stat.name,
+            }
+          "
+        />
+      }
+    </div>
+    <ng-template #statTemplate let-value let-name="name">
+      <div class="stats-item">
+        <span class="stats-value">{{ value }}</span>
+        <span class="stats-name">{{ name | transloco }}</span>
+      </div>
+    </ng-template>
+  </section>
+  <section class="user-section">
+    <div class="section-title">
+      <tui-icon icon="@tui.award" />
+      <h3>{{ 'profile.achievements' | transloco }}</h3>
+    </div>
+    <div class="section-title">
+      <span class="stats-name"
+        >{{ 'profile.state.unblocked' | transloco }}: 0 {{ 'profile.state.from' | transloco }} 5</span
+      >
+    </div>
+    <div class="divider"></div>
+    <div class="achievements">
+      @for (achieve of achieves; track achieve.title) {
+        <ng-container
+          *ngTemplateOutlet="
+            achieveTemplate;
+            context: {
+              icon: achieve.icon,
+              $implicit: achieve.width,
+              alt: achieve.alt,
+              title: achieve.title,
+              description: achieve.description,
+            }
+          "
+        />
+      }
+    </div>
+    <ng-template
+      #achieveTemplate
+      let-icon="icon"
+      let-width="$implicit"
+      let-alt="alt"
+      let-title="title"
+      let-description="description"
+    >
+      <div class="achieve-item">
+        <div class="achieve-icon"><img [src]="icon" [width]="width" [alt]="alt" /></div>
+        <div class="achieve-text">
+          <h3>{{ title | transloco }}</h3>
+          <span class="stats-name">{{ description | transloco }}</span>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+  <section class="user-section">
+    <div class="section-title">
+      <tui-icon icon="@tui.sparkles" />
+      <h3>{{ 'profile.zodiac' | transloco }}</h3>
+    </div>
+    <div class="zodiac-text">
+      <div class="section-title">
+        <tui-icon icon="@tui.zodiac-aquarius" size="m" />
+        <h2 class="zodiac-title">{{ 'profile.sign.title.aquarius' | transloco }}</h2>
+      </div>
+      <p class="zodiac-description">{{ 'profile.sign.description.aquarius' | transloco }}</p>
+    </div>
+  </section>
+</div>

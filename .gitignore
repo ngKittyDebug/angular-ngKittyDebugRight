@@ -7,7 +7,7 @@
 /bazel-out
 
 # Node
-/node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -49,3 +49,10 @@ Thumbs.db
 # Claude Code local files
 .claude/settings.local.json
 .claude/todos.json
+.planning
+
+# Local Netlify folder
+.netlify
+deno.lock
+.cursor
+/development-notes

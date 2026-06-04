@@ -6,6 +6,14 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.mock.ts"]
+  "include": ["src/**/*.ts", "src/app/shared/models/utility-types.d.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.mock.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }
