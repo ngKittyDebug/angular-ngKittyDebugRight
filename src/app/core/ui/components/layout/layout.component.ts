@@ -6,8 +6,9 @@ import { SidebarComponent } from '@core/ui/components/layout/sidebar/sidebar.com
 import { LayoutService } from '@core/services/layout/layout.service';
 import { HeaderComponent } from '@core/ui/components/layout/header/header.component';
 import { TuiMainComponent } from '@taiga-ui/layout';
+import { TuiAvatar, TuiTooltip } from '@taiga-ui/kit';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TuiAvatar } from '@taiga-ui/kit';
+import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
 
 @Component({
   selector: 'ngKitty-layout',
@@ -21,8 +22,9 @@ import { TuiAvatar } from '@taiga-ui/kit';
     TuiMainComponent,
     RouterLink,
     RouterLinkActive,
-    TranslocoPipe,
     TuiAvatar,
+    TuiTooltip,
+    TranslocoPipe,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
@@ -31,9 +33,8 @@ import { TuiAvatar } from '@taiga-ui/kit';
 export class LayoutComponent {
   protected readonly layoutService = inject(LayoutService);
   protected readonly isMobileNavOpen = this.layoutService.isMobileNavOpen;
-  protected readonly filteredNavigationItems = this.layoutService.filteredNavigationItems;
   protected readonly user = this.layoutService.user;
-
+  protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
   constructor() {
     afterNextRender(() => {
       this.layoutService.watchMobileNavMediaQuery();

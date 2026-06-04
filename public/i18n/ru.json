@@ -1,21 +1,20 @@
 {
   "navigation-items": {
-    "main": "Главная",
     "login": "Войти",
+    "register": "Зарегистрироваться",
     "shrift": "Исповедь",
     "runes": "Руны",
     "horoscope": "Гороскоп",
-    "chronicle": "Хроника",
-    "register": "Зарегаться"
+    "chronicle": "Хроника"
   },
   "sidebar": {
+    "exit": "Выход",
     "navigation": "НАВИГАЦИЯ",
     "user": {
       "city": {
         "moscow": "Москва"
       }
     },
-    "exit": "Выход",
     "hello": "Привет, Гость!"
   },
   "header": {

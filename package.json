@@ -18,7 +18,8 @@
     "typecheck": "tsc -b --noEmit",
     "prepare": "husky",
     "i18n:extract": "transloco-keys-manager extract",
-    "i18n:find": "transloco-keys-manager find"
+    "i18n:find": "transloco-keys-manager find",
+    "knip": "npx knip"
   },
   "private": true,
   "type": "module",
