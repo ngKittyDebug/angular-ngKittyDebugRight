@@ -93,3 +93,15 @@
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.exit {
+  width: 50%;
+}

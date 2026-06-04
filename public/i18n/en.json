@@ -1,11 +1,16 @@
 {
   "navigation-items": {
+    "main": "Main",
     "login": "Login",
     "shrift": "Shrift",
     "runes": "Runes",
     "horoscope": "Horoscope",
     "chronicle": "Chronicle",
     "register": "Register"
+  },
+  "header": {
+    "title": "CULT OF THE HOLY DEPLOY",
+    "subtitle": ">> Machine Spirit is unstable <<"
   },
   "sidebar": {
     "navigation": "NAVIGATION",
@@ -14,10 +19,6 @@
         "moscow": "Moscow"
       }
     }
-  },
-  "header": {
-    "title": "CULT OF THE HOLY DEPLOY",
-    "subtitle": ">> Machine Spirit is unstable <<"
   },
   "footer": {
     "repository": "REPOSITORY",
