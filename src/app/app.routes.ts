@@ -6,7 +6,7 @@ import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 import { guestGuard } from '@core/guards/guest-guard';
-import { MainComponent } from '@features/main/main/main.component';
+import { MainComponent } from '@features/main/ui/main.component';
 import { TarotService } from '@features/main/data/api/services/tarot.service';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';

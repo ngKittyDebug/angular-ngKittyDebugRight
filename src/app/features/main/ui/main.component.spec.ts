@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { MainComponent } from './main.component';
 import { TarotService } from '@features/main/data/api/services/tarot.service';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { tarotServiceMock } from '@features/main/data/api/services/tarot.service.mock';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -10,8 +12,8 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [TarotService],
-      imports: [MainComponent],
+      providers: [{ provide: TarotService, useValue: tarotServiceMock }],
+      imports: [MainComponent, TranslocoTestingMock],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainComponent);
