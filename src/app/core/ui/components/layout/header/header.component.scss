@@ -109,7 +109,7 @@
   margin: 0;
 }
 
-@media (width <= 768px) {
+@media (width <= 855px) {
   .header-box {
     display: flex;
     flex-direction: column;
@@ -157,4 +157,8 @@
     flex-wrap: wrap;
     gap: 0.5rem;
   }
+}
+
+a {
+  text-decoration: none;
 }
