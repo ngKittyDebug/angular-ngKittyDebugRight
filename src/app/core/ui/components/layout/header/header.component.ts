@@ -8,7 +8,7 @@ import { LanguageSwitcherComponent } from '@core/ui/components/language-switcher
   selector: 'ngKitty-header',
   imports: [TranslocoPipe, TuiTitle, TuiHeader, TuiButton, LanguageSwitcherComponent, TuiIcon],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {}
