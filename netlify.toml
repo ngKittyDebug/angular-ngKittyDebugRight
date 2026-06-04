@@ -2,13 +2,15 @@
   command = "pnpm build"
   publish = "dist/ngKittyDebugRight/browser"
 
-[functions]
-  directory = "netlify/functions"
-
 [dev]
   command = "pnpm ng serve"
   targetPort = 4200
   port = 8888
+
+[[redirects]]
+  from = "/api/reading"
+  to = "https://deploytarot.com/api/reading"
+  status = 200
 
 [[redirects]]
   from = "/*"

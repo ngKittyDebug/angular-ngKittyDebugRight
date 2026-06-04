@@ -1,7 +1,7 @@
 {
-  "/.netlify/functions/tarot-reading": {
-    "target": "http://localhost:8888",
-    "secure": false,
+  "/api/reading": {
+    "target": "https://deploytarot.com",
+    "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
   },

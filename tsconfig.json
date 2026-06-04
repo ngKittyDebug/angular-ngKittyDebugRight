@@ -36,9 +36,6 @@
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./tsconfig.netlify.json"
     }
   ]
 }
