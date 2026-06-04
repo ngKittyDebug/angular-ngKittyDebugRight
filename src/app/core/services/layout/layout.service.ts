@@ -1,9 +1,7 @@
-import { computed, DestroyRef, inject, Service, signal } from '@angular/core';
+import { DestroyRef, inject, Service, signal } from '@angular/core';
 import { LAYOUT_MOBILE_MEDIA_QUERY } from '@core/ui/components/layout/constants/layout-mobile-media-query';
 import { AuthService } from '@core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { NAVIGATION_ITEM_LIST } from '@core/ui/components/layout/constants/navigation-item-list.config';
-import type { NavigationItem } from '@core/ui/components/layout/models/navigation-item.model';
 
 @Service()
 export class LayoutService {
@@ -13,13 +11,6 @@ export class LayoutService {
   private readonly _isMobileNavOpen = signal(false);
   public readonly isMobileNavOpen = this._isMobileNavOpen.asReadonly();
   public readonly user = this.authService.user;
-  public readonly filteredNavigationItems = computed<NavigationItem[]>(() => {
-    const isAuth = this.authService.isAuthenticated();
-
-    return NAVIGATION_ITEM_LIST.filter((item) => {
-      return !(isAuth && item.guestOnly);
-    });
-  });
 
   public onToggleMobileNav() {
     this._isMobileNavOpen.update((value) => !value);

@@ -1,24 +1,24 @@
 {
   "navigation-items": {
-    "main": "Main",
     "login": "Login",
+    "register": "Register",
     "shrift": "Shrift",
     "runes": "Runes",
     "horoscope": "Horoscope",
-    "chronicle": "Chronicle",
-    "register": "Register"
-  },
-  "header": {
-    "title": "CULT OF THE HOLY DEPLOY",
-    "subtitle": ">> Machine Spirit is unstable <<"
+    "chronicle": "Chronicle"
   },
   "sidebar": {
+    "exit": "Exit",
     "navigation": "NAVIGATION",
     "user": {
       "city": {
         "moscow": "Moscow"
       }
     }
+  },
+  "header": {
+    "title": "CULT OF THE HOLY DEPLOY",
+    "subtitle": ">> Machine Spirit is unstable <<"
   },
   "footer": {
     "repository": "REPOSITORY",
