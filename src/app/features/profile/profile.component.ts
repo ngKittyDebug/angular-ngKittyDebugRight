@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { TuiAppearance, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
-import { inject } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 
 @Component({
@@ -15,7 +14,9 @@ import { AuthService } from '@core/services/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-  public stats = [
+  protected readonly authService = inject(AuthService);
+
+  protected stats = [
     {
       value: 0,
       name: 'profile.confessions',
@@ -33,7 +34,8 @@ export class ProfileComponent {
       name: 'profile.activity',
     },
   ];
-  public achieves = [
+
+  protected achieves = [
     {
       icon: './assets/pray.svg',
       width: 30,
@@ -70,5 +72,4 @@ export class ProfileComponent {
       description: 'profile.achieve.penitent.description',
     },
   ];
-  protected readonly authService = inject(AuthService);
 }

@@ -4,7 +4,6 @@
     @if (authService.user(); as user) {
       <h2 class="profile-title">{{ user.userMetadata?.['full_name'] || user.email }}</h2>
     }
-    <!-- <span>{{ 'profile.location' | transloco }} : {{ 'profile.city.moscow' | transloco }}</span> -->
   </section>
   <section class="user-section">
     <div class="section-title">

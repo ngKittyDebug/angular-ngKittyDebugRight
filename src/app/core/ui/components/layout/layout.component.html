@@ -20,11 +20,6 @@
       <div class="guest-block">{{ 'sidebar.hello' | transloco }}</div>
     }
   </ngKitty-sidebar>
-    [navigationItemList]="facade.filteredNavigationItems()"
-    [user]="facade.user()"
-    [isMobileOpen]="isMobileNavOpen()"
-    (logoutClicked)="facade.logout()"
-  />
   @if (isMobileNavOpen()) {
     <div class="layout-sidebar-backdrop" role="presentation" (click)="onCloseMobileNav()"></div>
   }

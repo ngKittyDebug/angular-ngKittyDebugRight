@@ -7,22 +7,7 @@
       }
     </nav>
   </section>
-
   <div class="content">
     <ng-content />
-    @if (user(); as user) {
-      <a class="profile-card" routerLink="/profile" routerLinkActive="active" aria-label="Open profile">
-        <div tuiAvatar="@tui.user" size="m"></div>
-        <div class="user-info">
-          <div class="name">{{ user.userMetadata?.['full_name'] || user.email }}</div>
-        </div>
-      </a>
-      <button appearance="primary" size="s" tuiButton type="button" class="exit" (click)="logoutClicked.emit()">
-        <tui-icon icon="@tui.log-out" />
-        <span>{{ 'sidebar.exit' | transloco }}</span>
-      </button>
-    } @else {
-      <div class="guest-block">{{ 'sidebar.hello' | transloco }}</div>
-    }
   </div>
 </aside>
