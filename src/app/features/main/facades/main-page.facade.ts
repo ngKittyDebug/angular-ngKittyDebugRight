@@ -22,7 +22,7 @@ export class MainPageFacade {
   public readonly role = this.tarotService.role;
   public readonly error = this._error.asReadonly();
 
-  public loadCardList(): void {
+  public loadTarot(): void {
     this._isLoading.set(true);
     this._error.set(null);
 

@@ -14,10 +14,10 @@ export class MainComponent {
   private readonly mainPageFacade = inject(MainPageFacade);
   // TODO переделать на резолвер
   protected readonly result = this.mainPageFacade.result;
-  // TODO переделать на резолвер
+  // TODO переделать на резолвер + ошибку
   protected readonly isLoading = this.mainPageFacade.isLoading;
 
   public onDrawCards() {
-    this.mainPageFacade.loadCardList();
+    this.mainPageFacade.loadTarot();
   }
 }

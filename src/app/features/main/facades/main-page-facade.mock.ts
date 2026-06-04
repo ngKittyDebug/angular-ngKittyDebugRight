@@ -10,7 +10,7 @@ export const mainPageFacadeMock = {
   result: signal(tarotResponseApiFixture).asReadonly(),
   isLoading: signal(false).asReadonly(),
   error: signal<unknown | null>(null).asReadonly(),
-  loadCardList: vi.fn(),
+  loadTarot: vi.fn(),
   setIntent: vi.fn(),
   setRole: vi.fn(),
   role: signal(TarotRole.DEVOPS).asReadonly(),
