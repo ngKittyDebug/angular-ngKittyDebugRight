@@ -11,6 +11,7 @@ import { TarotService } from '@features/main/data/api/services/tarot.service';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
+import { MainPageFacade } from '@features/main/facades/main-page.facade';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,7 @@ export const routes: Routes = [
       {
         path: '',
         component: MainComponent,
-        providers: [provideTranslocoScope('main'), TarotService],
+        providers: [provideTranslocoScope('main'), MainPageFacade, TarotService],
       },
       {
         path: 'profile',

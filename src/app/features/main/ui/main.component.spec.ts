@@ -2,9 +2,9 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { MainComponent } from './main.component';
-import { TarotService } from '@features/main/data/api/services/tarot.service';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
-import { tarotServiceMock } from '@features/main/data/api/services/tarot.service.mock';
+import { MainPageFacade } from '@features/main/facades/main-page.facade';
+import { mainPageFacadeMock } from '@features/main/facades/main-page-facade.mock';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -12,7 +12,7 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [{ provide: TarotService, useValue: tarotServiceMock }],
+      providers: [{ provide: MainPageFacade, useValue: mainPageFacadeMock }],
       imports: [MainComponent, TranslocoTestingMock],
     }).compileComponents();
 
