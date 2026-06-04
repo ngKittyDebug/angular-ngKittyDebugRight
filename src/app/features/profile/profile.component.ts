@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TuiIcon } from '@taiga-ui/core';
+import { TuiAppearance, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
+import { AuthService } from '@core/services/auth/auth.service';
 
 @Component({
   selector: 'ngKitty-profile',
-  imports: [TuiCardLarge, TuiAvatar, TuiIcon, TranslocoPipe, NgTemplateOutlet],
+  imports: [TuiAppearance, TuiCardLarge, TuiAvatar, TuiIcon, TranslocoPipe, NgTemplateOutlet],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
-  public stats = [
+  protected readonly authService = inject(AuthService);
+
+  protected stats = [
     {
       value: 0,
       name: 'profile.confessions',
@@ -30,7 +33,8 @@ export class ProfileComponent {
       name: 'profile.activity',
     },
   ];
-  public achieves = [
+
+  protected achieves = [
     {
       icon: './assets/pray.svg',
       width: 30,

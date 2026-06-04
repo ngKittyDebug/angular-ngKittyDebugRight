@@ -55,7 +55,7 @@
 .section-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  align-items: center;
+  align-items: first baseline;
   gap: 1rem;
   padding: 0.5rem;
   width: 100%;
@@ -134,4 +134,34 @@
   font-size: 2rem;
   color: var(--alternative-light-text);
   margin: 0;
+}
+
+@media (width<=768px) {
+  .section-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: first baseline;
+    gap: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+  }
+}
+
+@media (width<=460px) {
+  .section-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: first baseline;
+    gap: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  .achievements {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+  }
 }
