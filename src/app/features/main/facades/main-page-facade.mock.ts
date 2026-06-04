@@ -7,8 +7,9 @@ import { TarotRole } from '@features/main/data/api/models/role.model';
 import { TarotIntent } from '@features/main/data/api/models/intent.model';
 
 export const mainPageFacadeMock = {
-  result: signal(tarotResponseApiFixture),
-  isLoading: signal(false),
+  result: signal(tarotResponseApiFixture).asReadonly(),
+  isLoading: signal(false).asReadonly(),
+  error: signal<unknown | null>(null).asReadonly(),
   loadCardList: vi.fn(),
   setIntent: vi.fn(),
   setRole: vi.fn(),
