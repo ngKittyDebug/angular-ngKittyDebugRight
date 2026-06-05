@@ -1,0 +1,26 @@
+@let response = result();
+<section class="tarot-reading">
+  <div class="tarot-actions">
+    <button tuiButton type="button" appearance="primary" size="l" [disabled]="isLoading()" (click)="onDrawCards()">
+      {{ (isLoading() ? 'main.loading' : 'main.draw_cards') | transloco }}
+    </button>
+  </div>
+
+  @if (response) {
+    <div class="tarot-verdict">
+      <h2>{{ response.verdict_label }}</h2>
+      <p>{{ response.verdict_text }}</p>
+    </div>
+    <div class="tarot-cards-container">
+      @for (card of response.cards; track card.position) {
+        <ngKitty-card
+          class="tarot-card"
+          [subtitle]="card.position_label"
+          [title]="card.name"
+          [description]="card.narrative"
+          [badge]="card.position_label"
+        />
+      }
+    </div>
+  }
+</section>

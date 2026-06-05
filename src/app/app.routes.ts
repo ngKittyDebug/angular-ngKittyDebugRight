@@ -6,10 +6,12 @@ import { LoginPageFacade } from '@features/login/facades/login-page.facade';
 import { authGuard } from '@core/guards/auth-guard';
 import { dirtyFormGuard } from '@core/guards/dirty-form.guard';
 import { guestGuard } from '@core/guards/guest-guard';
-import { MainComponent } from '@features/main/main/main.component';
+import { MainComponent } from '@features/main/ui/main.component';
+import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
+import { MainPageFacade } from '@features/main/facades/main-page.facade';
 
 export const routes: Routes = [
   {
@@ -19,7 +21,7 @@ export const routes: Routes = [
       {
         path: '',
         component: MainComponent,
-        providers: [provideTranslocoScope('main')],
+        providers: [provideTranslocoScope('main'), MainPageFacade, TarotService],
       },
       {
         path: 'profile',
