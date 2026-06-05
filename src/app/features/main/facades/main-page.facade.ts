@@ -35,8 +35,8 @@ export class MainPageFacade {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
-        next: (data) => {
-          this._result.set(data);
+        next: (tarotResponse) => {
+          this._result.set(tarotResponse);
         },
         error: (error: unknown) => {
           if (error instanceof HttpErrorResponse) {

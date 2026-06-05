@@ -2,10 +2,6 @@
   command = "pnpm build"
   publish = "dist/ngKittyDebugRight/browser"
 
-[dev]
-  command = "pnpm ng serve"
-  targetPort = 4200
-  port = 8888
 
 [[redirects]]
   from = "/api/reading"

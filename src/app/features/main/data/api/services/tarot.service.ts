@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import type { Observable } from 'rxjs';
 import { TarotRole } from '@features/main/data/api/models/role.model';
@@ -6,7 +6,9 @@ import { TarotIntent } from '@features/main/data/api/models/intent.model';
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import { TAROT_URL } from '@features/main/data/api/tokens/tarot-url.token';
 
-@Injectable()
+@Service({
+  autoProvided: false,
+})
 export class TarotService {
   private readonly httpClient = inject(HttpClient);
   private readonly url = inject(TAROT_URL);

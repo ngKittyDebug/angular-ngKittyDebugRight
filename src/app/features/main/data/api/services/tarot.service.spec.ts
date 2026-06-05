@@ -8,9 +8,8 @@ import { TarotIntent } from '@features/main/data/api/models/intent.model';
 import { TarotRole } from '@features/main/data/api/models/role.model';
 import { TAROT_URL } from '@features/main/data/api/tokens/tarot-url.token';
 
-const TAROT_URL_MOCK = '/api/tarot-test';
-
 describe('TarotService', () => {
+  const tarotUrlFixture = '/api/tarot-test';
   let httpTestingController: HttpTestingController;
   let service: TarotService;
 
@@ -18,7 +17,7 @@ describe('TarotService', () => {
     TestBed.configureTestingModule({
       providers: [
         TarotService,
-        { provide: TAROT_URL, useValue: TAROT_URL_MOCK },
+        { provide: TAROT_URL, useValue: tarotUrlFixture },
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
@@ -35,7 +34,7 @@ describe('TarotService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Устиановка роли', () => {
+  describe('Установка роли', () => {
     it('должен устанавливать значение', () => {
       service.setRole(TarotRole.AI_AGENT);
 
@@ -57,7 +56,7 @@ describe('TarotService', () => {
         expect(response).toBe(tarotResponseApiFixture);
       });
 
-      const request = httpTestingController.expectOne((httpRequest) => httpRequest.url === TAROT_URL_MOCK);
+      const request = httpTestingController.expectOne((httpRequest) => httpRequest.url === tarotUrlFixture);
 
       expect(request.request.method).toBe('GET');
       expect(request.request.params.get('role')).toBe(TarotRole.DEVOPS);
@@ -71,7 +70,7 @@ describe('TarotService', () => {
         expect(response).toBe(tarotResponseApiFixture);
       });
 
-      const request = httpTestingController.expectOne((httpRequest) => httpRequest.url === TAROT_URL_MOCK);
+      const request = httpTestingController.expectOne((httpRequest) => httpRequest.url === tarotUrlFixture);
 
       expect(request.request.params.get('role')).toBe(TarotRole.AI_AGENT);
       expect(request.request.params.get('intent')).toBe(TarotIntent.IPO);
