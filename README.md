@@ -30,7 +30,7 @@ The Church of the Holy Deploy — это цифровой храм для про
 
 ## :closed_book:Требования
 
-- `Node.js` (рекомендуется LTS)
+- `Node.js` (24.15.0)
 - `pnpm` (в проекте зафиксирован `pnpm@10.30.0`)
 
 ## ⚡ Get Started
@@ -49,26 +49,29 @@ pnpm start
 
 ## :gear: Основные команды
 
-```bash
-pnpm ng             # Angular CLI
-pnpm start          # запуск dev-сервера (ng serve -o)
-pnpm build          # production-сборка
-pnpm watch          # сборка в watch-режиме (development)
-pnpm test           # unit-тесты (Vitest)
-pnpm test:watch     # тесты в watch-режиме
-pnpm test:cov       # тесты с покрытием
-pnpm lint           # eslint + stylelint
-pnpm lint:fix       # eslint + stylelint (с autofix)
-pnpm format         # проверка форматирования prettier
-pnpm format:fix     # форматирование prettier
-pnpm typecheck      # проверка TypeScript без эмита
-pnpm prepare        # установка git hooks (husky)
-```
+| Команда             | Что делает                                            |
+| ------------------- | ----------------------------------------------------- |
+| `pnpm ci`           | Устанавливает зависимости строго по `pnpm-lock.yaml`  |
+| `pnpm start`        | Запускает dev-сервер Angular                          |
+| `pnpm watch`        | Собирает проект в watch-режиме                        |
+| `pnpm build`        | Создаёт production-сборку приложения                  |
+| `pnpm typecheck`    | Проверяет TypeScript без генерации файлов             |
+| `pnpm lint`         | Запускает ESLint и Stylelint                          |
+| `pnpm lint:fix`     | Автоматически исправляет ошибки ESLint и Stylelint    |
+| `pnpm format`       | Проверяет форматирование Prettier                     |
+| `pnpm format:fix`   | Форматирует файлы через Prettier                      |
+| `pnpm test`         | Запускает unit-тесты один раз                         |
+| `pnpm test:watch`   | Запускает unit-тесты в watch-режиме                   |
+| `pnpm test:cov`     | Запускает тесты с отчётом о покрытии                  |
+| `pnpm i18n:extract` | Извлекает ключи локализации Transloco                 |
+| `pnpm i18n:find`    | Ищет отсутствующие и неиспользуемые ключи             |
+| `pnpm knip`         | Поиск неиспользуемых файлов, экспортов и зависимостей |
+| `pnpm deploy`       | Деплоит приложение                                    |
 
 ## :hammer_and_wrench: Tech Stack
 
-- Angular 21
-- TypeScript 5.9
+- Angular 22.0.0
+- TypeScript 6.0.3
 - Vitest
 - ESLint + Stylelint + Prettier
 - Taiga UI
