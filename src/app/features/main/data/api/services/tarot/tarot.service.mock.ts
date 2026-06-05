@@ -1,4 +1,4 @@
-import type { TarotService } from '@features/main/data/api/services/tarot.service';
+import type { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import type { MockedObject } from 'vitest';
 import { of } from 'rxjs';
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';

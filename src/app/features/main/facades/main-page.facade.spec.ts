@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MainPageFacade } from './main-page.facade';
-import { TarotService } from '@features/main/data/api/services/tarot.service';
-import { tarotServiceMock } from '@features/main/data/api/services/tarot.service.mock';
+import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
+import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
 import { TarotRole } from '@features/main/data/api/models/role.model';
 import { expect, vi } from 'vitest';
 import { TarotIntent } from '@features/main/data/api/models/intent.model';

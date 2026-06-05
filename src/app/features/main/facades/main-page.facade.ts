@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Service, signal } from '@angular/core';
-import { TarotService } from '@features/main/data/api/services/tarot.service';
+import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
