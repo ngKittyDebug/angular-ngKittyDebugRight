@@ -46,7 +46,7 @@ describe('MainPageFacade', () => {
 
     describe('Данные получены', () => {
       it('результат установлен в сигнал', () => {
-        const setSpy = vi.spyOn(service['_result'], 'set');
+        const setSpy = vi.spyOn(service.result, 'set');
 
         service.loadTarot();
 
