@@ -5,5 +5,14 @@
   "intent_placeholder": "Select intent",
   "role_label": "Your Role:",
   "role_placeholder": "Select role",
-  "loading": "Consulting the cards..."
+  "loading": "Consulting the cards...",
+  "oracle": {
+    "quote": "\"I am the Oracle of the Machine Spirit. I know the secrets of pipelines, the fate of containers, and the karmic debts of technical debt.\"",
+    "title": "[ THE ORACLE SPEAKS ]",
+    "truths": {
+      "cards": "Cards do not lie. Only pipelines do.",
+      "deploy": "Every deploy is a prayer into the void.",
+      "fate": "The fate of code is decided here."
+    }
+  }
 }

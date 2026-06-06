@@ -1,4 +1,24 @@
 @let response = result();
+<section class="oracle-speaks" aria-labelledby="oracle-speaks-title">
+  <h2 id="oracle-speaks-title" class="oracle-speaks-title">
+    {{ 'main.oracle.title' | transloco }}
+  </h2>
+
+  <div class="oracle-speaks-icon" aria-hidden="true">🔮</div>
+
+  <blockquote class="oracle-speaks-quote">
+    {{ 'main.oracle.quote' | transloco }}
+  </blockquote>
+
+  <span class="oracle-speaks-divider" aria-hidden="true"></span>
+
+  <ul class="oracle-speaks-list">
+    <li>{{ 'main.oracle.truths.cards' | transloco }}</li>
+    <li>{{ 'main.oracle.truths.deploy' | transloco }}</li>
+    <li>{{ 'main.oracle.truths.fate' | transloco }}</li>
+  </ul>
+</section>
+
 <ngKitty-tarot-oracle
   [isLoading]="isLoading()"
   [(role)]="currentRole"
