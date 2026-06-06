@@ -1,11 +1,11 @@
 @let response = result();
+<ngKitty-tarot-oracle
+  [isLoading]="isLoading()"
+  [(role)]="currentRole"
+  [(intent)]="currentIntent"
+  (drawCardsClicked)="onDrawCards()"
+/>
 <section class="tarot-reading">
-  <div class="tarot-actions">
-    <button tuiButton type="button" appearance="primary" size="l" [disabled]="isLoading()" (click)="onDrawCards()">
-      {{ (isLoading() ? 'main.loading' : 'main.draw_cards') | transloco }}
-    </button>
-  </div>
-
   @if (response) {
     <div class="tarot-verdict">
       <h2>{{ response.verdict_label }}</h2>

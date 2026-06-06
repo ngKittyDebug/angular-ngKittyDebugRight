@@ -1,0 +1,22 @@
+<tui-textfield tuiChevron tuiDropdownSheet="Select role" class="tui-space_vertical-4">
+  <input placeholder="Select user" tuiSelect [ngModel]="role()" (ngModelChange)="role.set($event)" />
+  <tui-data-list-wrapper *tuiDropdown [items]="TarotRole" />
+</tui-textfield>
+
+<tui-textfield tuiChevron tuiDropdownSheet="Select intent" class="tui-space_vertical-4">
+  <input placeholder="Select user" tuiSelect [ngModel]="intent()" (ngModelChange)="intent.set($event)" />
+  <tui-data-list-wrapper *tuiDropdown [items]="TarotIntent" />
+</tui-textfield>
+
+<div class="tarot-actions">
+  <button
+    tuiButton
+    type="button"
+    appearance="primary"
+    size="l"
+    [disabled]="isLoading()"
+    (click)="drawCardsClicked.emit()"
+  >
+    {{ (isLoading() ? 'main.loading' : 'main.draw_cards') | transloco }}
+  </button>
+</div>
