@@ -20,12 +20,4 @@ export class TarotService {
       params: { role, intent },
     });
   }
-
-  public setRole(role: TarotRole): void {
-    this.role.set(role);
-  }
-
-  public setIntent(intent: TarotIntent): void {
-    this.intent.set(intent);
-  }
 }

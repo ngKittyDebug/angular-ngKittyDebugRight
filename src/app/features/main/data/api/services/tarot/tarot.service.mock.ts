@@ -8,8 +8,6 @@ import { TarotRole } from '@features/main/data/api/models/role.model';
 
 export const tarotServiceMock = {
   loadReading: vi.fn().mockReturnValue(of(tarotResponseApiFixture)),
-  setIntent: vi.fn(),
-  setRole: vi.fn(),
   intent: signal(TarotIntent.FULL_RELEASE),
   role: signal(TarotRole.DEVOPS),
 } as const satisfies MockedObject<Partial<TarotService>>;

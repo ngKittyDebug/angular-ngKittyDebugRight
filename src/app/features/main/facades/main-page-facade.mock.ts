@@ -11,8 +11,6 @@ export const mainPageFacadeMock = {
   isLoading: signal(false).asReadonly(),
   error: signal<unknown | null>(null).asReadonly(),
   loadTarot: vi.fn(),
-  setIntent: vi.fn(),
-  setRole: vi.fn(),
   role: signal(TarotRole.DEVOPS),
   intent: signal(TarotIntent.FULL_RELEASE),
 } as const satisfies MockedObject<Partial<MainPageFacade>>;
