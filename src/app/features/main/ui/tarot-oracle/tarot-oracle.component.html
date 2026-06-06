@@ -31,7 +31,13 @@
     </tui-textfield>
   </div>
 
-  <button tuiButton type="button" size="l" [disabled]="!role() || !intent()" (click)="drawCardsClicked.emit()">
+  <button
+    tuiButton
+    type="button"
+    size="l"
+    [disabled]="!role() || !intent() || isLoading()"
+    (click)="drawCardsClicked.emit()"
+  >
     @if (isLoading()) {
       <tui-icon class="draw-button-icon-loading" icon="loader" /> {{ 'main.loading' | transloco }}
     } @else {
