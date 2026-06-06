@@ -10,6 +10,6 @@ export const tarotServiceMock = {
   loadReading: vi.fn().mockReturnValue(of(tarotResponseApiFixture)),
   setIntent: vi.fn(),
   setRole: vi.fn(),
-  intent: signal(TarotIntent.FULL_RELEASE).asReadonly(),
-  role: signal(TarotRole.DEVOPS).asReadonly(),
+  intent: signal(TarotIntent.FULL_RELEASE),
+  role: signal(TarotRole.DEVOPS),
 } as const satisfies MockedObject<Partial<TarotService>>;

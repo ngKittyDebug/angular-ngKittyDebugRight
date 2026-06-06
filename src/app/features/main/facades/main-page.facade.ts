@@ -18,8 +18,8 @@ export class MainPageFacade {
   private readonly _isLoading = signal(false);
   public readonly result = this._result.asReadonly();
   public readonly isLoading = this._isLoading.asReadonly();
-  public readonly intent = this.tarotService.intent;
-  public readonly role = this.tarotService.role;
+  public intent = this.tarotService.intent;
+  public role = this.tarotService.role;
   public readonly error = this._error.asReadonly();
 
   public loadTarot(): void {

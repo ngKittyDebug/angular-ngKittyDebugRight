@@ -12,22 +12,20 @@ import { TAROT_URL } from '@features/main/data/api/tokens/tarot-url.token';
 export class TarotService {
   private readonly httpClient = inject(HttpClient);
   private readonly url = inject(TAROT_URL);
-  private readonly _role = signal<TarotRole>(TarotRole.DEVOPS);
-  private readonly _intent = signal<TarotIntent>(TarotIntent.FULL_RELEASE);
-  public readonly role = this._role.asReadonly();
-  public readonly intent = this._intent.asReadonly();
+  public readonly role = signal<TarotRole>(TarotRole.DEVOPS);
+  public readonly intent = signal<TarotIntent>(TarotIntent.FULL_RELEASE);
 
-  public loadReading(role = this._role(), intent = this._intent()): Observable<TarotResponseApi> {
+  public loadReading(role = this.role(), intent = this.intent()): Observable<TarotResponseApi> {
     return this.httpClient.get<TarotResponseApi>(this.url, {
       params: { role, intent },
     });
   }
 
   public setRole(role: TarotRole): void {
-    this._role.set(role);
+    this.role.set(role);
   }
 
   public setIntent(intent: TarotIntent): void {
-    this._intent.set(intent);
+    this.intent.set(intent);
   }
 }
