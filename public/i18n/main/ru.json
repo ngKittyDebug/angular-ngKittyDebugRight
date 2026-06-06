@@ -1,4 +1,9 @@
 {
+  "configure_reading": "[ НАСТРОИТЬ РАСКЛАД ]",
   "draw_cards": "Вытянуть карты",
-  "loading": "Взываем к Духу Машины..."
+  "intent_label": "Намерение деплоя:",
+  "intent_placeholder": "Выберите намерение",
+  "role_label": "Ваша роль:",
+  "role_placeholder": "Выберите роль",
+  "loading": "Советуемся с картами..."
 }

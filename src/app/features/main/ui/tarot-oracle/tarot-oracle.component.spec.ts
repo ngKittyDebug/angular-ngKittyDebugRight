@@ -5,6 +5,7 @@ import { TarotOracleComponent } from './tarot-oracle.component';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { TarotIntent } from '@features/main/data/api/models/intent.model';
 import { TarotRole } from '@features/main/data/api/models/role.model';
+import { describe } from 'vitest';
 
 describe('TarotOracleComponent', () => {
   let component: TarotOracleComponent;
@@ -23,7 +24,7 @@ describe('TarotOracleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('должен инициализироваться', () => {
     expect(component).toBeTruthy();
   });
 });

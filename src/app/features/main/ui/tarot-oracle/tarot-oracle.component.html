@@ -1,22 +1,41 @@
-<tui-textfield tuiChevron tuiDropdownSheet="Select role" class="tui-space_vertical-4">
-  <input placeholder="Select user" tuiSelect [ngModel]="role()" (ngModelChange)="role.set($event)" />
-  <tui-data-list-wrapper *tuiDropdown [items]="TarotRole" />
-</tui-textfield>
+<section class="oracle-config" aria-labelledby="oracle-config-title">
+  <h2 id="oracle-config-title" class="oracle-config-title">
+    {{ 'main.configure_reading' | transloco }}
+  </h2>
 
-<tui-textfield tuiChevron tuiDropdownSheet="Select intent" class="tui-space_vertical-4">
-  <input placeholder="Select user" tuiSelect [ngModel]="intent()" (ngModelChange)="intent.set($event)" />
-  <tui-data-list-wrapper *tuiDropdown [items]="TarotIntent" />
-</tui-textfield>
+  <div class="oracle-field">
+    <label class="oracle-label" for="tarot-role">{{ 'main.role_label' | transloco }}</label>
+    <tui-textfield tuiChevron class="oracle-select">
+      <input
+        id="tarot-role"
+        [placeholder]="'main.role_placeholder' | transloco"
+        tuiSelect
+        [ngModel]="role()"
+        (ngModelChange)="role.set($event)"
+      />
+      <tui-data-list-wrapper *tuiDropdown [items]="TarotRole" />
+    </tui-textfield>
+  </div>
 
-<div class="tarot-actions">
-  <button
-    tuiButton
-    type="button"
-    appearance="primary"
-    size="l"
-    [disabled]="isLoading()"
-    (click)="drawCardsClicked.emit()"
-  >
-    {{ (isLoading() ? 'main.loading' : 'main.draw_cards') | transloco }}
+  <div class="oracle-field">
+    <label class="oracle-label" for="tarot-intent">{{ 'main.intent_label' | transloco }}</label>
+    <tui-textfield tuiChevron class="oracle-select">
+      <input
+        id="tarot-intent"
+        [placeholder]="'main.intent_placeholder' | transloco"
+        tuiSelect
+        [ngModel]="intent()"
+        (ngModelChange)="intent.set($event)"
+      />
+      <tui-data-list-wrapper *tuiDropdown [items]="TarotIntent" />
+    </tui-textfield>
+  </div>
+
+  <button tuiButton type="button" size="l" [disabled]="!role() || !intent()" (click)="drawCardsClicked.emit()">
+    @if (isLoading()) {
+      <tui-icon class="draw-button-icon-loading" icon="loader" /> {{ 'main.loading' | transloco }}
+    } @else {
+      <tui-icon icon="sparkles" /> {{ 'main.draw_cards' | transloco }}
+    }
   </button>
-</div>
+</section>

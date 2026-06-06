@@ -1,9 +1,9 @@
 import { Component, input, model, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TuiButton } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TarotRole } from '@features/main/data/api/models/role.model';
 import { TarotIntent } from '@features/main/data/api/models/intent.model';
-import { TuiChevron, TuiDataListWrapperComponent, TuiInputPhoneInternational, TuiSelectDirective } from '@taiga-ui/kit';
+import { TuiChevron, TuiDataListWrapper, TuiSelectDirective } from '@taiga-ui/kit';
 import { enumToArray } from '@shared/helpers/enum-to-array.helper';
 import { FormsModule } from '@angular/forms';
 
@@ -12,11 +12,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     TranslocoPipe,
     TuiButton,
-    TuiInputPhoneInternational,
+    TuiTextfield,
     TuiChevron,
     TuiSelectDirective,
-    TuiDataListWrapperComponent,
+    TuiDataListWrapper,
     FormsModule,
+    TuiIcon,
   ],
   templateUrl: './tarot-oracle.component.html',
   styleUrl: './tarot-oracle.component.scss',

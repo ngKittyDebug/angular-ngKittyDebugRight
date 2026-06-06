@@ -1,4 +1,9 @@
 {
+  "configure_reading": "[ CONFIGURE READING ]",
   "draw_cards": "Draw cards",
-  "loading": "Invoking the Machine Spirit..."
+  "intent_label": "Deploy Intent:",
+  "intent_placeholder": "Select intent",
+  "role_label": "Your Role:",
+  "role_placeholder": "Select role",
+  "loading": "Consulting the cards..."
 }
