@@ -29,9 +29,6 @@ importers:
       '@jsverse/transloco':
         specifier: ^8.3.0
         version: 8.3.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)(typescript@6.0.3)
-      '@netlify/identity':
-        specifier: ^1.1.0
-        version: 1.1.0
       '@ngrx/signals':
         specifier: ^21.1.0
         version: 21.1.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
@@ -2117,10 +2114,6 @@ packages:
   '@netlify/headers@2.1.10':
     resolution: {integrity: sha512-xih1Pf3dDpvdpBoPI+tua9WA2qTkRJeUSUIUaUtnAvRdhl959W06d09BtEWS+FtjlrCEkE/REVxD7J+SN6EpSw==}
     engines: {node: '>=20.6.1'}
-
-  '@netlify/identity@1.1.0':
-    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
-    engines: {node: '>=22'}
 
   '@netlify/images@1.3.9':
     resolution: {integrity: sha512-MM7pvY83uteO+bgG/15rHdG0cz9WXOWjd9oAUYA76ki+wrw5OCt96evvF4yJsMcAf2SZx3pauBDW6VujwKR/Ng==}
@@ -5318,9 +5311,6 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
-
-  gotrue-js@1.0.1:
-    resolution: {integrity: sha512-ZynwwM4bEo2y5yNWO3/Ynbx1AvQz9ONJSM9tB1jpooAvDPevGdvgeFP3NwM59FAlkd0szSkQRAhjINMkJSDfAQ==}
 
   graceful-fs@4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
@@ -10762,10 +10752,6 @@ snapshots:
     dependencies:
       '@netlify/headers-parser': 9.0.3
 
-  '@netlify/identity@1.1.0':
-    dependencies:
-      gotrue-js: 1.0.1
-
   '@netlify/images@1.3.9(@netlify/blobs@10.7.8)':
     dependencies:
       ipx: 3.1.1(@netlify/blobs@10.7.8)
@@ -14261,8 +14247,6 @@ snapshots:
       minimist: 1.2.8
 
   gopd@1.2.0: {}
-
-  gotrue-js@1.0.1: {}
 
   graceful-fs@4.2.10: {}
 
