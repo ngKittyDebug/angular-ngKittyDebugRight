@@ -1,18 +1,22 @@
 {
-  "configure_reading": "[ CONFIGURE READING ]",
-  "draw_cards": "Draw cards",
-  "intent_label": "Deploy Intent:",
-  "intent_placeholder": "Select intent",
-  "role_label": "Your Role:",
-  "role_placeholder": "Select role",
-  "loading": "Consulting the cards...",
   "oracle": {
-    "quote": "\"I am the Oracle of the Machine Spirit. I know the secrets of pipelines, the fate of containers, and the karmic debts of technical debt.\"",
     "title": "[ THE ORACLE SPEAKS ]",
+    "quote": "\"I am the Oracle of the Machine Spirit. I know the secrets of pipelines, the fate of containers, and the karmic debts of technical debt.\"",
     "truths": {
       "cards": "Cards do not lie. Only pipelines do.",
       "deploy": "Every deploy is a prayer into the void.",
       "fate": "The fate of code is decided here."
     }
-  }
+  },
+  "configure_reading": "[ CONFIGURE READING ]",
+  "role": {
+    "label": "Your Role:",
+    "placeholder": "Select role"
+  },
+  "intent": {
+    "label": "Deploy Intent:",
+    "placeholder": "Select intent"
+  },
+  "loading": "Consulting the cards...",
+  "draw_cards": "Draw cards"
 }

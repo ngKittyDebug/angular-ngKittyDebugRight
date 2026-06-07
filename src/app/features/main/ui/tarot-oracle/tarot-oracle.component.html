@@ -4,11 +4,11 @@
   </h2>
 
   <div class="oracle-field">
-    <label class="oracle-label" for="tarot-role">{{ 'main.role_label' | transloco }}</label>
+    <label class="oracle-label" for="tarot-role">{{ 'main.role.label' | transloco }}</label>
     <tui-textfield tuiChevron class="oracle-select">
       <input
         id="tarot-role"
-        [placeholder]="'main.role_placeholder' | transloco"
+        [placeholder]="'main.role.placeholder' | transloco"
         tuiSelect
         [ngModel]="role()"
         (ngModelChange)="role.set($event)"
@@ -18,11 +18,11 @@
   </div>
 
   <div class="oracle-field">
-    <label class="oracle-label" for="tarot-intent">{{ 'main.intent_label' | transloco }}</label>
+    <label class="oracle-label" for="tarot-intent">{{ 'main.intent.label' | transloco }}</label>
     <tui-textfield tuiChevron class="oracle-select">
       <input
         id="tarot-intent"
-        [placeholder]="'main.intent_placeholder' | transloco"
+        [placeholder]="'main.intent.placeholder' | transloco"
         tuiSelect
         [ngModel]="intent()"
         (ngModelChange)="intent.set($event)"
