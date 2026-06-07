@@ -6,6 +6,7 @@ export const NAVIGATION_ITEM_LIST = [
     icon: '@tui.sun',
     label: marker('navigation-items.tarot'),
     url: '/',
+    exact: true,
   },
   {
     icon: '@tui.scroll',

@@ -20,6 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
         component: MainComponent,
         providers: [provideTranslocoScope('main'), MainPageFacade, TarotService],
       },
