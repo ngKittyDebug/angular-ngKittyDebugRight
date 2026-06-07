@@ -112,7 +112,7 @@ describe('AuthService', () => {
   });
 
   describe('Регистрация по email и паролю', () => {
-    const signupDataFixture = { full_name: 'Dev User' } as const;
+    const signupDataFixture = { full_name: 'Dev User', date_of_birth: new Date(2000, 0, 1) } as const;
 
     beforeEach(() => {
       firebaseAuthMock.createUserWithEmailAndPassword.mockResolvedValue({ user: userFixture });
@@ -142,6 +142,17 @@ describe('AuthService', () => {
 
       expect(firebaseAuthMock.updateProfile).toHaveBeenNthCalledWith(1, userFixture, {
         displayName: signupDataFixture.full_name,
+      });
+    });
+
+    it('должен сохранить профиль пользователя в Firestore', async () => {
+      await service.signup(userFixture.email, passwordFixture, signupDataFixture);
+
+      expect(firebaseAuthMock.setDoc).toHaveBeenNthCalledWith(1, expect.anything(), {
+        createdAt: firebaseAuthMock.serverTimestampFixture,
+        dateOfBirth: signupDataFixture.date_of_birth,
+        displayName: signupDataFixture.full_name,
+        email: userFixture.email,
       });
     });
 

@@ -1,5 +1,5 @@
 import { computed, DestroyRef, inject, Service, signal } from '@angular/core';
-import { auth } from '@env/environment';
+import { auth, firestore } from '@env/environment';
 import type { AuthProvider, User } from 'firebase/auth';
 import {
   createUserWithEmailAndPassword,
@@ -10,8 +10,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateProfile,
 } from 'firebase/auth';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 @Service()
 export class AuthService {
@@ -68,11 +68,15 @@ export class AuthService {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const displayName = this.getSignupDisplayName(data);
 
-      if (displayName) {
-        await updateProfile(userCredential.user, { displayName });
-      }
+      await setDoc(doc(firestore, 'users', userCredential.user.uid), {
+        createdAt: serverTimestamp(),
+        dateOfBirth: this.getSignupDateOfBirth(data),
+        displayName: this.getSignupDisplayName(data),
+        email: userCredential.user.email ?? email,
+        candels: 0,
+        sins: 0,
+      });
 
       this._user.set(userCredential.user);
 
@@ -137,6 +141,15 @@ export class AuthService {
     try {
       const userCredential = await signInWithPopup(auth, provider);
 
+      await setDoc(doc(firestore, 'users', userCredential.user.uid), {
+        createdAt: serverTimestamp(),
+        dateOfBirth: null,
+        displayName: userCredential.user.displayName,
+        email: userCredential.user.email,
+        candels: 0,
+        sins: 0,
+      });
+
       this._user.set(userCredential.user);
 
       return userCredential.user;
@@ -153,5 +166,11 @@ export class AuthService {
     const fullName = data?.['full_name'];
 
     return typeof fullName === 'string' && fullName.trim() ? fullName.trim() : undefined;
+  }
+
+  private getSignupDateOfBirth(data?: Record<string, unknown>): Date | null {
+    const dateOfBirth = data?.['date_of_birth'];
+
+    return dateOfBirth instanceof Date ? dateOfBirth : null;
   }
 }
