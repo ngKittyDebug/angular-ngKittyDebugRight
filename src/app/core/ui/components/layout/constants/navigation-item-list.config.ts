@@ -3,23 +3,23 @@ import { marker } from '@jsverse/transloco-keys-manager/marker';
 
 export const NAVIGATION_ITEM_LIST = [
   {
+    icon: '@tui.sun',
+    label: marker('navigation-items.tarot'),
+    url: '/',
+  },
+  {
     icon: '@tui.scroll',
     label: marker('navigation-items.shrift'),
     url: '/shrift',
   },
   {
     icon: '@tui.flame',
-    label: marker('navigation-items.runes'),
-    url: '/runes',
+    label: marker('navigation-items.altar'),
+    url: '/altar',
   },
   {
-    icon: '@tui.sun',
-    label: marker('navigation-items.horoscope'),
-    url: '/horoscope',
-  },
-  {
-    icon: '@tui.book-open',
-    label: marker('navigation-items.chronicle'),
-    url: '/chronicle',
+    icon: '@tui.eye',
+    label: marker('navigation-items.crystal_ball'),
+    url: '/crystal-ball',
   },
 ] as const satisfies NavigationItem[];
