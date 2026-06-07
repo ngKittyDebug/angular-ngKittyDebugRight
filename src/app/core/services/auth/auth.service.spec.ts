@@ -5,6 +5,11 @@ import { describe, vi } from 'vitest';
 
 import { AuthService } from './auth.service';
 import { userFixture } from '@core/fixtures/user.fixture';
+import { UserProfileService } from '@core/services/user-profile/user-profile.service';
+import {
+  resetUserProfileServiceMock,
+  userProfileServiceMock,
+} from '@core/services/user-profile/user-profile.service.mock';
 import type { User } from 'firebase/auth';
 
 describe('AuthService', () => {
@@ -13,10 +18,11 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     resetFirebaseAuthMock();
+    resetUserProfileServiceMock();
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [AuthService],
+      providers: [AuthService, { provide: UserProfileService, useValue: userProfileServiceMock }],
     });
     service = TestBed.inject(AuthService);
   });
@@ -52,14 +58,16 @@ describe('AuthService', () => {
       await service.initialize();
 
       expect(service.user()).toEqual(userFixture);
+      expect(userProfileServiceMock.loadProfile).toHaveBeenNthCalledWith(1, userFixture.uid);
     });
 
-    it('должен загрузить текущего Firebase-пользователя', async () => {
+    it('должен загрузить профиль текущего Firebase-пользователя', async () => {
       firebaseAuthMock.authInstance.currentUser = userFixture as unknown as User;
 
       await service.loadUser();
 
       expect(service.user()).toEqual(userFixture);
+      expect(userProfileServiceMock.loadProfile).toHaveBeenNthCalledWith(1, userFixture.uid);
     });
   });
 
@@ -91,6 +99,7 @@ describe('AuthService', () => {
       await service.login(userFixture.email, passwordFixture);
 
       expect(service.user()).toEqual(userFixture);
+      expect(userProfileServiceMock.loadProfile).toHaveBeenNthCalledWith(1, userFixture.uid);
     });
 
     it('должен сохранить ошибку входа и пробросить ее дальше', async () => {
@@ -137,29 +146,23 @@ describe('AuthService', () => {
       );
     });
 
-    it('должен сохранить имя пользователя в Firebase profile', async () => {
-      await service.signup(userFixture.email, passwordFixture, signupDataFixture);
-
-      expect(firebaseAuthMock.updateProfile).toHaveBeenNthCalledWith(1, userFixture, {
-        displayName: signupDataFixture.full_name,
-      });
-    });
-
     it('должен сохранить профиль пользователя в Firestore', async () => {
       await service.signup(userFixture.email, passwordFixture, signupDataFixture);
 
-      expect(firebaseAuthMock.setDoc).toHaveBeenNthCalledWith(1, expect.anything(), {
-        createdAt: firebaseAuthMock.serverTimestampFixture,
-        dateOfBirth: signupDataFixture.date_of_birth,
-        displayName: signupDataFixture.full_name,
-        email: userFixture.email,
-      });
+      expect(userProfileServiceMock.createProfile).toHaveBeenNthCalledWith(
+        1,
+        userFixture.uid,
+        userFixture.email,
+        signupDataFixture.full_name,
+        signupDataFixture.date_of_birth
+      );
     });
 
-    it('должен сохранить пользователя после успешной регистрации', async () => {
+    it('должен сохранить Firebase-пользователя после успешной регистрации', async () => {
       await service.signup(userFixture.email, passwordFixture);
 
       expect(service.user()).toEqual(userFixture);
+      expect(userProfileServiceMock.loadProfile).toHaveBeenNthCalledWith(1, userFixture.uid);
     });
 
     it('должен сохранить ошибку регистрации и пробросить ее дальше', async () => {
@@ -208,6 +211,7 @@ describe('AuthService', () => {
       await service.logout();
 
       expect(service.user()).toBeNull();
+      expect(userProfileServiceMock.clearProfile).toHaveBeenCalledTimes(1);
     });
 
     it('должен завершить загрузку', async () => {
@@ -247,10 +251,33 @@ describe('AuthService', () => {
       expect(firebaseAuthMock.signInWithPopup).toHaveBeenCalledTimes(1);
     });
 
-    it('должен сохранить пользователя после provider login', async () => {
+    it('должен сохранить Firebase-пользователя после provider login', async () => {
       await service.loginWithGoogle();
 
       expect(service.user()).toEqual(userFixture);
+      expect(userProfileServiceMock.loadProfile).toHaveBeenNthCalledWith(1, userFixture.uid);
+    });
+
+    it('должен создать Firestore profile при первом provider login', async () => {
+      await service.loginWithGoogle();
+
+      expect(userProfileServiceMock.ensureProviderProfile).toHaveBeenNthCalledWith(
+        1,
+        userFixture.uid,
+        userFixture.email,
+        userFixture.displayName
+      );
+    });
+
+    it('не должен сбрасывать статистику при повторном provider login', async () => {
+      await service.loginWithGoogle();
+
+      expect(userProfileServiceMock.ensureProviderProfile).toHaveBeenNthCalledWith(
+        1,
+        userFixture.uid,
+        userFixture.email,
+        userFixture.displayName
+      );
     });
   });
 });

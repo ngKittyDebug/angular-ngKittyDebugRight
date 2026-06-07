@@ -1,5 +1,6 @@
 import { computed, DestroyRef, inject, Service, signal } from '@angular/core';
-import { auth, firestore } from '@env/environment';
+import { auth } from '@env/environment';
+import { UserProfileService } from '@core/services/user-profile/user-profile.service';
 import type { AuthProvider, User } from 'firebase/auth';
 import {
   createUserWithEmailAndPassword,
@@ -11,11 +12,11 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 @Service()
 export class AuthService {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly userProfileService = inject(UserProfileService);
   private readonly _user = signal<User | null>(null);
   private readonly _error = signal<unknown | null>(null);
   private readonly _isLoading = signal(false);
@@ -27,8 +28,9 @@ export class AuthService {
   public async initialize() {
     return new Promise<User | null>((resolve) => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        this._user.set(user);
-        resolve(user);
+        void this.setAuthUser(user).then(() => {
+          resolve(user);
+        });
       });
 
       this.destroyRef.onDestroy(unsubscribe);
@@ -38,7 +40,7 @@ export class AuthService {
   public async loadUser() {
     const user = auth.currentUser;
 
-    this._user.set(user);
+    await this.setAuthUser(user);
 
     return user;
   }
@@ -50,7 +52,7 @@ export class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      this._user.set(userCredential.user);
+      await this.setAuthUser(userCredential.user);
 
       return userCredential.user;
     } catch (error) {
@@ -69,16 +71,14 @@ export class AuthService {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      await setDoc(doc(firestore, 'users', userCredential.user.uid), {
-        createdAt: serverTimestamp(),
-        dateOfBirth: this.getSignupDateOfBirth(data),
-        displayName: this.getSignupDisplayName(data),
-        email: userCredential.user.email ?? email,
-        candels: 0,
-        sins: 0,
-      });
+      await this.userProfileService.createProfile(
+        userCredential.user.uid,
+        userCredential.user.email ?? email,
+        this.getSignupDisplayName(data),
+        this.getSignupDateOfBirth(data)
+      );
 
-      this._user.set(userCredential.user);
+      await this.setAuthUser(userCredential.user);
 
       return userCredential.user;
     } catch (error) {
@@ -96,7 +96,7 @@ export class AuthService {
 
     try {
       await signOut(auth);
-      this._user.set(null);
+      await this.setAuthUser(null);
     } catch (error) {
       this._error.set(error);
 
@@ -141,16 +141,12 @@ export class AuthService {
     try {
       const userCredential = await signInWithPopup(auth, provider);
 
-      await setDoc(doc(firestore, 'users', userCredential.user.uid), {
-        createdAt: serverTimestamp(),
-        dateOfBirth: null,
-        displayName: userCredential.user.displayName,
-        email: userCredential.user.email,
-        candels: 0,
-        sins: 0,
-      });
-
-      this._user.set(userCredential.user);
+      await this.userProfileService.ensureProviderProfile(
+        userCredential.user.uid,
+        userCredential.user.email,
+        userCredential.user.displayName
+      );
+      await this.setAuthUser(userCredential.user);
 
       return userCredential.user;
     } catch (error) {
@@ -162,15 +158,27 @@ export class AuthService {
     }
   }
 
-  private getSignupDisplayName(data?: Record<string, unknown>): string | undefined {
+  private getSignupDisplayName(data?: Record<string, unknown>): string | null {
     const fullName = data?.['full_name'];
 
-    return typeof fullName === 'string' && fullName.trim() ? fullName.trim() : undefined;
+    return typeof fullName === 'string' && fullName.trim() ? fullName.trim() : null;
   }
 
   private getSignupDateOfBirth(data?: Record<string, unknown>): Date | null {
     const dateOfBirth = data?.['date_of_birth'];
 
     return dateOfBirth instanceof Date ? dateOfBirth : null;
+  }
+
+  private async setAuthUser(user: User | null) {
+    this._user.set(user);
+
+    if (user === null) {
+      this.userProfileService.clearProfile();
+
+      return;
+    }
+
+    await this.userProfileService.loadProfile(user.uid);
   }
 }
