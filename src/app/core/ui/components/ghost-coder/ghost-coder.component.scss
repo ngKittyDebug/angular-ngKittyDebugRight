@@ -1,0 +1,62 @@
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.eye-closed,
+.eye-thinking,
+.eye-angry,
+.mouth-angry,
+.mouth-open {
+  display: none;
+}
+
+.speaking {
+  position: relative;
+  background: var(--tui-background-base);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 3px var(--earth);
+}
+
+.speaking::before,
+.speaking::after {
+  content: '';
+  position: absolute;
+  background: var(--tui-background-base);
+  box-shadow: 0 0 4px var(--earth);
+  border-radius: 50%;
+}
+
+.speaking::before {
+  width: 12px;
+  height: 12px;
+  bottom: -8px;
+  right: 16px;
+}
+
+.speaking::after {
+  width: 6px;
+  height: 6px;
+  bottom: -14px;
+  right: 24px;
+}
+
+.coder {
+  filter: drop-shadow(0 0 4px var(--earth));
+  animation: fly 4s infinite;
+}
+
+@keyframes fly {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
