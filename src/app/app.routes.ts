@@ -20,6 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
         component: MainComponent,
         providers: [provideTranslocoScope('main'), MainPageFacade, TarotService],
       },
@@ -28,13 +29,6 @@ export const routes: Routes = [
         canMatch: [authGuard],
         loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
         providers: [provideTranslocoScope('profile')],
-        data: { preloadFor: PreloadFor.AUTH },
-      },
-      {
-        path: 'chronicle',
-        canMatch: [authGuard],
-        loadComponent: () => import('./features/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
-        providers: [provideTranslocoScope('chronicle')],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {

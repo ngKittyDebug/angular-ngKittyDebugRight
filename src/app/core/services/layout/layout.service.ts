@@ -2,15 +2,17 @@ import { DestroyRef, inject, Service, signal } from '@angular/core';
 import { LAYOUT_MOBILE_MEDIA_QUERY } from '@core/ui/components/layout/constants/layout-mobile-media-query';
 import { AuthService } from '@core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { UserProfileService } from '@core/services/user-profile/user-profile.service';
 
 @Service()
 export class LayoutService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
+  private readonly userProfileService = inject(UserProfileService);
   private readonly router = inject(Router);
   private readonly _isMobileNavOpen = signal(false);
   public readonly isMobileNavOpen = this._isMobileNavOpen.asReadonly();
-  public readonly user = this.authService.user;
+  public readonly user = this.userProfileService.user;
 
   public onToggleMobileNav() {
     this._isMobileNavOpen.update((value) => !value);
