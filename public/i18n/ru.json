@@ -3,9 +3,9 @@
     "login": "Войти",
     "register": "Зарегистрироваться",
     "shrift": "Исповедь",
-    "runes": "Руны",
-    "horoscope": "Гороскоп",
-    "chronicle": "Хроника"
+    "altar": "Алтарь",
+    "tarot": "Таро",
+    "crystal_ball": "Шар"
   },
   "sidebar": {
     "exit": "Выход",

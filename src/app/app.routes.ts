@@ -31,13 +31,6 @@ export const routes: Routes = [
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
-        path: 'chronicle',
-        canMatch: [authGuard],
-        loadComponent: () => import('./features/chronicle/chronicle.component').then((c) => c.ChronicleComponent),
-        providers: [provideTranslocoScope('chronicle')],
-        data: { preloadFor: PreloadFor.AUTH },
-      },
-      {
         path: 'login',
         canMatch: [guestGuard],
         loadComponent: () => import('./features/login/ui/login.component').then((c) => c.LoginComponent),
