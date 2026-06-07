@@ -1,20 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { userFixture } from '@core/fixtures/user.fixture';
-import { netlifyIdentityMock, resetNetlifyIdentityMock } from '@core/services/auth/mocks/netlify-identity.mock';
-
+import { firebaseAuthMock, resetFirebaseAuthMock } from '@core/services/auth/mocks/firebase-auth.mock';
 import { describe, vi } from 'vitest';
 
 import { AuthService } from './auth.service';
+import { userFixture } from '@core/fixtures/user.fixture';
+import type { User } from 'firebase/auth';
 
 describe('AuthService', () => {
-  const emailFixture = 'dev@example.com';
   const passwordFixture = 'password';
-  const providerFixture = 'github';
   let service: AuthService;
 
   beforeEach(() => {
-    resetNetlifyIdentityMock();
+    resetFirebaseAuthMock();
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -32,102 +30,82 @@ describe('AuthService', () => {
   });
 
   describe('Инициализация сессии', () => {
-    describe('Обработка OAuth-callback', () => {
-      it('должен вызвать метод колбек авторизации нетлифая', async () => {
-        netlifyIdentityMock.handleAuthCallback.mockResolvedValue({
-          type: 'oauth',
-          user: userFixture,
-        });
-        netlifyIdentityMock.getUser.mockResolvedValue(userFixture);
+    it('должен подписаться на изменение Firebase-сессии', async () => {
+      firebaseAuthMock.onAuthStateChanged.mockImplementation((_auth, onNext) => {
+        onNext(userFixture);
 
-        await service.initialize();
-
-        expect(netlifyIdentityMock.handleAuthCallback).toHaveBeenCalledTimes(1);
+        return vi.fn();
       });
 
-      it('должен вызвать колбек для гидрации сессии', async () => {
-        netlifyIdentityMock.handleAuthCallback.mockResolvedValue({
-          type: 'oauth',
-          user: userFixture,
-        });
-        netlifyIdentityMock.getUser.mockResolvedValue(userFixture);
+      await service.initialize();
 
-        await service.initialize();
-
-        expect(netlifyIdentityMock.hydrateSession).toHaveBeenCalledTimes(1);
-      });
-
-      it('должен подписаться на изменения авторизации', async () => {
-        netlifyIdentityMock.handleAuthCallback.mockResolvedValue({
-          type: 'oauth',
-          user: userFixture,
-        });
-        netlifyIdentityMock.getUser.mockResolvedValue(userFixture);
-
-        await service.initialize();
-
-        expect(netlifyIdentityMock.onAuthChange).toHaveBeenCalledTimes(1);
-      });
+      expect(firebaseAuthMock.onAuthStateChanged).toHaveBeenCalledTimes(1);
     });
 
-    describe('Ошибка OAuth-callback', () => {
-      beforeEach(() => {
-        netlifyIdentityMock.handleAuthCallback.mockRejectedValue(new Error('No OAuth callback'));
-        netlifyIdentityMock.getUser.mockResolvedValue(null);
+    it('должен сохранить пользователя из Firebase-сессии', async () => {
+      firebaseAuthMock.onAuthStateChanged.mockImplementation((_auth, onNext) => {
+        onNext(userFixture);
+
+        return vi.fn();
       });
 
-      it('должен вызвать hydrateSession', async () => {
-        await service.initialize();
+      await service.initialize();
 
-        expect(netlifyIdentityMock.hydrateSession).toHaveBeenCalledTimes(1);
-      });
-
-      it('должен подписаться на изменения авторизации', async () => {
-        await service.initialize();
-
-        expect(netlifyIdentityMock.onAuthChange).toHaveBeenCalledTimes(1);
-      });
-
-      it('должен загрузить пользователя после ошибки callback', async () => {
-        await service.initialize();
-
-        expect(netlifyIdentityMock.getUser).toHaveBeenCalledTimes(1);
-      });
+      expect(service.user()).toEqual(userFixture);
     });
 
-    describe('Ошибка hydrateSession', () => {
-      it('должен пробросить ошибку hydrateSession', async () => {
-        netlifyIdentityMock.handleAuthCallback.mockResolvedValue(null);
-        netlifyIdentityMock.hydrateSession.mockRejectedValue(new Error('Network error'));
+    it('должен загрузить текущего Firebase-пользователя', async () => {
+      firebaseAuthMock.authInstance.currentUser = userFixture as unknown as User;
 
-        await expect(service.initialize()).rejects.toThrow('Network error');
-      });
+      await service.loadUser();
+
+      expect(service.user()).toEqual(userFixture);
     });
   });
 
   describe('Вход по email и паролю', () => {
     beforeEach(() => {
-      netlifyIdentityMock.login.mockResolvedValue(userFixture);
+      firebaseAuthMock.signInWithEmailAndPassword.mockResolvedValue({ user: userFixture });
     });
 
     it('должен начать загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(1, true);
     });
 
+    it('должен вызвать Firebase login с email и паролем', async () => {
+      await service.login(userFixture.email, passwordFixture);
+
+      expect(firebaseAuthMock.signInWithEmailAndPassword).toHaveBeenNthCalledWith(
+        1,
+        expect.anything(),
+        userFixture.email,
+        passwordFixture
+      );
+    });
+
     it('должен сохранить пользователя после успешного входа', async () => {
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
 
       expect(service.user()).toEqual(userFixture);
+    });
+
+    it('должен сохранить ошибку входа и пробросить ее дальше', async () => {
+      const error = new Error('Firebase login failed');
+
+      firebaseAuthMock.signInWithEmailAndPassword.mockRejectedValue(error);
+
+      await expect(service.login(userFixture.email, passwordFixture)).rejects.toThrow('Firebase login failed');
+      expect(service.error()).toBe(error);
     });
 
     it('должен завершить загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(2, false);
     });
@@ -137,53 +115,55 @@ describe('AuthService', () => {
     const signupDataFixture = { full_name: 'Dev User' } as const;
 
     beforeEach(() => {
-      netlifyIdentityMock.signup.mockResolvedValue(userFixture);
-      netlifyIdentityMock.getUser.mockResolvedValue(userFixture);
+      firebaseAuthMock.createUserWithEmailAndPassword.mockResolvedValue({ user: userFixture });
     });
 
     it('должен начать загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.signup(emailFixture, passwordFixture);
+      await service.signup(userFixture.email, passwordFixture);
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(1, true);
     });
 
-    it('должен вызвать метод signup нетлифая с переданными данными', async () => {
-      await service.signup(emailFixture, passwordFixture, signupDataFixture);
+    it('должен создать пользователя в Firebase', async () => {
+      await service.signup(userFixture.email, passwordFixture, signupDataFixture);
 
-      expect(netlifyIdentityMock.signup).toHaveBeenNthCalledWith(1, emailFixture, passwordFixture, signupDataFixture);
+      expect(firebaseAuthMock.createUserWithEmailAndPassword).toHaveBeenNthCalledWith(
+        1,
+        expect.anything(),
+        userFixture.email,
+        passwordFixture
+      );
+    });
+
+    it('должен сохранить имя пользователя в Firebase profile', async () => {
+      await service.signup(userFixture.email, passwordFixture, signupDataFixture);
+
+      expect(firebaseAuthMock.updateProfile).toHaveBeenNthCalledWith(1, userFixture, {
+        displayName: signupDataFixture.full_name,
+      });
     });
 
     it('должен сохранить пользователя после успешной регистрации', async () => {
-      await service.signup(emailFixture, passwordFixture);
+      await service.signup(userFixture.email, passwordFixture);
 
       expect(service.user()).toEqual(userFixture);
     });
 
-    describe('Signup не создал сессию', () => {
-      it('должен вызвать login', async () => {
-        netlifyIdentityMock.getUser.mockResolvedValueOnce(null);
-        netlifyIdentityMock.login.mockResolvedValue(userFixture);
+    it('должен сохранить ошибку регистрации и пробросить ее дальше', async () => {
+      const error = new Error('Firebase signup failed');
 
-        await service.signup(emailFixture, passwordFixture);
+      firebaseAuthMock.createUserWithEmailAndPassword.mockRejectedValue(error);
 
-        expect(netlifyIdentityMock.login).toHaveBeenNthCalledWith(1, emailFixture, passwordFixture);
-      });
-    });
-
-    describe('Signup создал сессию', () => {
-      it('не должен вызывать login', async () => {
-        await service.signup(emailFixture, passwordFixture);
-
-        expect(netlifyIdentityMock.login).not.toHaveBeenCalled();
-      });
+      await expect(service.signup(userFixture.email, passwordFixture)).rejects.toThrow('Firebase signup failed');
+      expect(service.error()).toBe(error);
     });
 
     it('должен завершить загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.signup(emailFixture, passwordFixture);
+      await service.signup(userFixture.email, passwordFixture);
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(2, false);
     });
@@ -191,28 +171,28 @@ describe('AuthService', () => {
 
   describe('Выход из аккаунта', () => {
     beforeEach(() => {
-      netlifyIdentityMock.login.mockResolvedValue(userFixture);
+      firebaseAuthMock.signInWithEmailAndPassword.mockResolvedValue({ user: userFixture });
     });
 
     it('должен начать загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
       await service.logout();
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(1, true);
     });
 
-    it('должен вызвать метод логаут нетлифая', async () => {
-      await service.login(emailFixture, passwordFixture);
+    it('должен вызвать Firebase signOut', async () => {
+      await service.login(userFixture.email, passwordFixture);
 
       await service.logout();
 
-      expect(netlifyIdentityMock.logout).toHaveBeenCalledTimes(1);
+      expect(firebaseAuthMock.signOut).toHaveBeenCalledTimes(1);
     });
 
     it('должен сбросить пользователя после выхода', async () => {
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
 
       await service.logout();
 
@@ -222,7 +202,7 @@ describe('AuthService', () => {
     it('должен завершить загрузку', async () => {
       const isLoadingSetSpy = vi.spyOn(service['_isLoading'], 'set');
 
-      await service.login(emailFixture, passwordFixture);
+      await service.login(userFixture.email, passwordFixture);
       await service.logout();
 
       expect(isLoadingSetSpy).toHaveBeenNthCalledWith(2, false);
@@ -230,34 +210,36 @@ describe('AuthService', () => {
   });
 
   describe('Восстановление пароля', () => {
-    beforeEach(() => {
-      netlifyIdentityMock.requestPasswordRecovery.mockResolvedValue(undefined);
-    });
+    it('должен отправить письмо восстановления пароля через Firebase', async () => {
+      await service.requestPasswordRecovery(userFixture.email);
 
-    it('должен вызвать метод requestPasswordRecovery нетлифая с переданным email', async () => {
-      await service.requestPasswordRecovery(emailFixture);
-
-      expect(netlifyIdentityMock.requestPasswordRecovery).toHaveBeenNthCalledWith(1, emailFixture);
+      expect(firebaseAuthMock.sendPasswordResetEmail).toHaveBeenNthCalledWith(1, expect.anything(), userFixture.email);
     });
   });
 
   describe('OAuth-вход', () => {
-    it('должен перенаправить на GitHub OAuth', () => {
-      service.loginWithGithub();
-
-      expect(netlifyIdentityMock.oauthLogin).toHaveBeenNthCalledWith(1, providerFixture);
+    beforeEach(() => {
+      firebaseAuthMock.signInWithPopup.mockResolvedValue({ user: userFixture });
     });
 
-    it('должен перенаправить на Google OAuth', () => {
-      service.loginWithGoogle();
+    it('должен войти через GitHub provider', async () => {
+      await service.loginWithGithub();
 
-      expect(netlifyIdentityMock.oauthLogin).toHaveBeenNthCalledWith(1, 'google');
+      expect(firebaseAuthMock.GithubAuthProvider).toHaveBeenCalledTimes(1);
+      expect(firebaseAuthMock.signInWithPopup).toHaveBeenCalledTimes(1);
     });
 
-    it('должен перенаправить на страницу входа переданного провайдера', () => {
-      service.loginWithProvider(providerFixture);
+    it('должен войти через Google provider', async () => {
+      await service.loginWithGoogle();
 
-      expect(netlifyIdentityMock.oauthLogin).toHaveBeenNthCalledWith(1, providerFixture);
+      expect(firebaseAuthMock.GoogleAuthProvider).toHaveBeenCalledTimes(1);
+      expect(firebaseAuthMock.signInWithPopup).toHaveBeenCalledTimes(1);
+    });
+
+    it('должен сохранить пользователя после provider login', async () => {
+      await service.loginWithGoogle();
+
+      expect(service.user()).toEqual(userFixture);
     });
   });
 });
