@@ -4,6 +4,6 @@ export interface UserProfile {
   displayName: string | null;
   dateOfBirth: unknown;
   createdAt: unknown;
-  candels: number;
+  candles: number;
   sins: number;
 }

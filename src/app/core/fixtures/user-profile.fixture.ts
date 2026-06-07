@@ -6,6 +6,6 @@ export const userProfileFixture = {
   displayName: 'abob',
   dateOfBirth: null,
   createdAt: 'server-timestamp',
-  candels: 0,
+  candles: 0,
   sins: 0,
 } as const satisfies UserProfile;

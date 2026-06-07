@@ -31,7 +31,7 @@ export class UserProfileService {
       dateOfBirth: dateOfBirth,
       displayName: displayName,
       email: email,
-      candels: 0,
+      candles: 0,
       sins: 0,
     });
   }
@@ -58,7 +58,7 @@ export class UserProfileService {
       dateOfBirth: null,
       displayName: displayName,
       email: email,
-      candels: 0,
+      candles: 0,
       sins: 0,
     });
   }
@@ -78,7 +78,7 @@ export class UserProfileService {
       displayName: this.getNullableString(data['displayName']),
       dateOfBirth: data['dateOfBirth'] ?? null,
       createdAt: data['createdAt'] ?? null,
-      candels: this.getNumber(data['candels']),
+      candles: this.getNumber(data['candles']),
       sins: this.getNumber(data['sins']),
     };
   }
