@@ -30,6 +30,10 @@
   flex-direction: column;
   gap: 0.4rem;
   min-width: 0;
+
+  &::ng-deep tui-textfield {
+    border-radius: 0;
+  }
 }
 
 .oracle-label {
