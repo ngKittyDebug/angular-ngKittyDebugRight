@@ -9,7 +9,15 @@
 
 .eye-closed,
 .mouth-open {
-  display: none;
+  opacity: 0;
+}
+
+.coder.is-blinking .eye-open {
+  opacity: 0;
+}
+
+.coder.is-blinking .eye-closed {
+  opacity: 1;
 }
 
 .speaking {
