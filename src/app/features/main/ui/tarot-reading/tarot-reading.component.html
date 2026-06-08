@@ -1,0 +1,24 @@
+<section class="tarot-reading">
+  @if (tarotReading(); as result) {
+    <div class="tarot-verdict">
+      <h2>{{ result.verdict_label }}</h2>
+      <p>{{ result.verdict_text }}</p>
+    </div>
+    <div class="tarot-cards-container">
+      @for (card of result.cards; track card.position) {
+        <ngKitty-card
+          class="tarot-card"
+          [subtitle]="card.position_label"
+          [title]="card.name"
+          [description]="card.narrative"
+          [badge]="card.position_label"
+        />
+      }
+    </div>
+  } @else {
+    <div class="empty">
+      <p>Configure your reading and draw the cards to see what fate awaits your deploy.</p>
+      <tui-icon icon="sparkles" />
+    </div>
+  }
+</section>
