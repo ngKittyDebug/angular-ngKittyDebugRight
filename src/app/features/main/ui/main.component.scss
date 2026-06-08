@@ -22,9 +22,9 @@
 
 .oracle-speaks-icon {
   align-self: center;
+  width: clamp(3rem, 8vw, 4.5rem);
+  height: auto;
   margin-top: 0.75rem;
-  font-size: clamp(3rem, 8vw, 4.5rem);
-  line-height: 1;
   filter: drop-shadow(0 0 0.85rem var(--accent-primary));
 }
 
