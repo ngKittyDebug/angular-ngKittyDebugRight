@@ -19,7 +19,7 @@ describe('CardViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('должен инициализироваться', () => {
     expect(component).toBeTruthy();
   });
 });
