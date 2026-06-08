@@ -1,10 +1,13 @@
+:host {
+  padding: 1rem;
+}
+
 .tarot-reading {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   width: 100%;
-  padding: 1rem;
 }
 
 .tarot-verdict {
@@ -33,8 +36,42 @@
   justify-content: space-between;
 }
 
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  min-height: 18rem;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--accent-primary) 12%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tui-background-base-alt) 72%, transparent), transparent);
+  box-shadow:
+    inset 0 0 2rem color-mix(in srgb, var(--accent-primary) 8%, transparent),
+    0 0 1.5rem color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  text-align: center;
+}
+
+.empty p {
+  max-width: 44rem;
+  margin: 0;
+  color: color-mix(in srgb, var(--tui-text-primary) 72%, transparent);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-shadow: 0 0 0.75rem color-mix(in srgb, var(--accent-primary) 32%, transparent);
+}
+
 @media (width <= 768px) {
   .tarot-cards-container {
     flex-direction: column;
+  }
+
+  .empty {
+    min-height: 14rem;
   }
 }
