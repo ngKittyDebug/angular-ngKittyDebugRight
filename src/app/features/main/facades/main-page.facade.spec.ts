@@ -3,9 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { MainPageFacade } from './main-page.facade';
 import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
-import { TarotRole } from '@features/main/data/api/models/role.model';
 import { expect, vi } from 'vitest';
-import { TarotIntent } from '@features/main/data/api/models/intent.model';
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
 import { throwError } from 'rxjs';
 
@@ -21,22 +19,6 @@ describe('MainPageFacade', () => {
 
   it('должен инициализироваться', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('Установление роли', () => {
-    it('должен вызывать метод сервиса', () => {
-      service.setRole(TarotRole.AI_AGENT);
-
-      expect(tarotServiceMock.setRole).toHaveBeenNthCalledWith(1, TarotRole.AI_AGENT);
-    });
-  });
-
-  describe('Установление намерения', () => {
-    it('должен вызывать метод сервиса', () => {
-      service.setIntent(TarotIntent.IPO);
-
-      expect(tarotServiceMock.setIntent).toHaveBeenNthCalledWith(1, TarotIntent.IPO);
-    });
   });
 
   describe('Загрузка таро', () => {
@@ -64,7 +46,7 @@ describe('MainPageFacade', () => {
 
     describe('Данные получены', () => {
       it('результат установлен в сигнал', () => {
-        const setSpy = vi.spyOn(service['_result'], 'set');
+        const setSpy = vi.spyOn(service.result, 'set');
 
         service.loadTarot();
 

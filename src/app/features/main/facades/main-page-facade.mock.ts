@@ -7,12 +7,10 @@ import { TarotRole } from '@features/main/data/api/models/role.model';
 import { TarotIntent } from '@features/main/data/api/models/intent.model';
 
 export const mainPageFacadeMock = {
-  result: signal(tarotResponseApiFixture).asReadonly(),
+  result: signal(tarotResponseApiFixture),
   isLoading: signal(false).asReadonly(),
   error: signal<unknown | null>(null).asReadonly(),
   loadTarot: vi.fn(),
-  setIntent: vi.fn(),
-  setRole: vi.fn(),
-  role: signal(TarotRole.DEVOPS).asReadonly(),
-  intent: signal(TarotIntent.FULL_RELEASE).asReadonly(),
+  role: signal(TarotRole.DEVOPS),
+  intent: signal(TarotIntent.FULL_RELEASE),
 } as const satisfies MockedObject<Partial<MainPageFacade>>;

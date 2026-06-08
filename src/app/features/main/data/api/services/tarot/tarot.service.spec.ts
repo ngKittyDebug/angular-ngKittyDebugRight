@@ -34,22 +34,6 @@ describe('TarotService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Установка роли', () => {
-    it('должен устанавливать значение', () => {
-      service.setRole(TarotRole.AI_AGENT);
-
-      expect(service.role()).toBe(TarotRole.AI_AGENT);
-    });
-  });
-
-  describe('Установка намерения', () => {
-    it('должен устанавливать значение', () => {
-      service.setIntent(TarotIntent.IPO);
-
-      expect(service.intent()).toBe(TarotIntent.IPO);
-    });
-  });
-
   describe('Загрузка расклада', () => {
     it('должен отправлять запрос с параметрами по умолчанию', () => {
       service.loadReading().subscribe((response) => {
