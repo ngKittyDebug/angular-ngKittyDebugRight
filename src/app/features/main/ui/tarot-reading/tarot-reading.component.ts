@@ -1,18 +1,34 @@
-import { Component, computed, input } from '@angular/core';
-import { CardComponent } from '@shared/ui/card/card.component';
+import type { ElementRef } from '@angular/core';
+import { Component, computed, effect, input, viewChildren } from '@angular/core';
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import { TuiIcon } from '@taiga-ui/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'ngKitty-tarot-reading',
-  imports: [CardComponent, TuiIcon, TranslocoPipe],
+  imports: [TuiIcon, TranslocoPipe],
   templateUrl: './tarot-reading.component.html',
   styleUrl: './tarot-reading.component.scss',
 })
 export class TarotReadingComponent {
+  private readonly tarotCardElements = viewChildren<ElementRef<HTMLDetailsElement>>('tarotCard');
   public readonly tarotReading = input.required<TarotResponseApi | null>();
   protected readonly verdictClassName = computed(() => {
     return 'tarot-verdict ' + this.tarotReading()?.verdict;
   });
+
+  public constructor() {
+    effect(() => {
+      const tarotReading = this.tarotReading();
+      const tarotCardElements = this.tarotCardElements();
+
+      if (!tarotReading) {
+        return;
+      }
+
+      for (const tarotCardElement of tarotCardElements) {
+        tarotCardElement.nativeElement.open = false;
+      }
+    });
+  }
 }

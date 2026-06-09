@@ -8,13 +8,22 @@
     </div>
     <div class="tarot-cards-container">
       @for (card of result.cards; track card.position) {
-        <ngKitty-card
-          class="tarot-card"
-          [subtitle]="card.position_label"
-          [title]="card.name"
-          [description]="card.narrative"
-          [badge]="card.position_label"
-        />
+        <details #tarotCard class="tarot-card">
+          <summary class="tarot-card-inner">
+            <span class="tarot-card-face tarot-card-front">
+              <span class="tarot-card-position">{{ card.position_label }}</span>
+              <span class="tarot-card-icon-shell" [class.reversed]="card.reversed">
+                <tui-icon icon="@tui.sparkles" class="tarot-card-icon" />
+              </span>
+              <span class="tarot-card-title">{{ card.name }}</span>
+              <span class="tarot-card-state">{{ card.reversed ? 'Reversed' : 'Upright' }}</span>
+            </span>
+            <span class="tarot-card-face tarot-card-back">
+              <span class="tarot-card-title">{{ card.position_label }}</span>
+              <span class="tarot-card-description">{{ card.narrative }}</span>
+            </span>
+          </summary>
+        </details>
       }
     </div>
   </section>
