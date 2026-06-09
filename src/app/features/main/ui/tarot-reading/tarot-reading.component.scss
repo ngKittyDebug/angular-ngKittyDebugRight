@@ -11,17 +11,66 @@
 }
 
 .tarot-verdict {
+  --verdict-accent: var(--warning);
+  --verdict-text: var(--accent-secondary);
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  max-width: 48rem;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 60rem;
+  padding: 1.25rem;
+  border: 1px solid var(--verdict-accent);
+  background: color-mix(in srgb, var(--verdict-accent) 8%, var(--tui-background-base));
+  box-shadow: 0 0 1rem color-mix(in srgb, var(--verdict-accent) 20%, transparent);
   text-align: center;
 }
 
-.tarot-verdict h2,
-.tarot-verdict p {
+.ship-it,
+.proceed {
+  --verdict-accent: var(--earth);
+  --verdict-text: var(--accent-secondary);
+}
+
+.tread-carefully {
+  --verdict-accent: var(--warning);
+  --verdict-text: var(--warning);
+}
+
+.abort-mission {
+  --verdict-accent: var(--critical);
+  --verdict-text: var(--critical);
+}
+
+.just-vibes {
+  --verdict-accent: var(--accent-primary);
+  --verdict-text: var(--accent-primary-soft);
+}
+
+.tarot-verdict-title,
+.tarot-verdict-text {
   margin: 0;
+}
+
+.tarot-verdict-title {
+  color: var(--verdict-accent);
+  font-family: var(--font-orbitron);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-shadow: 0 0 0.5rem color-mix(in srgb, var(--verdict-accent) 55%, transparent);
+}
+
+.tarot-verdict-text {
+  max-width: 52rem;
+  color: var(--verdict-text);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
 }
 
 .tarot-cards-container {
