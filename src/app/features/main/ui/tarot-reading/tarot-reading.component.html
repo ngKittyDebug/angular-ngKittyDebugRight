@@ -16,7 +16,9 @@
                 <tui-icon icon="@tui.sparkles" class="tarot-card-icon" />
               </span>
               <span class="tarot-card-title">{{ card.name }}</span>
-              <span class="tarot-card-state">{{ card.reversed ? 'Reversed' : 'Upright' }}</span>
+              <span class="tarot-card-state">
+                {{ (card.reversed ? 'main.card_state.reversed' : 'main.card_state.upright') | transloco }}
+              </span>
             </span>
             <span class="tarot-card-face tarot-card-back">
               <span class="tarot-card-title">{{ card.position_label }}</span>
@@ -30,6 +32,11 @@
 } @else {
   <div class="empty">
     <p>{{ 'main.empty.description' | transloco }}</p>
-    <tui-icon icon="@tui.sparkles" />
+    <tui-icon
+      [style.font-size.rem]="10"
+      [style.inline-size.rem]="10"
+      [style.--tui-stroke-width.rem]="0.25"
+      icon="@tui.wand"
+    />
   </div>
 }

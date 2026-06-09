@@ -11,22 +11,22 @@ import { TranslocoPipe } from '@jsverse/transloco';
   styleUrl: './tarot-reading.component.scss',
 })
 export class TarotReadingComponent {
-  private readonly tarotCardElements = viewChildren<ElementRef<HTMLDetailsElement>>('tarotCard');
+  private readonly tarotCardElementList = viewChildren<ElementRef<HTMLDetailsElement>>('tarotCard');
   public readonly tarotReading = input.required<TarotResponseApi | null>();
   protected readonly verdictClassName = computed(() => {
     return 'tarot-verdict ' + this.tarotReading()?.verdict;
   });
 
-  public constructor() {
+  constructor() {
     effect(() => {
       const tarotReading = this.tarotReading();
-      const tarotCardElements = this.tarotCardElements();
+      const tarotCardElementList = this.tarotCardElementList();
 
       if (!tarotReading) {
         return;
       }
 
-      for (const tarotCardElement of tarotCardElements) {
+      for (const tarotCardElement of tarotCardElementList) {
         tarotCardElement.nativeElement.open = false;
       }
     });
