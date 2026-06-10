@@ -8,6 +8,13 @@
       "fate": "The fate of code is decided here."
     }
   },
+  "empty": {
+    "description": "Configure your reading and draw the cards to see what fate awaits your deploy."
+  },
+  "card_state": {
+    "reversed": "Reversed",
+    "upright": "Upright"
+  },
   "configure_reading": "[ CONFIGURE READING ]",
   "role": {
     "label": "Your Role:",
