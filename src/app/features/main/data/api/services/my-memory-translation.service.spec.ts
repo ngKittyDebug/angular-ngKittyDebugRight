@@ -1,0 +1,77 @@
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+
+import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation.service';
+
+describe('MyMemoryTranslationService', () => {
+  let httpTestingController: HttpTestingController;
+  let service: MyMemoryTranslationService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [MyMemoryTranslationService, provideHttpClient(), provideHttpClientTesting()],
+    });
+
+    httpTestingController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(MyMemoryTranslationService);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
+  it('should skip translation for source language', () => {
+    service.translateReading(tarotResponseApiFixture, 'en').subscribe((reading) => {
+      expect(reading).toBe(tarotResponseApiFixture);
+    });
+
+    httpTestingController.expectNone('https://api.mymemory.translated.net/get');
+  });
+
+  it('should translate tarot reading fields before display', () => {
+    service.translateReading(tarotResponseApiFixture, 'ru').subscribe((reading) => {
+      expect(reading.verdict_label).toBe('Можно выпускать');
+      expect(reading.verdict_text).toBe('Отправляй.');
+      expect(reading.cards[0]?.position_label).toBe('Основание');
+      expect(reading.cards[0]?.name).toBe('Пайплайн');
+      expect(reading.cards[0]?.narrative).toBe('Сборка зелёная.');
+    });
+
+    const requestList = httpTestingController.match(
+      (request) => request.url === 'https://api.mymemory.translated.net/get'
+    );
+
+    expect(requestList).toHaveLength(5);
+
+    for (const request of requestList) {
+      expect(request.request.params.get('langpair')).toBe('en|ru');
+
+      request.flush({
+        responseData: {
+          translatedText: getTranslatedText(request.request.params.get('q')),
+          match: 1,
+        },
+        responseDetails: '',
+        responseStatus: 200,
+      });
+    }
+  });
+});
+
+const TRANSLATED_TEXT_BY_SOURCE: Record<string, string> = {
+  Foundation: 'Основание',
+  Proceed: 'Можно выпускать',
+  'Ship it.': 'Отправляй.',
+  'The Pipeline': 'Пайплайн',
+  'The build is green.': 'Сборка зелёная.',
+};
+
+function getTranslatedText(text: string | null): string {
+  if (!text) {
+    return '';
+  }
+
+  return TRANSLATED_TEXT_BY_SOURCE[text] ?? '';
+}
