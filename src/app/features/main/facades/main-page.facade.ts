@@ -3,7 +3,7 @@ import { TarotService } from '@features/main/data/api/services/tarot/tarot.servi
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation.service';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 

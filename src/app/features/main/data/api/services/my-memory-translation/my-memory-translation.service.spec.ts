@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
-import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation.service';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 
 describe('MyMemoryTranslationService', () => {
   let httpTestingController: HttpTestingController;

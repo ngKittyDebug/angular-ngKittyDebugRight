@@ -6,7 +6,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { MainPageFacade } from './main-page.facade';
 import { expect, vi } from 'vitest';
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
-import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation.service';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
 
