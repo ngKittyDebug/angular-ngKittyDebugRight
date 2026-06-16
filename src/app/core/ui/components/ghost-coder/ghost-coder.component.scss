@@ -26,6 +26,7 @@
   border-radius: 1rem;
   padding: 0.5rem;
   box-shadow: 0 0 3px var(--earth);
+  min-width: 200px;
 }
 
 .speaking::before,
@@ -64,5 +65,24 @@
 
   50% {
     transform: translateY(-10px);
+  }
+}
+
+.thinking::after {
+  content: '...';
+  animation: dots 1.5s steps(3, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: '.';
+  }
+
+  33% {
+    content: '..';
+  }
+
+  66% {
+    content: '...';
   }
 }

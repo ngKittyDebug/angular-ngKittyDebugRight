@@ -2,7 +2,8 @@
   @if (currentQuote()) {
     {{ currentQuote() }}
   } @else {
-    {{ '...' }}
+    {{ 'coder.text' | transloco }}
+    <span class="thinking"></span>
   }
 </div>
 <div class="ghost">
