@@ -1,4 +1,11 @@
-<div class="speaking">тут текст который произносит дед, если он большой он будет выглядеть так</div>
+<div class="speaking">
+  @if (currentQuote()) {
+    {{ currentQuote() }}
+  } @else {
+    {{ 'coder.text' | transloco }}
+    <span class="thinking"></span>
+  }
+</div>
 <div class="ghost">
   <svg
     class="coder"
