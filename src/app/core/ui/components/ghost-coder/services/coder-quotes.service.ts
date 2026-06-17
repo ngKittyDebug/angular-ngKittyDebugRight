@@ -48,7 +48,6 @@ export class CoderQuotesService {
     });
 
     this.cache.set(lang, quotes);
-    console.log(quotes);
 
     return quotes;
   }
