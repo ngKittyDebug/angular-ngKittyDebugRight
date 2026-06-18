@@ -16,11 +16,11 @@ export class MainPageFacade {
   private readonly myMemoryTranslationService = inject(MyMemoryTranslationService);
   private readonly translocoService = inject(TranslocoService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly _error = signal<unknown | null>(null);
+  private readonly _error = signal<unknown>(null);
   private readonly _isTarotLoading = signal(false);
   private readonly _isTranslationLoading = signal(false);
   private readonly _result = signal<TarotResponseApi | null>(null);
-  private readonly sourceResult = linkedSignal<TarotResponseApi | null>(() => {
+  private readonly _sourceResult = linkedSignal<TarotResponseApi | null>(() => {
     this.role();
     this.intent();
 
@@ -34,7 +34,7 @@ export class MainPageFacade {
 
   constructor() {
     effect((onCleanup) => {
-      const sourceResult = this.sourceResult();
+      const sourceResult = this._sourceResult();
       const activeLang = this.translocoService.activeLang() as Languages;
 
       if (!sourceResult) {
@@ -77,7 +77,7 @@ export class MainPageFacade {
       )
       .subscribe({
         next: (tarotResponse) => {
-          this.sourceResult.set(tarotResponse);
+          this._sourceResult.set(tarotResponse);
         },
         error: (error: unknown) => {
           if (error instanceof HttpErrorResponse) {

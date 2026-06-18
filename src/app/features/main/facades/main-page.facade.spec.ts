@@ -10,13 +10,12 @@ import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.s
 import { myMemoryTranslationServiceMock } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service.mock';
 import { translatedTarotResponseApiFixture } from '@features/main/data/api/fixtures/translated-tarot-response-api.fixture';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { Languages } from '@core/models/languages.model';
 
 describe('MainPageFacade', () => {
   let service: MainPageFacade;
 
   beforeEach(() => {
-    vi.clearAllMocks();
-
     TestBed.configureTestingModule({
       providers: [
         MainPageFacade,
@@ -66,7 +65,11 @@ describe('MainPageFacade', () => {
       service.loadTarot();
       TestBed.tick();
 
-      expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(1, tarotResponseApiFixture, 'ru');
+      expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(
+        1,
+        tarotResponseApiFixture,
+        Languages.RU
+      );
     });
 
     describe('Получена ошибка', () => {
