@@ -18,16 +18,14 @@ export class MyMemoryTranslationService {
   private readonly maxConcurrentRequests = 2;
 
   public translateReading(reading: TarotResponseApi, targetLang: Languages): Observable<TarotResponseApi> {
-    const normalizedTargetLang = this.normalizeLanguage(targetLang);
-
-    if (normalizedTargetLang === Languages.EN) {
+    if (targetLang === Languages.EN) {
       return of(reading);
     }
 
     return forkJoin({
-      cards: this.translateCardList(reading.cards, normalizedTargetLang),
-      verdictLabel: this.translateText(reading.verdict_label, normalizedTargetLang),
-      verdictText: this.translateText(reading.verdict_text, normalizedTargetLang),
+      cards: this.translateCardList(reading.cards, targetLang),
+      verdictLabel: this.translateText(reading.verdict_label, targetLang),
+      verdictText: this.translateText(reading.verdict_text, targetLang),
     }).pipe(
       map(({ cards, verdictLabel, verdictText }) => ({
         ...reading,
@@ -139,11 +137,5 @@ export class MyMemoryTranslationService {
 
   private getByteLength(text: string): number {
     return this.textEncoder.encode(text).length;
-  }
-
-  private normalizeLanguage(lang: Languages): Languages {
-    const [language] = lang.toLowerCase().split('-');
-
-    return (language as Languages) || Languages.EN;
   }
 }
