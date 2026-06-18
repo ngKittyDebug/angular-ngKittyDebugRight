@@ -7,20 +7,19 @@ import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tar
 import type { MyMemoryTranslationResponseApi } from '@features/main/data/api/models/my-memory-translation-response-api.model';
 import type { TarotCardApi } from '@features/main/data/api/models/tarot-card-api.model';
 import { MY_MEMORY_TRANSLATION_URL } from '@features/main/data/api/tokens/my-memory-translation-url.token';
-
-const MY_MEMORY_SOURCE_LANGUAGE = 'en';
-const MY_MEMORY_TEXT_BYTE_LIMIT = 500;
+import { Languages } from '@core/models/languages.model';
 
 @Injectable({ providedIn: 'root' })
 export class MyMemoryTranslationService {
   private readonly httpClient = inject(HttpClient);
   private readonly url = inject(MY_MEMORY_TRANSLATION_URL);
   private readonly textEncoder = new TextEncoder();
+  private readonly myMemoryTextByteLimit = 500;
 
   public translateReading(reading: TarotResponseApi, targetLang: string): Observable<TarotResponseApi> {
     const normalizedTargetLang = this.normalizeLanguage(targetLang);
 
-    if (normalizedTargetLang === MY_MEMORY_SOURCE_LANGUAGE) {
+    if (normalizedTargetLang === Languages.EN) {
       return of(reading);
     }
 
@@ -75,7 +74,7 @@ export class MyMemoryTranslationService {
   }
 
   private translateChunk(chunk: string, targetLang: string): Observable<string> {
-    const parameters = new HttpParams().set('q', chunk).set('langpair', `${MY_MEMORY_SOURCE_LANGUAGE}|${targetLang}`);
+    const parameters = new HttpParams().set('q', chunk).set('langpair', `${Languages.EN}|${targetLang}`);
 
     return this.httpClient.get<MyMemoryTranslationResponseApi>(this.url, { params: parameters }).pipe(
       map((response) => (response.responseStatus === 200 ? response.responseData.translatedText : chunk)),
@@ -90,7 +89,7 @@ export class MyMemoryTranslationService {
     for (const word of text.split(' ')) {
       const nextChunk = currentChunk ? `${currentChunk} ${word}` : word;
 
-      if (this.getByteLength(nextChunk) <= MY_MEMORY_TEXT_BYTE_LIMIT) {
+      if (this.getByteLength(nextChunk) <= this.myMemoryTextByteLimit) {
         currentChunk = nextChunk;
         continue;
       }
@@ -99,7 +98,7 @@ export class MyMemoryTranslationService {
         chunkList.push(currentChunk);
       }
 
-      currentChunk = this.getByteLength(word) <= MY_MEMORY_TEXT_BYTE_LIMIT ? word : this.trimToByteLimit(word);
+      currentChunk = this.getByteLength(word) <= this.myMemoryTextByteLimit ? word : this.trimToByteLimit(word);
     }
 
     if (currentChunk) {
@@ -115,7 +114,7 @@ export class MyMemoryTranslationService {
     for (const symbol of text) {
       const nextText = `${trimmedText}${symbol}`;
 
-      if (this.getByteLength(nextText) > MY_MEMORY_TEXT_BYTE_LIMIT) {
+      if (this.getByteLength(nextText) > this.myMemoryTextByteLimit) {
         return trimmedText;
       }
 
@@ -132,6 +131,6 @@ export class MyMemoryTranslationService {
   private normalizeLanguage(lang: string): string {
     const [language] = lang.toLowerCase().split('-');
 
-    return language || MY_MEMORY_SOURCE_LANGUAGE;
+    return language || Languages.EN;
   }
 }
