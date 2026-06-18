@@ -2,7 +2,7 @@
   <section class="tarot-reading">
     <div [class]="verdictClassName()">
       <h2 class="tarot-verdict-title">
-        {{ result.verdict_label | uppercase }}
+        {{ 'main.verdict.' + result.verdict | transloco | uppercase }}
       </h2>
       <p class="tarot-verdict-text">{{ result.verdict_text }}</p>
     </div>

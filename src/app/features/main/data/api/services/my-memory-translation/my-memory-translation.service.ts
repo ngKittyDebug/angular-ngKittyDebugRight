@@ -24,13 +24,11 @@ export class MyMemoryTranslationService {
 
     return forkJoin({
       cards: this.translateCardList(reading.cards, targetLang),
-      verdictLabel: this.translateText(reading.verdict_label, targetLang),
       verdictText: this.translateText(reading.verdict_text, targetLang),
     }).pipe(
-      map(({ cards, verdictLabel, verdictText }) => ({
+      map(({ cards, verdictText }) => ({
         ...reading,
         cards,
-        verdict_label: verdictLabel,
         verdict_text: verdictText,
       }))
     );

@@ -20,6 +20,13 @@
     "crossing": "The Crossing",
     "outcome": "The Outcome"
   },
+  "verdict": {
+    "ship-it": "Ship It",
+    "proceed": "Proceed",
+    "tread-carefully": "Tread Carefully",
+    "abort-mission": "Abort Mission",
+    "just-vibes": "Just Vibes"
+  },
   "configure_reading": "[ CONFIGURE READING ]",
   "role": {
     "label": "Your Role:",
