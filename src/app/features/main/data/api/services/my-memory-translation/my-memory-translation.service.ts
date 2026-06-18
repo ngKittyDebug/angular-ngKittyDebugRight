@@ -68,8 +68,8 @@ export class MyMemoryTranslationService {
         this.maxConcurrentRequests
       ),
       toArray(),
-      map((items) =>
-        items
+      map((itemList) =>
+        itemList
           .sort((a, b) => a.index - b.index)
           .map((item) => item.translated)
           .join(' ')
@@ -92,7 +92,7 @@ export class MyMemoryTranslationService {
   }
 
   private createChunkList(text: string): string[] {
-    const chunkList: string[] = [];
+    const chunkList = [];
     let currentChunk = '';
 
     for (const word of text.split(' ')) {

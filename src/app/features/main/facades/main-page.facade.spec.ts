@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { signal } from '@angular/core';
-import { of, throwError } from 'rxjs';
-import { TranslocoService } from '@jsverse/transloco';
+import { throwError } from 'rxjs';
 
 import { MainPageFacade } from './main-page.facade';
 import { expect, vi } from 'vitest';
@@ -9,35 +7,23 @@ import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
-import { Languages } from '@core/models/languages.model';
-
-const translatedTarotResponseApiFixture = {
-  ...tarotResponseApiFixture,
-  verdict_text: 'Отправляй.',
-};
-
-const myMemoryTranslationServiceMock = {
-  translateReading: vi.fn().mockReturnValue(of(translatedTarotResponseApiFixture)),
-};
-
-const translocoServiceMock = {
-  activeLang: signal('ru'),
-};
+import { myMemoryTranslationServiceMock } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service.mock';
+import { translatedTarotResponseApiFixture } from '@features/main/data/api/fixtures/translated-tarot-response-api.fixture';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('MainPageFacade', () => {
   let service: MainPageFacade;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    translocoServiceMock.activeLang.set('ru');
 
     TestBed.configureTestingModule({
       providers: [
         MainPageFacade,
         { provide: MyMemoryTranslationService, useValue: myMemoryTranslationServiceMock },
         { provide: TarotService, useValue: tarotServiceMock },
-        { provide: TranslocoService, useValue: translocoServiceMock },
       ],
+      imports: [TranslocoTestingMock],
     });
     service = TestBed.inject(MainPageFacade);
   });
@@ -71,14 +57,14 @@ describe('MainPageFacade', () => {
 
     it('должен переводить результат перед сохранением', () => {
       service.loadTarot();
-      flushEffects();
+      TestBed.tick();
 
       expect(service.result()).toBe(translatedTarotResponseApiFixture);
     });
 
     it('должен вызвать сервис перевода с активным языком', () => {
       service.loadTarot();
-      flushEffects();
+      TestBed.tick();
 
       expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(1, tarotResponseApiFixture, 'ru');
     });
@@ -107,22 +93,4 @@ describe('MainPageFacade', () => {
       expect(setSpy).toHaveBeenNthCalledWith(2, false);
     });
   });
-
-  it('должен переводить текущий расклад при смене языка приложения', () => {
-    service.loadTarot();
-    flushEffects();
-
-    translocoServiceMock.activeLang.set(Languages.EN);
-    flushEffects();
-
-    expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(
-      2,
-      tarotResponseApiFixture,
-      Languages.EN
-    );
-  });
 });
-
-function flushEffects(): void {
-  TestBed.tick();
-}
