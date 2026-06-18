@@ -9,6 +9,7 @@ import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
+import { Languages } from '@core/models/languages.model';
 
 const translatedTarotResponseApiFixture = {
   ...tarotResponseApiFixture,
@@ -111,10 +112,14 @@ describe('MainPageFacade', () => {
     service.loadTarot();
     flushEffects();
 
-    translocoServiceMock.activeLang.set('en');
+    translocoServiceMock.activeLang.set(Languages.EN);
     flushEffects();
 
-    expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(2, tarotResponseApiFixture, 'en');
+    expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(
+      2,
+      tarotResponseApiFixture,
+      Languages.EN
+    );
   });
 });
 
