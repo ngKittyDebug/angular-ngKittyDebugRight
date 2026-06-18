@@ -42,5 +42,8 @@
       "confirm_label": "Cast it to oblivion",
       "cancel_label": "Keep the vow"
     }
+  },
+  "coder": {
+    "text": "Go on... click me already"
   }
 }
