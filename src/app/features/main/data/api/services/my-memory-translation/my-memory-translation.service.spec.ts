@@ -35,7 +35,7 @@ describe('MyMemoryTranslationService', () => {
     service.translateReading(tarotResponseApiFixture, Languages.RU).subscribe((reading) => {
       expect(reading.verdict_label).toBe('Можно выпускать');
       expect(reading.verdict_text).toBe('Отправляй.');
-      expect(reading.cards[0]?.position_label).toBe('Основание');
+      expect(reading.cards[0]?.position_label).toBe('Foundation');
       expect(reading.cards[0]?.name).toBe('Пайплайн');
       expect(reading.cards[0]?.narrative).toBe('Сборка зелёная.');
     });
@@ -44,7 +44,7 @@ describe('MyMemoryTranslationService', () => {
       (request) => request.url === 'https://api.mymemory.translated.net/get'
     );
 
-    expect(requestList).toHaveLength(5);
+    expect(requestList).toHaveLength(4);
 
     for (const request of requestList) {
       expect(request.request.params.get('langpair')).toBe('en|ru');
@@ -62,7 +62,6 @@ describe('MyMemoryTranslationService', () => {
 });
 
 const TRANSLATED_TEXT_BY_SOURCE: Record<string, string> = {
-  Foundation: 'Основание',
   Proceed: 'Можно выпускать',
   'Ship it.': 'Отправляй.',
   'The Pipeline': 'Пайплайн',

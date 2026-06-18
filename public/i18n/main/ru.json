@@ -15,6 +15,11 @@
     "reversed": "Перевёрнута",
     "upright": "Прямая"
   },
+  "position": {
+    "foundation": "Основание",
+    "crossing": "Препятствие",
+    "outcome": "Итог"
+  },
   "configure_reading": "[ НАСТРОИТЬ РАСКЛАД ]",
   "role": {
     "label": "Ваша роль:",

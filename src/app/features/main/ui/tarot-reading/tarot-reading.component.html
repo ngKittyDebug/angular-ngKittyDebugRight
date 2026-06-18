@@ -11,7 +11,7 @@
         <details #tarotCard class="tarot-card">
           <summary class="tarot-card-inner">
             <span class="tarot-card-face tarot-card-front">
-              <span class="tarot-card-position">{{ card.position_label }}</span>
+              <span class="tarot-card-position">{{ 'main.position.' + card.position | transloco }}</span>
               <span class="tarot-card-icon-shell" [class.reversed]="card.reversed">
                 <tui-icon icon="@tui.sparkles" class="tarot-card-icon" />
               </span>
@@ -21,7 +21,7 @@
               </span>
             </span>
             <span class="tarot-card-face tarot-card-back">
-              <span class="tarot-card-title">{{ card.position_label }}</span>
+              <span class="tarot-card-title">{{ 'main.position.' + card.position | transloco }}</span>
               <span class="tarot-card-description">{{ card.narrative }}</span>
             </span>
           </summary>

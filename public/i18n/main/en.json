@@ -15,6 +15,11 @@
     "reversed": "Reversed",
     "upright": "Upright"
   },
+  "position": {
+    "foundation": "The Foundation",
+    "crossing": "The Crossing",
+    "outcome": "The Outcome"
+  },
   "configure_reading": "[ CONFIGURE READING ]",
   "role": {
     "label": "Your Role:",
