@@ -5,8 +5,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { Languages } from '@core/models/languages.model';
+import { translatedTarotResponseApiFixture } from '@features/main/data/api/fixtures/translated-tarot-response-api.fixture';
 
-describe.skip('MyMemoryTranslationService', () => {
+const MY_MEMORY_URL = 'https://api.mymemory.translated.net/get';
+
+describe('MyMemoryTranslationService', () => {
   let httpTestingController: HttpTestingController;
   let service: MyMemoryTranslationService;
 
@@ -29,32 +32,36 @@ describe.skip('MyMemoryTranslationService', () => {
         expect(reading).toBe(tarotResponseApiFixture);
       });
 
-      httpTestingController.expectNone('https://api.mymemory.translated.net/get');
+      httpTestingController.expectNone(MY_MEMORY_URL);
     });
   });
 
   describe('Выбран русский язык', () => {
     it('должен перевести расклад', () => {
+      const [sourceCard] = tarotResponseApiFixture.cards;
+      const [translatedCard] = translatedTarotResponseApiFixture.cards;
+      const translationBySource = new Map<string, string>([
+        [tarotResponseApiFixture.verdict_text, translatedTarotResponseApiFixture.verdict_text],
+        [sourceCard.name, translatedCard.name],
+        [sourceCard.narrative, translatedCard.narrative],
+      ]);
+
       service.translateReading(tarotResponseApiFixture, Languages.RU).subscribe((reading) => {
-        expect(reading.verdict_label).toBe('Proceed');
-        expect(reading.verdict_text).toBe('Отправляй.');
-        expect(reading.cards[0]?.position_label).toBe('Foundation');
-        expect(reading.cards[0]?.name).toBe('Пайплайн');
-        expect(reading.cards[0]?.narrative).toBe('Сборка зелёная.');
+        expect(reading).toEqual(translatedTarotResponseApiFixture);
       });
 
-      const requestList = httpTestingController.match(
-        (request) => request.url === 'https://api.mymemory.translated.net/get'
-      );
+      const requestList = httpTestingController.match((request) => request.url === MY_MEMORY_URL);
 
-      expect(requestList).toHaveLength(3);
+      expect(requestList).toHaveLength(translationBySource.size);
 
       for (const request of requestList) {
+        const sourceText = request.request.params.get('q') ?? '';
+
         expect(request.request.params.get('langpair')).toBe('en|ru');
 
         request.flush({
           responseData: {
-            translatedText: getTranslatedText(request.request.params.get('q')),
+            translatedText: translationBySource.get(sourceText) ?? sourceText,
             match: 1,
           },
           responseDetails: '',
@@ -64,17 +71,3 @@ describe.skip('MyMemoryTranslationService', () => {
     });
   });
 });
-
-const TRANSLATED_TEXT_BY_SOURCE: Record<string, string> = {
-  'Ship it.': 'Отправляй.',
-  'The Pipeline': 'Пайплайн',
-  'The build is green.': 'Сборка зелёная.',
-};
-
-function getTranslatedText(text: string | null): string {
-  if (!text) {
-    return '';
-  }
-
-  return TRANSLATED_TEXT_BY_SOURCE[text] ?? '';
-}
