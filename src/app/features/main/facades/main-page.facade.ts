@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
+import type { Languages } from '@core/models/languages.model';
 
 @Service({
   autoProvided: false,
@@ -34,7 +35,7 @@ export class MainPageFacade {
   constructor() {
     effect((onCleanup) => {
       const sourceResult = this.sourceResult();
-      const activeLang = this.translocoService.activeLang();
+      const activeLang = this.translocoService.activeLang() as Languages;
 
       if (!sourceResult) {
         this._result.set(null);

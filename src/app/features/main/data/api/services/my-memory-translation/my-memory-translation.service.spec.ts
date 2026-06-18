@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
+import { Languages } from '@core/models/languages.model';
 
 describe('MyMemoryTranslationService', () => {
   let httpTestingController: HttpTestingController;
@@ -23,7 +24,7 @@ describe('MyMemoryTranslationService', () => {
   });
 
   it('should skip translation for source language', () => {
-    service.translateReading(tarotResponseApiFixture, 'en').subscribe((reading) => {
+    service.translateReading(tarotResponseApiFixture, Languages.EN).subscribe((reading) => {
       expect(reading).toBe(tarotResponseApiFixture);
     });
 
@@ -31,7 +32,7 @@ describe('MyMemoryTranslationService', () => {
   });
 
   it('should translate tarot reading fields before display', () => {
-    service.translateReading(tarotResponseApiFixture, 'ru').subscribe((reading) => {
+    service.translateReading(tarotResponseApiFixture, Languages.RU).subscribe((reading) => {
       expect(reading.verdict_label).toBe('Можно выпускать');
       expect(reading.verdict_text).toBe('Отправляй.');
       expect(reading.cards[0]?.position_label).toBe('Основание');

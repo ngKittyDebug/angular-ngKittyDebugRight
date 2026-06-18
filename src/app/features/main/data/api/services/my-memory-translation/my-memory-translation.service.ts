@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { catchError, forkJoin, map, of } from 'rxjs';
+import { catchError, forkJoin, from, map, mergeMap, of, toArray } from 'rxjs';
 
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import type { MyMemoryTranslationResponseApi } from '@features/main/data/api/models/my-memory-translation-response-api.model';
@@ -15,8 +15,9 @@ export class MyMemoryTranslationService {
   private readonly url = inject(MY_MEMORY_TRANSLATION_URL);
   private readonly textEncoder = new TextEncoder();
   private readonly myMemoryTextByteLimit = 500;
+  private readonly maxConcurrentRequests = 2;
 
-  public translateReading(reading: TarotResponseApi, targetLang: string): Observable<TarotResponseApi> {
+  public translateReading(reading: TarotResponseApi, targetLang: Languages): Observable<TarotResponseApi> {
     const normalizedTargetLang = this.normalizeLanguage(targetLang);
 
     if (normalizedTargetLang === Languages.EN) {
@@ -37,7 +38,7 @@ export class MyMemoryTranslationService {
     );
   }
 
-  private translateCardList(cardList: TarotCardApi[], targetLang: string): Observable<TarotCardApi[]> {
+  private translateCardList(cardList: TarotCardApi[], targetLang: Languages): Observable<TarotCardApi[]> {
     if (cardList.length === 0) {
       return of([]);
     }
@@ -45,40 +46,52 @@ export class MyMemoryTranslationService {
     return forkJoin(cardList.map((card) => this.translateCard(card, targetLang)));
   }
 
-  private translateCard(card: TarotCardApi, targetLang: string): Observable<TarotCardApi> {
+  private translateCard(card: TarotCardApi, targetLang: Languages): Observable<TarotCardApi> {
     return forkJoin({
       name: this.translateText(card.name, targetLang),
       narrative: this.translateText(card.narrative, targetLang),
-      positionLabel: this.translateText(card.position_label, targetLang),
     }).pipe(
-      map(({ name, narrative, positionLabel }) => ({
+      map(({ name, narrative }) => ({
         ...card,
         name,
         narrative,
-        position_label: positionLabel,
       }))
     );
   }
 
-  private translateText(text: string, targetLang: string): Observable<string> {
+  private translateText(text: string, targetLang: Languages): Observable<string> {
     if (!text.trim()) {
       return of(text);
     }
 
     const chunkList = this.createChunkList(text);
 
-    return forkJoin(chunkList.map((chunk) => this.translateChunk(chunk, targetLang))).pipe(
-      map((translatedChunkList) => translatedChunkList.join(' ')),
+    return from(chunkList.map((chunk, index) => ({ chunk, index }))).pipe(
+      mergeMap(
+        ({ chunk, index }) => this.translateChunk(chunk, targetLang).pipe(map((translated) => ({ index, translated }))),
+        this.maxConcurrentRequests
+      ),
+      toArray(),
+      map((items) =>
+        items
+          .sort((a, b) => a.index - b.index)
+          .map((item) => item.translated)
+          .join(' ')
+      ),
       catchError(() => of(text))
     );
   }
 
-  private translateChunk(chunk: string, targetLang: string): Observable<string> {
+  private translateChunk(chunk: string, targetLang: Languages): Observable<string> {
     const parameters = new HttpParams().set('q', chunk).set('langpair', `${Languages.EN}|${targetLang}`);
 
     return this.httpClient.get<MyMemoryTranslationResponseApi>(this.url, { params: parameters }).pipe(
-      map((response) => (response.responseStatus === 200 ? response.responseData.translatedText : chunk)),
-      catchError(() => of(chunk))
+      map((response) => {
+        const status = Number(response.responseStatus);
+        const translated = response.responseData?.translatedText ?? '';
+
+        return status === 200 && translated && !translated.startsWith('MYMEMORY WARNING') ? translated : chunk;
+      })
     );
   }
 
@@ -128,9 +141,9 @@ export class MyMemoryTranslationService {
     return this.textEncoder.encode(text).length;
   }
 
-  private normalizeLanguage(lang: string): string {
+  private normalizeLanguage(lang: Languages): Languages {
     const [language] = lang.toLowerCase().split('-');
 
-    return language || Languages.EN;
+    return (language as Languages) || Languages.EN;
   }
 }
