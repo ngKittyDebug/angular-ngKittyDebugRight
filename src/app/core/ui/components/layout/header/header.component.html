@@ -1,7 +1,7 @@
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
     <div class="header-buttons">
-      <button appearance="primary" class="header-action" size="s" tuiButton type="button">
+      <button appearance="primary" class="header-action" size="s" tuiButton type="button" (click)="themeChanged.emit()">
         <tui-icon icon="@tui.moon" />
       </button>
       <ngKitty-language-switcher />
