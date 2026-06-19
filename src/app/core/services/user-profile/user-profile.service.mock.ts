@@ -10,6 +10,7 @@ export const userProfileServiceMock = {
   loadProfile: vi.fn().mockResolvedValue(userProfileFixture),
   createProfile: vi.fn().mockResolvedValue(undefined),
   ensureProviderProfile: vi.fn().mockResolvedValue(undefined),
+  updateUiState: vi.fn().mockResolvedValue(undefined),
   clearProfile: vi.fn(),
 } as const satisfies MockedObject<Partial<UserProfileService>>;
 
@@ -20,5 +21,6 @@ export const resetUserProfileServiceMock = (): void => {
   userProfileServiceMock.loadProfile.mockReset().mockResolvedValue(userProfileFixture);
   userProfileServiceMock.createProfile.mockReset().mockResolvedValue(undefined);
   userProfileServiceMock.ensureProviderProfile.mockReset().mockResolvedValue(undefined);
+  userProfileServiceMock.updateUiState.mockReset().mockResolvedValue(undefined);
   userProfileServiceMock.clearProfile.mockReset();
 };
