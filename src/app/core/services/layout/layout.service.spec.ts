@@ -10,6 +10,8 @@ import {
   userProfileServiceMock,
 } from '@core/services/user-profile/user-profile.service.mock';
 import { LayoutService } from './layout.service';
+import { ThemeService } from '@core/services/theme/theme.service';
+import { themeServiceMock } from '@core/services/theme/theme.service.mock';
 
 describe('LayoutService', () => {
   let service: LayoutService;
@@ -23,6 +25,7 @@ describe('LayoutService', () => {
         LayoutService,
         { provide: AuthService, useValue: authServiceMock },
         { provide: UserProfileService, useValue: userProfileServiceMock },
+        { provide: ThemeService, useValue: themeServiceMock },
       ],
     });
     service = TestBed.inject(LayoutService);

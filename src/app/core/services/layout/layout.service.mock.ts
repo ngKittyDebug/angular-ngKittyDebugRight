@@ -3,6 +3,7 @@ import { vi } from 'vitest';
 import type { LayoutService } from '@core/services/layout/layout.service';
 import type { Signal } from '@angular/core';
 import type { UserProfile } from '@core/services/user-profile/models/user-profile.model';
+import { Theme } from '@core/models/theme.model';
 
 export const layoutServiceMock = {
   isMobileNavOpen: vi.fn().mockReturnValue(false) as unknown as Signal<boolean>,
@@ -11,4 +12,6 @@ export const layoutServiceMock = {
   onCloseMobileNav: vi.fn(),
   watchMobileNavMediaQuery: vi.fn(),
   logout: vi.fn(),
+  theme: vi.fn().mockReturnValue(Theme.DARK) as unknown as Signal<Theme>,
+  toggleTheme: vi.fn(),
 } as const satisfies MockedObject<Partial<LayoutService>>;
