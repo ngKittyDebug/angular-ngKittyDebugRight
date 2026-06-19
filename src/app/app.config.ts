@@ -17,6 +17,7 @@ import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import { UserStateStrategy } from '@core/services/preloading-strategy/user-state-strategy.service';
 import { Languages } from '@core/models/languages.model';
+import { uiStateStore } from '@core/store/ui-state.store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +25,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withViewTransitions(), withPreloading(UserStateStrategy)),
     provideTaiga(),
-    provideAppInitializer(() => inject(AuthService).initialize()),
+    provideAppInitializer(() => {
+      inject(uiStateStore);
+
+      return inject(AuthService).initialize();
+    }),
     provideHttpClient(withXhr()),
     provideTransloco({
       config: {

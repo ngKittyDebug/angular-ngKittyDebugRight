@@ -49,7 +49,7 @@ export class LayoutService {
     await this.router.navigate(['/login']);
   }
 
-  public toggleTheme(): void {
+  public toggleTheme() {
     void this.uiStateStore.toggleTheme();
   }
 }
