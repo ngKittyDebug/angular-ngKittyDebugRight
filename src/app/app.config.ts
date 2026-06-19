@@ -16,6 +16,7 @@ import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import { UserStateStrategy } from '@core/services/preloading-strategy/user-state-strategy.service';
+import { Languages } from '@core/models/languages.model';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,8 +28,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withXhr()),
     provideTransloco({
       config: {
-        availableLangs: ['en', 'ru'],
-        defaultLang: 'ru',
+        availableLangs: Object.values(Languages),
+        defaultLang: Languages.RU,
         // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
