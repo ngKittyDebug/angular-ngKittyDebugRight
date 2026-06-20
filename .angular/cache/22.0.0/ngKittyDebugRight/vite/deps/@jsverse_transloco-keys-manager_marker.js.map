@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../node_modules/.pnpm/@jsverse+transloco-keys-manager@8.1.0_typescript@6.0.3/node_modules/@jsverse/transloco-keys-manager/marker.js"],
+  "sourcesContent": ["/**\n * This function provides the capability to mark translation keys for automatic extraction with transloco.\n * If you want to extract some standalone strings that are not part of any translation call you can wrap them with the marker function to tell the keys manager to extract them.\n * The function will simply return the first \"key\" argument passed into it.\n *\n * @param key The translation key to extract.\n * @param params This parameter does nothing, but is required for compatipility reasons.\n * @param scope The scope to when extracting the translation key.\n */\nexport function marker(key, params, scope) {\n    return key;\n}\n"],
+  "mappings": ";;;AASO,SAAS,OAAO,KAAK,QAAQ,OAAO;AACvC,SAAO;AACX;",
+  "names": []
+}
