@@ -5,6 +5,7 @@ import { TuiNotificationService } from '@taiga-ui/core';
 import { LoginFormService } from '../services/login-form.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 
 @Service({
   autoProvided: false,
@@ -81,11 +82,12 @@ export class LoginPageFacade {
   }
 
   private async completeSuccessfulLogin() {
-    void this.showNotification(
-      this.translocoService.translate('success', {}, 'login'),
-      this.translocoService.translate('success-title', {}, 'login'),
-      'positive'
-    );
+    const [message, label] = await Promise.all([
+      firstValueFrom<string>(this.translocoService.selectTranslate('success', {}, 'login')),
+      firstValueFrom<string>(this.translocoService.selectTranslate('success-title', {}, 'login')),
+    ]);
+
+    this.showNotification(message, label, 'positive');
     this.loginForm.markAsPristine();
     await this.router.navigate(['/']);
   }

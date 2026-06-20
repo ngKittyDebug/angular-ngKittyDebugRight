@@ -59,8 +59,15 @@ export const uiStateStore = signalStore(
         themeService.setTheme(store.theme());
       });
 
-      effect(() => {
-        translocoService.setActiveLang(store.language());
+      effect((onCleanup) => {
+        const language = store.language();
+        const subscription = translocoService.load(language).subscribe(() => {
+          translocoService.setActiveLang(language);
+        });
+
+        onCleanup(() => {
+          subscription.unsubscribe();
+        });
       });
     },
   })
