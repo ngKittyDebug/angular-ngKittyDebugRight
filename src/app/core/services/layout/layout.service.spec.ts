@@ -10,14 +10,15 @@ import {
   userProfileServiceMock,
 } from '@core/services/user-profile/user-profile.service.mock';
 import { LayoutService } from './layout.service';
-import { ThemeService } from '@core/services/theme/theme.service';
-import { themeServiceMock } from '@core/services/theme/theme.service.mock';
+import { uiStateStore } from '@core/store/ui-state.store';
+import { resetUiStateStoreMock, uiStateStoreMock } from '@core/store/ui-state.store.mock';
 
 describe('LayoutService', () => {
   let service: LayoutService;
 
   beforeEach(() => {
     resetUserProfileServiceMock();
+    resetUiStateStoreMock();
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -25,7 +26,7 @@ describe('LayoutService', () => {
         LayoutService,
         { provide: AuthService, useValue: authServiceMock },
         { provide: UserProfileService, useValue: userProfileServiceMock },
-        { provide: ThemeService, useValue: themeServiceMock },
+        { provide: uiStateStore, useValue: uiStateStoreMock },
       ],
     });
     service = TestBed.inject(LayoutService);

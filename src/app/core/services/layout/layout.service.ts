@@ -3,19 +3,19 @@ import { LAYOUT_MOBILE_MEDIA_QUERY } from '@core/ui/components/layout/constants/
 import { AuthService } from '@core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserProfileService } from '@core/services/user-profile/user-profile.service';
-import { ThemeService } from '@core/services/theme/theme.service';
+import { uiStateStore } from '@core/store/ui-state.store';
 
 @Service()
 export class LayoutService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
   private readonly userProfileService = inject(UserProfileService);
-  private readonly themeService = inject(ThemeService);
+  private readonly uiStateStore = inject(uiStateStore);
   private readonly router = inject(Router);
   private readonly _isMobileNavOpen = signal(false);
   public readonly isMobileNavOpen = this._isMobileNavOpen.asReadonly();
   public readonly user = this.userProfileService.user;
-  public readonly theme = this.themeService.theme;
+  public readonly theme = this.uiStateStore.theme;
   public onToggleMobileNav() {
     this._isMobileNavOpen.update((value) => !value);
   }
@@ -50,6 +50,6 @@ export class LayoutService {
   }
 
   public toggleTheme() {
-    this.themeService.toggleTheme();
+    void this.uiStateStore.toggleTheme();
   }
 }

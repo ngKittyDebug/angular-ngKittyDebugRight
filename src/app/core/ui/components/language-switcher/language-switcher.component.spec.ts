@@ -6,6 +6,8 @@ import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-
 import { LanguageSwitcherComponent } from './language-switcher.component';
 import { signal } from '@angular/core';
 import { Languages } from '@core/models/languages.model';
+import { uiStateStore } from '@core/store/ui-state.store';
+import { resetUiStateStoreMock, uiStateStoreMock } from '@core/store/ui-state.store.mock';
 
 describe('LanguageSwitcherComponent', () => {
   let component: LanguageSwitcherComponent;
@@ -19,9 +21,14 @@ describe('LanguageSwitcherComponent', () => {
   };
 
   beforeEach(async () => {
+    resetUiStateStoreMock();
+
     await TestBed.configureTestingModule({
       imports: [LanguageSwitcherComponent, TranslocoTestingMock],
-      providers: [{ provide: TranslocoService, useValue: mockTranslocoService }],
+      providers: [
+        { provide: TranslocoService, useValue: mockTranslocoService },
+        { provide: uiStateStore, useValue: uiStateStoreMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LanguageSwitcherComponent);

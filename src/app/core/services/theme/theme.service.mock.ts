@@ -6,5 +6,6 @@ import type { ThemeService } from '@core/services/theme/theme.service';
 
 export const themeServiceMock = {
   theme: vi.fn().mockReturnValue(Theme.DARK) as unknown as Signal<Theme>,
-  toggleTheme: vi.fn(),
+  setTheme: vi.fn(),
+  toggleTheme: vi.fn().mockReturnValue(Theme.DARK),
 } as const satisfies MockedObject<Partial<ThemeService>>;

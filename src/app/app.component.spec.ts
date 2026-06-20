@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TuiRootComponentMock } from '@shared/mocks/tui-root/tui-root.component.mock';
 import { TuiRoot } from '@taiga-ui/core';
-import { ThemeService } from '@core/services/theme/theme.service';
-import { themeServiceMock } from '@core/services/theme/theme.service.mock';
+import { uiStateStore } from '@core/store/ui-state.store';
+import { uiStateStoreMock } from '@core/store/ui-state.store.mock';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -21,7 +21,7 @@ describe('AppComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [{ provide: ThemeService, useValue: themeServiceMock }],
+      providers: [{ provide: uiStateStore, useValue: uiStateStoreMock }],
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
