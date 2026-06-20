@@ -3,8 +3,8 @@ import { TranslocoService } from '@jsverse/transloco';
 import { FormsModule } from '@angular/forms';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiButtonSelect, TuiDataListWrapper } from '@taiga-ui/kit';
-import { Languages } from '@core/models/languages.model';
 import { uiStateStore } from '@core/store/ui-state.store';
+import type { Languages } from '@core/models/languages.model';
 
 @Component({
   selector: 'ngKitty-language-switcher',
@@ -22,15 +22,7 @@ export class LanguageSwitcherComponent {
 
   protected readonly currentLang = this.uiStateStore.language;
 
-  public onChangeLanguage(lang: string): void {
-    if (!this.isLanguage(lang)) {
-      return;
-    }
-
+  public onChangeLanguage(lang: Languages): void {
     void this.uiStateStore.setLanguage(lang);
-  }
-
-  private isLanguage(lang: string): lang is Languages {
-    return Object.values(Languages).includes(lang as Languages);
   }
 }
