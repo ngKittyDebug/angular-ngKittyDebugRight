@@ -2,6 +2,7 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { AltarComponent } from './altar.component';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('AltarComponent', () => {
   let component: AltarComponent;
@@ -9,7 +10,7 @@ describe('AltarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AltarComponent],
+      imports: [AltarComponent, TranslocoTestingMock],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AltarComponent);
@@ -17,7 +18,7 @@ describe('AltarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('должен инициализироваться', () => {
     expect(component).toBeTruthy();
   });
 });
