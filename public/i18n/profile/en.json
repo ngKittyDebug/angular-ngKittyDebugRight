@@ -1,0 +1,47 @@
+{
+  "location": "location",
+  "city": {
+    "moscow": "Moscow"
+  },
+  "statistics": "Statistics",
+  "achievements": "Achievements",
+  "state": {
+    "unblocked": "Unblocked",
+    "from": "from"
+  },
+  "zodiac": "Developer's Zodiac sign",
+  "sign": {
+    "title": {
+      "aquarius": "Aquarius"
+    },
+    "description": {
+      "aquarius": "Generator of unconventional solutions"
+    }
+  },
+  "confessions": "Confessions",
+  "writings": "Writings",
+  "level": "Average level",
+  "activity": "Days of activity",
+  "achieve": {
+    "first_confession": {
+      "title": "First confession",
+      "description": "You confessed your first bug"
+    },
+    "chronicist": {
+      "title": "Chronicist",
+      "description": "7 daily writings to diary"
+    },
+    "good_mood": {
+      "title": "Happy developer",
+      "description": "The average mood rating is over 4"
+    },
+    "regular_visitor": {
+      "title": "Regular visitor",
+      "description": "Over 30 days of activity"
+    },
+    "penitent": {
+      "title": "Penitent",
+      "description": "10 confessions"
+    }
+  }
+}

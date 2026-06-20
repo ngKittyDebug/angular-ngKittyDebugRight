@@ -1,0 +1,67 @@
+@let emailControl = facade.loginForm.controls.email;
+@let passwordControl = facade.loginForm.controls.password;
+@let isLoading = facade.isLoading();
+
+<form
+  tuiAppearance="floating"
+  tuiCardLarge
+  tuiForm="m"
+  class="form"
+  [style.max-width.rem]="32"
+  [formGroup]="facade.loginForm"
+  (submit)="$event.preventDefault(); facade.login()"
+>
+  <tui-textfield iconStart="@tui.mail">
+    <label tuiLabel for="email">{{ 'login.email' | transloco }}</label>
+    <input formControlName="email" placeholder="john@wick.com" tuiInput type="email" id="email" />
+  </tui-textfield>
+  @if (emailControl.errors?.['required'] && emailControl.touched) {
+    <tui-error [error]="validationErrors.required | transloco" />
+  }
+
+  @if (emailControl.errors?.['pattern'] && emailControl.touched) {
+    <tui-error [error]="validationErrors.emailPattern | transloco" />
+  }
+
+  <tui-textfield iconStart="@tui.lock">
+    <label tuiLabel for="password">{{ 'login.password' | transloco }}</label>
+    <input id="password" formControlName="password" placeholder="Aa88888" tuiInput />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+  @if (passwordControl.errors?.['required'] && passwordControl.touched) {
+    <tui-error [error]="validationErrors.required | transloco" />
+  }
+
+  @if (passwordControl.errors?.['pattern'] && passwordControl.touched) {
+    <tui-error [error]="validationErrors.passwordPattern | transloco" />
+  }
+
+  <footer class="footer">
+    <button tuiButton type="submit" [disabled]="facade.loginForm.invalid || isLoading">
+      @if (isLoading) {
+        <tui-loader />
+      } @else {
+        {{ 'login.submit' | transloco }}
+      }
+    </button>
+
+    <span class="divider"></span>
+
+    <button appearance="secondary" tuiButton type="button" (click)="facade.loginWithGoogle()" [disabled]="isLoading">
+      @if (isLoading) {
+        <tui-loader />
+      } @else {
+        {{ 'login.google' | transloco }}
+      }
+    </button>
+
+    <button appearance="secondary" tuiButton type="button" (click)="facade.loginWithGithub()" [disabled]="isLoading">
+      @if (isLoading) {
+        <tui-loader />
+      } @else {
+        {{ 'login.github' | transloco }}
+      }
+    </button>
+    <a routerLink="/register" class="link">{{ 'login.register' | transloco }}</a>
+  </footer>
+</form>

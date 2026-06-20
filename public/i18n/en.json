@@ -1,0 +1,46 @@
+{
+  "navigation-items": {
+    "login": "Login",
+    "register": "Register",
+    "shrift": "Shrift",
+    "runes": "Runes",
+    "horoscope": "Horoscope",
+    "chronicle": "Chronicle"
+  },
+  "sidebar": {
+    "exit": "Exit",
+    "navigation": "NAVIGATION",
+    "user": {
+      "city": {
+        "moscow": "Moscow"
+      }
+    }
+  },
+  "header": {
+    "title": "CULT OF THE HOLY DEPLOY",
+    "subtitle": ">> Machine Spirit is unstable <<"
+  },
+  "footer": {
+    "repository": "REPOSITORY",
+    "text": "Made with paws, use at own risk",
+    "dasha": "Dasha",
+    "alena": "Alena",
+    "nadya": "Nadya"
+  },
+  "validation_errors": {
+    "required": "The void rejects emptiness — fill this field.",
+    "max_length": "Too long for the parish scroll (max {{ requiredLength }} characters). Shorten it.",
+    "min_length": "Your secret mantra is too short for initiation (at least {{ requiredLength }} characters).",
+    "email_pattern": "This sigil doesn't look like email. Check the address.",
+    "password_pattern": "Temple cipher: at least {{ minLength }} characters — one uppercase, one lowercase, one digit. Latin letters and digits only, no spaces.",
+    "password_confirmation": "The mantras do not match — repeat the cipher exactly."
+  },
+  "modal": {
+    "confirmation": {
+      "content": "The scriptures are not yet sealed. Leave the altar now, and all that is unsaved shall be given to oblivion.",
+      "heading": "Abandon the unsealed vow?",
+      "confirm_label": "Cast it to oblivion",
+      "cancel_label": "Keep the vow"
+    }
+  }
+}
