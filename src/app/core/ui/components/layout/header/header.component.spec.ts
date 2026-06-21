@@ -21,6 +21,7 @@ describe('HeaderComponent', () => {
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(HeaderComponent);
+    fixture.componentRef.setInput('isSpiritPleased', false);
     fixture.detectChanges();
   });
 

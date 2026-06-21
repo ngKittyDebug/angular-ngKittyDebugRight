@@ -5,9 +5,7 @@
     "label": "Статистика алтаря",
     "total_offerings": "[ ВСЕГО ПОДНОШЕНИЙ ]",
     "spirit_status": "[ СТАТУС ДУХА ]",
-    "blessing_level": "[ УРОВЕНЬ БЛАГОСЛОВЕНИЯ ]",
-    "status_watching": "НАБЛЮДАЕТ",
-    "status_pleased": "ДОВОЛЕН"
+    "blessing_level": "[ УРОВЕНЬ БЛАГОСЛОВЕНИЯ ]"
   },
   "instructions": {
     "title": "[ ИНСТРУКЦИЯ РИТУАЛА ]",
@@ -18,6 +16,19 @@
     "drag_suffix": " на неё",
     "blessing": "Machine Spirit примет вашу жертву и даст благословение",
     "extinguish": "Свеча погаснет через 5 секунд и запомнит вашу жертву"
+  },
+  "candles": {
+    "count": "{{count}} раз",
+    "altar_label": "[ АЛТАРЬ ]",
+    "altar_placeholder": "Перетащите свечу сюда",
+    "purposes": {
+      "deploy": "За успешный деплой",
+      "bug": "За исправленный баг",
+      "review": "За пройденный Code Review",
+      "refactor": "За завершенный рефакторинг",
+      "database": "За миграцию без rollback",
+      "legacy": "За работу с legacy code"
+    }
   },
   "prayer": {
     "title": "[ МОЛИТВА MACHINE SPIRIT ]",

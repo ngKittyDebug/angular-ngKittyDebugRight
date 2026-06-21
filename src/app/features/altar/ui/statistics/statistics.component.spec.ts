@@ -15,6 +15,9 @@ describe('StatisticsComponent', () => {
 
     fixture = TestBed.createComponent(StatisticsComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('totalOfferings', 0);
+    fixture.componentRef.setInput('blessingLevel', 0);
+    fixture.componentRef.setInput('isSpiritPleased', false);
     fixture.detectChanges();
   });
 

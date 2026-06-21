@@ -14,4 +14,5 @@ export const layoutServiceMock = {
   logout: vi.fn(),
   theme: vi.fn().mockReturnValue(Theme.DARK) as unknown as Signal<Theme>,
   toggleTheme: vi.fn(),
+  isSpiritPleased: vi.fn().mockReturnValue(false) as unknown as Signal<boolean>,
 } as const satisfies MockedObject<Partial<LayoutService>>;
