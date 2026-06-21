@@ -46,7 +46,12 @@
       @for (litCandle of litCandleList(); track litCandle.instanceId) {
         <article class="candle candle-lit" [style.--candle-color]="litCandle.color">
           <div class="candle-figure">
-            <span class="candle-wick candle-wick-lit" aria-hidden="true"></span>
+            <span class="candle-wick-wrap" aria-hidden="true">
+              <span class="candle-flame">
+                <span class="candle-flame-core"></span>
+              </span>
+              <span class="candle-wick candle-wick-lit"></span>
+            </span>
 
             <div class="candle-body">
               <tui-icon class="candle-icon" [icon]="litCandle.icon" />
