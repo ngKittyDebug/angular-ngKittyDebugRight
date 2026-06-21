@@ -61,7 +61,7 @@ export const routes: Routes = [
         path: 'altar',
         canMatch: [authGuard],
         loadComponent: () => import('./features/altar/ui/altar.component').then((c) => c.AltarComponent),
-        providers: [provideTranslocoScope('altar'), ShriftPageFacade, ConfessFormService],
+        providers: [provideTranslocoScope('altar')],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
