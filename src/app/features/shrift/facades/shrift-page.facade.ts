@@ -9,6 +9,7 @@ export class ShriftPageFacade {
   private readonly confessService = inject(ConfessService);
   public readonly confessForm = inject(ConfessFormService).confessForm;
   public readonly sins = this.confessService.sins;
+  public readonly isLoading = this.confessService.isLoading;
 
   constructor() {
     this.confessService.loadSins().catch((error: unknown) => {
