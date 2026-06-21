@@ -1,0 +1,75 @@
+import { inject, Service, signal } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { firestore } from '@env/environment';
+import type { Severity, Sin, Status } from '@features/shrift/models/sin.model';
+
+const USERS_COLLECTION = 'users';
+const SINS_SUBCOLLECTION = 'sins';
+const STATUSES: Status[] = ['none', 'half', 'full'];
+
+@Service()
+export class ConfessService {
+  private readonly authService = inject(AuthService);
+
+  private readonly _sins = signal<Sin[] | null>(null);
+  public readonly sins = this._sins.asReadonly();
+
+  public async loadSins(): Promise<void> {
+    const uid = this.requireUid();
+
+    const sinsReference = collection(firestore, USERS_COLLECTION, uid, SINS_SUBCOLLECTION);
+    const snapshot = await getDocs(sinsReference);
+
+    const sins = snapshot.docs.map((document) => {
+      const data = document.data();
+
+      return {
+        uid: document.id,
+        text: data['text'] as string,
+        severity: data['severity'] as Severity,
+        status: data['status'] as Status,
+      } satisfies Sin;
+    });
+
+    this._sins.set(sins);
+  }
+
+  public async addSin(text: string, severity: Severity): Promise<void> {
+    const uid = this.requireUid();
+    const status = this.getRandomStatus();
+
+    const sinsReference = collection(firestore, USERS_COLLECTION, uid, SINS_SUBCOLLECTION);
+    const documentReference = await addDoc(sinsReference, { text, severity, status });
+
+    const newSin: Sin = { uid: documentReference.id, text, severity, status };
+
+    this._sins.update((sins) => (sins ? [...sins, newSin] : [newSin]));
+  }
+
+  public async deleteSin(sinUid: string): Promise<void> {
+    const uid = this.requireUid();
+
+    const sinReference = doc(firestore, USERS_COLLECTION, uid, SINS_SUBCOLLECTION, sinUid);
+
+    await deleteDoc(sinReference);
+
+    this._sins.update((sins) => sins?.filter((sin) => sin.uid !== sinUid) ?? null);
+  }
+
+  private requireUid(): string {
+    const uid = this.authService.user()?.uid;
+
+    if (!uid) {
+      throw new Error('User is not authenticated');
+    }
+
+    return uid;
+  }
+
+  private getRandomStatus(): Status {
+    const index = Math.floor(Math.random() * STATUSES.length);
+
+    return STATUSES[index];
+  }
+}
