@@ -1,18 +1,28 @@
 import { TestBed } from '@angular/core/testing';
+import { throwError } from 'rxjs';
 
 import { MainPageFacade } from './main-page.facade';
-import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
-import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
 import { expect, vi } from 'vitest';
 import { tarotResponseApiFixture } from '@features/main/data/api/fixtures/tarot-response-api.fixture';
-import { throwError } from 'rxjs';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
+import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
+import { tarotServiceMock } from '@features/main/data/api/services/tarot/tarot.service.mock';
+import { myMemoryTranslationServiceMock } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service.mock';
+import { translatedTarotResponseApiFixture } from '@features/main/data/api/fixtures/translated-tarot-response-api.fixture';
+import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
+import { Languages } from '@core/models/languages.model';
 
 describe('MainPageFacade', () => {
   let service: MainPageFacade;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MainPageFacade, { provide: TarotService, useValue: tarotServiceMock }],
+      providers: [
+        MainPageFacade,
+        { provide: MyMemoryTranslationService, useValue: myMemoryTranslationServiceMock },
+        { provide: TarotService, useValue: tarotServiceMock },
+      ],
+      imports: [TranslocoTestingMock],
     });
     service = TestBed.inject(MainPageFacade);
   });
@@ -23,7 +33,7 @@ describe('MainPageFacade', () => {
 
   describe('Загрузка таро', () => {
     it('должен начать загрузку', () => {
-      const setSpy = vi.spyOn(service['_isLoading'], 'set');
+      const setSpy = vi.spyOn(service['_isTarotLoading'], 'set');
 
       service.loadTarot();
 
@@ -44,14 +54,22 @@ describe('MainPageFacade', () => {
       expect(tarotServiceMock.loadReading).toHaveBeenCalledTimes(1);
     });
 
-    describe('Данные получены', () => {
-      it('результат установлен в сигнал', () => {
-        const setSpy = vi.spyOn(service.result, 'set');
+    it('должен переводить результат перед сохранением', () => {
+      service.loadTarot();
+      TestBed.tick();
 
-        service.loadTarot();
+      expect(service.result()).toBe(translatedTarotResponseApiFixture);
+    });
 
-        expect(setSpy).toHaveBeenNthCalledWith(1, tarotResponseApiFixture);
-      });
+    it('должен вызвать сервис перевода с активным языком', () => {
+      service.loadTarot();
+      TestBed.tick();
+
+      expect(myMemoryTranslationServiceMock.translateReading).toHaveBeenNthCalledWith(
+        1,
+        tarotResponseApiFixture,
+        Languages.RU
+      );
     });
 
     describe('Получена ошибка', () => {
@@ -71,7 +89,7 @@ describe('MainPageFacade', () => {
     });
 
     it('должен завершить загрузку', () => {
-      const setSpy = vi.spyOn(service['_isLoading'], 'set');
+      const setSpy = vi.spyOn(service['_isTarotLoading'], 'set');
 
       service.loadTarot();
 

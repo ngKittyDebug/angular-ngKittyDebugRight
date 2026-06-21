@@ -36,6 +36,7 @@ export class LayoutComponent {
   protected readonly isMobileNavOpen = this.layoutService.isMobileNavOpen;
   protected readonly user = this.layoutService.user;
   protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
+  protected readonly theme = this.layoutService.theme;
   constructor() {
     afterNextRender(() => {
       this.layoutService.watchMobileNavMediaQuery();
@@ -52,5 +53,9 @@ export class LayoutComponent {
 
   public async onLogout() {
     await this.layoutService.logout();
+  }
+
+  public toggleTheme() {
+    this.layoutService.toggleTheme();
   }
 }
