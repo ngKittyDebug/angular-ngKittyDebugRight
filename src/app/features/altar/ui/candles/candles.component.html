@@ -8,9 +8,9 @@
     (cdkDropListDropped)="onDrop($event)"
   >
     @for (candle of candleList; track candle.id) {
-      <article class="candle" [style.--candle-color]="candle.color" cdkDrag>
+      <article class="candle candle-lit" [style.--candle-color]="candle.color" cdkDrag>
         <div class="candle-figure">
-          <span class="candle-wick" aria-hidden="true"></span>
+          <span class="candle-wick candle-wick-lit" aria-hidden="true"></span>
 
           <div class="candle-body">
             <tui-icon class="candle-icon" [icon]="candle.icon" />
