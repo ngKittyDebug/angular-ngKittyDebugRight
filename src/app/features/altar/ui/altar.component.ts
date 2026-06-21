@@ -17,4 +17,7 @@ export class AltarComponent {
   protected readonly candleCounts = this.candlesService.candleCounts;
   protected readonly litCandleList = this.candlesService.litCandleList;
   protected readonly candleTypes = this.candlesService.candleTypes;
+  protected readonly totalOfferings = this.candlesService.totalOfferings;
+  protected readonly blessingLevel = this.candlesService.blessingLevel;
+  protected readonly isSpiritPleased = this.candlesService.isSpiritPleased;
 }

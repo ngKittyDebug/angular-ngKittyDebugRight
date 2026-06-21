@@ -6,8 +6,8 @@
     "total_offerings": "[ ВСЕГО ПОДНОШЕНИЙ ]",
     "spirit_status": "[ СТАТУС ДУХА ]",
     "blessing_level": "[ УРОВЕНЬ БЛАГОСЛОВЕНИЯ ]",
-    "status_watching": "НАБЛЮДАЕТ",
-    "status_pleased": "ДОВОЛЕН"
+    "status_unstable": "нестабилен",
+    "status_pleased": "доволен"
   },
   "instructions": {
     "title": "[ ИНСТРУКЦИЯ РИТУАЛА ]",
