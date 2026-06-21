@@ -11,7 +11,7 @@ export class MachineSpiritStatePipe implements PipeTransform {
   private readonly translocoService = inject(TranslocoService);
   transform(value: boolean): string {
     return value
-      ? this.translocoService.translate(marker('altar.statistics.status_pleased'))
-      : this.translocoService.translate(marker('altar.statistics.status_unstable'));
+      ? this.translocoService.translate(marker('header.status_pleased'))
+      : this.translocoService.translate(marker('header.status_unstable'));
   }
 }

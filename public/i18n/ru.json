@@ -19,7 +19,9 @@
   },
   "header": {
     "title": "КУЛЬТ СВЯТОГО ДЕПЛОЯ",
-    "subtitle": ">> Дух Машины {{ machineSpiritState }} <<"
+    "subtitle": ">> Дух Машины {{ machineSpiritState }} <<",
+    "status_unstable": "нестабилен",
+    "status_pleased": "доволен"
   },
   "footer": {
     "repository": "РЕПОЗИТОРИЙ",
