@@ -25,7 +25,7 @@ export interface Achievement {
   unlocked: boolean;
 }
 
-export interface AchievementsInfo {
+export interface AchievementInfo {
   total: number;
   unlocked: number;
   achievements: Achievement[];
@@ -39,6 +39,6 @@ export interface Zodiac {
 export interface ProfileData {
   profile: Profile;
   statistics: Statistics;
-  achievements: Achievement[];
+  achievementInfo: AchievementInfo;
   zodiac: Zodiac;
 }
