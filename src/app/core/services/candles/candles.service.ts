@@ -10,8 +10,8 @@ import { UserProfileService } from '@core/services/user-profile/user-profile.ser
 import { firestore } from '@env/environment';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { timer } from 'rxjs';
-import { createEmptyCandleCounts } from '@core/services/candles/create-empty-candle-counts.helper';
 import type { CandleType } from '@core/services/candles/models/candle-type.model';
+import { createEmptyCandleCounts } from '@core/services/candles/helpers/create-empty-candle-counts.helper';
 
 @Service()
 export class CandlesService {

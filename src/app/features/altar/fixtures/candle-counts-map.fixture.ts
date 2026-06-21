@@ -1,6 +1,6 @@
-import { createEmptyCandleCounts } from '@core/services/candles/create-empty-candle-counts.helper';
 import { CandleId } from '@core/services/candles/models/candle-id.model';
 import type { CandleCounts } from '@core/services/candles/models/candle-counts.model';
+import { createEmptyCandleCounts } from '@core/services/candles/helpers/create-empty-candle-counts.helper';
 
 export const candleCountsMapFixture = {
   ...createEmptyCandleCounts(),

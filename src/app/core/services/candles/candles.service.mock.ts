@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 
 import type { CandlesService } from '@core/services/candles/candles.service';
 import { CANDLE_TYPES_CONFIG } from '@core/services/candles/constants/candle-types.config';
-import { createEmptyCandleCounts } from '@core/services/candles/create-empty-candle-counts.helper';
+import { createEmptyCandleCounts } from '@core/services/candles/helpers/create-empty-candle-counts.helper';
 
 export const candlesServiceMock = {
   candleTypes: CANDLE_TYPES_CONFIG,
