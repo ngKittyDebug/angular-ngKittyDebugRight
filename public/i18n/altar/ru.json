@@ -19,6 +19,17 @@
     "blessing": "Machine Spirit примет вашу жертву и даст благословение",
     "extinguish": "Свеча погаснет через 5 секунд и запомнит вашу жертву"
   },
+  "candles": {
+    "count": "{{count}} раз",
+    "purposes": {
+      "deploy": "За успешный деплой",
+      "bug": "За исправленный баг",
+      "review": "За пройденный Code Review",
+      "refactor": "За завершенный рефакторинг",
+      "database": "За миграцию без rollback",
+      "legacy": "За работу с legacy code"
+    }
+  },
   "prayer": {
     "title": "[ МОЛИТВА MACHINE SPIRIT ]",
     "opening": "«От святого Machine Spirit мы просим:",

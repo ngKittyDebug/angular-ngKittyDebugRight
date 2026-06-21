@@ -19,6 +19,17 @@
     "blessing": "Machine Spirit will accept your offering and grant a blessing",
     "extinguish": "The candle will go out in 5 seconds and remember your sacrifice"
   },
+  "candles": {
+    "count": "{{count}} times",
+    "purposes": {
+      "deploy": "For a successful deploy",
+      "bug": "For a fixed bug",
+      "review": "For a passed code review",
+      "refactor": "For a completed refactor",
+      "database": "For a migration without rollback",
+      "legacy": "For working with legacy code"
+    }
+  },
   "prayer": {
     "title": "[ PRAYER TO MACHINE SPIRIT ]",
     "opening": "\"From the holy Machine Spirit we ask:",

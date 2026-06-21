@@ -1,1 +1,22 @@
-<p>candles works!</p>
+<section class="candles">
+  @for (candle of candleList; track candle.id) {
+    <article class="candle" [style.--candle-color]="candle.color">
+      <div class="candle-figure">
+        <span class="candle-wick" aria-hidden="true"></span>
+
+        <div class="candle-body">
+          <tui-icon class="candle-icon" [icon]="candle.icon" />
+          <span class="candle-marker" aria-hidden="true"></span>
+        </div>
+
+        <div class="candle-base" aria-hidden="true">
+          <span class="candle-base-line"></span>
+          <span class="candle-base-line"></span>
+        </div>
+      </div>
+
+      <p class="candle-purpose">{{ candle.purpose | transloco }}</p>
+      <p class="candle-count">{{ 'altar.candles.count' | transloco: { count: 0 } }}</p>
+    </article>
+  }
+</section>
