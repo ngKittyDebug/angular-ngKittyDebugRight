@@ -99,13 +99,6 @@
     inset 0 0 12px color-mix(in srgb, var(--candle-color) 8%, transparent);
 }
 
-.candle-wick-lit {
-  position: relative;
-  z-index: 1;
-  background: #4a4a4a;
-  box-shadow: 0 0 4px rgb(0 0 0 / 35%);
-}
-
 .candle-lit .candle-body {
   box-shadow:
     0 0 14px color-mix(in srgb, var(--candle-color) 55%, transparent),
@@ -214,6 +207,11 @@
   font-size: 0.65rem;
   letter-spacing: 0.06em;
   text-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary) 45%, transparent);
+}
+
+.candle-wick-lit {
+  background: var(--candle-color);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--candle-color) 70%, transparent);
 }
 
 .candle-altar {
