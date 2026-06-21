@@ -18,7 +18,7 @@
   },
   "header": {
     "title": "CULT OF THE HOLY DEPLOY",
-    "subtitle": ">> Machine Spirit is unstable <<"
+    "subtitle": ">> Machine Spirit is {{ machineSpiritState }} <<"
   },
   "footer": {
     "repository": "REPOSITORY",

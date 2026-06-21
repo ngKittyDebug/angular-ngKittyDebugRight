@@ -1,4 +1,4 @@
-<ngKitty-header (themeChanged)="toggleTheme()">
+<ngKitty-header [isSpiritPleased]="isSpiritPleased()" (themeChanged)="toggleTheme()">
   @if (user()) {
     <button appearance="primary" size="s" tuiButton type="button" class="exit" (click)="onLogout()">
       <tui-icon [tuiTooltip]="'sidebar.exit' | transloco" icon="@tui.log-out" />
