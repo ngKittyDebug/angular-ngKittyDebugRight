@@ -11,7 +11,9 @@ export class ShriftPageFacade {
   public readonly sins = this.confessService.sins;
 
   constructor() {
-    void this.confessService.loadSins();
+    this.confessService.loadSins().catch((error: unknown) => {
+      console.error('Failed to load sins', error);
+    });
   }
 
   public async onSubmit() {
@@ -21,9 +23,12 @@ export class ShriftPageFacade {
 
     const { text, severity } = this.confessForm.getRawValue();
 
-    await this.confessService.addSin(text, severity);
-
-    this.confessForm.reset();
+    try {
+      await this.confessService.addSin(text, severity);
+      this.confessForm.reset();
+    } catch (error) {
+      console.error('Failed to add sin', error);
+    }
   }
 
   public onDelete(sinUid: string) {

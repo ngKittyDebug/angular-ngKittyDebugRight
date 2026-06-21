@@ -1,6 +1,6 @@
 import { inject, Service, signal } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { firestore } from '@env/environment';
 import type { Severity, Sin, Status } from '@features/shrift/models/sin.model';
 
@@ -45,6 +45,7 @@ export class ConfessService {
     const newSin: Sin = { uid: documentReference.id, text, severity, status };
 
     this._sins.update((sins) => (sins ? [...sins, newSin] : [newSin]));
+    await this.updateSinsCount(uid, await this.getSinsCount(uid));
   }
 
   public async deleteSin(sinUid: string): Promise<void> {
@@ -55,6 +56,20 @@ export class ConfessService {
     await deleteDoc(sinReference);
 
     this._sins.update((sins) => sins?.filter((sin) => sin.uid !== sinUid) ?? null);
+    await this.updateSinsCount(uid, await this.getSinsCount(uid));
+  }
+
+  public async getSinsCount(uid: string): Promise<number> {
+    const sinsReference = collection(firestore, USERS_COLLECTION, uid, SINS_SUBCOLLECTION);
+    const snapshot = await getDocs(sinsReference);
+
+    return snapshot.size;
+  }
+
+  public async updateSinsCount(uid: string, count: number): Promise<void> {
+    const userReference = doc(firestore, USERS_COLLECTION, uid);
+
+    await updateDoc(userReference, { sins: count });
   }
 
   private requireUid(): string {
