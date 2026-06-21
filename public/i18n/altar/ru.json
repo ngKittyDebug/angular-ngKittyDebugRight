@@ -21,6 +21,8 @@
   },
   "candles": {
     "count": "{{count}} раз",
+    "altar_label": "[ АЛТАРЬ ]",
+    "altar_placeholder": "Перетащите свечу сюда",
     "purposes": {
       "deploy": "За успешный деплой",
       "bug": "За исправленный баг",

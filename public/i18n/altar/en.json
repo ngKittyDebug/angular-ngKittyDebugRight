@@ -21,6 +21,8 @@
   },
   "candles": {
     "count": "{{count}} times",
+    "altar_label": "[ ALTAR ]",
+    "altar_placeholder": "Drag a candle here",
     "purposes": {
       "deploy": "For a successful deploy",
       "bug": "For a fixed bug",
