@@ -5,9 +5,7 @@
     "label": "Altar statistics",
     "total_offerings": "[ TOTAL OFFERINGS ]",
     "spirit_status": "[ SPIRIT STATUS ]",
-    "blessing_level": "[ BLESSING LEVEL ]",
-    "status_watching": "WATCHING",
-    "status_pleased": "PLEASED"
+    "blessing_level": "[ BLESSING LEVEL ]"
   },
   "instructions": {
     "title": "[ RITUAL INSTRUCTIONS ]",

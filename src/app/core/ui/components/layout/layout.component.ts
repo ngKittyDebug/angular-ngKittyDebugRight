@@ -37,6 +37,8 @@ export class LayoutComponent {
   protected readonly user = this.layoutService.user;
   protected readonly navigationItemList = NAVIGATION_ITEM_LIST;
   protected readonly theme = this.layoutService.theme;
+  protected readonly isSpiritPleased = this.layoutService.isSpiritPleased;
+
   constructor() {
     afterNextRender(() => {
       this.layoutService.watchMobileNavMediaQuery();

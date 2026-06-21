@@ -5,9 +5,7 @@
     "label": "Статистика алтаря",
     "total_offerings": "[ ВСЕГО ПОДНОШЕНИЙ ]",
     "spirit_status": "[ СТАТУС ДУХА ]",
-    "blessing_level": "[ УРОВЕНЬ БЛАГОСЛОВЕНИЯ ]",
-    "status_watching": "НАБЛЮДАЕТ",
-    "status_pleased": "ДОВОЛЕН"
+    "blessing_level": "[ УРОВЕНЬ БЛАГОСЛОВЕНИЯ ]"
   },
   "instructions": {
     "title": "[ ИНСТРУКЦИЯ РИТУАЛА ]",

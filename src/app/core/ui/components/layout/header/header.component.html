@@ -1,3 +1,4 @@
+@let machineSpiritState = isSpiritPleased() | machineSpiritState;
 <header tuiHeader="h2" appearance="primary">
   <div class="header-box">
     <div class="header-buttons">
@@ -11,7 +12,7 @@
         <a routerLink="/">{{ 'header.title' | transloco }}</a>
       </h2>
       <p tuiSubtitle class="header-subtitle">
-        {{ 'header.subtitle' | transloco }}
+        {{ 'header.subtitle' | transloco: { machineSpiritState } }}
       </p>
     </hgroup>
     <div class="header-buttons">

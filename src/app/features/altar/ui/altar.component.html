@@ -8,7 +8,11 @@
   </header>
 
   <div class="altar-content">
-    <ngKitty-statistics />
+    <ngKitty-statistics
+      [isSpiritPleased]="isSpiritPleased()"
+      [totalOfferings]="totalOfferings()"
+      [blessingLevel]="blessingLevel()"
+    />
     <ngKitty-candles
       [candleCountsMap]="candleCounts()"
       [litCandleList]="litCandleList()"
