@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { PROFILE_MOCK } from '../data//fixtures/profile.fixture';
+import { PROFILE_MOCK } from '../data/fixtures/profile.fixture';
 import type { AchievementInfo, Profile, ProfileData, Statistics, Zodiac } from '../data/models/profile.model';
 
 @Injectable({
