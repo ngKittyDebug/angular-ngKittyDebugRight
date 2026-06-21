@@ -1,19 +1,19 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { BallComponent } from './ball.component';
+import { WisdomComponent } from './wisdom.component';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
-describe('BallComponent', () => {
-  let component: BallComponent;
-  let fixture: ComponentFixture<BallComponent>;
+describe('WisdomComponent', () => {
+  let component: WisdomComponent;
+  let fixture: ComponentFixture<WisdomComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BallComponent, TranslocoTestingMock],
+      imports: [WisdomComponent, TranslocoTestingMock],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BallComponent);
+    fixture = TestBed.createComponent(WisdomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

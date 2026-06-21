@@ -1,3 +1,18 @@
-<div class="ball-circle"></div>
-<div class="stand-top"></div>
-<div class="stand-bottom"></div>
+<section class="ball">
+  <header class="ball-header">
+    <h2 class="ball-title">
+      {{ 'ball.title' | transloco }}
+    </h2>
+    <p class="ball-subtitle">{{ 'ball.subtitle' | transloco }}</p>
+    <span class="ball-divider" aria-hidden="true"></span>
+  </header>
+
+  <div class="call-container">
+    <div class="ball-circle">
+      <tui-icon icon="@tui.sparkles" />
+    </div>
+    <div class="stand-top">{{ 'ball.ask' | transloco }}</div>
+    <div class="stand-bottom"></div>
+  </div>
+  <ngKitty-wisdom />
+</section>

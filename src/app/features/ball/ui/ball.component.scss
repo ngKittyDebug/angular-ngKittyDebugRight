@@ -1,10 +1,73 @@
 :host {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  @media (width <= 485px) {
+    padding: 0.75rem;
+  }
+}
+
+.ball {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.ball-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.ball-title {
+  margin: 0;
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 65%, transparent);
+}
+
+.ball-subtitle {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  font-style: italic;
+  line-height: 1.5;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--air) 35%, transparent);
+}
+
+.ball-divider {
+  width: 100%;
+  height: 1px;
+  margin-top: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent-primary) 52%, transparent),
+    transparent
+  );
+}
+
+.call-container {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 1rem;
+
+  @media (width <= 485px) {
+    padding: 0.75rem;
+  }
 }
 
 .ball-circle {
@@ -13,6 +76,23 @@
   border-radius: 50%;
   background: var(--accent-primary);
   box-shadow: 0 0 20px var(--accent-primary);
+  display: grid;
+  place-items: center;
+  transition: 1s ease all;
+  cursor: url('/assets/cursor-pointer.png'), pointer;
+
+  tui-icon {
+    color: var(--accent-primary-soft);
+    inline-size: 4rem;
+    block-size: 4rem;
+
+    --tui-stroke-width: 3px;
+    --tui-icon-size: 4rem;
+  }
+
+  &:hover {
+    box-shadow: 0 0 40px var(--accent-primary);
+  }
 
   @media (width <= 485px) {
     width: 250px;
@@ -22,14 +102,16 @@
 
 .stand-top {
   width: 210px;
-  height: 38px;
+  height: 40px;
   background: var(--bg-primary-btn);
   margin-top: -2px;
+  display: grid;
+  place-items: center;
 }
 
 .stand-bottom {
   width: 250px;
-  height: 24px;
+  height: 25px;
   background: var(--bg-secondary-btn);
   margin-top: -1px;
 }
