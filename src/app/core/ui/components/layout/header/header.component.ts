@@ -5,7 +5,6 @@ import { TuiHeader } from '@taiga-ui/layout';
 import { LanguageSwitcherComponent } from '@core/ui/components/language-switcher/language-switcher.component';
 import { RouterLink } from '@angular/router';
 import { MachineSpiritStatePipe } from '@shared/pipes/machine-spirit-state.pipe';
-import { LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'ngKitty-header',
@@ -18,7 +17,6 @@ import { LowerCasePipe } from '@angular/common';
     TuiIcon,
     RouterLink,
     MachineSpiritStatePipe,
-    LowerCasePipe,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

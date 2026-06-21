@@ -13,5 +13,4 @@ export class StatisticsComponent {
   public readonly totalOfferings = input.required<number>();
   public readonly blessingLevel = input.required<number>();
   public readonly isSpiritPleased = input.required<boolean>();
-  protected readonly MachineSpiritStatePipe = MachineSpiritStatePipe;
 }
