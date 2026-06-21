@@ -13,5 +13,6 @@ export const candlesServiceMock = {
   totalOfferings: signal(0).asReadonly(),
   blessingLevel: computed(() => 0),
   isSpiritPleased: computed(() => false),
+  error: signal(null).asReadonly(),
   offerCandle: vi.fn(),
 } as const satisfies MockedObject<Partial<CandlesService>>;

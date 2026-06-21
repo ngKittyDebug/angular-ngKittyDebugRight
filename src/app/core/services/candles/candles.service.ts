@@ -19,9 +19,11 @@ export class CandlesService {
   private readonly userProfileService = inject(UserProfileService);
   private readonly _candleCounts = signal<CandleCounts>(createEmptyCandleCounts());
   private readonly _litCandleList = signal<LitCandle[]>([]);
+  private readonly _error = signal<unknown | null>(null);
   public readonly candleTypes = CANDLE_TYPES_CONFIG;
   public readonly litCandleList = this._litCandleList.asReadonly();
   public readonly candleCounts = this._candleCounts.asReadonly();
+  public readonly error = this._error.asReadonly();
   public readonly totalOfferings = computed(() => {
     const counts = this._candleCounts();
 
@@ -41,6 +43,7 @@ export class CandlesService {
       if (!profile) {
         this._candleCounts.set(createEmptyCandleCounts());
         this._litCandleList.set([]);
+        this._error.set(null);
 
         return;
       }
@@ -50,6 +53,8 @@ export class CandlesService {
   }
 
   public offerCandle(candle: CandleType): void {
+    this._error.set(null);
+
     const litCandle: LitCandle = {
       ...candle,
       instanceId: crypto.randomUUID(),
@@ -68,9 +73,10 @@ export class CandlesService {
   private async completeOffering(instanceId: string, candleId: CandleId): Promise<void> {
     this._litCandleList.update((list) => list.filter((candle) => candle.instanceId !== instanceId));
 
+    const previousCounts = this._candleCounts();
     const nextCounts = {
-      ...this._candleCounts(),
-      [candleId]: this._candleCounts()[candleId] + 1,
+      ...previousCounts,
+      [candleId]: previousCounts[candleId] + 1,
     };
 
     this._candleCounts.set(nextCounts);
@@ -83,21 +89,34 @@ export class CandlesService {
 
     const totalCandles = Object.values(nextCounts).reduce((total, count) => total + count, 0);
 
-    await this.saveCandleCounts(profile.uid, nextCounts, totalCandles);
+    try {
+      await this.saveCandleCounts(profile.uid, nextCounts, totalCandles);
+      this._error.set(null);
+    } catch (error) {
+      this._candleCounts.set(previousCounts);
+      this._error.set(error);
+    }
   }
 
   private async loadCandleCounts(uid: string): Promise<void> {
-    const userSnapshot = await getDoc(this.getUserReference(uid));
+    try {
+      const userSnapshot = await getDoc(this.getUserReference(uid));
 
-    if (!userSnapshot.exists()) {
+      if (!userSnapshot.exists()) {
+        this._candleCounts.set(createEmptyCandleCounts());
+        this._error.set(null);
+
+        return;
+      }
+
+      const data = userSnapshot.data();
+
+      this._candleCounts.set(this.parseCandleCounts(data['candleCounts']));
+      this._error.set(null);
+    } catch (error) {
       this._candleCounts.set(createEmptyCandleCounts());
-
-      return;
+      this._error.set(error);
     }
-
-    const data = userSnapshot.data();
-
-    this._candleCounts.set(this.parseCandleCounts(data['candleCounts']));
   }
 
   private async saveCandleCounts(uid: string, candleCounts: CandleCounts, totalCandles: number): Promise<void> {
