@@ -8,9 +8,23 @@
   </header>
 
   <div class="call-container">
-    <div class="ball-circle">
-      <tui-icon icon="@tui.sparkles" />
-    </div>
+    <button class="ball-circle" [class.is-charging]="isCharging()" (click)="onBallClick()">
+      <span class="spark spark-1"></span>
+      <span class="spark spark-2"></span>
+      <span class="spark spark-3"></span>
+      <span class="spark spark-4"></span>
+      <span class="spark spark-5"></span>
+      <span class="spark spark-6"></span>
+      <span class="spark spark-7"></span>
+      <span class="spark spark-8"></span>
+      <span class="spark spark-9"></span>
+
+      @if (answerText()) {
+        <p class="ball-answer">{{ answerText() }}</p>
+      } @else {
+        <tui-icon icon="@tui.sparkles" />
+      }
+    </button>
     <div class="stand-top">{{ 'ball.ask' | transloco }}</div>
     <div class="stand-bottom"></div>
   </div>
