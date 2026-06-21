@@ -8,9 +8,9 @@
     (cdkDropListDropped)="onDrop($event)"
   >
     @for (candle of candleList; track candle.id) {
-      <article class="candle candle-lit" [style.--candle-color]="candle.color" cdkDrag>
+      <article class="candle" [style.--candle-color]="candle.color" cdkDrag>
         <div class="candle-figure">
-          <span class="candle-wick candle-wick-lit" aria-hidden="true"></span>
+          <span class="candle-wick" aria-hidden="true"></span>
 
           <div class="candle-body">
             <tui-icon class="candle-icon" [icon]="candle.icon" />
@@ -41,9 +41,14 @@
       class="candle-altar-surface"
     >
       @for (altarCandle of altarCandleList; track altarCandle.id) {
-        <article class="candle" [style.--candle-color]="altarCandle.color" cdkDrag>
+        <article class="candle candle-lit" [style.--candle-color]="altarCandle.color" cdkDrag>
           <div class="candle-figure">
-            <span class="candle-wick" aria-hidden="true"></span>
+            <span class="candle-wick-wrap" aria-hidden="true">
+              <span class="candle-flame">
+                <span class="candle-flame-core"></span>
+              </span>
+              <span class="candle-wick candle-wick-lit"></span>
+            </span>
 
             <div class="candle-body">
               <tui-icon class="candle-icon" [icon]="altarCandle.icon" />
