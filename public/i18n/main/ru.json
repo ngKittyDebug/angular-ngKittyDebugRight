@@ -15,6 +15,18 @@
     "reversed": "Перевёрнута",
     "upright": "Прямая"
   },
+  "position": {
+    "foundation": "Основание",
+    "crossing": "Препятствие",
+    "outcome": "Итог"
+  },
+  "verdict": {
+    "ship-it": "Выкатывай",
+    "proceed": "Можно выпускать",
+    "tread-carefully": "Действуй осторожно",
+    "abort-mission": "Отмена деплоя",
+    "just-vibes": "Просто вайбы"
+  },
   "configure_reading": "[ НАСТРОИТЬ РАСКЛАД ]",
   "role": {
     "label": "Ваша роль:",

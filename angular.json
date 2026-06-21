@@ -106,6 +106,7 @@
           "options": {
             "tsConfig": "tsconfig.spec.json",
             "runnerConfig": "vitest.config.ts",
+            "isolate": true,
             "coverageExclude": ["**/**/*.html"]
           }
         },

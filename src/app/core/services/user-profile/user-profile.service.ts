@@ -3,6 +3,10 @@ import { firestore } from '@env/environment';
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 import type { UserProfile } from './models/user-profile.model';
+import { initialUiState } from '@core/store/constants/initial-ui-state';
+import type { UiState } from '@core/store/models/ui-state.model';
+import { Theme } from '@core/models/theme.model';
+import { Languages } from '@core/models/languages.model';
 
 @Service()
 export class UserProfileService {
@@ -33,6 +37,9 @@ export class UserProfileService {
       email: email,
       candles: 0,
       sins: 0,
+      uiState: {
+        ...initialUiState,
+      },
     });
   }
 
@@ -63,7 +70,17 @@ export class UserProfileService {
     });
   }
 
-  public clearProfile(): void {
+  public async updateUiState(uid: string, uiState: UiState) {
+    await setDoc(this.getUserReference(uid), { uiState }, { merge: true });
+
+    const currentUser = this._user();
+
+    if (currentUser?.uid === uid) {
+      this._user.set({ ...currentUser, uiState });
+    }
+  }
+
+  public clearProfile() {
     this._user.set(null);
   }
 
@@ -80,14 +97,27 @@ export class UserProfileService {
       createdAt: data['createdAt'] ?? null,
       candles: this.getNumber(data['candles']),
       sins: this.getNumber(data['sins']),
+      uiState: this.getUiState(data['uiState']),
     };
   }
 
-  private getNullableString(value: unknown): string | null {
+  private getNullableString(value: unknown) {
     return typeof value === 'string' ? value : null;
   }
 
-  private getNumber(value: unknown): number {
+  private getNumber(value: unknown) {
     return typeof value === 'number' ? value : 0;
+  }
+
+  private getUiState(value: unknown): UiState {
+    if (typeof value !== 'object' || value === null) {
+      return { ...initialUiState };
+    }
+    const uiState = value as Record<string, unknown>;
+
+    return {
+      theme: uiState['theme'] === Theme.LIGHT ? Theme.LIGHT : Theme.DARK,
+      language: uiState['language'] === Languages.EN ? Languages.EN : Languages.RU,
+    };
   }
 }

@@ -3,10 +3,11 @@ import { Component, computed, effect, input, viewChildren } from '@angular/core'
 import type { TarotResponseApi } from '@features/main/data/api/models/deploy-tarot-response-api.model';
 import { TuiIcon } from '@taiga-ui/core';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'ngKitty-tarot-reading',
-  imports: [TuiIcon, TranslocoPipe],
+  imports: [TuiIcon, TranslocoPipe, UpperCasePipe],
   templateUrl: './tarot-reading.component.html',
   styleUrl: './tarot-reading.component.scss',
 })
