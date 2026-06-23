@@ -33,7 +33,7 @@
 
   <tui-textfield iconStart="@tui.lock">
     <label tuiLabel for="password">{{ 'register.form.labels.password' | transloco }}</label>
-    <input id="password" [formControl]="passwordControl" placeholder="Aa88888" tuiInput type="password" />
+    <input id="password" [formControl]="passwordControl" placeholder="Aa888888" tuiInput type="password" />
     <tui-icon tuiPassword />
   </tui-textfield>
   @let passwordControlErrors = passwordControl.errors;
@@ -51,7 +51,13 @@
 
   <tui-textfield iconStart="@tui.lock">
     <label tuiLabel for="passwordConfirmation">{{ 'register.form.labels.password_confirmation' | transloco }}</label>
-    <input id="passwordConfirmation" [formControl]="passwordConfirmationControl" placeholder="Aa88888" tuiInput />
+    <input
+      id="passwordConfirmation"
+      [formControl]="passwordConfirmationControl"
+      placeholder="Aa888888"
+      tuiInput
+      type="password"
+    />
     <tui-icon tuiPassword />
   </tui-textfield>
   @let passwordConfirmationControlErrors = passwordConfirmationControl.errors;
