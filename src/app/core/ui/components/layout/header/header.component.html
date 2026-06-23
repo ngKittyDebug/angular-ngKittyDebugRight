@@ -12,7 +12,14 @@
 
     <div class="header-actions">
       <div class="header-actions-start">
-        <button appearance="primary" class="header-action" size="s" tuiButton type="button" (click)="themeChanged.emit()">
+        <button
+          appearance="primary"
+          class="header-action"
+          size="s"
+          tuiButton
+          type="button"
+          (click)="themeChanged.emit()"
+        >
           <tui-icon icon="@tui.moon" />
         </button>
         <ngKitty-language-switcher />
