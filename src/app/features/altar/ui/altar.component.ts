@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StatisticsComponent } from '@features/altar/ui/statistics/statistics.component';
 import { PrayerComponent } from '@features/altar/ui/prayer/prayer.component';
-import { InstructionsComponent } from '@features/altar/ui/instractions/instructions.component';
+import { InstructionsComponent } from '@features/altar/ui/instructions/instructions.component';
 import { CandlesComponent } from '@features/altar/ui/candles/candles.component';
 import { CandlesService } from '@core/services/candles/candles.service';
 

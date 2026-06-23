@@ -4,11 +4,5 @@
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
-  },
-  "/.netlify": {
-    "target": "https://delulu-church.netlify.app",
-    "secure": true,
-    "changeOrigin": true,
-    "logLevel": "debug"
   }
 }
