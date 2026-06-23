@@ -1,8 +1,24 @@
 :root {
-  --font-display: 'Orbitron', sans-serif;
+  --font-display: 'Science Gothic', sans-serif;
   --font-display-weight: 700;
+  --font-display-stretch: 125%;
   --font-orbitron: var(--font-display);
   --font-oxanium: 'Oxanium', var(--font-display), sans-serif;
+  --tui-typography-family-display: var(--font-display);
+  --tui-typography-family-text: var(--font-oxanium);
+}
+
+.header-title,
+.tarot-verdict-title,
+.altar-title,
+.altar-panel-label,
+.altar-stat-value,
+.candle-count,
+.candle-altar-label,
+.oracle-config-title,
+.oracle-speaks-title {
+  font-family: var(--font-display), sans-serif;
+  font-stretch: var(--font-display-stretch);
 }
 
 /* App «light» theme (gold). :root — дефолт, когда provideTaiga снимает tuiTheme с body */
