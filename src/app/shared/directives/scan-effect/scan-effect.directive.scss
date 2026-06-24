@@ -1,0 +1,58 @@
+.scan-effect {
+  position: relative;
+}
+
+.scan-effect.is-scanning::before,
+.scan-effect.is-scanning::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.scan-effect.is-scanning::before {
+  inset: 0;
+  z-index: 2;
+  opacity: var(--scan-opacity, 0.55);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 7%, transparent) 0,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 7%, transparent) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.scan-effect.is-scanning::after {
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: var(--scan-line-height, 2px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 85%, transparent),
+    transparent
+  );
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--scan-color, var(--accent-primary)) 70%, transparent),
+    0 0 4px color-mix(in srgb, var(--scan-color, var(--accent-primary)) 90%, transparent);
+  animation: scan-effect-sweep var(--scan-duration, 6s) linear infinite;
+}
+
+@keyframes scan-effect-sweep {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: calc(100% - var(--scan-line-height, 2px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-effect.is-scanning::after {
+    animation: none;
+    opacity: 0;
+  }
+}

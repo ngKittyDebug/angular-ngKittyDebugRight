@@ -1,3 +1,6 @@
+/* stylelint-disable-next-line at-rule-no-unknown */
+@use 'app/shared/directives/scan-effect/scan-effect.directive';
+
 .main-page {
   display: flex;
   flex-direction: column;

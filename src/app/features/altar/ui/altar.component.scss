@@ -1,3 +1,6 @@
+/* stylelint-disable-next-line at-rule-no-unknown */
+@use 'app/shared/directives/scan-effect/scan-effect.directive';
+
 :host {
   display: block;
   width: 100%;
