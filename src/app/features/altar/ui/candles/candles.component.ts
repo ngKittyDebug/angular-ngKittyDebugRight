@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { TuiIcon } from '@taiga-ui/core';
 import type { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -12,7 +12,6 @@ import type { CandleCounts } from '@core/services/candles/models/candle-counts.m
   imports: [TuiIcon, TranslocoPipe, CdkDrag, CdkDropList],
   templateUrl: './candles.component.html',
   styleUrl: './candles.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CandlesComponent {
   public readonly candleListChanged = output<CandleType>();
