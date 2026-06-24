@@ -9,44 +9,46 @@
   pointer-events: none;
 }
 
+/* Static video scanlines — single faint layer */
 .scan-effect.is-scanning::before {
   inset: 0;
   z-index: 2;
-  opacity: var(--scan-opacity, 0.55);
+  opacity: var(--scan-opacity, 0.28);
   background-image: repeating-linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 7%, transparent) 0,
-    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 7%, transparent) 1px,
-    transparent 1px,
-    transparent 4px
+    transparent 0,
+    transparent 3px,
+    color-mix(in srgb, #000 5%, transparent) 3px,
+    color-mix(in srgb, #000 5%, transparent) 4px
   );
 }
 
+/* One soft sweep — slow, like a rolling shutter on analog video */
 .scan-effect.is-scanning::after {
   top: 0;
   right: 0;
   left: 0;
   z-index: 3;
-  height: var(--scan-line-height, 2px);
+  height: var(--scan-beam-height, 2.5rem);
+  opacity: 0.32;
   background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 85%, transparent),
-    transparent
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 5%, transparent) 42%,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 14%, transparent) 50%,
+    color-mix(in srgb, var(--scan-color, var(--accent-primary)) 5%, transparent) 58%,
+    transparent 100%
   );
-  box-shadow:
-    0 0 12px color-mix(in srgb, var(--scan-color, var(--accent-primary)) 70%, transparent),
-    0 0 4px color-mix(in srgb, var(--scan-color, var(--accent-primary)) 90%, transparent);
-  animation: scan-effect-sweep var(--scan-duration, 6s) linear infinite;
+  animation: scan-effect-sweep var(--scan-duration, 12s) linear infinite;
 }
 
 @keyframes scan-effect-sweep {
   from {
-    top: 0;
+    top: calc(-1 * var(--scan-beam-height, 2.5rem));
   }
 
   to {
-    top: calc(100% - var(--scan-line-height, 2px));
+    top: 100%;
   }
 }
 

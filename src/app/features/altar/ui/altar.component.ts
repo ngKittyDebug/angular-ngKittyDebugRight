@@ -5,18 +5,10 @@ import { PrayerComponent } from '@features/altar/ui/prayer/prayer.component';
 import { InstructionsComponent } from '@features/altar/ui/instructions/instructions.component';
 import { CandlesComponent } from '@features/altar/ui/candles/candles.component';
 import { CandlesService } from '@core/services/candles/candles.service';
-import { ScanEffectDirective } from '@shared/directives/scan-effect/scan-effect.directive';
 
 @Component({
   selector: 'ngKitty-altar',
-  imports: [
-    StatisticsComponent,
-    PrayerComponent,
-    InstructionsComponent,
-    TranslocoPipe,
-    CandlesComponent,
-    ScanEffectDirective,
-  ],
+  imports: [StatisticsComponent, PrayerComponent, InstructionsComponent, TranslocoPipe, CandlesComponent],
   templateUrl: './altar.component.html',
   styleUrl: './altar.component.scss',
 })
