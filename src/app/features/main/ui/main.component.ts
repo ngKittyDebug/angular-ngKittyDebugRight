@@ -1,12 +1,13 @@
 import { Component, computed, inject } from '@angular/core';
 import { MainPageFacade } from '@features/main/facades/main-page.facade';
+import { ScanEffectDirective } from '@shared/directives/scan-effect/scan-effect.directive';
 import { TarotOracleComponent } from '@features/main/ui/tarot-oracle/tarot-oracle.component';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { TarotReadingComponent } from '@features/main/ui/tarot-reading/tarot-reading.component';
 
 @Component({
   selector: 'ngKitty-main',
-  imports: [TarotOracleComponent, TranslocoPipe, TarotReadingComponent],
+  imports: [TarotOracleComponent, TranslocoPipe, TarotReadingComponent, ScanEffectDirective],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
