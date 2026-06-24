@@ -25,7 +25,7 @@
 
   <tui-textfield iconStart="@tui.lock">
     <label tuiLabel for="password">{{ 'login.password' | transloco }}</label>
-    <input id="password" formControlName="password" placeholder="Aa88888" tuiInput />
+    <input id="password" formControlName="password" placeholder="Aa888888" tuiInput type="password" />
     <tui-icon tuiPassword />
   </tui-textfield>
   @if (passwordControl.errors?.['required'] && passwordControl.touched) {
