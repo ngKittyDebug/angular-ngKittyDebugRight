@@ -5,6 +5,7 @@ import { TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
 import { UserProfileService } from '@core/services/user-profile/user-profile.service';
+import { ProfileFacade } from './facades/profile.facade';
 
 @Component({
   selector: 'ngKitty-profile',
@@ -13,6 +14,8 @@ import { UserProfileService } from '@core/services/user-profile/user-profile.ser
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
+  private readonly facade = inject(ProfileFacade);
+
   protected readonly userProfileService = inject(UserProfileService);
 
   protected stats = [
