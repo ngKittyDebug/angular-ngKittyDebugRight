@@ -1,0 +1,461 @@
+<div
+  class="digital-priest"
+  [class.digital-priest-idle]="mood() === 'idle'"
+  [class.digital-priest-preaching]="mood() === 'preaching'"
+  [class.digital-priest-blessing]="mood() === 'blessing'"
+  [class.digital-priest-damning]="mood() === 'damning'"
+  [class.digital-priest-engaged]="isEngaged()"
+  [class.digital-priest-raging]="isEngaged()"
+  [class.digital-priest-hover]="isPointerOver()"
+>
+  <div class="digital-priest-speech-slot" aria-live="polite">
+    @if (speechKey(); as key) {
+      <p class="digital-priest-speech">{{ key | transloco }}</p>
+    }
+  </div>
+
+  <button
+    type="button"
+    class="digital-priest-trigger"
+    [attr.aria-label]="ariaLabel()"
+    (pointermove)="onPointerMove($event)"
+    (pointerleave)="onPointerLeave()"
+    (click)="onInteract()"
+  >
+    @if (!speechKey()) {
+      <p class="digital-priest-hint">{{ 'sanctum.priest.hint' | transloco }}</p>
+    }
+
+    <div class="digital-priest-frame">
+      <div class="digital-priest-crt" aria-hidden="true"></div>
+      <div class="digital-priest-pixel-mask" aria-hidden="true"></div>
+
+      <svg
+        class="digital-priest-svg"
+        viewBox="0 0 140 210"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern id="digital-priest-pixel" width="5" height="5" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" fill="#1a1410" />
+            <rect width="1" height="1" fill="var(--digital-priest-accent)" opacity="0.2" />
+          </pattern>
+          <pattern id="digital-priest-floral" width="8" height="8" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" fill="#241c18" />
+            <circle cx="2" cy="2" r="0.8" fill="var(--digital-priest-accent)" opacity="0.28" />
+            <circle cx="6" cy="6" r="0.6" fill="var(--digital-priest-accent)" opacity="0.18" />
+          </pattern>
+          <pattern id="digital-priest-apron-stitch" width="12" height="12" patternUnits="userSpaceOnUse">
+            <path d="M0 6 H12 M6 0 V12" stroke="var(--digital-priest-accent)" stroke-width="0.25" opacity="0.14" />
+          </pattern>
+          <linearGradient id="digital-priest-robe" x1="70" y1="88" x2="70" y2="205" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#2a221c" />
+            <stop offset="1" stop-color="#120e0c" />
+          </linearGradient>
+          <linearGradient id="digital-priest-glow" x1="70" y1="18" x2="70" y2="110" gradientUnits="userSpaceOnUse">
+            <stop stop-color="var(--digital-priest-accent)" stop-opacity="0.42" />
+            <stop offset="1" stop-color="var(--digital-priest-accent)" stop-opacity="0" />
+          </linearGradient>
+          <linearGradient id="digital-priest-face-fill" x1="70" y1="36" x2="70" y2="78" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#2e2620" />
+            <stop offset="1" stop-color="#1a1512" />
+          </linearGradient>
+          <radialGradient
+            id="digital-priest-cheek-glow"
+            cx="0"
+            cy="0"
+            r="1"
+            gradientUnits="userSpaceOnUse"
+            gradientTransform="scale(4 2.5)"
+          >
+            <stop stop-color="#e8a0a0" stop-opacity="0.45" />
+            <stop offset="1" stop-color="#e8a0a0" stop-opacity="0" />
+          </radialGradient>
+          <filter id="digital-priest-glow-filter">
+            <feGaussianBlur stdDeviation="1.4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <ellipse class="digital-priest-aura" cx="70" cy="108" rx="50" ry="64" fill="url(#digital-priest-glow)" />
+
+        <g class="digital-priest-data-orbit" opacity="0.4">
+          <text x="14" y="24" class="digital-priest-hex">баба</text>
+          <text x="98" y="30" class="digital-priest-hex">0xΩ</text>
+          <text x="10" y="168" class="digital-priest-hex">чай</text>
+          <text x="104" y="176" class="digital-priest-hex">CI</text>
+        </g>
+
+        <g class="digital-priest-halo">
+          <circle
+            cx="70"
+            cy="46"
+            r="34"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.9"
+            stroke-dasharray="4 7"
+            opacity="0.55"
+          />
+          <circle
+            cx="70"
+            cy="46"
+            r="26"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.6"
+            stroke-dasharray="2 6"
+            opacity="0.35"
+          />
+          <text x="70" y="51" text-anchor="middle" class="digital-priest-halo-mark">☦</text>
+        </g>
+
+        <path
+          class="digital-priest-robe"
+          d="M36 94 C30 118 28 150 30 188 C44 198 96 198 110 188 C112 150 110 118 104 94 C92 102 48 102 36 94 Z"
+          fill="url(#digital-priest-robe)"
+          stroke="var(--digital-priest-accent)"
+          stroke-width="1"
+        />
+
+        <path
+          class="digital-priest-shawl"
+          d="M34 92 C48 86 92 86 106 92 C100 100 40 100 34 92 Z"
+          fill="url(#digital-priest-floral)"
+          stroke="var(--digital-priest-accent)"
+          stroke-width="0.8"
+          opacity="0.92"
+        />
+
+        <path
+          class="digital-priest-apron"
+          d="M50 100 C70 112 90 100 94 104 L98 172 C70 184 42 172 46 104 Z"
+          fill="url(#digital-priest-apron-stitch)"
+          stroke="var(--digital-priest-accent)"
+          stroke-width="0.85"
+          opacity="0.88"
+        />
+
+        <g class="digital-priest-pendant">
+          <circle cx="70" cy="108" r="5" stroke="var(--digital-priest-accent)" stroke-width="0.7" fill="#120e0c" />
+          <path
+            d="M70 104 V112 M67 107 H73"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.8"
+            stroke-linecap="round"
+          />
+        </g>
+
+        <g class="digital-priest-hair">
+          <ellipse
+            class="digital-priest-bun"
+            cx="88"
+            cy="44"
+            rx="9"
+            ry="10"
+            fill="#1a1512"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.7"
+          />
+          <path
+            class="digital-priest-scarf-back"
+            d="M38 48 C28 62 24 82 30 98 C42 88 46 68 48 52 Z"
+            fill="url(#digital-priest-floral)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.75"
+            opacity="0.9"
+          />
+          <path
+            class="digital-priest-scarf-top"
+            d="M34 42 C52 24 88 24 106 42 C104 54 76 58 70 56 C64 58 36 54 34 42 Z"
+            fill="url(#digital-priest-pixel)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.95"
+          />
+          <path
+            class="digital-priest-scarf-tail"
+            d="M32 50 C22 68 18 88 26 108 C30 92 34 72 38 58 Z"
+            fill="url(#digital-priest-floral)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.7"
+            opacity="0.85"
+          />
+          <path
+            class="digital-priest-scarf-knot"
+            d="M58 68 C70 76 82 68 82 72 C82 78 70 84 58 78 C58 74 58 72 58 68 Z"
+            fill="#241c18"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.8"
+          />
+        </g>
+
+        <ellipse
+          class="digital-priest-head"
+          cx="70"
+          cy="58"
+          rx="21"
+          ry="24"
+          fill="url(#digital-priest-face-fill)"
+          stroke="var(--digital-priest-accent)"
+          stroke-width="0.95"
+        />
+
+        <path
+          class="digital-priest-wrinkle"
+          d="M58 66 Q70 70 82 66"
+          stroke="var(--digital-priest-accent)"
+          stroke-width="0.45"
+          opacity="0.35"
+          stroke-linecap="round"
+        />
+
+        <ellipse
+          class="digital-priest-cheek digital-priest-cheek-left"
+          cx="54"
+          cy="64"
+          rx="5"
+          ry="3"
+          fill="url(#digital-priest-cheek-glow)"
+        />
+        <ellipse
+          class="digital-priest-cheek digital-priest-cheek-right"
+          cx="86"
+          cy="64"
+          rx="5"
+          ry="3"
+          fill="url(#digital-priest-cheek-glow)"
+        />
+
+        <g class="digital-priest-face" [attr.transform]="faceTransform()">
+          <g class="digital-priest-eye digital-priest-eye-left">
+            <circle cx="57" cy="54" r="9" fill="#100d0b" stroke="var(--digital-priest-accent)" stroke-width="0.85" />
+            <circle cx="57" cy="54" r="6.5" fill="#0a0807" />
+            <circle
+              class="digital-priest-pupil"
+              cx="57"
+              cy="54"
+              r="2.6"
+              fill="var(--digital-priest-accent)"
+              filter="url(#digital-priest-glow-filter)"
+              [attr.transform]="pupilTransform()"
+            />
+            <circle
+              cx="57"
+              cy="54"
+              r="9.8"
+              fill="none"
+              stroke="var(--digital-priest-accent)"
+              stroke-width="0.55"
+              opacity="0.55"
+            />
+          </g>
+          <g class="digital-priest-eye digital-priest-eye-right">
+            <circle cx="83" cy="54" r="9" fill="#100d0b" stroke="var(--digital-priest-accent)" stroke-width="0.85" />
+            <circle cx="83" cy="54" r="6.5" fill="#0a0807" />
+            <circle
+              class="digital-priest-pupil"
+              cx="83"
+              cy="54"
+              r="2.6"
+              fill="var(--digital-priest-accent)"
+              filter="url(#digital-priest-glow-filter)"
+              [attr.transform]="pupilTransform()"
+            />
+            <circle
+              cx="83"
+              cy="54"
+              r="9.8"
+              fill="none"
+              stroke="var(--digital-priest-accent)"
+              stroke-width="0.55"
+              opacity="0.55"
+            />
+          </g>
+          <path
+            class="digital-priest-nose"
+            d="M70 58 C68 62 72 62 70 58 Z"
+            fill="var(--digital-priest-accent)"
+            opacity="0.35"
+          />
+          <g class="digital-priest-mouth-closed">
+            <path
+              d="M62 70 Q70 76 78 70"
+              stroke="var(--digital-priest-accent)"
+              stroke-width="1.1"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </g>
+          <g class="digital-priest-brows-angry">
+            <path
+              d="M50 48 Q57 44 62 48"
+              stroke="var(--critical)"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <path
+              d="M90 48 Q83 44 78 48"
+              stroke="var(--critical)"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </g>
+          <g class="digital-priest-mouth-open">
+            <ellipse cx="70" cy="72" rx="7" ry="5" fill="#0a0807" stroke="var(--critical)" stroke-width="0.85" />
+            <ellipse cx="70" cy="73" rx="4" ry="2" fill="var(--critical)" opacity="0.5" />
+          </g>
+          <g class="digital-priest-mouth-rage">
+            <path
+              d="M63 72 Q70 80 77 72"
+              stroke="var(--critical)"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <path d="M66 74 L68 78 M74 74 L72 78" stroke="var(--critical)" stroke-width="1" stroke-linecap="round" />
+          </g>
+        </g>
+
+        <g class="digital-priest-staff-group">
+          <path
+            class="digital-priest-staff"
+            d="M108 62 C106 110 104 150 102 186"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle
+            class="digital-priest-staff-node"
+            cx="108"
+            cy="54"
+            r="7"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="1.1"
+            fill="#1a1512"
+          />
+          <text class="digital-priest-staff-mark" x="108" y="57" text-anchor="middle">Ω</text>
+          <circle
+            class="digital-priest-staff-segment"
+            cx="106"
+            cy="98"
+            r="2.5"
+            fill="var(--digital-priest-accent)"
+            opacity="0.45"
+          />
+          <circle
+            class="digital-priest-staff-segment"
+            cx="105"
+            cy="132"
+            r="2"
+            fill="var(--digital-priest-accent)"
+            opacity="0.3"
+          />
+          <circle
+            class="digital-priest-staff-segment"
+            cx="104"
+            cy="162"
+            r="1.8"
+            fill="var(--digital-priest-accent)"
+            opacity="0.22"
+          />
+        </g>
+
+        <g class="digital-priest-hand-staff">
+          <ellipse
+            cx="100"
+            cy="98"
+            rx="8"
+            ry="10"
+            fill="url(#digital-priest-pixel)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.75"
+          />
+          <path
+            d="M96 94 C98 90 102 90 104 94"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.6"
+            opacity="0.5"
+          />
+        </g>
+
+        <g class="digital-priest-hand-raised">
+          <ellipse
+            cx="32"
+            cy="78"
+            rx="10"
+            ry="12"
+            fill="url(#digital-priest-pixel)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.8"
+          />
+          <path
+            d="M26 70 C24 62 28 54 34 56 C38 58 36 66 32 70 Z"
+            fill="url(#digital-priest-floral)"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.65"
+          />
+          <path
+            d="M22 58 C20 52 24 46 28 48"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.7"
+            stroke-linecap="round"
+          />
+        </g>
+
+        <g class="digital-priest-circuits" opacity="0.5">
+          <path
+            d="M48 128 Q70 134 92 128"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.55"
+            stroke-dasharray="2 4"
+          />
+          <path
+            d="M52 148 Q70 154 88 148"
+            stroke="var(--digital-priest-accent)"
+            stroke-width="0.5"
+            stroke-dasharray="3 3"
+          />
+        </g>
+
+        <rect
+          class="digital-priest-scanline"
+          x="14"
+          y="0"
+          width="112"
+          height="2"
+          fill="var(--digital-priest-accent)"
+          opacity="0.6"
+        />
+        <rect
+          class="digital-priest-glitch-bar"
+          x="8"
+          y="0"
+          width="124"
+          height="1.5"
+          fill="var(--digital-priest-accent)"
+        />
+        <rect
+          class="digital-priest-glitch-bar digital-priest-glitch-bar-alt"
+          x="8"
+          y="0"
+          width="124"
+          height="1"
+          fill="var(--digital-priest-glitch)"
+        />
+      </svg>
+
+      <div class="digital-priest-binary-rain" aria-hidden="true">
+        <span>01001111</span>
+        <span>11010110</span>
+        <span>00101101</span>
+      </div>
+    </div>
+  </button>
+
+  <div class="digital-priest-pedestal" aria-hidden="true"></div>
+</div>
