@@ -1,0 +1,660 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sanctum {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+.sanctum-header {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.35rem 0.65rem 0.3rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-primary) 28%, transparent);
+}
+
+.sanctum-title {
+  margin: 0;
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 65%, transparent);
+}
+
+.sanctum-subtitle {
+  margin: 0;
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.82rem, 2vw, 0.95rem);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.sanctum-workspace {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 1px;
+  min-width: 0;
+  min-height: 0;
+  background: color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'rite'
+    'oracle'
+    'litany'
+    'verdict';
+}
+
+.sanctum-panel {
+  min-width: 0;
+  border: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 5%, transparent), transparent 48%),
+    color-mix(in srgb, var(--tui-background-base-alt) 96%, #000 4%);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--accent-primary) 6%, transparent);
+}
+
+.sanctum-panel-title {
+  margin: 0 0 0.35rem;
+  color: var(--accent-primary);
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sanctum-rite {
+  grid-area: rite;
+  padding: 0.65rem 0.75rem;
+}
+
+.sanctum-oracle {
+  grid-area: oracle;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 14rem;
+  padding: 0.35rem 0.45rem 0.45rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sanctum-litany {
+  grid-area: litany;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.55rem 0.65rem;
+}
+
+.sanctum-litany-empty {
+  opacity: 0.42;
+}
+
+.sanctum-litany-active {
+  animation: sanctum-litany-flicker 2.8s ease-in-out infinite;
+}
+
+.sanctum-verdict-panel {
+  grid-area: verdict;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.sanctum-verdict-panel:not(.sanctum-verdict-panel-visible) {
+  display: none;
+}
+
+.sanctum-verdict-panel-visible {
+  padding: 0.55rem 0.65rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 5%, transparent), transparent 48%),
+    color-mix(in srgb, var(--tui-background-base-alt) 96%, #000 4%);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--accent-primary) 6%, transparent);
+}
+
+.sanctum-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sanctum-label {
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 0.84rem;
+  letter-spacing: 0.1em;
+}
+
+.sanctum-submit {
+  width: 100%;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+}
+
+.sanctum-input {
+  font-size: 0.9rem;
+}
+
+.sanctum-input input {
+  font-size: inherit;
+}
+
+.sanctum-intents {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.sanctum-intent-options {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.sanctum-intent-option {
+  cursor: pointer;
+  min-width: 0;
+}
+
+.sanctum-intent-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.sanctum-intent-label {
+  color: var(--accent-primary);
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+
+.sanctum-intent-description {
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.sanctum-intent-option-merge {
+  --sanctum-intent-accent: var(--accent-primary);
+}
+
+.sanctum-intent-option-deploy {
+  --sanctum-intent-accent: var(--warning);
+}
+
+.sanctum-intent-option-penance {
+  --sanctum-intent-accent: var(--info, #7eb8ff);
+}
+
+.sanctum-litany-screen {
+  min-height: 4.5rem;
+  padding: 0.1rem 0.05rem;
+  overflow-wrap: anywhere;
+}
+
+.sanctum-litany-line {
+  margin: 0;
+  color: color-mix(in srgb, var(--accent-primary) 88%, #fff 12%);
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  animation: sanctum-fade-in 0.22s ease-out both;
+}
+
+.sanctum-litany-cursor {
+  display: inline-block;
+  margin: 0;
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  animation: sanctum-cursor-blink 0.8s step-end infinite;
+}
+
+.sanctum-verdict-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  animation: sanctum-fade-in 0.35s ease-out both;
+}
+
+.sanctum-fate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--sanctum-fate-color);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--sanctum-fate-color) 12%, transparent), transparent);
+}
+
+.sanctum-fate-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.sanctum-fate-green {
+  --sanctum-fate-color: #3ecf8e;
+}
+
+.sanctum-fate-amber {
+  --sanctum-fate-color: var(--warning);
+}
+
+.sanctum-fate-red {
+  --sanctum-fate-color: var(--critical);
+}
+
+.sanctum-fate-label {
+  margin: 0;
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sanctum-fate-value {
+  margin: 0;
+  color: var(--sanctum-fate-color);
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: clamp(0.72rem, 1.6vw, 0.88rem);
+  letter-spacing: 0.06em;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.sanctum-fate-bar {
+  height: 0.3rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sanctum-fate-color) 18%, transparent);
+}
+
+.sanctum-fate-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--sanctum-fate-color));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--sanctum-fate-color) 55%, transparent);
+  transition: width 0.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.sanctum-omens {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.sanctum-omen {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--sanctum-omen-color);
+  background: color-mix(in srgb, var(--sanctum-omen-color) 8%, transparent);
+  animation: sanctum-fade-in 0.3s ease-out both;
+}
+
+.sanctum-omen:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.sanctum-omen:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.sanctum-omen:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.sanctum-omen-sacred {
+  --sanctum-omen-color: var(--accent-primary);
+}
+
+.sanctum-omen-heretical {
+  --sanctum-omen-color: var(--warning);
+}
+
+.sanctum-omen-forbidden {
+  --sanctum-omen-color: var(--critical);
+}
+
+.sanctum-omen-icon {
+  color: var(--sanctum-omen-color);
+  font-size: 1.15rem;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--sanctum-omen-color) 45%, transparent));
+}
+
+.sanctum-omen-text {
+  margin: 0;
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.sanctum-stage {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.sanctum-sigil {
+  position: absolute;
+  inset: 0.75rem;
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 1.5rem);
+  max-height: calc(100% - 1.5rem);
+  margin: auto;
+  aspect-ratio: 1;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.sanctum-sigil-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+}
+
+.sanctum-sigil-ring-outer {
+  animation: sanctum-spin 16s linear infinite;
+}
+
+.sanctum-sigil-ring-inner {
+  inset: 0.85rem;
+  border-style: dashed;
+  animation: sanctum-spin-reverse 11s linear infinite;
+}
+
+.sanctum-sigil-core {
+  position: absolute;
+  inset: 2rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent-primary) 75%, #fff 10%) 0%,
+    color-mix(in srgb, var(--accent-primary) 20%, transparent) 70%
+  );
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  animation: sanctum-pulse 2.4s ease-in-out infinite;
+}
+
+.sanctum-stage-judging .sanctum-sigil {
+  opacity: 0.75;
+}
+
+.sanctum-stage-judging .sanctum-sigil-core {
+  animation: sanctum-oracle 0.9s ease-in-out infinite alternate;
+}
+
+.sanctum-verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--sanctum-verdict-color);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sanctum-verdict-color) 10%, transparent), transparent 60%),
+    color-mix(in srgb, var(--tui-background-base-alt) 92%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--sanctum-verdict-color) 18%, transparent);
+}
+
+.sanctum-verdict-sacred {
+  --sanctum-verdict-color: var(--accent-primary);
+}
+
+.sanctum-verdict-heretical {
+  --sanctum-verdict-color: var(--warning);
+}
+
+.sanctum-verdict-forbidden {
+  --sanctum-verdict-color: var(--critical);
+}
+
+.sanctum-verdict-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.sanctum-verdict-label {
+  margin: 0;
+  color: var(--sanctum-verdict-color);
+  font-family: var(--font-orbitron), 'Courier New', monospace;
+  font-size: 0.92rem;
+  letter-spacing: 0.1em;
+}
+
+.sanctum-verdict-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem 0.5rem;
+  margin: 0;
+}
+
+.sanctum-verdict-meta div {
+  min-width: 0;
+}
+
+.sanctum-verdict-meta dt {
+  margin: 0;
+  color: var(--air);
+  font-family: 'Courier New', monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.sanctum-verdict-meta dd {
+  margin: 0.1rem 0 0;
+  color: var(--sanctum-verdict-color);
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.sanctum-verdict-prophecy {
+  margin: 0;
+  color: var(--sanctum-verdict-color);
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.sanctum-seal {
+  position: relative;
+  flex: 0 0 auto;
+  width: 2.6rem;
+  height: 2.6rem;
+  animation: sanctum-stamp 0.45s ease-out both;
+}
+
+.sanctum-seal-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--sanctum-verdict-color);
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.sanctum-seal-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sanctum-verdict-color);
+  font-family: var(--font-display), serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--sanctum-verdict-color) 55%, transparent);
+}
+
+@keyframes sanctum-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sanctum-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes sanctum-pulse {
+  0%,
+  100% {
+    transform: scale(0.94);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctum-oracle {
+  0% {
+    filter: hue-rotate(0deg);
+    transform: scale(0.9);
+  }
+
+  100% {
+    filter: hue-rotate(25deg);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes sanctum-stamp {
+  0% {
+    transform: scale(1.35) rotate(-12deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1) rotate(-8deg);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctum-litany-flicker {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.06);
+  }
+}
+
+@keyframes sanctum-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sanctum-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (width >= 56rem) {
+  .sanctum-workspace {
+    grid-template:
+      'rite oracle'
+      'litany oracle'
+      'verdict oracle'
+      / minmax(0, 1fr) minmax(20rem, 32%);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-items: stretch;
+    min-height: calc(100% - 3.25rem);
+  }
+
+  .sanctum-oracle {
+    min-height: 0;
+    padding: 0.4rem 0.55rem 0.55rem;
+  }
+
+  .sanctum-omens {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sanctum-verdict-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 40rem) {
+  .sanctum-verdict-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .sanctum-omens {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-sigil-ring,
+  .sanctum-sigil-core,
+  .sanctum-seal,
+  .sanctum-litany-active,
+  .sanctum-litany-line,
+  .sanctum-litany-cursor,
+  .sanctum-verdict-stack,
+  .sanctum-omen {
+    animation: none;
+  }
+}

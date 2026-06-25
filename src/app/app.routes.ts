@@ -13,6 +13,9 @@ import { ConfessFormService } from '@features/shrift/services/confess-form.servi
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
 import { MainPageFacade } from '@features/main/facades/main-page.facade';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
+import { SanctumPageFacade } from '@features/sanctum/facades/sanctum-page.facade';
+import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
+import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
 
 export const routes: Routes = [
   {
@@ -63,6 +66,13 @@ export const routes: Routes = [
         canMatch: [authGuard],
         loadComponent: () => import('./features/altar/ui/altar.component').then((c) => c.AltarComponent),
         providers: [provideTranslocoScope('altar')],
+        data: { preloadFor: PreloadFor.AUTH },
+      },
+      {
+        path: 'sanctum',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/sanctum/ui/sanctum.component').then((c) => c.SanctumComponent),
+        providers: [provideTranslocoScope('sanctum'), SanctumPageFacade, SanctumFormService, SanctumSoundService],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
