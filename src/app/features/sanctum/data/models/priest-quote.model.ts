@@ -1,4 +1,6 @@
-import type { PriestQuotePoolId } from '@features/sanctum/data/models/priest-quote-pool-id.model';
+import type { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
+
+export type PriestQuotePoolId = DigitalPriestMood | 'busy' | 'low_spirit';
 
 export interface PriestQuote {
   lang: string;

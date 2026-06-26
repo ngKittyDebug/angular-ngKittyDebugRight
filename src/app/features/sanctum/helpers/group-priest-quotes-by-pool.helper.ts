@@ -1,29 +1,33 @@
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import type { PriestQuote } from '@features/sanctum/data/models/priest-quote.model';
-import type { PriestQuotePoolId } from '@features/sanctum/data/models/priest-quote-pool-id.model';
 import type { PriestQuotesByPool } from '@features/sanctum/data/models/priest-quotes-by-pool.model';
-import { createEmptyPriestQuotesByPool } from '@features/sanctum/helpers/create-empty-priest-quotes-by-pool.helper';
 
-function isPriestQuotePoolId(pool: string): pool is PriestQuotePoolId {
-  return (
-    pool === 'busy' ||
-    pool === 'low_spirit' ||
-    pool === 'idle' ||
-    pool === 'preaching' ||
-    pool === 'blessing' ||
-    pool === 'damning'
-  );
-}
+const EMPTY_PRIEST_QUOTES_BY_POOL: PriestQuotesByPool = {
+  busy: [],
+  low_spirit: [],
+  [DigitalPriestMood.IDLE]: [],
+  [DigitalPriestMood.PREACHING]: [],
+  [DigitalPriestMood.BLESSING]: [],
+  [DigitalPriestMood.DAMNING]: [],
+};
 
-export function groupPriestQuotesByPool(quotes: readonly PriestQuote[]): PriestQuotesByPool {
-  const grouped = createEmptyPriestQuotesByPool();
+export function groupPriestQuotesByPool(quoteList: readonly PriestQuote[]): PriestQuotesByPool {
+  const groupedQuotes: PriestQuotesByPool = {
+    busy: [],
+    low_spirit: [],
+    [DigitalPriestMood.IDLE]: [],
+    [DigitalPriestMood.PREACHING]: [],
+    [DigitalPriestMood.BLESSING]: [],
+    [DigitalPriestMood.DAMNING]: [],
+  };
 
-  for (const quote of quotes) {
-    if (!isPriestQuotePoolId(quote.pool)) {
-      continue;
-    }
-
-    grouped[quote.pool] = [...grouped[quote.pool], quote.text];
+  for (const quote of quoteList) {
+    groupedQuotes[quote.pool] = [...groupedQuotes[quote.pool], quote.text];
   }
 
-  return grouped;
+  return groupedQuotes;
+}
+
+export function createEmptyPriestQuotesByPool(): PriestQuotesByPool {
+  return { ...EMPTY_PRIEST_QUOTES_BY_POOL };
 }

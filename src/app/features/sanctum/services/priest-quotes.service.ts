@@ -1,12 +1,14 @@
-import { effect, inject, Service, signal } from '@angular/core';
+import { inject, resource, Service } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { firestore } from '@env/environment';
 import { TranslocoService } from '@jsverse/transloco';
 import { PRIEST_QUOTES_COLLECTION } from '@features/sanctum/constants/priest-quotes.config';
 import type { PriestQuote } from '@features/sanctum/data/models/priest-quote.model';
 import type { PriestQuotesByPool } from '@features/sanctum/data/models/priest-quotes-by-pool.model';
-import { createEmptyPriestQuotesByPool } from '@features/sanctum/helpers/create-empty-priest-quotes-by-pool.helper';
-import { groupPriestQuotesByPool } from '@features/sanctum/helpers/group-priest-quotes-by-pool.helper';
+import {
+  createEmptyPriestQuotesByPool,
+  groupPriestQuotesByPool,
+} from '@features/sanctum/helpers/group-priest-quotes-by-pool.helper';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 @Service({
@@ -20,23 +22,20 @@ export class PriestQuotesService {
     initialValue: this.translocoService.getActiveLang(),
   });
 
-  public readonly quotesByPool = signal<PriestQuotesByPool>(createEmptyPriestQuotesByPool());
+  public readonly quotesByPool = resource({
+    params: () => this.activeLang(),
+    loader: async ({ params: lang, abortSignal }) => {
+      return this.loadQuotes(lang, abortSignal);
+    },
+  });
 
-  public constructor() {
-    effect(() => {
-      const lang = this.activeLang();
+  public getQuotesByPool(): PriestQuotesByPool {
+    const cached = this.quotesByPool.value();
 
-      void this.loadQuotes(lang).then((quotes) => {
-        this.quotesByPool.set(quotes);
-      });
-    });
+    return cached ?? createEmptyPriestQuotesByPool();
   }
 
-  public getQuotesByPool(): Promise<PriestQuotesByPool> {
-    return this.loadQuotes(this.activeLang() ?? this.translocoService.getActiveLang());
-  }
-
-  private async loadQuotes(lang: string): Promise<PriestQuotesByPool> {
+  private async loadQuotes(lang: string, abortSignal: AbortSignal): Promise<PriestQuotesByPool> {
     if (this.cache.has(lang)) {
       return this.cache.get(lang)!;
     }
@@ -44,7 +43,11 @@ export class PriestQuotesService {
     const priestQuotesQuery = query(collection(firestore, PRIEST_QUOTES_COLLECTION), where('lang', '==', lang));
     const snapshot = await getDocs(priestQuotesQuery);
 
-    const quotes = snapshot.docs.map((document) => {
+    if (abortSignal.aborted) {
+      return createEmptyPriestQuotesByPool();
+    }
+
+    const quoteList = snapshot.docs.map((document) => {
       const data = document.data();
 
       return {
@@ -53,8 +56,7 @@ export class PriestQuotesService {
         text: data['text'] as string,
       } satisfies PriestQuote;
     });
-
-    const groupedQuotes = groupPriestQuotesByPool(quotes);
+    const groupedQuotes = groupPriestQuotesByPool(quoteList);
 
     this.cache.set(lang, groupedQuotes);
 
