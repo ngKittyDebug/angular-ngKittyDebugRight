@@ -6,14 +6,13 @@ import {
   DIGITAL_PRIEST_MAX_EYE_OFFSET_Y,
 } from '@features/sanctum/ui/components/digital-priest/constants/digital-priest.config';
 import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
-import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
-import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
+import { DigitalPriestService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest.service';
 import { PriestQuotesService } from '@features/sanctum/services/priest-quotes.service';
 
 @Component({
   selector: 'ngKitty-digital-priest',
   imports: [TranslocoPipe],
-  providers: [DigitalPriestQuoteService, DigitalPriestVoiceService, PriestQuotesService],
+  providers: [DigitalPriestService, PriestQuotesService],
   templateUrl: './digital-priest.component.html',
   styleUrl: './digital-priest.component.scss',
   host: {
@@ -22,12 +21,11 @@ import { PriestQuotesService } from '@features/sanctum/services/priest-quotes.se
 })
 export class DigitalPriestComponent {
   private readonly destroyRef = inject(DestroyRef);
-  private readonly priestQuotes = inject(DigitalPriestQuoteService);
-  private readonly priestVoice = inject(DigitalPriestVoiceService);
+  private readonly priest = inject(DigitalPriestService);
 
   public readonly mood = input<DigitalPriestMood>(DigitalPriestMood.IDLE);
   public readonly spiritLevel = input(50);
-  public readonly disabled = input(false);
+  public readonly isBusy = input(false);
   public readonly layout = input<'default' | 'stage'>('default');
   public readonly ariaLabel = input<string>('Digital priest');
   public readonly priestRaged = output<void>();
@@ -38,16 +36,18 @@ export class DigitalPriestComponent {
   protected readonly eyeOffsetX = signal(0);
   protected readonly eyeOffsetY = signal(0);
 
-  protected readonly pupilTransform = computed(() => `translate(${this.eyeOffsetX()} ${this.eyeOffsetY()})`);
-  protected readonly faceTransform = computed(() => {
-    const tilt = this.eyeOffsetX() * 0.65;
+  protected readonly eyesTransform = computed(
+    () => `translate(${this.eyeOffsetX() * 0.35} ${this.eyeOffsetY() * 0.35})`
+  );
+  protected readonly headTransform = computed(() => {
+    const tilt = this.eyeOffsetX() * 0.35;
 
-    return `rotate(${tilt} 70 58)`;
+    return `rotate(${tilt} 60 54)`;
   });
 
   public constructor() {
     this.destroyRef.onDestroy(() => {
-      this.priestVoice.cancel();
+      this.priest.cancelSpeech();
     });
   }
 
@@ -81,15 +81,15 @@ export class DigitalPriestComponent {
   }
 
   protected onInteract(): void {
-    if (this.isEngaged()) {
+    if (this.isEngaged() || this.isBusy()) {
       return;
     }
 
-    void this.speakFromQuotes();
+    void this.speak();
   }
 
-  private async speakFromQuotes(): Promise<void> {
-    const quoteText = await this.priestQuotes.pick(this.mood(), this.spiritLevel(), this.disabled());
+  private async speak(): Promise<void> {
+    const quoteText = this.priest.pickQuote(this.mood(), this.spiritLevel(), this.isBusy());
 
     if (!quoteText) {
       return;
@@ -99,9 +99,11 @@ export class DigitalPriestComponent {
     this.isEngaged.set(true);
     this.priestRaged.emit();
 
-    await this.priestVoice.speakQuote(quoteText, this.mood()).finally(() => {
+    try {
+      await this.priest.speakQuote(quoteText, this.mood());
+    } finally {
       this.speechText.set(null);
       this.isEngaged.set(false);
-    });
+    }
   }
 }
