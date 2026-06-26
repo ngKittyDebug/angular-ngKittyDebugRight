@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import type { RitualSessionState } from '@features/sanctum/data/models/ritual-session-state.model';
 import {
   RITUAL_LITANY_LINE_DELAY_MS,
   RITUAL_VERDICT_REVEAL_DELAY_MS,
-} from '@features/sanctum/constants/ritual-timing.config';
+} from '@features/sanctum/constants/branch-judgment.config';
 import { BranchSanctity } from '@features/sanctum/data/models/branch-sanctity.model';
 import { RitualIntent } from '@features/sanctum/data/models/ritual-intent.model';
-import { analyzeBranchName } from '@features/sanctum/helpers/analyze-branch-name.helper';
+import type { RitualSessionState } from '@features/sanctum/data/models/ritual-session-state.model';
+import { analyzeBranch } from '@features/sanctum/helpers/analyze-branch.helper';
 import { createRitualTimelineStream } from '@features/sanctum/helpers/create-ritual-timeline-stream.helper';
 
 describe('createRitualTimelineStream', () => {
@@ -20,7 +20,7 @@ describe('createRitualTimelineStream', () => {
       spiritLevel: 0,
       requestId: 1,
     };
-    const preview = analyzeBranchName(request.branch, request.spiritLevel, request.ritualIntent, 0);
+    const preview = analyzeBranch(request.branch, request.spiritLevel, request.ritualIntent, 0);
     const ritualDurationMs = preview.litany.length * RITUAL_LITANY_LINE_DELAY_MS + RITUAL_VERDICT_REVEAL_DELAY_MS;
     let lastState: RitualSessionState | undefined;
     const subscription = createRitualTimelineStream(request).subscribe((state) => {
