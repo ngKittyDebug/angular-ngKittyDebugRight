@@ -1,6 +1,6 @@
 import { Service } from '@angular/core';
 import type { SanctumSoundPhase } from '@features/sanctum/data/models/sanctum-sound-phase.model';
-import { createSanctumAudioBus, scheduleSanctumPhase } from '@features/sanctum/helpers/schedule-sanctum-phase.helper';
+import { createSanctumAudioBus, playSanctumSound } from '@features/sanctum/helpers/play-sanctum-sound.helper';
 import { isPrefersReducedMotion } from '@shared/helpers/is-prefers-reduced-motion.helper';
 
 @Service({
@@ -25,7 +25,7 @@ export class SanctumSoundService {
       return;
     }
 
-    scheduleSanctumPhase(context, this.destination, phase);
+    playSanctumSound(context, this.destination, phase);
   }
 
   private async ensureContext(): Promise<AudioContext | null> {

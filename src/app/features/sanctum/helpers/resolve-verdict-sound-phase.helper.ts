@@ -6,10 +6,10 @@ export function resolveVerdictSoundPhase(sanctity: BranchSanctity): SanctumSound
     case BranchSanctity.SACRED:
       return SanctumSoundPhase.VERDICT_SACRED;
 
-    case BranchSanctity.FORBIDDEN:
-      return SanctumSoundPhase.VERDICT_FORBIDDEN;
+    case BranchSanctity.HERETICAL:
+      return SanctumSoundPhase.VERDICT_HERETICAL;
 
     default:
-      return SanctumSoundPhase.VERDICT_HERETICAL;
+      return SanctumSoundPhase.VERDICT_FORBIDDEN;
   }
 }

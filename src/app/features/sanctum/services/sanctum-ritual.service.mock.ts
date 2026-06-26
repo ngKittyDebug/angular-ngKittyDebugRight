@@ -3,7 +3,7 @@ import type { MockInstance } from 'vitest';
 import { vi } from 'vitest';
 
 import type { BranchJudgment } from '@features/sanctum/data/models/branch-judgment.model';
-import type { BranchLitanyLine } from '@features/sanctum/data/models/branch-litany-line.model';
+import type { BranchLitanyLine } from '@features/sanctum/data/models/branch-judgment.model';
 import type { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
 
 interface SanctumRitualServiceMock {
