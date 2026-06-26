@@ -12,6 +12,7 @@ import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
 import { MainPageFacade } from '@features/main/facades/main-page.facade';
+import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,7 @@ export const routes: Routes = [
         path: '',
         pathMatch: 'full',
         component: MainComponent,
-        providers: [provideTranslocoScope('main'), MainPageFacade, TarotService],
+        providers: [provideTranslocoScope('main'), MainPageFacade, TarotService, MyMemoryTranslationService],
       },
       {
         path: 'profile',
