@@ -48,6 +48,7 @@ describe('SanctumPageFacade', () => {
     it('должен запустить ритуал с данными формы', () => {
       facade.invokeJudgment();
 
+      expect(sanctumSoundServiceMock.prime).toHaveBeenCalledTimes(1);
       expect(sanctumRitualServiceMock.startRitual).toHaveBeenNthCalledWith(
         1,
         branchJudgmentFixture.branchName,

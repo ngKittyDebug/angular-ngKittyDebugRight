@@ -34,6 +34,7 @@ export class SanctumPageFacade {
       return;
     }
 
+    this.sanctumSound.prime();
     this.sanctumRitual.startRitual(branch, ritualIntent, this.candlesService.blessingLevel());
   }
 

@@ -10,6 +10,18 @@ export class SanctumSoundService {
   private context: AudioContext | null = null;
   private destination: AudioNode | null = null;
 
+  public prime(): void {
+    if (isPrefersReducedMotion()) {
+      return;
+    }
+
+    const context = this.ensureContext();
+
+    if (context?.state === 'suspended') {
+      void context.resume().catch(() => undefined);
+    }
+  }
+
   public play(phase: SanctumSoundPhase): void {
     if (isPrefersReducedMotion()) {
       return;
@@ -19,29 +31,39 @@ export class SanctumSoundService {
   }
 
   private async playPhase(phase: SanctumSoundPhase): Promise<void> {
-    const context = await this.ensureContext();
+    const context = this.ensureContext();
 
     if (!context || !this.destination) {
       return;
     }
 
+    if (context.state === 'suspended') {
+      await context.resume();
+    }
+
     playSanctumSound(context, this.destination, phase);
   }
 
-  private async ensureContext(): Promise<AudioContext | null> {
-    if (globalThis.AudioContext === undefined) {
+  private ensureContext(): AudioContext | null {
+    const AudioContextCtor = resolveAudioContextCtor();
+
+    if (!AudioContextCtor) {
       return null;
     }
 
     if (!this.context) {
-      this.context = new AudioContext();
+      this.context = new AudioContextCtor();
       this.destination = createSanctumAudioBus(this.context);
-    }
-
-    if (this.context.state === 'suspended') {
-      await this.context.resume();
     }
 
     return this.context;
   }
+}
+
+function resolveAudioContextCtor(): typeof AudioContext | undefined {
+  if (globalThis.AudioContext !== undefined) {
+    return globalThis.AudioContext;
+  }
+
+  return (globalThis as typeof globalThis & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
 }
