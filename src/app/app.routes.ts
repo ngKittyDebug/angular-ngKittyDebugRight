@@ -15,6 +15,7 @@ import { MainPageFacade } from '@features/main/facades/main-page.facade';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
 import { SanctumPageFacade } from '@features/sanctum/facades/sanctum-page.facade';
 import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
+import { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
 
 export const routes: Routes = [
@@ -72,7 +73,13 @@ export const routes: Routes = [
         path: 'sanctum',
         canMatch: [authGuard],
         loadComponent: () => import('./features/sanctum/ui/sanctum.component').then((c) => c.SanctumComponent),
-        providers: [provideTranslocoScope('sanctum'), SanctumPageFacade, SanctumFormService, SanctumSoundService],
+        providers: [
+          provideTranslocoScope('sanctum'),
+          SanctumPageFacade,
+          SanctumFormService,
+          SanctumRitualService,
+          SanctumSoundService,
+        ],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
