@@ -5,14 +5,15 @@ import {
   DIGITAL_PRIEST_MAX_EYE_OFFSET_X,
   DIGITAL_PRIEST_MAX_EYE_OFFSET_Y,
 } from '@features/sanctum/ui/components/digital-priest/constants/digital-priest.config';
-import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
 import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
+import { PriestQuotesService } from '@features/sanctum/services/priest-quotes.service';
 
 @Component({
   selector: 'ngKitty-digital-priest',
   imports: [TranslocoPipe],
-  providers: [DigitalPriestQuoteService, DigitalPriestVoiceService],
+  providers: [DigitalPriestQuoteService, DigitalPriestVoiceService, PriestQuotesService],
   templateUrl: './digital-priest.component.html',
   styleUrl: './digital-priest.component.scss',
   host: {
@@ -31,7 +32,7 @@ export class DigitalPriestComponent {
   public readonly ariaLabel = input<string>('Digital priest');
   public readonly priestRaged = output<void>();
 
-  protected readonly speechKey = signal<string | null>(null);
+  protected readonly speechText = signal<string | null>(null);
   protected readonly isEngaged = signal(false);
   protected readonly isPointerOver = signal(false);
   protected readonly eyeOffsetX = signal(0);
@@ -84,14 +85,22 @@ export class DigitalPriestComponent {
       return;
     }
 
-    const quoteKey = this.priestQuotes.pick(this.mood(), this.spiritLevel(), this.disabled());
+    void this.speakFromQuotes();
+  }
 
-    this.speechKey.set(quoteKey);
+  private async speakFromQuotes(): Promise<void> {
+    const quoteText = await this.priestQuotes.pick(this.mood(), this.spiritLevel(), this.disabled());
+
+    if (!quoteText) {
+      return;
+    }
+
+    this.speechText.set(quoteText);
     this.isEngaged.set(true);
     this.priestRaged.emit();
 
-    void this.priestVoice.speakQuote(quoteKey, this.mood()).finally(() => {
-      this.speechKey.set(null);
+    await this.priestVoice.speakQuote(quoteText, this.mood()).finally(() => {
+      this.speechText.set(null);
       this.isEngaged.set(false);
     });
   }

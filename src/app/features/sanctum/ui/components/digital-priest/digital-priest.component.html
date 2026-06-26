@@ -9,8 +9,8 @@
   [class.digital-priest-hover]="isPointerOver()"
 >
   <div class="digital-priest-speech-slot" aria-live="polite">
-    @if (speechKey(); as key) {
-      <p class="digital-priest-speech">{{ key | transloco }}</p>
+    @if (speechText(); as text) {
+      <p class="digital-priest-speech">{{ text }}</p>
     }
   </div>
 
@@ -22,7 +22,7 @@
     (pointerleave)="onPointerLeave()"
     (click)="onInteract()"
   >
-    @if (!speechKey()) {
+    @if (!speechText()) {
       <p class="digital-priest-hint">{{ 'sanctum.priest.hint' | transloco }}</p>
     }
 

@@ -4,7 +4,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { clampNumber } from '@shared/helpers/clamp-number.helper';
 import { isPrefersReducedMotion } from '@shared/helpers/is-prefers-reduced-motion.helper';
 import { DIGITAL_PRIEST_VOICES_READY_TIMEOUT_MS } from '@features/sanctum/ui/components/digital-priest/constants/digital-priest-voice.config';
-import type { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import type { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import type { DigitalPriestVoiceProfile } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-voice-profile.model';
 import {
   isVoiceMatchingLang,
@@ -65,14 +65,14 @@ export class DigitalPriestVoiceService {
     },
   });
 
-  public speakQuote(quoteKey: string, mood: DigitalPriestMood): Promise<void> {
+  public speakQuote(quoteText: string, mood: DigitalPriestMood): Promise<void> {
     if (isPrefersReducedMotion()) {
       return Promise.resolve();
     }
 
-    const text = this.translocoService.translate(quoteKey).trim();
+    const text = quoteText.trim();
 
-    if (!text || text === quoteKey) {
+    if (!text) {
       return Promise.resolve();
     }
 

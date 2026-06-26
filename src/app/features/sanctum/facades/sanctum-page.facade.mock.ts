@@ -7,7 +7,7 @@ import { sanctumFormFixture } from '@features/sanctum/fixtures/sanctum-form.fixt
 import type { BranchJudgment } from '@features/sanctum/data/models/branch-judgment.model';
 import type { BranchLitanyLine } from '@features/sanctum/data/models/branch-litany-line.model';
 import type { SanctumPageFacade } from '@features/sanctum/facades/sanctum-page.facade';
-import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 
 export const sanctumPageFacadeMock = {
   sanctumForm: sanctumFormFixture,

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { BranchSanctity } from '@features/sanctum/data/models/branch-sanctity.model';
 import { RitualIntent } from '@features/sanctum/data/models/ritual-intent.model';
 import { analyzeBranchName } from '@features/sanctum/helpers/analyze-branch-name.helper';
-import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import { resolvePriestMood } from '@features/sanctum/helpers/resolve-priest-mood.helper';
 
 describe('resolvePriestMood', () => {

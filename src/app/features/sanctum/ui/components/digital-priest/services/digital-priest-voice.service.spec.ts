@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
 import { vi } from 'vitest';
 
-import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
 
 describe('DigitalPriestVoiceService', () => {
@@ -36,16 +36,14 @@ describe('DigitalPriestVoiceService', () => {
 
     const service = TestBed.inject(DigitalPriestVoiceService);
 
-    await service.speakQuote('sanctum.priest.quotes.idle.0', DigitalPriestMood.IDLE);
+    await service.speakQuote('Заткнись!', DigitalPriestMood.IDLE);
 
     expect(translocoMock.translate).not.toHaveBeenCalled();
   });
 
   it('не должен падать без Web Speech API', async () => {
-    translocoMock.translate.mockReturnValue('Заткнись!');
-
     const service = TestBed.inject(DigitalPriestVoiceService);
 
-    await expect(service.speakQuote('sanctum.priest.quotes.idle.0', DigitalPriestMood.IDLE)).resolves.toBeUndefined();
+    await expect(service.speakQuote('Заткнись!', DigitalPriestMood.IDLE)).resolves.toBeUndefined();
   });
 });

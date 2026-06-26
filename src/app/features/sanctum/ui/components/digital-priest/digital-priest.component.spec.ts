@@ -2,7 +2,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
 import { DigitalPriestComponent } from './digital-priest.component';
-import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/data/models/digital-priest-mood.model';
 import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
 import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
@@ -11,18 +11,26 @@ describe('DigitalPriestComponent', () => {
   let fixture: ComponentFixture<DigitalPriestComponent>;
   let component: DigitalPriestComponent;
   const priestVoiceMock = { speakQuote: vi.fn().mockResolvedValue(undefined), cancel: vi.fn() };
+  const priestQuoteMock = {
+    pick: vi.fn().mockResolvedValue('Idle quote 1'),
+  };
 
   beforeEach(async () => {
     priestVoiceMock.speakQuote.mockReset();
     priestVoiceMock.speakQuote.mockResolvedValue(undefined);
     priestVoiceMock.cancel.mockReset();
+    priestQuoteMock.pick.mockReset();
+    priestQuoteMock.pick.mockResolvedValue('Idle quote 1');
 
     await TestBed.configureTestingModule({
       imports: [DigitalPriestComponent, TranslocoTestingMock],
     })
       .overrideComponent(DigitalPriestComponent, {
         set: {
-          providers: [{ provide: DigitalPriestVoiceService, useValue: priestVoiceMock }, DigitalPriestQuoteService],
+          providers: [
+            { provide: DigitalPriestVoiceService, useValue: priestVoiceMock },
+            { provide: DigitalPriestQuoteService, useValue: priestQuoteMock },
+          ],
         },
       })
       .compileComponents();
@@ -67,17 +75,29 @@ describe('DigitalPriestComponent', () => {
 
     expect(component['eyeOffsetX']()).toBeGreaterThan(0);
 
-    component['onInteract']();
-    fixture.detectChanges();
+    let resolveSpeak!: () => void;
 
-    expect(component['isEngaged']()).toBe(true);
-    expect(component['speechKey']()).toContain('sanctum.priest.quotes');
-    expect(priestVoiceMock.speakQuote).toHaveBeenCalled();
+    priestVoiceMock.speakQuote.mockImplementation(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSpeak = resolve;
+        })
+    );
+
+    const speakPromise = component['speakFromQuotes']();
 
     await Promise.resolve();
     fixture.detectChanges();
 
+    expect(component['isEngaged']()).toBe(true);
+    expect(component['speechText']()).toBe('Idle quote 1');
+    expect(priestVoiceMock.speakQuote).toHaveBeenCalled();
+
+    resolveSpeak();
+    await speakPromise;
+    fixture.detectChanges();
+
     expect(component['isEngaged']()).toBe(false);
-    expect(component['speechKey']()).toBeNull();
+    expect(component['speechText']()).toBeNull();
   });
 });

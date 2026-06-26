@@ -3,37 +3,7 @@
   "subtitle": "\"Choose your ritual intent, speak the branch name, let the cogitator judge\"",
   "priest": {
     "label": "Digital grandmother priestess of the Machine Spirit",
-    "hint": "Click her — she'll yell at you",
-    "quotes": {
-      "idle": {
-        "0": "Why the hell are you poking me? Type the branch, not me.",
-        "1": "Push main to prod again and grandma will excommunicate your repo.",
-        "2": "Stop staring. My cache is full, git child."
-      },
-      "preaching": {
-        "0": "Shut up! Litany is running. Don't touch the hologram.",
-        "1": "Every slash in your branch is a splinter in my RAM.",
-        "2": "Verdict incoming. Hands off, for crying out loud."
-      },
-      "blessing": {
-        "0": "Fine, branch is acceptable. Don't get cocky — CI can still fail.",
-        "1": "Merge if you must. Just don't screw up review.",
-        "2": "The Omnissiah nodded. That doesn't make you a saint."
-      },
-      "damning": {
-        "0": "What kind of cursed branch name is that?! Rename it before grandma snaps.",
-        "1": "Heresy and wip in one package. Have you lost your mind?",
-        "2": "Deploy to hell. You're coming too if you don't fix this."
-      },
-      "busy": {
-        "0": "I'M BUSY, dammit! Wait for the decree!",
-        "1": "Poke a priestess mid-rite — earn the yelling you deserve."
-      },
-      "low_spirit": {
-        "0": "Spirit's at zero and you bother me? Go light candles, fool.",
-        "1": "Empty altar, yet you offer branches. Bring candles first!"
-      }
-    }
+    "hint": "Click her — she'll yell at you"
   },
   "form": {
     "label": "[ BRANCH NAME ]",
