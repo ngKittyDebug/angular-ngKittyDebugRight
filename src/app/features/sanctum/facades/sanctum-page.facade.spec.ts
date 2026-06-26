@@ -1,32 +1,32 @@
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
 
 import { SanctumPageFacade } from './sanctum-page.facade';
 import { CandlesService } from '@core/services/candles/candles.service';
 import { candlesServiceMock } from '@core/services/candles/candles.service.mock';
-import {
-  RITUAL_LITANY_LINE_DELAY_MS,
-  RITUAL_VERDICT_REVEAL_DELAY_MS,
-} from '@features/sanctum/constants/ritual-timing.config';
 import { BranchSanctity } from '@features/sanctum/data/models/branch-sanctity.model';
 import { RitualIntent } from '@features/sanctum/data/models/ritual-intent.model';
-import { analyzeBranchName } from '@features/sanctum/helpers/analyze-branch-name.helper';
+import { sacredBranchJudgmentFixture } from '@features/sanctum/fixtures/sacred-branch-judgment.fixture';
 import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
+import { sanctumRitualServiceMock } from '@features/sanctum/services/sanctum-ritual.service.mock';
+import { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
+import { sanctumSoundServiceMock } from '@features/sanctum/services/sanctum-sound.service.mock';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
 
 describe('SanctumPageFacade', () => {
   let facade: SanctumPageFacade;
-  const sanctumSoundMock = { play: vi.fn() };
 
   beforeEach(() => {
-    sanctumSoundMock.play.mockReset();
+    sanctumRitualServiceMock.isJudging.set(false);
+    sanctumRitualServiceMock.judgment.set(null);
+    sanctumRitualServiceMock.litanyLines.set([]);
 
     TestBed.configureTestingModule({
       providers: [
         SanctumPageFacade,
         SanctumFormService,
         { provide: CandlesService, useValue: candlesServiceMock },
-        { provide: SanctumSoundService, useValue: sanctumSoundMock },
+        { provide: SanctumRitualService, useValue: sanctumRitualServiceMock },
+        { provide: SanctumSoundService, useValue: sanctumSoundServiceMock },
       ],
     });
 
@@ -37,31 +37,45 @@ describe('SanctumPageFacade', () => {
     expect(facade).toBeTruthy();
   });
 
-  it('должен выносить вердикт после ритуальной литании', () => {
-    vi.useFakeTimers();
-
-    facade.sanctumForm.setValue({
-      branch: 'feat/sanctum-branch-blessing',
-      ritualIntent: RitualIntent.MERGE,
+  describe('Вердикт запрошен', () => {
+    beforeEach(() => {
+      facade.sanctumForm.setValue({
+        branch: sacredBranchJudgmentFixture.branchName,
+        ritualIntent: RitualIntent.MERGE,
+      });
     });
 
-    const ritual = analyzeBranchName('feat/sanctum-branch-blessing', 0, RitualIntent.MERGE, 0);
-    const ritualDurationMs = ritual.litany.length * RITUAL_LITANY_LINE_DELAY_MS + RITUAL_VERDICT_REVEAL_DELAY_MS;
+    it('должен запустить ритуал с данными формы', () => {
+      facade.invokeJudgment();
 
-    facade.invokeJudgment();
-    expect(facade.isJudging()).toBe(true);
-    expect(facade.litanyLines()).toHaveLength(0);
+      expect(sanctumRitualServiceMock.startRitual).toHaveBeenNthCalledWith(
+        1,
+        sacredBranchJudgmentFixture.branchName,
+        RitualIntent.MERGE,
+        0
+      );
+    });
+  });
 
-    vi.advanceTimersByTime(ritualDurationMs);
+  describe('Вердикт получен', () => {
+    it('должен отображать состояние судебного ритуала', () => {
+      sanctumRitualServiceMock.isJudging.set(true);
 
-    const judgment = facade.judgment();
+      expect(facade.isJudging()).toBe(true);
+    });
 
-    expect(facade.isJudging()).toBe(false);
-    expect(facade.litanyLines()).toHaveLength(ritual.litany.length);
-    expect(judgment?.branchName).toBe('feat/sanctum-branch-blessing');
-    expect(judgment?.sanctity).toBe(BranchSanctity.SACRED);
-    expect(judgment?.omens).toHaveLength(3);
+    it('должен отображать литанию', () => {
+      sanctumRitualServiceMock.litanyLines.set(sacredBranchJudgmentFixture.litany);
 
-    vi.useRealTimers();
+      expect(facade.litanyLines()).toEqual(sacredBranchJudgmentFixture.litany);
+    });
+
+    it('должен отображать вердикт', () => {
+      sanctumRitualServiceMock.judgment.set(sacredBranchJudgmentFixture);
+
+      expect(facade.judgment()?.branchName).toBe(sacredBranchJudgmentFixture.branchName);
+      expect(facade.judgment()?.sanctity).toBe(BranchSanctity.SACRED);
+      expect(facade.judgment()?.omens).toHaveLength(3);
+    });
   });
 });
