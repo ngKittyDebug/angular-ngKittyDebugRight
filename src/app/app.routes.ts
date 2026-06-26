@@ -66,10 +66,8 @@ export const routes: Routes = [
       },
       {
         path: 'crystal-ball',
-        canMatch: [authGuard],
         loadComponent: () => import('./features/ball/ui/ball.component').then((c) => c.BallComponent),
         providers: [provideTranslocoScope('ball')],
-        data: { preloadFor: PreloadFor.AUTH },
       },
       {
         path: '**',

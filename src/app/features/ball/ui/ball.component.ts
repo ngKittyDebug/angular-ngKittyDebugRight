@@ -1,8 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { TuiIcon } from '@taiga-ui/core';
 import { WisdomComponent } from './wisdom/wisdom.component';
 import { ANSWER_KEYS } from '../constants/answer-keys';
+import { timer } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'ngKitty-ball',
@@ -12,6 +14,7 @@ import { ANSWER_KEYS } from '../constants/answer-keys';
 })
 export class BallComponent {
   private readonly transloco = inject(TranslocoService);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly isCharging = signal(false);
   protected readonly answerText = signal<string | null>(null);
 
@@ -23,17 +26,20 @@ export class BallComponent {
     this.answerText.set(null);
     this.isCharging.set(true);
 
-    setTimeout(() => {
-      const randomKey = this.pickRandomAnswerKey();
-      const translated = this.transloco.translate(`ball.answers.${randomKey}`);
+    timer(1800)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        const randomKey = this.pickRandomAnswerKey();
+        const translated = this.transloco.translate(`ball.answers.${randomKey}`);
 
-      this.answerText.set(translated);
-      this.isCharging.set(false);
-
-      setTimeout(() => {
-        this.answerText.set(null);
-      }, 3000);
-    }, 1800);
+        this.answerText.set(translated);
+        this.isCharging.set(false);
+        timer(4000)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.answerText.set(null);
+          });
+      });
   }
 
   private pickRandomAnswerKey(): string {
