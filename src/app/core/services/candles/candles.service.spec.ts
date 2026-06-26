@@ -82,13 +82,28 @@ describe('CandlesService', () => {
       vi.useFakeTimers();
       firebaseAuthMock.getDoc.mockImplementation(async () => ({
         exists: () => true,
-        data: () => ({ candleCounts: createEmptyCandleCounts() }),
+        data: () => ({
+          candleCounts: createEmptyCandleCounts(),
+          spiritSatisfaction: 0,
+          spiritSatisfactionUpdatedAt: Date.now(),
+        }),
       }));
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [CandlesService, { provide: UserProfileService, useValue: userProfileServiceMock }],
+      });
+      service = TestBed.inject(CandlesService);
+
+      await vi.waitFor(() => firebaseAuthMock.getDoc.mock.calls.length > 0);
+      await firebaseAuthMock.getDoc.mock.results.at(-1)?.value;
 
       const candleType = CANDLE_TYPES_CONFIG.find((candle) => candle.id === CandleId.BUG)!;
 
       service.offerCandle(candleType);
       await vi.advanceTimersByTimeAsync(CANDLE_EXTINGUISH_TIME_IN_MS);
+      await vi.waitFor(() => firebaseAuthMock.setDoc.mock.calls.length > 0);
+      await firebaseAuthMock.setDoc.mock.results.at(-1)?.value;
 
       expect(firebaseAuthMock.setDoc).toHaveBeenCalled();
       expect(service.candleCounts()[CandleId.BUG]).toBe(1);
@@ -99,16 +114,30 @@ describe('CandlesService', () => {
       vi.useFakeTimers();
       firebaseAuthMock.getDoc.mockImplementation(async () => ({
         exists: () => true,
-        data: () => ({ candleCounts: createEmptyCandleCounts() }),
+        data: () => ({
+          candleCounts: createEmptyCandleCounts(),
+          spiritSatisfaction: 0,
+          spiritSatisfactionUpdatedAt: Date.now(),
+        }),
       }));
       firebaseAuthMock.setDoc.mockImplementation(async () => {
         throw new Error('Firestore error');
       });
 
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [CandlesService, { provide: UserProfileService, useValue: userProfileServiceMock }],
+      });
+      service = TestBed.inject(CandlesService);
+
+      await vi.waitFor(() => firebaseAuthMock.getDoc.mock.calls.length > 0);
+      await firebaseAuthMock.getDoc.mock.results.at(-1)?.value;
+
       const candleType = CANDLE_TYPES_CONFIG.find((candle) => candle.id === CandleId.REVIEW)!;
 
       service.offerCandle(candleType);
       await vi.advanceTimersByTimeAsync(CANDLE_EXTINGUISH_TIME_IN_MS);
+      await vi.waitFor(() => firebaseAuthMock.setDoc.mock.calls.length > 0);
 
       expect(service.candleCounts()[CandleId.REVIEW]).toBe(0);
       expect(service.error()).toBeInstanceOf(Error);
