@@ -33,11 +33,12 @@ export class BallComponent {
         const translated = this.transloco.translate(`ball.answers.${randomKey}`);
 
         this.answerText.set(translated);
-        this.isCharging.set(false);
+
         timer(4000)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe(() => {
             this.answerText.set(null);
+            this.isCharging.set(false);
           });
       });
   }
