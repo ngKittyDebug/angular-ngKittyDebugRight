@@ -5,12 +5,16 @@ import { BranchSanctity } from '@features/sanctum/data/models/branch-sanctity.mo
 import { RitualIntent } from '@features/sanctum/data/models/ritual-intent.model';
 import { branchJudgmentFixture } from '@features/sanctum/fixtures/branch-judgment.fixture';
 import { sanctumSoundServiceMock } from '@features/sanctum/services/sanctum-sound.service.mock';
+import { SanctumSoundPhase } from '@features/sanctum/data/models/sanctum-sound-phase.model';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
 
 describe('SanctumRitualService', () => {
   let service: SanctumRitualService;
 
   beforeEach(() => {
+    sanctumSoundServiceMock.play.mockClear();
+    sanctumSoundServiceMock.prime.mockClear();
+
     TestBed.configureTestingModule({
       providers: [SanctumRitualService, { provide: SanctumSoundService, useValue: sanctumSoundServiceMock }],
     });
@@ -31,6 +35,13 @@ describe('SanctumRitualService', () => {
       expect(service.isJudging()).toBe(true);
       expect(service.litanyLines()).toHaveLength(0);
       expect(service.judgment()).toBeNull();
+    });
+
+    it('должен проигрывать звук старта ритуала', () => {
+      service.startRitual(branchJudgmentFixture.branchName, RitualIntent.MERGE, 0);
+      TestBed.tick();
+
+      expect(sanctumSoundServiceMock.play).toHaveBeenCalledWith(SanctumSoundPhase.RITUAL_START);
     });
   });
 

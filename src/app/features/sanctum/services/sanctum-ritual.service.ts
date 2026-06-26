@@ -1,4 +1,4 @@
-import { computed, effect, inject, Service, signal } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import type { RitualRequest } from '@features/sanctum/data/models/ritual-request.model';
 import type { RitualSessionState } from '@features/sanctum/data/models/ritual-session-state.model';
@@ -6,7 +6,7 @@ import { SanctumSoundPhase } from '@features/sanctum/data/models/sanctum-sound-p
 import { createRitualTimelineStream } from '@features/sanctum/helpers/create-ritual-timeline-stream.helper';
 import { resolveVerdictSoundPhase } from '@features/sanctum/helpers/resolve-verdict-sound-phase.helper';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
-import { EMPTY } from 'rxjs';
+import { EMPTY, tap } from 'rxjs';
 
 const EMPTY_RITUAL_SESSION: RitualSessionState = {
   litanyLines: [],
@@ -20,7 +20,6 @@ export class SanctumRitualService {
   private readonly sanctumSound = inject(SanctumSoundService);
   private readonly _requestId = signal(0);
   private readonly _ritualRequest = signal<RitualRequest | undefined>(undefined);
-  private lastLitanyLength = 0;
 
   public readonly ritualSession = rxResource({
     params: () => this._ritualRequest(),
@@ -30,7 +29,21 @@ export class SanctumRitualService {
         return EMPTY;
       }
 
-      return createRitualTimelineStream(params);
+      this.sanctumSound.play(SanctumSoundPhase.RITUAL_START);
+
+      return createRitualTimelineStream(params).pipe(
+        tap((state) => {
+          if (state.judgment) {
+            this.sanctumSound.play(resolveVerdictSoundPhase(state.judgment.sanctity));
+
+            return;
+          }
+
+          if (state.litanyLines.length > 0) {
+            this.sanctumSound.play(SanctumSoundPhase.LITANY_TICK);
+          }
+        })
+      );
     },
   });
 
@@ -48,31 +61,7 @@ export class SanctumRitualService {
 
   public readonly judgment = computed(() => this.ritualSession.value().judgment);
 
-  public constructor() {
-    effect(() => {
-      const state = this.ritualSession.value();
-      const status = this.ritualSession.status();
-
-      if (status !== 'loading' && status !== 'reloading') {
-        return;
-      }
-
-      if (state.litanyLines.length === 0 && this.lastLitanyLength === 0) {
-        this.sanctumSound.play(SanctumSoundPhase.RITUAL_START);
-      } else if (state.litanyLines.length > this.lastLitanyLength) {
-        this.sanctumSound.play(SanctumSoundPhase.LITANY_TICK);
-      }
-
-      if (state.judgment) {
-        this.sanctumSound.play(resolveVerdictSoundPhase(state.judgment.sanctity));
-      }
-
-      this.lastLitanyLength = state.litanyLines.length;
-    });
-  }
-
   public startRitual(branch: string, ritualIntent: RitualRequest['ritualIntent'], spiritLevel: number): void {
-    this.lastLitanyLength = 0;
     this.ritualSession.set(EMPTY_RITUAL_SESSION);
     this._requestId.update((requestId) => requestId + 1);
 
