@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, resource, Service, signal } from '@angular/core';
+import { rxResource, toObservable } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 import { clampNumber } from '@shared/helpers/clamp-number.helper';
 import { isPrefersReducedMotion } from '@shared/helpers/is-prefers-reduced-motion.helper';
@@ -18,8 +19,18 @@ import {
 } from '@features/sanctum/ui/components/digital-priest/helpers/priest-voice-audio.helper';
 import { randomJitter } from '@features/sanctum/ui/components/digital-priest/helpers/random-jitter.helper';
 import { resolveDigitalPriestVoiceProfile } from '@features/sanctum/ui/components/digital-priest/helpers/resolve-digital-priest-voice-profile.helper';
+import { EMPTY, filter, firstValueFrom, from, take } from 'rxjs';
 
-@Injectable()
+interface SpeechRequest {
+  text: string;
+  mood: DigitalPriestMood;
+  session: number;
+  requestId: number;
+}
+
+@Service({
+  autoProvided: false,
+})
 export class DigitalPriestVoiceService {
   private readonly translocoService = inject(TranslocoService);
 
@@ -27,7 +38,32 @@ export class DigitalPriestVoiceService {
   private audioDestination: AudioNode | null = null;
   private activeBed: PriestVoiceBedHandle | null = null;
   private speechSession = 0;
-  private voicesPromise: Promise<readonly SpeechSynthesisVoice[]> | null = null;
+  private speechRequestId = 0;
+
+  private readonly _speechRequest = signal<SpeechRequest | undefined>(undefined);
+
+  public readonly voices = resource({
+    loader: async () => {
+      const synthesis = globalThis.speechSynthesis;
+
+      if (!synthesis) {
+        return [] as readonly SpeechSynthesisVoice[];
+      }
+
+      return waitForVoices(synthesis);
+    },
+  });
+
+  public readonly speech = rxResource({
+    params: () => this._speechRequest(),
+    stream: ({ params }) => {
+      if (!params) {
+        return EMPTY;
+      }
+
+      return from(this.runSpeech(params));
+    },
+  });
 
   public speakQuote(quoteKey: string, mood: DigitalPriestMood): Promise<void> {
     if (isPrefersReducedMotion()) {
@@ -53,24 +89,59 @@ export class DigitalPriestVoiceService {
     this.cancel();
 
     const session = this.speechSession;
-    const activeLang = this.translocoService.getActiveLang();
-    const profile = resolveDigitalPriestVoiceProfile(mood, activeLang);
+    const requestId = this.speechRequestId + 1;
 
-    return Promise.all([this.loadVoices(synthesis), this.ensureAudioContext()]).then(([voices, context]) => {
-      if (session !== this.speechSession || !context || !this.audioDestination) {
-        return;
-      }
-
-      const voice = pickDigitalPriestVoice(voices, activeLang);
-
-      return this.speakUtterance(synthesis, text, voice, profile, session, context, this.audioDestination, activeLang);
+    this._speechRequest.set({
+      text,
+      mood,
+      session,
+      requestId,
     });
+
+    return firstValueFrom(
+      toObservable(this.speech.status).pipe(
+        filter((status) => status === 'resolved' || status === 'error'),
+        take(1)
+      )
+    ).then(() => undefined);
   }
 
   public cancel(): void {
     this.speechSession += 1;
+    this.speechRequestId += 1;
+    this._speechRequest.set(undefined);
     this.stopVoiceBed();
     globalThis.speechSynthesis?.cancel();
+  }
+
+  private async runSpeech(request: SpeechRequest): Promise<void> {
+    const synthesis = globalThis.speechSynthesis;
+
+    if (!synthesis || request.session !== this.speechSession) {
+      return;
+    }
+
+    const activeLang = this.translocoService.getActiveLang();
+    const profile = resolveDigitalPriestVoiceProfile(request.mood, activeLang);
+    const voices = await this.resolveVoices();
+    const context = await this.ensureAudioContext();
+
+    if (request.session !== this.speechSession || !context || !this.audioDestination) {
+      return;
+    }
+
+    const voice = pickDigitalPriestVoice(voices, activeLang);
+
+    await this.speakUtterance(
+      synthesis,
+      request.text,
+      voice,
+      profile,
+      request.session,
+      context,
+      this.audioDestination,
+      activeLang
+    );
   }
 
   private speakUtterance(
@@ -163,36 +234,43 @@ export class DigitalPriestVoiceService {
     this.activeBed = null;
   }
 
-  private loadVoices(synthesis: SpeechSynthesis): Promise<readonly SpeechSynthesisVoice[]> {
-    if (!this.voicesPromise) {
-      this.voicesPromise = this.waitForVoices(synthesis);
+  private async resolveVoices(): Promise<readonly SpeechSynthesisVoice[]> {
+    if (this.voices.status() === 'resolved') {
+      return this.voices.value() ?? [];
     }
 
-    return this.voicesPromise;
+    await firstValueFrom(
+      toObservable(this.voices.status).pipe(
+        filter((status) => status === 'resolved' || status === 'error'),
+        take(1)
+      )
+    );
+
+    return this.voices.value() ?? [];
+  }
+}
+
+function waitForVoices(synthesis: SpeechSynthesis): Promise<readonly SpeechSynthesisVoice[]> {
+  const voices = synthesis.getVoices();
+
+  if (voices.length) {
+    return Promise.resolve(voices);
   }
 
-  private waitForVoices(synthesis: SpeechSynthesis): Promise<readonly SpeechSynthesisVoice[]> {
-    const voices = synthesis.getVoices();
+  return new Promise((resolve) => {
+    let settled = false;
 
-    if (voices.length) {
-      return Promise.resolve(voices);
-    }
+    const finish = (): void => {
+      if (settled) {
+        return;
+      }
 
-    return new Promise((resolve) => {
-      let settled = false;
+      settled = true;
+      synthesis.removeEventListener('voiceschanged', finish);
+      resolve(synthesis.getVoices());
+    };
 
-      const finish = (): void => {
-        if (settled) {
-          return;
-        }
-
-        settled = true;
-        synthesis.removeEventListener('voiceschanged', finish);
-        resolve(synthesis.getVoices());
-      };
-
-      synthesis.addEventListener('voiceschanged', finish);
-      globalThis.setTimeout(finish, DIGITAL_PRIEST_VOICES_READY_TIMEOUT_MS);
-    });
-  }
+    synthesis.addEventListener('voiceschanged', finish);
+    globalThis.setTimeout(finish, DIGITAL_PRIEST_VOICES_READY_TIMEOUT_MS);
+  });
 }
