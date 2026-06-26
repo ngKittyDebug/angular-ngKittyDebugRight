@@ -16,12 +16,19 @@ export const firebaseAuthMock = vi.hoisted(() => {
   }
 
   return {
+    addDoc: vi.fn(),
     appInstance,
     authInstance,
+    collection: vi.fn(),
     createUserWithEmailAndPassword: vi.fn(),
+    deleteDoc: vi.fn(),
     doc: vi.fn(),
     firestoreInstance,
     getDoc: vi.fn(),
+    getDocs: vi.fn(),
+    query: vi.fn(),
+    updateDoc: vi.fn(),
+    where: vi.fn(),
     GithubAuthProvider: vi.fn(GithubAuthProviderMock),
     getAuth: vi.fn(() => authInstance),
     getApps: vi.fn(() => [appInstance]),
@@ -44,9 +51,16 @@ vi.mock('firebase/auth', () => firebaseAuthMock);
 vi.mock('firebase/firestore', () => firebaseAuthMock);
 
 export const resetFirebaseAuthMock = (): void => {
+  firebaseAuthMock.addDoc.mockReset();
+  firebaseAuthMock.collection.mockReset();
   firebaseAuthMock.createUserWithEmailAndPassword.mockReset();
+  firebaseAuthMock.deleteDoc.mockReset();
   firebaseAuthMock.doc.mockReset();
   firebaseAuthMock.getDoc.mockReset();
+  firebaseAuthMock.getDocs.mockReset();
+  firebaseAuthMock.query.mockReset();
+  firebaseAuthMock.updateDoc.mockReset();
+  firebaseAuthMock.where.mockReset();
   firebaseAuthMock.GithubAuthProvider.mockReset();
   firebaseAuthMock.getAuth.mockReset();
   firebaseAuthMock.getApps.mockReset();
@@ -61,8 +75,15 @@ export const resetFirebaseAuthMock = (): void => {
   firebaseAuthMock.signInWithPopup.mockReset();
   firebaseAuthMock.signOut.mockReset();
   firebaseAuthMock.authInstance.currentUser = null;
+  firebaseAuthMock.addDoc.mockResolvedValue({ id: 'new-sin-id' });
+  firebaseAuthMock.collection.mockReturnValue({ path: 'users/firebase-user-1/sins' });
   firebaseAuthMock.doc.mockReturnValue({ path: 'users/firebase-user-1' });
   firebaseAuthMock.getDoc.mockResolvedValue({ exists: () => false });
+  firebaseAuthMock.getDocs.mockResolvedValue({ docs: [], size: 0 });
+  firebaseAuthMock.query.mockImplementation((_collection, ...constraints) => ({ constraints }));
+  firebaseAuthMock.updateDoc.mockResolvedValue(undefined);
+  firebaseAuthMock.deleteDoc.mockResolvedValue(undefined);
+  firebaseAuthMock.where.mockReturnValue({ field: 'lang', op: '==', value: 'ru' });
   firebaseAuthMock.getAuth.mockReturnValue(firebaseAuthMock.authInstance);
   firebaseAuthMock.getApps.mockReturnValue([firebaseAuthMock.appInstance]);
   firebaseAuthMock.getFirestore.mockReturnValue(firebaseAuthMock.firestoreInstance);
