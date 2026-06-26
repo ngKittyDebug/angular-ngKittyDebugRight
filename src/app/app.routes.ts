@@ -86,6 +86,7 @@ export const routes: Routes = [
         path: 'crystal-ball',
         loadComponent: () => import('./features/ball/ui/ball.component').then((c) => c.BallComponent),
         providers: [provideTranslocoScope('ball')],
+        data: { preloadFor: PreloadFor.GUEST },
       },
       {
         path: '**',

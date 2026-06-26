@@ -8,6 +8,7 @@ export const NAVIGATION_ITEM_LIST = [
     url: '/',
     exact: true,
   },
+  { icon: '@tui.sparkles', label: marker('navigation-items.crystal_ball'), url: '/crystal-ball' },
   {
     icon: '@tui.scroll',
     label: marker('navigation-items.shrift'),
