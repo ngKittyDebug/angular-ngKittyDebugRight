@@ -59,17 +59,11 @@
 
     <aside class="sanctum-panel sanctum-oracle">
       <div class="sanctum-stage" [class.sanctum-stage-judging]="facade.isJudging()">
-        <div class="sanctum-sigil" aria-hidden="true">
-          <span class="sanctum-sigil-ring sanctum-sigil-ring-outer"></span>
-          <span class="sanctum-sigil-ring sanctum-sigil-ring-inner"></span>
-          <span class="sanctum-sigil-core"></span>
-        </div>
-
         <ngKitty-digital-priest
           layout="stage"
           [mood]="facade.priestMood()"
           [spiritLevel]="facade.blessingLevel()"
-          [disabled]="facade.isJudging()"
+          [isBusy]="facade.isJudging()"
           [ariaLabel]="'sanctum.priest.label' | transloco"
           (priestRaged)="onPriestRaged()"
         />
@@ -123,7 +117,6 @@
             <div class="sanctum-verdict-head">
               <p class="sanctum-verdict-label">{{ 'sanctum.verdicts.' + result.sanctity | transloco | uppercase }}</p>
               <div class="sanctum-seal" [attr.aria-label]="'sanctum.result.seal' | transloco">
-                <span class="sanctum-seal-ring"></span>
                 <span class="sanctum-seal-mark">Ω</span>
               </div>
             </div>

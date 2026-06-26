@@ -30,6 +30,10 @@ export class SanctumPageFacade {
 
     const { branch, ritualIntent } = this.sanctumForm.getRawValue();
 
+    if (!branch) {
+      return;
+    }
+
     this.sanctumRitual.startRitual(branch, ritualIntent, this.candlesService.blessingLevel());
   }
 

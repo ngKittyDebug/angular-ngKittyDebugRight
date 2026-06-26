@@ -5,7 +5,7 @@ import { CandlesService } from '@core/services/candles/candles.service';
 import { candlesServiceMock } from '@core/services/candles/candles.service.mock';
 import { BranchSanctity } from '@features/sanctum/data/models/branch-sanctity.model';
 import { RitualIntent } from '@features/sanctum/data/models/ritual-intent.model';
-import { sacredBranchJudgmentFixture } from '@features/sanctum/fixtures/sacred-branch-judgment.fixture';
+import { branchJudgmentFixture } from '@features/sanctum/fixtures/branch-judgment.fixture';
 import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
 import { sanctumRitualServiceMock } from '@features/sanctum/services/sanctum-ritual.service.mock';
 import { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
@@ -40,7 +40,7 @@ describe('SanctumPageFacade', () => {
   describe('Вердикт запрошен', () => {
     beforeEach(() => {
       facade.sanctumForm.setValue({
-        branch: sacredBranchJudgmentFixture.branchName,
+        branch: branchJudgmentFixture.branchName,
         ritualIntent: RitualIntent.MERGE,
       });
     });
@@ -50,7 +50,7 @@ describe('SanctumPageFacade', () => {
 
       expect(sanctumRitualServiceMock.startRitual).toHaveBeenNthCalledWith(
         1,
-        sacredBranchJudgmentFixture.branchName,
+        branchJudgmentFixture.branchName,
         RitualIntent.MERGE,
         0
       );
@@ -65,15 +65,15 @@ describe('SanctumPageFacade', () => {
     });
 
     it('должен отображать литанию', () => {
-      sanctumRitualServiceMock.litanyLines.set(sacredBranchJudgmentFixture.litany);
+      sanctumRitualServiceMock.litanyLines.set(branchJudgmentFixture.litany);
 
-      expect(facade.litanyLines()).toEqual(sacredBranchJudgmentFixture.litany);
+      expect(facade.litanyLines()).toEqual(branchJudgmentFixture.litany);
     });
 
     it('должен отображать вердикт', () => {
-      sanctumRitualServiceMock.judgment.set(sacredBranchJudgmentFixture);
+      sanctumRitualServiceMock.judgment.set(branchJudgmentFixture);
 
-      expect(facade.judgment()?.branchName).toBe(sacredBranchJudgmentFixture.branchName);
+      expect(facade.judgment()?.branchName).toBe(branchJudgmentFixture.branchName);
       expect(facade.judgment()?.sanctity).toBe(BranchSanctity.SACRED);
       expect(facade.judgment()?.omens).toHaveLength(3);
     });
