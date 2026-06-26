@@ -11,7 +11,7 @@ export const candlesServiceMock = {
   litCandleList: signal([]).asReadonly(),
   candleCounts: signal(createEmptyCandleCounts()).asReadonly(),
   totalOfferings: signal(0).asReadonly(),
-  blessingLevel: computed(() => 0),
+  blessingLevel: signal(0).asReadonly(),
   isSpiritPleased: computed(() => false),
   error: signal(null).asReadonly(),
   offerCandle: vi.fn(),
