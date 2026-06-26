@@ -2,22 +2,22 @@ import { inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { clampNumber } from '@shared/helpers/clamp-number.helper';
 import { isPrefersReducedMotion } from '@shared/helpers/is-prefers-reduced-motion.helper';
-import { DIGITAL_PRIEST_VOICES_READY_TIMEOUT_MS } from '@shared/ui/digital-priest/constants/digital-priest-voice.config';
-import type { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import type { DigitalPriestVoiceProfile } from '@shared/ui/digital-priest/data/models/digital-priest-voice-profile.model';
+import { DIGITAL_PRIEST_VOICES_READY_TIMEOUT_MS } from '@features/sanctum/ui/components/digital-priest/constants/digital-priest-voice.config';
+import type { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import type { DigitalPriestVoiceProfile } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-voice-profile.model';
 import {
   isVoiceMatchingLang,
   pickDigitalPriestVoice,
   resolveDigitalPriestLangTag,
-} from '@shared/ui/digital-priest/helpers/pick-digital-priest-voice.helper';
+} from '@features/sanctum/ui/components/digital-priest/helpers/pick-digital-priest-voice.helper';
 import {
   createPriestVoiceAudioBus,
   type PriestVoiceBedHandle,
   schedulePriestDigitalTick,
   startPriestVoiceBed,
-} from '@shared/ui/digital-priest/helpers/priest-voice-audio.helper';
-import { randomJitter } from '@shared/ui/digital-priest/helpers/random-jitter.helper';
-import { resolveDigitalPriestVoiceProfile } from '@shared/ui/digital-priest/helpers/resolve-digital-priest-voice-profile.helper';
+} from '@features/sanctum/ui/components/digital-priest/helpers/priest-voice-audio.helper';
+import { randomJitter } from '@features/sanctum/ui/components/digital-priest/helpers/random-jitter.helper';
+import { resolveDigitalPriestVoiceProfile } from '@features/sanctum/ui/components/digital-priest/helpers/resolve-digital-priest-voice-profile.helper';
 
 @Injectable()
 export class DigitalPriestVoiceService {

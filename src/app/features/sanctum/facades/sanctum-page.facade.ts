@@ -1,10 +1,11 @@
 import { computed, inject, Service } from '@angular/core';
 import { CandlesService } from '@core/services/candles/candles.service';
+import { RITUAL_INTENT_OPTIONS } from '@features/sanctum/constants/ritual-intent-options.config';
 import { SanctumSoundPhase } from '@features/sanctum/data/models/sanctum-sound-phase.model';
+import { resolvePriestMood } from '@features/sanctum/helpers/resolve-priest-mood.helper';
 import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
 import { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
-import { resolvePriestMood } from '@shared/ui/digital-priest/helpers/resolve-priest-mood.helper';
 
 @Service({
   autoProvided: false,
@@ -19,6 +20,7 @@ export class SanctumPageFacade {
   public readonly judgment = this.sanctumRitual.judgment;
   public readonly litanyLines = this.sanctumRitual.litanyLines;
   public readonly blessingLevel = this.candlesService.blessingLevel;
+  public readonly ritualIntentOptions = RITUAL_INTENT_OPTIONS;
   public readonly priestMood = computed(() => resolvePriestMood(this.isJudging(), this.judgment()));
 
   public invokeJudgment(): void {

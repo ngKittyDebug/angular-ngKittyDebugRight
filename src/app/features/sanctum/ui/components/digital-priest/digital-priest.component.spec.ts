@@ -2,9 +2,9 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
 import { DigitalPriestComponent } from './digital-priest.component';
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import { DigitalPriestQuoteService } from '@shared/ui/digital-priest/services/digital-priest-quote.service';
-import { DigitalPriestVoiceService } from '@shared/ui/digital-priest/services/digital-priest-voice.service';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
+import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 
 describe('DigitalPriestComponent', () => {

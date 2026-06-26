@@ -1,5 +1,5 @@
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import type { DigitalPriestVoiceProfile } from '@shared/ui/digital-priest/data/models/digital-priest-voice-profile.model';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import type { DigitalPriestVoiceProfile } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-voice-profile.model';
 
 const EN_PROFILES: Record<DigitalPriestMood, DigitalPriestVoiceProfile> = {
   [DigitalPriestMood.IDLE]: {

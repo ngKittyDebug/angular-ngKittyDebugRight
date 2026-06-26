@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import { DigitalPriestQuoteService } from '@shared/ui/digital-priest/services/digital-priest-quote.service';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
 
 describe('DigitalPriestQuoteService', () => {
   let service: DigitalPriestQuoteService;

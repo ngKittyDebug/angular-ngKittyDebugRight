@@ -1,5 +1,5 @@
 import { marker } from '@jsverse/transloco-keys-manager/marker';
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
 
 export const PRIEST_LOW_SPIRIT_THRESHOLD = 30;
 export const PRIEST_LOW_SPIRIT_CHANCE = 0.45;

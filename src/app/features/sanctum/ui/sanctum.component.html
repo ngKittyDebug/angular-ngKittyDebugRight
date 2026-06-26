@@ -24,15 +24,15 @@
           <legend id="sanctum-intent-title" class="sanctum-label">{{ 'sanctum.intents.title' | transloco }}</legend>
 
           <div class="sanctum-intent-options">
-            @for (intent of RitualIntent; track intent) {
-              <label tuiBlock class="sanctum-intent-option sanctum-intent-option-{{ intent }}">
-                <input formControlName="ritualIntent" tuiRadio type="radio" [value]="intent" />
+            @for (option of facade.ritualIntentOptions; track option.value) {
+              <label tuiBlock class="sanctum-intent-option sanctum-intent-option-{{ option.value }}">
+                <input formControlName="ritualIntent" tuiRadio type="radio" [value]="option.value" />
                 <span class="sanctum-intent-copy">
                   <span class="sanctum-intent-label" tuiFade>{{
-                    'sanctum.intents.' + intent + '.label' | transloco
+                    'sanctum.intents.' + option.value + '.label' | transloco
                   }}</span>
                   <span class="sanctum-intent-description">{{
-                    'sanctum.intents.' + intent + '.description' | transloco
+                    'sanctum.intents.' + option.value + '.description' | transloco
                   }}</span>
                 </span>
               </label>

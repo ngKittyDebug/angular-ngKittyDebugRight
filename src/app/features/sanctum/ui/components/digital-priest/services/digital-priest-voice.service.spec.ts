@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
 import { vi } from 'vitest';
 
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import { DigitalPriestVoiceService } from '@shared/ui/digital-priest/services/digital-priest-voice.service';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
 
 describe('DigitalPriestVoiceService', () => {
   const translocoMock = {

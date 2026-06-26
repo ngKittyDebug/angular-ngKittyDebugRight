@@ -4,8 +4,8 @@ import {
   PRIEST_LOW_SPIRIT_QUOTES,
   PRIEST_LOW_SPIRIT_THRESHOLD,
   PRIEST_MOOD_QUOTES,
-} from '@shared/ui/digital-priest/constants/priest-quotes.config';
-import type { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
+} from '@features/sanctum/constants/priest-quotes.config';
+import type { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
 
 export interface PriestQuotePool {
   poolId: string;

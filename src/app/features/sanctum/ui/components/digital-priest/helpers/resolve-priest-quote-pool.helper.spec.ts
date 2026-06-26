@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import { resolvePriestQuotePool } from '@shared/ui/digital-priest/helpers/resolve-priest-quote-pool.helper';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { resolvePriestQuotePool } from '@features/sanctum/ui/components/digital-priest/helpers/resolve-priest-quote-pool.helper';
 
 describe('resolvePriestQuotePool', () => {
   it('должен возвращать busy-пул во время ритуала', () => {

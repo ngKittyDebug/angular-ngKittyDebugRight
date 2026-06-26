@@ -4,10 +4,10 @@ import { clampNumber } from '@shared/helpers/clamp-number.helper';
 import {
   DIGITAL_PRIEST_MAX_EYE_OFFSET_X,
   DIGITAL_PRIEST_MAX_EYE_OFFSET_Y,
-} from '@shared/ui/digital-priest/constants/digital-priest.config';
-import { DigitalPriestMood } from '@shared/ui/digital-priest/data/models/digital-priest-mood.model';
-import { DigitalPriestQuoteService } from '@shared/ui/digital-priest/services/digital-priest-quote.service';
-import { DigitalPriestVoiceService } from '@shared/ui/digital-priest/services/digital-priest-voice.service';
+} from '@features/sanctum/ui/components/digital-priest/constants/digital-priest.config';
+import { DigitalPriestMood } from '@features/sanctum/ui/components/digital-priest/data/models/digital-priest-mood.model';
+import { DigitalPriestQuoteService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-quote.service';
+import { DigitalPriestVoiceService } from '@features/sanctum/ui/components/digital-priest/services/digital-priest-voice.service';
 
 @Component({
   selector: 'ngKitty-digital-priest',
