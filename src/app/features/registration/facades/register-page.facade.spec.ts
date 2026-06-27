@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TuiNotificationService } from '@taiga-ui/core';
 import { AuthService } from '@core/services/auth/auth.service';
-import { authServiceMock } from '@core/services/auth/auth.service.mock';
+import { authServiceMock, resetAuthServiceMock } from '@core/services/auth/auth.service.mock';
 import { registerFormValidValueFixture } from '@features/registration/fixtures/register-form-value.fixture';
 import { TranslocoTestingMock } from '@shared/mocks/transloco-testing/transloco-testing.mock';
 import { routerMock } from '@shared/mocks/router/router.mock';
@@ -16,6 +16,7 @@ describe('RegisterPageFacade', () => {
   let facade: RegisterPageFacade;
 
   beforeEach(() => {
+    resetAuthServiceMock();
     authServiceMock.signup.mockReset().mockResolvedValue(null);
     routerMock.navigate.mockReset().mockReturnValue(Promise.resolve(true));
     tuiNotificationServiceMock.open.mockReset().mockReturnValue(of(undefined));
