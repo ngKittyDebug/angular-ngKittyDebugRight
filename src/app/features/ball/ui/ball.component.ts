@@ -15,10 +15,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class BallComponent {
   private readonly transloco = inject(TranslocoService);
   private readonly destroyRef = inject(DestroyRef);
-  protected readonly isCharging = signal(false);
-  protected readonly answerText = signal<string | null>(null);
+  public readonly isCharging = signal(false);
+  public readonly answerText = signal<string | null>(null);
 
-  protected onBallClick(): void {
+  public onBallClick(): void {
     if (this.isCharging()) {
       return;
     }
