@@ -22,39 +22,57 @@ describe('BallComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('должен начать загрузку после клика', () => {
-    component.onBallClick();
+  describe('Взаимодействие с шаром', () => {
+    it('должен начать загрузку после клика', () => {
+      component.onBallClick();
 
-    expect(component.isCharging()).toBe(true);
-    expect(component.answerText()).toBeNull();
-  });
+      expect(component.isCharging()).toBe(true);
+      expect(component.answerText()).toBeNull();
+    });
 
-  it('должен показать ответ через 1800 мс', () => {
-    vi.useFakeTimers();
+    it('должен показать ответ через 1800 мс', () => {
+      vi.useFakeTimers();
 
-    component.onBallClick();
+      component.onBallClick();
 
-    vi.advanceTimersByTime(1800);
+      vi.advanceTimersByTime(1800);
 
-    expect(component.answerText()).not.toBeNull();
+      expect(component.answerText()).not.toBeNull();
 
-    vi.useRealTimers();
-  });
+      vi.useRealTimers();
+    });
 
-  it('должен очистить ответ и завершить загрузку через 4000 мс после появления ответа', () => {
-    vi.useFakeTimers();
+    it('должен очистить ответ и завершить загрузку через 4000 мс после появления ответа', () => {
+      vi.useFakeTimers();
 
-    component.onBallClick();
+      component.onBallClick();
 
-    vi.advanceTimersByTime(1800);
+      vi.advanceTimersByTime(1800);
 
-    expect(component.answerText()).not.toBeNull();
+      expect(component.answerText()).not.toBeNull();
 
-    vi.advanceTimersByTime(4000);
+      vi.advanceTimersByTime(4000);
 
-    expect(component.answerText()).toBeNull();
-    expect(component.isCharging()).toBe(false);
+      expect(component.answerText()).toBeNull();
+      expect(component.isCharging()).toBe(false);
 
-    vi.useRealTimers();
+      vi.useRealTimers();
+    });
+
+    it('не должен повторно запускать загрузку, если она уже выполняется', () => {
+      vi.useFakeTimers();
+
+      component.onBallClick();
+
+      expect(component.isCharging()).toBe(true);
+
+      component.onBallClick();
+
+      vi.advanceTimersByTime(1800);
+
+      expect(component.answerText()).not.toBeNull();
+
+      vi.useRealTimers();
+    });
   });
 });
