@@ -10,7 +10,6 @@ import {
   resetUserProfileServiceMock,
   userProfileServiceMock,
 } from '@core/services/user-profile/user-profile.service.mock';
-import { resetAuthServiceMock } from '@core/services/auth/auth.service.mock';
 import type { User } from 'firebase/auth';
 
 describe('AuthService', () => {
@@ -19,7 +18,6 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     resetFirebaseAuthMock();
-    resetAuthServiceMock();
     resetUserProfileServiceMock();
 
     TestBed.resetTestingModule();
