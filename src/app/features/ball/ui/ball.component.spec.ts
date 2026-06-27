@@ -9,6 +9,8 @@ describe('BallComponent', () => {
   let fixture: ComponentFixture<BallComponent>;
 
   beforeEach(async () => {
+    vi.useFakeTimers();
+
     await TestBed.configureTestingModule({
       imports: [BallComponent, TranslocoTestingMock],
     }).compileComponents();
@@ -16,6 +18,10 @@ describe('BallComponent', () => {
     fixture = TestBed.createComponent(BallComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('должен инициализироваться', () => {
@@ -29,22 +35,18 @@ describe('BallComponent', () => {
       expect(component.isCharging()).toBe(true);
       expect(component.answerText()).toBeNull();
     });
+  });
 
+  describe('Взаимодействие с таймером', () => {
     it('должен показать ответ через 1800 мс', () => {
-      vi.useFakeTimers();
-
       component.onBallClick();
 
       vi.advanceTimersByTime(1800);
 
       expect(component.answerText()).not.toBeNull();
-
-      vi.useRealTimers();
     });
 
     it('должен очистить ответ и завершить загрузку через 4000 мс после появления ответа', () => {
-      vi.useFakeTimers();
-
       component.onBallClick();
 
       vi.advanceTimersByTime(1800);
@@ -55,13 +57,9 @@ describe('BallComponent', () => {
 
       expect(component.answerText()).toBeNull();
       expect(component.isCharging()).toBe(false);
-
-      vi.useRealTimers();
     });
 
     it('не должен повторно запускать загрузку, если она уже выполняется', () => {
-      vi.useFakeTimers();
-
       component.onBallClick();
 
       expect(component.isCharging()).toBe(true);
@@ -71,8 +69,6 @@ describe('BallComponent', () => {
       vi.advanceTimersByTime(1800);
 
       expect(component.answerText()).not.toBeNull();
-
-      vi.useRealTimers();
     });
   });
 });
