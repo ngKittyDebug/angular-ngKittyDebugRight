@@ -1,6 +1,7 @@
 import { provideTaiga } from '@taiga-ui/core';
 import type { ApplicationConfig } from '@angular/core';
 import {
+  ErrorHandler,
   inject,
   isDevMode,
   provideAppInitializer,
@@ -12,16 +13,19 @@ import { provideRouter, withComponentInputBinding, withPreloading, withViewTrans
 import { AuthService } from '@core/services/auth/auth.service';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import { UserStateStrategy } from '@core/services/preloading-strategy/user-state-strategy.service';
 import { Languages } from '@core/models/languages.model';
 import { uiStateStore } from '@core/store/ui-state.store';
 import { initialUiState } from '@core/store/constants/initial-ui-state';
+import { httpErrorInterceptor } from '@core/interceptors/http-error-interceptor';
+import { GlobalErrorHandler } from '@core/services/global-error-handler/global-error-handler.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withViewTransitions(), withPreloading(UserStateStrategy)),
@@ -31,7 +35,7 @@ export const appConfig: ApplicationConfig = {
 
       return inject(AuthService).initialize();
     }),
-    provideHttpClient(withXhr()),
+    provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor])),
     provideTransloco({
       config: {
         availableLangs: Object.values(Languages),
