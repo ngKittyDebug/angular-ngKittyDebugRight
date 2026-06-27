@@ -18,7 +18,6 @@ import type { CandleType } from '@core/services/candles/models/candle-type.model
 import type { LitCandle } from '@core/services/candles/models/lit-candle.model';
 import type { SpiritSatisfaction } from '@core/services/candles/models/spirit-satisfaction.model';
 import { UserProfileService } from '@core/services/user-profile/user-profile.service';
-import { CoderQuotesService } from '@core/ui/components/ghost-coder/services/coder-quotes.service';
 import { firestore } from '@env/environment';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { timer } from 'rxjs';
@@ -33,7 +32,6 @@ interface UserCandleState {
 export class CandlesService {
   private readonly destroyRef = inject(DestroyRef);
   private readonly userProfileService = inject(UserProfileService);
-  private readonly coderService = inject(CoderQuotesService);
   private readonly _candleCounts = signal<CandleCounts>(createEmptyCandleCounts());
   private readonly _litCandleList = signal<LitCandle[]>([]);
   private readonly _spiritSatisfaction = signal<SpiritSatisfaction>(createEmptySpiritSatisfaction());
@@ -89,7 +87,6 @@ export class CandlesService {
     };
 
     this._litCandleList.update((list) => [...list, litCandle]);
-    this.coderService.reactCandle();
 
     timer(CANDLE_EXTINGUISH_TIME_IN_MS)
       .pipe(takeUntilDestroyed(this.destroyRef))
