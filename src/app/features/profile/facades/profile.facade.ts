@@ -4,11 +4,16 @@ import type { AchievementInfo, Profile, ProfileData, Statistics, Zodiac } from '
 import { UserProfileService } from '@core/services/user-profile/user-profile.service';
 import { CandlesService } from '@core/services/candles/candles.service';
 import { ConfessService } from '@core/services/confess/confess.service';
+import { ProfileSecurityFormService } from '../services/profile-security/profile-security';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileFacade {
+  private readonly profileSecurityFormService = inject(ProfileSecurityFormService);
+
+  public readonly profileForm = this.profileSecurityFormService.form;
+
   public readonly state = signal<ProfileData>(PROFILE_MOCK);
 
   public readonly userProfileService = inject(UserProfileService);
@@ -77,6 +82,8 @@ export class ProfileFacade {
     };
   });
 
+  public readonly isLoading = computed(() => false);
+
   public readonly achievementsCount = computed(() => this.achievementInfo().achievements.length);
 
   public readonly unlockedAchievementsCount = computed(
@@ -87,4 +94,8 @@ export class ProfileFacade {
     unlocked: this.unlockedAchievementsCount(),
     total: this.achievementsCount(),
   }));
+
+  public async submit(): Promise<void> {
+    console.log(this.profileForm.getRawValue());
+  }
 }

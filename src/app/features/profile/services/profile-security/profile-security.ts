@@ -8,7 +8,7 @@ import type { ProfileSecurityFormGroup } from '@features/profile/data/models/pro
 @Service()
 export class ProfileSecurityFormService {
   private readonly fb = inject(FormBuilder);
-  public readonly registerForm = this.createFormInstance();
+  public readonly form = this.createFormInstance();
 
   private createFormInstance() {
     return this.fb.group<ProfileSecurityFormGroup>(
