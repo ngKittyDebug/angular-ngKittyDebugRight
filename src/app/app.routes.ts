@@ -10,6 +10,7 @@ import { MainComponent } from '@features/main/ui/main.component';
 import { TarotService } from '@features/main/data/api/services/tarot/tarot.service';
 import { ShriftPageFacade } from '@features/shrift/facades/shrift-page.facade';
 import { ConfessFormService } from '@features/shrift/services/confess-form.service';
+import { AltarPageFacade } from '@features/altar/facades/altar-page.facade';
 import { PreloadFor } from '@core/services/preloading-strategy/models/preload-for.model';
 import { MainPageFacade } from '@features/main/facades/main-page.facade';
 import { MyMemoryTranslationService } from '@features/main/data/api/services/my-memory-translation/my-memory-translation.service';
@@ -66,7 +67,7 @@ export const routes: Routes = [
         path: 'altar',
         canMatch: [authGuard],
         loadComponent: () => import('./features/altar/ui/altar.component').then((c) => c.AltarComponent),
-        providers: [provideTranslocoScope('altar')],
+        providers: [provideTranslocoScope('altar'), AltarPageFacade],
         data: { preloadFor: PreloadFor.AUTH },
       },
       {
