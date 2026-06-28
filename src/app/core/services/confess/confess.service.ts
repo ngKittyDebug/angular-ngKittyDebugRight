@@ -5,8 +5,7 @@ import { firestore } from '@env/environment';
 import type { Severity, Sin, Status } from '@features/shrift/models/sin.model';
 import { SINS_SUBCOLLECTION, STATUSES, USERS_COLLECTION } from '@core/services/confess/models/confess.model';
 import { withTimeout } from '@shared/helpers/with-timeout.helper';
-
-const FIRESTORE_OPERATION_TIMEOUT_MS = 15_000;
+import { FIRESTORE_OPERATION_TIMEOUT_MS } from '@shared/constants/firestore-operation-timeout';
 
 @Service()
 export class ConfessService {

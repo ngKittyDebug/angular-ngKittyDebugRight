@@ -10,6 +10,7 @@ import { vi } from 'vitest';
 
 import { ConfessService } from './confess.service';
 import { confessServiceMock, resetConfessServiceMock } from './confess.service.mock';
+import { FIRESTORE_OPERATION_TIMEOUT_MS } from '@shared/constants/firestore-operation-timeout';
 
 describe('ConfessService', () => {
   let service: ConfessService;
@@ -81,7 +82,7 @@ describe('ConfessService', () => {
 
       const loadPromise = service.loadSins();
 
-      await vi.advanceTimersByTimeAsync(15_000);
+      await vi.advanceTimersByTimeAsync(FIRESTORE_OPERATION_TIMEOUT_MS);
 
       await expect(loadPromise).rejects.toThrow('Request timed out');
       expect(service.isLoading()).toBe(false);
