@@ -1,7 +1,6 @@
 import { provideTaiga } from '@taiga-ui/core';
 import type { ApplicationConfig } from '@angular/core';
 import {
-  ErrorHandler,
   inject,
   isDevMode,
   provideAppInitializer,
@@ -21,11 +20,9 @@ import { Languages } from '@core/models/languages.model';
 import { uiStateStore } from '@core/store/ui-state.store';
 import { initialUiState } from '@core/store/constants/initial-ui-state';
 import { httpErrorInterceptor } from '@core/interceptors/http-error-interceptor';
-import { GlobalErrorHandler } from '@core/services/global-error-handler/global-error-handler.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withViewTransitions(), withPreloading(UserStateStrategy)),
