@@ -18,6 +18,7 @@ import { SanctumPageFacade } from '@features/sanctum/facades/sanctum-page.facade
 import { SanctumFormService } from '@features/sanctum/services/sanctum-form.service';
 import { SanctumRitualService } from '@features/sanctum/services/sanctum-ritual.service';
 import { SanctumSoundService } from '@features/sanctum/services/sanctum-sound.service';
+import { PriestQuotesService } from '@features/sanctum/services/priest-quotes.service';
 
 export const routes: Routes = [
   {
@@ -80,6 +81,7 @@ export const routes: Routes = [
           SanctumFormService,
           SanctumRitualService,
           SanctumSoundService,
+          PriestQuotesService,
         ],
         data: { preloadFor: PreloadFor.AUTH },
       },
