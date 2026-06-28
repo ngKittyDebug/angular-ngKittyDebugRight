@@ -1,4 +1,15 @@
 {
+  "form": {
+    "labels": {
+      "name": "Username",
+      "password": "Current password",
+      "new_password": "New password",
+      "new_password_confirmation": "New password confirmation"
+    }
+  },
+  "actions": {
+    "submit": "Save changes"
+  },
   "location": "location",
   "city": {
     "moscow": "Moscow"

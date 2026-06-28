@@ -4,7 +4,7 @@
 @let newPasswordConfirmationControl = form.controls.newPasswordConfirmation;
 <form [formGroup]="form" tuiCardLarge tuiForm="m" class="form" [style.max-width.rem]="48" (submit)="onSubmit($event)">
   <tui-textfield>
-    <label tuiLabel for="name">{{ 'register.form.labels.name' | transloco }}</label>
+    <label tuiLabel for="name">{{ 'profile.form.labels.name' | transloco }}</label>
     <input [formControl]="nameControl" placeholder="aboba" tuiInput id="name" />
   </tui-textfield>
 
@@ -87,9 +87,5 @@
         {{ 'profile.actions.submit' | transloco }}
       }
     </button>
-
-    <span class="divider"></span>
-
-    <a routerLink="/login" class="link">{{ 'navigation-items.login' | transloco }}</a>
   </footer>
 </form>
