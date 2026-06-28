@@ -10,7 +10,6 @@ import {
   TuiLoader,
   tuiLoaderOptionsProvider,
 } from '@taiga-ui/core';
-import { RouterLink } from '@angular/router';
 import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VALIDATION_ERRORS_DICT } from '@shared/dictionaries/validation-errors.dictionary';
@@ -25,7 +24,6 @@ import { TuiDay } from '@taiga-ui/cdk';
     TuiPassword,
     TuiButton,
     TuiLoader,
-    RouterLink,
     TuiIcon,
     TuiCardLarge,
     TuiForm,

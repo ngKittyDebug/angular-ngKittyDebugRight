@@ -5,12 +5,15 @@ import { UserProfileService } from '@core/services/user-profile/user-profile.ser
 import { CandlesService } from '@core/services/candles/candles.service';
 import { ConfessService } from '@core/services/confess/confess.service';
 import { ProfileSecurityFormService } from '../services/profile-security/profile-security';
+import { AuthService } from '@core/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileFacade {
   private readonly profileSecurityFormService = inject(ProfileSecurityFormService);
+
+  private readonly authService = inject(AuthService);
 
   public readonly profileForm = this.profileSecurityFormService.form;
 
@@ -95,7 +98,30 @@ export class ProfileFacade {
     total: this.achievementsCount(),
   }));
 
-  public async submit(): Promise<void> {
-    console.log(this.profileForm.getRawValue());
+  public async submit() {
+    if (this.profileForm.invalid || this.isLoading()) {
+      return;
+    }
+    const { name, currentPassword, newPassword } = this.profileForm.getRawValue();
+
+    const user = this.authService.user();
+
+    if (!user) {
+      return;
+    }
+
+    try {
+      await this.userProfileService.updateProfile(user.uid, {
+        displayName: name,
+      });
+
+      if (currentPassword && newPassword) {
+        await this.authService.changePassword(currentPassword, newPassword);
+      }
+
+      this.profileForm.markAsPristine();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
