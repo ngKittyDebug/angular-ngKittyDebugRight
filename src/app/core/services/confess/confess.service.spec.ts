@@ -6,6 +6,7 @@ import { authServiceMock, resetAuthServiceMock } from '@core/services/auth/auth.
 import { userFixture } from '@core/fixtures/user.fixture';
 import type { User } from 'firebase/auth';
 import type { Mock } from 'vitest';
+import { vi } from 'vitest';
 
 import { ConfessService } from './confess.service';
 import { confessServiceMock, resetConfessServiceMock } from './confess.service.mock';
@@ -72,6 +73,21 @@ describe('ConfessService', () => {
       await expect(service.loadSins()).rejects.toThrow('User is not authenticated');
       expect(service.isLoading()).toBe(false);
       expect(firebaseAuthMock.getDocs).not.toHaveBeenCalled();
+    });
+
+    it('должен прервать загрузку по таймауту Firestore', async () => {
+      vi.useFakeTimers();
+      firebaseAuthMock.getDocs.mockImplementation(() => new Promise(() => undefined));
+
+      const loadPromise = service.loadSins();
+
+      await vi.advanceTimersByTimeAsync(15_000);
+
+      await expect(loadPromise).rejects.toThrow('Request timed out');
+      expect(service.isLoading()).toBe(false);
+      expect(service.error()).toEqual(expect.any(Error));
+
+      vi.useRealTimers();
     });
   });
 
