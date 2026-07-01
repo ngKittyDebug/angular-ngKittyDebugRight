@@ -1,5 +1,7 @@
-import { vi } from 'vitest';
+import { beforeEach, vi } from 'vitest';
 import type { User } from 'firebase/auth';
+
+import { resetFirebaseAuthMock } from './app/core/services/auth/mocks/firebase-auth-hoisted.mock';
 
 const firebaseAuthMock = vi.hoisted(() => {
   const appInstance = {};
@@ -55,3 +57,7 @@ interface FirebaseAuthMockGlobal {
 }
 
 (globalThis as unknown as FirebaseAuthMockGlobal).__firebaseAuthMock__ = firebaseAuthMock;
+
+beforeEach(() => {
+  resetFirebaseAuthMock();
+});

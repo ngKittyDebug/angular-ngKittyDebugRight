@@ -32,6 +32,8 @@
   --tui-text-secondary: #e8c98f;
   --tui-text-tertiary: #c9b88a;
   --tui-border-normal: #d6a85f;
+  --tui-border-hover: var(--accent-primary-soft);
+  --tui-border-focus: color-mix(in srgb, var(--accent-primary) 72%, #fff);
   --tui-status-positive-pale: rgb(96 255 180 / 16%);
   --tui-status-negative-pale: rgb(255 82 82 / 16%);
   --tui-status-warning-pale: rgb(255 190 92 / 16%);
@@ -106,6 +108,8 @@
   --tui-text-secondary: #c084fc;
   --tui-text-tertiary: #a78bfa;
   --tui-border-normal: #a855f7;
+  --tui-border-hover: var(--accent-primary-soft);
+  --tui-border-focus: color-mix(in srgb, var(--accent-primary) 72%, #fff);
   --tui-status-positive-pale: rgb(0 255 200 / 18%);
   --tui-status-negative-pale: rgb(255 0 98 / 18%);
   --tui-status-warning-pale: rgb(255 166 0 / 18%);
