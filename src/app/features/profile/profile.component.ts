@@ -6,10 +6,11 @@ import { TuiAvatar } from '@taiga-ui/kit';
 import { NgTemplateOutlet } from '@angular/common';
 import { UserProfileService } from '@core/services/user-profile/user-profile.service';
 import { ProfileFacade } from './facades/profile.facade';
+import { ProfileFormComponent } from './ui/profile-form.component';
 
 @Component({
   selector: 'ngKitty-profile',
-  imports: [TuiCardLarge, TuiAvatar, TuiIcon, TranslocoPipe, NgTemplateOutlet],
+  imports: [TuiCardLarge, TuiAvatar, TuiIcon, TranslocoPipe, NgTemplateOutlet, ProfileFormComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

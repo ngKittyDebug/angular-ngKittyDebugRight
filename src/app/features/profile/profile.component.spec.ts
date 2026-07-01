@@ -7,10 +7,28 @@ import {
   userProfileServiceMock,
 } from '@core/services/user-profile/user-profile.service.mock';
 import { ProfileComponent } from './profile.component';
+import { ProfileFacade } from './facades/profile.facade';
+import { vi } from 'vitest';
+import { signal } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+
+  const profileFacadeMock: Partial<ProfileFacade> = {
+    profileForm: new FormGroup({
+      name: new FormControl(''),
+      currentPassword: new FormControl(''),
+      newPassword: new FormControl(''),
+      newPasswordConfirmation: new FormControl(''),
+    }) as ProfileFacade['profileForm'],
+
+    isLoading: signal(false),
+
+    submit: vi.fn(),
+  };
 
   beforeEach(async () => {
     vi.clearAllMocks();
@@ -18,7 +36,11 @@ describe('ProfileComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [ProfileComponent, TranslocoTestingMock],
-      providers: [{ provide: UserProfileService, useValue: userProfileServiceMock }],
+      providers: [
+        { provide: UserProfileService, useValue: userProfileServiceMock },
+        { provide: ProfileFacade, useValue: profileFacadeMock },
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
