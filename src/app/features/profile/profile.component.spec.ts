@@ -12,7 +12,6 @@ import { vi } from 'vitest';
 import { signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { provideTaiga } from '@taiga-ui/core';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -38,7 +37,6 @@ describe('ProfileComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ProfileComponent, TranslocoTestingMock, ReactiveFormsModule],
       providers: [
-        provideTaiga(),
         { provide: UserProfileService, useValue: userProfileServiceMock },
         { provide: ProfileFacade, useValue: profileFacadeMock },
       ],
