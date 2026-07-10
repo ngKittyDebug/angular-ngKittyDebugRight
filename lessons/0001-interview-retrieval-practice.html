@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Урок 1 — Подготовка к интервью Angular</title>
+  <link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+
+<h1>Урок 1: Retrieval Practice</h1>
+<p>Цель — не перечитать ответы, а <strong>вспомнить</strong> их из памяти. Сначала попробуй ответить вслух, потом проверь в <a href="../reference/angular-interview-excellent.html">справочнике</a>.</p>
+<p><strong>Миссия:</strong> <a href="../MISSION.md">Angular Interview — Excellent Level</a></p>
+
+<h2>Как учиться</h2>
+<ol>
+  <li>Закрой справочник.</li>
+  <li>Ответь на вопрос квиза вслух (на английском — как на интервью).</li>
+  <li>Выбери вариант и нажми «Проверить».</li>
+  <li>Открой соответствующий раздел справочника и дополни пробелы.</li>
+</ol>
+
+<h2>HTTP</h2>
+
+<div class="quiz" data-answer="b">
+  <p><strong>1.</strong> В standalone Angular 22 вместо HttpClientModule используется:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q1" value="a"> import HttpClientModule в AppComponent</label>
+    <label><input type="radio" name="q1" value="b"> provideHttpClient() в ApplicationConfig</label>
+    <label><input type="radio" name="q1" value="c"> HttpClient в providedIn: 'platform'</label>
+    <label><input type="radio" name="q1" value="d"> new HttpClient() в main.ts</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+  <p class="hint" style="font-size:0.85rem; color:#555;">→ <a href="../reference/angular-interview-excellent.html#q-01">Справочник: HttpClientModule</a></p>
+</div>
+
+<div class="quiz" data-answer="c">
+  <p><strong>2.</strong> HttpClient.get() возвращает Observable, который по умолчанию:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q2" value="a"> eager и multicast</label>
+    <label><input type="radio" name="q2" value="b"> lazy и multicast</label>
+    <label><input type="radio" name="q2" value="c"> lazy и cold</label>
+    <label><input type="radio" name="q2" value="d"> eager и hot</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+  <p class="hint" style="font-size:0.85rem; color:#555;">→ <a href="../reference/angular-interview-excellent.html#q-02">Справочник: HTTP requests</a></p>
+</div>
+
+<h2>RxJS</h2>
+
+<div class="quiz" data-answer="a">
+  <p><strong>3.</strong> Для search-as-you-type с отменой предыдущего запроса:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q3" value="a"> switchMap отменяет предыдущий inner</label>
+    <label><input type="radio" name="q3" value="b"> mergeMap отменяет предыдущий inner</label>
+    <label><input type="radio" name="q3" value="c"> concatMap отменяет предыдущий inner</label>
+    <label><input type="radio" name="q3" value="d"> exhaustMap отменяет предыдущий inner</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+  <p class="hint" style="font-size:0.85rem; color:#555;">→ <a href="../reference/angular-interview-excellent.html#rxjs">Справочник: higher-order operators</a></p>
+</div>
+
+<div class="quiz" data-answer="d">
+  <p><strong>4.</strong> Современный способ отписки в компоненте Angular 16+:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q4" value="a"> ngOnDestroy с destroy$ Subject</label>
+    <label><input type="radio" name="q4" value="b"> subscription.add() в сервисе</label>
+    <label><input type="radio" name="q4" value="c"> never unsubscribe HTTP</label>
+    <label><input type="radio" name="q4" value="d"> takeUntilDestroyed(destroyRef)</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+</div>
+
+<h2>DI &amp; Signals</h2>
+
+<div class="quiz" data-answer="b">
+  <p><strong>5.</strong> TarotService с autoProvided: false доступен только:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q5" value="a"> везде через root injector</label>
+    <label><input type="radio" name="q5" value="b"> где route providers его регистрирует</label>
+    <label><input type="radio" name="q5" value="c"> только в AppComponent providers</label>
+    <label><input type="radio" name="q5" value="d"> только через providedIn: 'any'</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+</div>
+
+<div class="quiz" data-answer="c">
+  <p><strong>6.</strong> rxResource отличается от resource тем, что:</p>
+  <div class="quiz-options">
+    <label><input type="radio" name="q6" value="a"> работает только с Firebase</label>
+    <label><input type="radio" name="q6" value="b"> loader возвращает Promise</label>
+    <label><input type="radio" name="q6" value="c"> stream возвращает Observable</label>
+    <label><input type="radio" name="q6" value="d"> не поддерживает params</label>
+  </div>
+  <button type="button" onclick="checkQuiz(this)">Проверить</button>
+  <div class="feedback" hidden></div>
+  <p class="hint" style="font-size:0.85rem; color:#555;">→ <a href="../reference/angular-interview-excellent.html#signals">Справочник: resource vs rxResource</a></p>
+</div>
+
+<h2>Проект — устный ответ</h2>
+<p>Без подсказок объясни за 2 минуты flow <strong>tarot draw</strong>: от клика до отображения карт. Запиши себя на диктофон. Сверь с <a href="../reference/angular-interview-excellent.html#project">разделом Project</a>.</p>
+
+<h2>Primary source</h2>
+<p>Прочитай: <a href="https://angular.dev/guide/http">Angular HTTP Guide</a> — раздел про interceptors и <code>provideHttpClient</code>.</p>
+
+<footer>
+  <p><strong>Следующий шаг:</strong> попроси в чате урок по слабой теме или mock-интервью.</p>
+  <p>Полный справочник: <a href="../reference/angular-interview-excellent.html">angular-interview-excellent.html</a></p>
+</footer>
+
+<script>
+function checkQuiz(btn) {
+  const quiz = btn.closest('.quiz');
+  const answer = quiz.dataset.answer;
+  const selected = quiz.querySelector('input[type=radio]:checked');
+  const feedback = quiz.querySelector('.feedback');
+  feedback.hidden = false;
+  if (!selected) {
+    feedback.textContent = 'Выбери вариант ответа.';
+    feedback.className = 'feedback incorrect';
+    return;
+  }
+  if (selected.value === answer) {
+    feedback.textContent = 'Верно! Теперь объясни почему — вслух, с trade-off.';
+    feedback.className = 'feedback correct';
+  } else {
+    feedback.textContent = 'Неверно. Сначала попробуй ответить вслух, потом открой справочник.';
+    feedback.className = 'feedback incorrect';
+  }
+}
+</script>
+
+</body>
+</html>

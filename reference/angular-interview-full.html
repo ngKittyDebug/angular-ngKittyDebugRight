@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Angular Interview — полный справочник (113 вопросов)</title>
+  <link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body class="ref-page">
+
+<div class="ref-layout">
+
+<nav class="ref-sidebar" aria-label="Оглавление вопросов">
+  <p class="ref-sidebar-title">113 вопросов</p>
+
+  <p class="ref-sidebar-group"><a href="#general">General</a></p>
+  <a href="#q-01"><span class="q-link-num">01</span> Angular</a>
+  <a href="#q-02"><span class="q-link-num">02</span> Angular CLI</a>
+  <a href="#q-03"><span class="q-link-num">03</span> Модуль</a>
+  <a href="#q-04"><span class="q-link-num">04</span> Межкомпонентное взаимодействие</a>
+
+  <p class="ref-sidebar-group"><a href="#components">Components</a></p>
+  <a href="#q-05"><span class="q-link-num">05</span> Компоненты</a>
+  <a href="#q-06"><span class="q-link-num">06</span> @Component</a>
+  <a href="#q-07"><span class="q-link-num">07</span> Жизненный цикл</a>
+  <a href="#q-08"><span class="q-link-num">08</span> Двустороннее связывание</a>
+  <a href="#q-09"><span class="q-link-num">09</span> Standalone</a>
+  <a href="#q-10"><span class="q-link-num">10</span> ViewChild</a>
+  <a href="#q-11"><span class="q-link-num">11</span> ElementRef / Renderer2</a>
+  <a href="#q-12"><span class="q-link-num">12</span> HostBinding / HostListener</a>
+  <a href="#q-13"><span class="q-link-num">13</span> Change Detection</a>
+  <a href="#q-14"><span class="q-link-num">14</span> Динамические компоненты</a>
+
+  <p class="ref-sidebar-group"><a href="#directives">Directives</a></p>
+  <a href="#q-15"><span class="q-link-num">15</span> Директивы</a>
+  <a href="#q-16"><span class="q-link-num">16</span> Структурные vs атрибутные</a>
+  <a href="#q-17"><span class="q-link-num">17</span> Своя директива</a>
+  <a href="#q-18"><span class="q-link-num">18</span> ngIf / ngFor</a>
+  <a href="#q-19"><span class="q-link-num">19</span> *ngIf vs hidden</a>
+  <a href="#q-20"><span class="q-link-num">20</span> ngSwitch</a>
+  <a href="#q-21"><span class="q-link-num">21</span> ngStyle vs ngClass</a>
+  <a href="#q-22"><span class="q-link-num">22</span> ngContainer</a>
+  <a href="#q-23"><span class="q-link-num">23</span> Свои структурные</a>
+
+  <p class="ref-sidebar-group"><a href="#pipes">Pipes</a></p>
+  <a href="#q-24"><span class="q-link-num">24</span> Пайпы</a>
+  <a href="#q-25"><span class="q-link-num">25</span> Встроенные пайпы</a>
+  <a href="#q-26"><span class="q-link-num">26</span> Pure vs Impure</a>
+  <a href="#q-27"><span class="q-link-num">27</span> Цепочка пайпов</a>
+  <a href="#q-28"><span class="q-link-num">28</span> Параметры пайпа</a>
+  <a href="#q-29"><span class="q-link-num">29</span> Async pipe</a>
+  <a href="#q-30"><span class="q-link-num">30</span> Регистрация пайпа</a>
+  <a href="#q-31"><span class="q-link-num">31</span> Сложные преобразования</a>
+
+  <p class="ref-sidebar-group"><a href="#routing">Routing</a></p>
+  <a href="#q-32"><span class="q-link-num">32</span> Маршрутизация</a>
+  <a href="#q-33"><span class="q-link-num">33</span> Router / outlet</a>
+  <a href="#q-34"><span class="q-link-num">34</span> params / queryParams</a>
+  <a href="#q-35"><span class="q-link-num">35</span> Дочерние маршруты</a>
+  <a href="#q-36"><span class="q-link-num">36</span> Preloading</a>
+  <a href="#q-37"><span class="q-link-num">37</span> Route Guards</a>
+  <a href="#q-38"><span class="q-link-num">38</span> ActivatedRoute</a>
+  <a href="#q-39"><span class="q-link-num">39</span> Lazy в routing</a>
+
+  <p class="ref-sidebar-group"><a href="#rxjs">RxJS</a></p>
+  <a href="#q-40"><span class="q-link-num">40</span> RxJS в Angular</a>
+  <a href="#q-41"><span class="q-link-num">41</span> Observable / Observer</a>
+  <a href="#q-42"><span class="q-link-num">42</span> Observable vs Promise</a>
+  <a href="#q-43"><span class="q-link-num">43</span> Базовые операторы</a>
+  <a href="#q-44"><span class="q-link-num">44</span> Custom Observable</a>
+  <a href="#q-45"><span class="q-link-num">45</span> Subject / BehaviorSubject</a>
+  <a href="#q-46"><span class="q-link-num">46</span> Hot vs Cold</a>
+  <a href="#q-47"><span class="q-link-num">47</span> Отписка</a>
+  <a href="#q-48"><span class="q-link-num">48</span> State management</a>
+  <a href="#q-49"><span class="q-link-num">49</span> Ошибки и retry</a>
+
+  <p class="ref-sidebar-group"><a href="#di">DI</a></p>
+  <a href="#q-50"><span class="q-link-num">50</span> Dependency Injection</a>
+  <a href="#q-51"><span class="q-link-num">51</span> Создание сервиса</a>
+  <a href="#q-52"><span class="q-link-num">52</span> providedIn</a>
+  <a href="#q-53"><span class="q-link-num">53</span> useClass / Value / Factory</a>
+  <a href="#q-54"><span class="q-link-num">54</span> Injector hierarchy</a>
+  <a href="#q-55"><span class="q-link-num">55</span> DI-токены</a>
+  <a href="#q-56"><span class="q-link-num">56</span> Optional / Self / SkipSelf</a>
+  <a href="#q-57"><span class="q-link-num">57</span> Условный DI</a>
+  <a href="#q-58"><span class="q-link-num">58</span> Multi-providers</a>
+  <a href="#q-59"><span class="q-link-num">59</span> DI компонентов</a>
+  <a href="#q-60"><span class="q-link-num">60</span> Переиспользование</a>
+
+  <p class="ref-sidebar-group"><a href="#forms">Forms</a></p>
+  <a href="#q-61"><span class="q-link-num">61</span> Template vs Reactive</a>
+  <a href="#q-62"><span class="q-link-num">62</span> FormControl / Group / Array</a>
+  <a href="#q-63"><span class="q-link-num">63</span> Валидация</a>
+  <a href="#q-64"><span class="q-link-num">64</span> Custom validators</a>
+  <a href="#q-65"><span class="q-link-num">65</span> Submit данных</a>
+  <a href="#q-66"><span class="q-link-num">66</span> Two-way в TD</a>
+  <a href="#q-67"><span class="q-link-num">67</span> FormBuilder</a>
+  <a href="#q-68"><span class="q-link-num">68</span> touched / dirty</a>
+  <a href="#q-69"><span class="q-link-num">69</span> Async validation</a>
+
+  <p class="ref-sidebar-group"><a href="#lazy">Lazy Loading</a></p>
+  <a href="#q-70"><span class="q-link-num">70</span> Lazy Loading</a>
+  <a href="#q-71"><span class="q-link-num">71</span> Настройка модуля</a>
+  <a href="#q-72"><span class="q-link-num">72</span> Изменения routing</a>
+  <a href="#q-73"><span class="q-link-num">73</span> Преимущества</a>
+  <a href="#q-74"><span class="q-link-num">74</span> NoPreload / PreloadAll</a>
+  <a href="#q-75"><span class="q-link-num">75</span> PreloadingStrategy</a>
+  <a href="#q-76"><span class="q-link-num">76</span> Недостатки</a>
+  <a href="#q-77"><span class="q-link-num">77</span> Отладка lazy</a>
+
+  <p class="ref-sidebar-group"><a href="#modules">Modules</a></p>
+  <a href="#q-78"><span class="q-link-num">78</span> NgModule</a>
+  <a href="#q-79"><span class="q-link-num">79</span> Структура модуля</a>
+  <a href="#q-80"><span class="q-link-num">80</span> Разделение на модули</a>
+
+  <p class="ref-sidebar-group"><a href="#http">HTTP</a></p>
+  <a href="#q-81"><span class="q-link-num">81</span> HttpClientModule</a>
+  <a href="#q-82"><span class="q-link-num">82</span> HTTP-запросы</a>
+  <a href="#q-83"><span class="q-link-num">83</span> Observable vs Promise</a>
+  <a href="#q-84"><span class="q-link-num">84</span> Ошибки HTTP</a>
+  <a href="#q-85"><span class="q-link-num">85</span> Оптимизация и кэш</a>
+  <a href="#q-86"><span class="q-link-num">86</span> HttpInterceptor</a>
+  <a href="#q-87"><span class="q-link-num">87</span> Interceptor: ошибки</a>
+  <a href="#q-88"><span class="q-link-num">88</span> Auth interceptors</a>
+
+  <p class="ref-sidebar-group"><a href="#testing">Testing</a></p>
+  <a href="#q-89"><span class="q-link-num">89</span> Типы тестирования</a>
+  <a href="#q-90"><span class="q-link-num">90</span> Инструменты</a>
+  <a href="#q-91"><span class="q-link-num">91</span> TestBed</a>
+  <a href="#q-92"><span class="q-link-num">92</span> ComponentFixture</a>
+  <a href="#q-93"><span class="q-link-num">93</span> Directives и pipes</a>
+  <a href="#q-94"><span class="q-link-num">94</span> Моки и стабы</a>
+  <a href="#q-95"><span class="q-link-num">95</span> Тестирование форм</a>
+  <a href="#q-96"><span class="q-link-num">96</span> async / fakeAsync</a>
+  <a href="#q-97"><span class="q-link-num">97</span> Изоляция тестов</a>
+
+  <p class="ref-sidebar-group"><a href="#signals">Signals</a></p>
+  <a href="#q-98"><span class="q-link-num">98</span> Signals</a>
+  <a href="#q-99"><span class="q-link-num">99</span> Read / write</a>
+  <a href="#q-100"><span class="q-link-num">100</span> Выгода signals</a>
+  <a href="#q-101"><span class="q-link-num">101</span> Signal inputs</a>
+  <a href="#q-102"><span class="q-link-num">102</span> Подписка на signal</a>
+  <a href="#q-103"><span class="q-link-num">103</span> untracked</a>
+  <a href="#q-104"><span class="q-link-num">104</span> effect()</a>
+  <a href="#q-105"><span class="q-link-num">105</span> Signals и CD</a>
+  <a href="#q-106"><span class="q-link-num">106</span> Отладка signals</a>
+
+  <p class="ref-sidebar-group"><a href="#versions">Angular 16–18+</a></p>
+  <a href="#q-107"><span class="q-link-num">107</span> Новое в 16–18</a>
+  <a href="#q-108"><span class="q-link-num">108</span> @if / @for / @defer</a>
+  <a href="#q-109"><span class="q-link-num">109</span> Ivy / рендерер</a>
+  <a href="#q-110"><span class="q-link-num">110</span> Производительность</a>
+  <a href="#q-111"><span class="q-link-num">111</span> Angular Material</a>
+  <a href="#q-112"><span class="q-link-num">112</span> SSR</a>
+  <a href="#q-113"><span class="q-link-num">113</span> CLI обновления</a>
+</nav>
+
+<main class="ref-content">
+
+<h1>Angular Interview — полный справочник</h1>
+<p>113 вопросов RS School с ответами уровня <strong>Excellent</strong>: trade-offs, сравнения подходов, привязка к <strong>ngKittyDebug</strong> (Angular 22, standalone, signals, Vitest, Taiga UI). Источник: <a href="https://angular.dev">angular.dev</a>.</p>
+
+<!-- ═══════════════════ GENERAL ═══════════════════ -->
+<h2 id="general">General</h2>
+
+<div class="question" id="q-01">
+  <h3><span class="q-num">1.</span> Что такое Angular и для чего он используется?</h3>
+  <p><strong>Angular</strong> — TypeScript-фреймворк для SPA и progressive web apps от Google. Даёт полный стек: компонентная архитектура, DI, маршрутизация, формы, HTTP, i18n, тестирование. Компилятор (AOT) превращает шаблоны в эффективный JS; рантайм управляет change detection и lifecycle.</p>
+  <p>Используют для enterprise SPA, админок, дашбордов — где важны структура, типобезопасность, долгосрочная поддержка и единые паттерны команды. Angular 16+ — standalone-first, signals, zoneless-ready.</p>
+  <div class="tradeoff">
+    <strong>vs React/Vue:</strong> больше «batteries included», круче learning curve, но меньше ad-hoc решений. Angular 22 в ngKittyDebug — не legacy NgModules, а современный standalone + signals стек.
+  </div>
+</div>
+
+<div class="question" id="q-02">
+  <h3><span class="q-num">2.</span> Что такое Angular CLI и каковы его основные функции?</h3>
+  <p><code>ng</code> CLI — официальный toolchain: scaffold (<code>ng generate</code>), dev server (<code>ng serve</code>), production build (<code>ng build</code>), тесты (<code>ng test</code>), lint, deploy helpers. Оборачивает esbuild/Vite (Angular 17+) и управляет <code>angular.json</code>.</p>
+  <p>Ключевые функции: генерация standalone components/directives/pipes с правильными imports; path aliases; schematics для миграций; application builder с code splitting; SSR/hydration scaffolding.</p>
+  <div class="project"><strong>Проект:</strong> <code>pnpm start</code> → <code>ng serve -o</code>; <code>pnpm test</code> → Vitest через Angular builder; префикс селекторов <code>ngKitty</code> из <code>angular.json</code>.</div>
+</div>
+
+<div class="question" id="q-03">
+  <h3><span class="q-num">3.</span> Что такое модуль в Angular, и какова его роль в приложении?</h3>
+  <p><strong>Исторически</strong> <code>NgModule</code> группировал declarations, imports, exports, providers — единица компиляции и lazy loading. Root <code>AppModule</code> bootstrap'ил приложение.</p>
+  <p><strong>Современно (Angular 15+):</strong> standalone components заменяют модули. Bootstrap через <code>bootstrapApplication(AppComponent, appConfig)</code>; providers в <code>ApplicationConfig</code>; lazy routes через <code>loadComponent</code> / <code>loadChildren</code> без feature modules.</p>
+  <div class="tradeoff">
+    NgModules ещё встречаются в legacy и библиотеках, но новый код — standalone. «Модуль» на интервью 2026 = логический feature boundary (<code>features/main/</code>), не обязательно <code>@NgModule</code>.
+  </div>
+  <div class="project"><strong>Проект:</strong> нет <code>AppModule</code> — только <code>app.config.ts</code> + feature folders с route-scoped providers.</div>
+</div>
+
+<div class="question" id="q-04">
+  <h3><span class="q-num">4.</span> Что такое межкомпонентное взаимодействие в Angular? Опишите различные способы передачи данных между компонентами (например, @Input/@Output, сервисы с Observables и т. д.).</h3>
+  <p>Способы передачи данных и событий:</p>
+  <ul>
+    <li><strong>@Input / @Output</strong> (или <code>input()</code> / <code>output()</code>) — parent ↔ child, явный контракт.</li>
+    <li><strong>Services + signals/Observable</strong> — shared state между несвязанными компонентами (<code>AuthService</code>, <code>uiStateStore</code>).</li>
+    <li><strong>Route params / queryParams</strong> — данные через URL; <code>withComponentInputBinding()</code> биндит в signal inputs.</li>
+    <li><strong>Facades</strong> — UI читает один orchestration API вместо прямых service calls.</li>
+    <li><strong>Content projection</strong> — <code>ng-content</code> для composition.</li>
+  </ul>
+  <div class="tradeoff">
+    Input/Output — для локальной иерархии. Services — для cross-cutting domain. Не злоупотребляй глобальным state для parent-child — усложняет тесты и traceability.
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>MainComponent</code> → <code>MainPageFacade</code> (не HTTP напрямую). <code>uiStateStore</code> синхронизирует тему/язык с Firestore при auth.</div>
+</div>
+
+<!-- ═══════════════════ COMPONENTS ═══════════════════ -->
+<h2 id="components">Components</h2>
+
+<div class="question" id="q-05">
+  <h3><span class="q-num">5.</span> Что такое компоненты в Angular и как они являются основой структуры приложения?</h3>
+  <p>Компонент = <strong>класс + шаблон + стили + metadata</strong>. Это минимальная единица UI: Angular создаёт instance, привязывает данные к шаблону, запускает change detection. Дерево компонентов = дерево приложения.</p>
+  <p>Standalone components (дефолт в CLI) явно объявляют <code>imports: [...]</code> — зависимости видны в файле, tree-shaking лучше чем у NgModule barrel exports.</p>
+  <div class="project"><strong>Проект:</strong> feature layout: <code>features/main/ui/main.component.ts</code> + дочерние <code>tarot-oracle</code>, <code>tarot-reading</code>; shared <code>CardComponent</code> в <code>shared/ui/</code>.</div>
+</div>
+
+<div class="question" id="q-06">
+  <h3><span class="q-num">6.</span> Как настраивается селектор, шаблон и стиль компонента с помощью декоратора @Component?</h3>
+  <pre>@Component({
+  selector: 'ngKitty-main',
+  standalone: true,
+  imports: [TarotOracleComponent, TranslocoPipe],
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush, // опционально в A22
+})</pre>
+  <p><code>selector</code> — CSS-селектор для использования в шаблонах. <code>template</code> / <code>templateUrl</code> — inline или внешний HTML. <code>styles</code> / <code>styleUrl(s)</code> — encapsulation через emulated (дефолт), <code>ShadowDom</code> или <code>None</code>.</p>
+  <div class="tradeoff">
+    Inline template удобен для tiny components; внешние файлы — для readability и Prettier. <code>styleUrl</code> (singular) — Angular 17+ вместо <code>styleUrls</code>.
+  </div>
+</div>
+
+<div class="question" id="q-07">
+  <h3><span class="q-num">7.</span> Как вы объясните жизненный цикл компонента и его основные методы (например, ngOnInit, ngOnChanges, ngOnDestroy)?</h3>
+  <p>Хуки (реализуют interfaces, вызываются фреймворком):</p>
+  <ul>
+    <li><code>ngOnChanges</code> — при изменении @Input (не для signal inputs).</li>
+    <li><code>ngOnInit</code> — после первого init inputs; одноразовая setup-логика.</li>
+    <li><code>ngDoCheck</code> — custom CD hook (редко).</li>
+    <li><code>ngAfterContentInit/Checked</code> — projected content.</li>
+    <li><code>ngAfterViewInit/Checked</code> — ViewChild доступен; осторожно с CD loops.</li>
+    <li><code>ngOnDestroy</code> — cleanup subscriptions, timers.</li>
+  </ul>
+  <p>В signals-era часть логики переезжает в <code>constructor</code> + <code>effect()</code> + <code>afterNextRender()</code>. <code>ngOnInit</code> всё ещё каноничен для side effects после DI.</p>
+  <div class="tradeoff">
+    Не ставь тяжёлую логику в <code>ngAfterViewChecked</code> — вызывается очень часто. Предпочитай <code>effect()</code> для реакции на signal changes.
+  </div>
+</div>
+
+<div class="question" id="q-08">
+  <h3><span class="q-num">8.</span> Как работает двустороннее связывание данных в Angular, и в чем отличие от одностороннего связывания данных?</h3>
+  <p><strong>Одностороннее:</strong> <code>[value]="expr"</code> (property binding) или <code>(event)="handler"</code> (event binding). Данные текут в одну сторону — предсказуемо, OnPush-friendly.</p>
+  <p><strong>Двустороннее:</strong> <code>[(ngModel)]="field"</code> — синтаксический сахар для <code>[ngModel]</code> + <code>(ngModelChange)</code>. Требует <code>FormsModule</code>. В reactive forms — явно <code>formControlName</code> + <code>valueChanges</code>, без banana-in-box.</p>
+  <div class="tradeoff">
+    <code>[(ngModel)]</code> удобен в простых template-driven формах; в сложных — reactive forms дают типизацию, тестируемость, sync validators. Signal forms (experimental) — будущая альтернатива.
+  </div>
+  <div class="project"><strong>Проект:</strong> registration/login — typed reactive forms + <code>FormBuilder.nonNullable</code>; не <code>ngModel</code> на auth flows.</div>
+</div>
+
+<div class="question" id="q-09">
+  <h3><span class="q-num">9.</span> Отдельные компоненты.</h3>
+  <p><strong>Standalone components</strong> (<code>standalone: true</code>) — самодостаточны: сами импортируют directives, pipes, child components. Не нужен NgModule wrapper. Дефолт в Angular 19+ CLI.</p>
+  <p>Bootstrapping: <code>bootstrapApplication(AppComponent, appConfig)</code>. Роуты lazy-load standalone через <code>loadComponent: () => import(...).then(m => m.X)</code>. Libraries экспортируют standalone API.</p>
+  <div class="tradeoff">
+    Standalone упрощает mental model и tree-shaking. Миграция legacy: <code>ng generate @angular/core:standalone</code>. Все компоненты ngKittyDebug — standalone.
+  </div>
+</div>
+
+<div class="question" id="q-10">
+  <h3><span class="q-num">10.</span> Что такое ViewChild и ViewChildren?</h3>
+  <p><code>@ViewChild(Selector)</code> — ссылка на один child в <strong>template</strong> компонента (компонент, directive, ElementRef). Доступен после <code>ngAfterViewInit</code>. Signal-версия: <code>viewChild()</code>, <code>viewChildren()</code> — реактивно, без static timing pitfalls.</p>
+  <p><code>@ContentChild</code> / <code>contentChild()</code> — projected content через <code>ng-content</code>.</p>
+  <div class="tradeoff">
+    Императивный доступ к DOM/child — escape hatch. Предпочитай data binding и signal inputs. ViewChild оправдан для focus(), scroll, интеграции с non-Angular widgets (Taiga overlays).
+  </div>
+</div>
+
+<div class="question" id="q-11">
+  <h3><span class="q-num">11.</span> В чем разница между ElementRef и Renderer2?</h3>
+  <p><code>ElementRef</code> — обёртка над native DOM element. <code>.nativeElement</code> даёт прямой доступ — <strong>опасен</strong> (XSS при user content, ломает SSR abstraction).</p>
+  <p><code>Renderer2</code> — platform-agnostic API для DOM mutations: <code>setStyle</code>, <code>addClass</code>, <code>listen</code>. Работает в SSR/web worker contexts. В modern Angular предпочитай <code>host</code> bindings в декораторе или <code>hostDirectives</code>.</p>
+  <div class="tradeoff">
+    <code>ElementRef</code> — только для trusted low-level cases. Для стилей/классов — <code>[class.x]</code>, <code>[style.x]</code> или host metadata. Renderer2 реже нужен с signals + host bindings.
+  </div>
+</div>
+
+<div class="question" id="q-12">
+  <h3><span class="q-num">12.</span> Как работают декораторы HostBinding и HostListener?</h3>
+  <p><code>@HostBinding('class.active')</code> — привязка свойства host element. <code>@HostListener('click')</code> — подписка на DOM events host'а.</p>
+  <p><strong>Современная замена:</strong> <code>host: { '[class.active]': 'isActive()', '(click)': 'onClick()' }</code> в <code>@Component</code> / <code>@Directive</code> — всё в metadata, без отдельных декораторов.</p>
+  <div class="project"><strong>Проект:</strong> <code>ScanEffectDirective</code> — signal inputs + declarative <code>host</code> bindings для CSS custom properties и классов.</div>
+</div>
+
+<div class="question" id="q-13">
+  <h3><span class="q-num">13.</span> Каков механизм обнаружения изменений в Angular, и в чем разница между стратегиями Default и OnPush? Когда лучше использовать каждую из них?</h3>
+  <p>Change Detection (CD) обходит дерево компонентов, сравнивает bindings. <strong>Default</strong> — проверяется при любом async event (Zone.js) или явном <code>markForCheck</code>. <strong>OnPush</strong> — только при: input reference change, event в компоненте, async pipe emit, signal read, explicit <code>markForCheck</code>.</p>
+  <p>Angular 22: OnPush — дефолт. Signals интегрированы в CD graph — чтение signal в шаблоне автоматически помечает view dirty.</p>
+  <div class="tradeoff">
+    OnPush + immutable data + signals = предсказуемая perf. Default проще для новичков, но риск лишних проверок. Zoneless apps полагаются на signals/events без Zone patching.
+  </div>
+</div>
+
+<div class="question" id="q-14">
+  <h3><span class="q-num">14.</span> Как вы обрабатываете динамические компоненты?</h3>
+  <p>Три паттерна:</p>
+  <ol>
+    <li><code>ViewContainerRef.createComponent()</code> — императивно, полный lifecycle control.</li>
+    <li><code>NgComponentOutlet</code> — декларативно в шаблоне.</li>
+    <li><strong>Dialog/overlay services</strong> — Taiga <code>TuiDialogService</code>, CDK Overlay.</li>
+  </ol>
+  <div class="tradeoff">
+    Dynamic components обходят compile-time checks. Предпочитай static imports + <code>@if</code> / lazy <code>loadComponent</code> где возможно.
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>ModalService</code> — Taiga dialogs. Profile — <code>ngTemplateOutlet</code> для переключения шаблонов вместо dynamic component.</div>
+</div>
+
+<!-- ═══════════════════ DIRECTIVES ═══════════════════ -->
+<h2 id="directives">Directives</h2>
+
+<div class="question" id="q-15">
+  <h3><span class="q-num">15.</span> Что такое директивы в Angular и для чего они используются?</h3>
+  <p>Директива — класс с <code>@Directive</code>, меняющий поведение/вид DOM без собственного шаблона (в отличие от компонента). <strong>Атрибутные</strong> — классы, стили, listeners (<code>ngClass</code>, <code>ScanEffectDirective</code>). <strong>Структурные</strong> — добавляют/убирают DOM (<code>*ngIf</code>, <code>@if</code>).</p>
+  <p>Компонент технически — директива с template. Переиспользуемая логика DOM лучше в directive, чем copy-paste в компонентах.</p>
+</div>
+
+<div class="question" id="q-16">
+  <h3><span class="q-num">16.</span> В чем разница между структурными и атрибутными директивами?</h3>
+  <p><strong>Атрибутные</strong> меняют существующий element: <code>[ngClass]</code>, <code>[ngStyle]</code>, custom <code>[ngKittyScanEffect]</code>. Element остаётся в DOM.</p>
+  <p><strong>Структурные</strong> (префикс <code>*</code>) — microsyntax для <code>ng-template</code>: создают/уничтожают embedded view. <code>*ngFor</code> = template + ViewContainerRef.</p>
+  <div class="tradeoff">
+    Angular 17+ control flow (<code>@if</code>, <code>@for</code>) — встроенные structural blocks, быстрее и читабельнее legacy <code>*ngIf</code>. Атрибутные директивы по-прежнему актуальны.
+  </div>
+  <div class="project"><strong>Проект:</strong> шаблоны на <code>@if</code>/<code>@for</code>; атрибутная <code>ScanEffectDirective</code> на <code>tui-root</code>.</div>
+</div>
+
+<div class="question" id="q-17">
+  <h3><span class="q-num">17.</span> Как создать и использовать собственную директиву? Объясните @Directive.</h3>
+  <pre>@Directive({
+  selector: '[ngKittyScanEffect]',
+  standalone: true,
+  host: {
+    '[class.scan-active]': 'scanEnabled()',
+    '(mouseenter)': 'onEnter()',
+  },
+})
+export class ScanEffectDirective {
+  scanEnabled = input(true);
+}</pre>
+  <p>Standalone directive добавляется в <code>imports</code> компонента. <code>input()</code> / <code>output()</code> — signal API. <code>inject()</code> для сервисов.</p>
+  <div class="tradeoff">
+    Директива vs компонент: нет template — только поведение на host. Директива vs service: нужен доступ к ElementRef/DOM/render context.
+  </div>
+</div>
+
+<div class="question" id="q-18">
+  <h3><span class="q-num">18.</span> Объясните ngIf и ngFor и их использование.</h3>
+  <p><code>*ngIf="condition"</code> — создаёт view только при truthy condition; <code>else</code> / <code>then</code> templates для ветвления. <code>*ngFor="let item of items; trackBy: trackFn"</code> — итерирует коллекцию, создаёт view per item.</p>
+  <p><strong>Современная замена:</strong></p>
+  <pre>@if (reading()) { &lt;tarot-reading /&gt; }
+@for (card of cards(); track card.id) { &lt;ngKitty-card /&gt; }</pre>
+  <p><code>track</code> обязателен в <code>@for</code> — identity для DOM reuse, как <code>trackBy</code>.</p>
+  <div class="project"><strong>Проект:</strong> <code>main.component.html</code>, <code>altar.component.html</code> — <code>@if</code>/<code>@for</code>, не legacy structural directives.</div>
+</div>
+
+<div class="question" id="q-19">
+  <h3><span class="q-num">19.</span> В чем разница между *ngIf и [hidden]?</h3>
+  <p><code>*ngIf</code> — <strong>не создаёт</strong> DOM при false; уничтожает component tree, освобождает память, не гоняет CD для скрытого контента.</p>
+  <p><code>[hidden]="true"</code> — element <strong>в DOM</strong>, CSS <code>display: none</code>. Component жив, подписки активны, CD может проверять.</p>
+  <div class="tradeoff">
+    <code>hidden</code> — быстрое toggle без destroy/init cost (tabs с частым переключением). <code>ngIf/@if</code> — тяжёлые виджеты, условный рендер, экономия памяти. <code>@if</code> предпочтительнее <code>*ngIf</code> в новом коде.
+  </div>
+</div>
+
+<div class="question" id="q-20">
+  <h3><span class="q-num">20.</span> Какова цель ngSwitch, ngSwitchCase и ngSwitchDefault?</h3>
+  <p>Multi-way branching без вложенных <code>*ngIf</code>: <code>[ngSwitch]="value"</code> + <code>*ngSwitchCase</code> + <code>*ngSwitchDefault</code>. Показывает один matching case.</p>
+  <pre>@switch (role()) {
+  @case ('oracle') { &lt;oracle-view /&gt; }
+  @case ('seeker') { &lt;seeker-view /&gt; }
+  @default { &lt;fallback /&gt; }
+}</pre>
+  <div class="tradeoff">
+    <code>@switch</code> читабельнее цепочки <code>@if/@else if</code> при 3+ ветках. Для 2 веток — достаточно <code>@if/@else</code>.
+  </div>
+</div>
+
+<div class="question" id="q-21">
+  <h3><span class="q-num">21.</span> В чем разница между ngStyle и ngClass?</h3>
+  <p><code>[ngClass]</code> — объекты/массивы/строки CSS-классов: <code>[ngClass]="{ active: isActive(), disabled: loading() }"</code>.</p>
+  <p><code>[ngStyle]</code> — inline styles object: <code>[ngStyle]="{ 'font-size.px': size() }"</code>.</p>
+  <p><strong>Предпочтительно:</strong> <code>[class.active]="isActive()"</code>, <code>[style.width.px]="w()"</code> — проще, меньше directive overhead.</p>
+  <div class="tradeoff">
+    ngClass/ngStyle полезны при динамических наборах из computed object. Статические биндинги — native syntax.
+  </div>
+</div>
+
+<div class="question" id="q-22">
+  <h3><span class="q-num">22.</span> Что такое ngContainer и для чего он используется?</h3>
+  <p><code>ng-container</code> — логический wrapper <strong>без DOM element</strong>. Группирует structural directives без лишнего div:</p>
+  <pre>&lt;ng-container *ngIf="show"&gt;
+  &lt;h2&gt;Title&lt;/h2&gt;
+  &lt;p&gt;Body&lt;/p&gt;
+&lt;/ng-container&gt;</pre>
+  <p>С <code>@if</code> часто не нужен — block syntax не требует wrapper. Остаётся для <code>ngTemplateOutlet</code>, multi-directive grouping.</p>
+  <div class="project"><strong>Проект:</strong> profile использует <code>ngTemplateOutlet</code> с <code>ng-container</code> для conditional templates.</div>
+</div>
+
+<div class="question" id="q-23">
+  <h3><span class="q-num">23.</span> Как создать собственные структурные директивы с использованием ng-template?</h3>
+  <p>Инжектируй <code>TemplateRef</code> + <code>ViewContainerRef</code>. Создавай/очищай embedded views:</p>
+  <pre>@Directive({ selector: '[appUnless]' })
+export class UnlessDirective {
+  private readonly tpl = inject(TemplateRef);
+  private readonly vcr = inject(ViewContainerRef);
+  @Input() set appUnless(cond: boolean) {
+    this.vcr.clear();
+    if (!cond) this.vcr.createEmbeddedView(this.tpl);
+  }
+}</pre>
+  <div class="tradeoff">
+    Custom structural directives — редко нужны с <code>@if/@for</code>. Оправданы для domain-specific DSL (permissions, feature flags as structural).
+  </div>
+</div>
+
+<!-- ═══════════════════ PIPES ═══════════════════ -->
+<h2 id="pipes">Pipes</h2>
+
+<div class="question" id="q-24">
+  <h3><span class="q-num">24.</span> Что такое пайпы, и для чего они предназначены в Angular?</h3>
+  <p>Pipe — чистая (обычно) transform-функция в шаблоне: <code>{{ value | pipeName:arg }}</code>. Декоратор <code>@Pipe({ name, standalone: true })</code>. Разделяет presentation logic от component class.</p>
+  <p>Используют для форматирования дат, валют, truncate, i18n display. Pure pipes кэшируются per binding per CD cycle.</p>
+</div>
+
+<div class="question" id="q-25">
+  <h3><span class="q-num">25.</span> Можете ли вы привести примеры некоторых встроенных пайпов (например, date, uppercase, lowercase)?</h3>
+  <ul>
+    <li><code>date</code> — <code>{{ ts | date:'shortDate' }}</code></li>
+    <li><code>uppercase</code> / <code>lowercase</code> / <code>titlecase</code></li>
+    <li><code>currency</code>, <code>decimal</code>, <code>percent</code></li>
+    <li><code>json</code> — debug</li>
+    <li><code>slice</code>, <code>keyvalue</code>, <code>async</code></li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> <code>TranslocoPipe</code> для i18n вместо built-in <code>i18n</code> pipe; <code>date</code> в profile/shrift при необходимости.</div>
+</div>
+
+<div class="question" id="q-26">
+  <h3><span class="q-num">26.</span> В чем разница между 'чистыми' и 'не чистыми' пайпами?</h3>
+  <p><strong>Pure</strong> (default) — пересчитывается только при изменении input reference или args. Кэш на уровне binding.</p>
+  <p><strong>Impure</strong> (<code>pure: false</code>) — вызывается <strong>каждый</strong> CD cycle. Опасно для perf на hot paths.</p>
+  <div class="tradeoff">
+    Impure оправдан для async-like transforms без async pipe (редко). Предпочитай pure + immutable inputs или <code>computed()</code> в компоненте вместо impure pipe.
+  </div>
+</div>
+
+<div class="question" id="q-27">
+  <h3><span class="q-num">27.</span> Как использовать несколько пайпов одновременно?</h3>
+  <p>Цепочка слева направо: <code>{{ name | lowercase | slice:0:10 | uppercase }}</code> — каждый pipe получает output предыдущего.</p>
+  <p>Порядок важен: <code>{{ date | date:'medium' | uppercase }}</code> vs <code>{{ date | uppercase }}</code> (бессмысленно для Date).</p>
+</div>
+
+<div class="question" id="q-28">
+  <h3><span class="q-num">28.</span> Как передать параметры в пайп?</h3>
+  <p>Colon-separated args после name: <code>{{ text | slice:0:limit() }}</code>. Pipe class:</p>
+  <pre>transform(value: string, start = 0, end?: number): string {
+  return value.slice(start, end);
+}</pre>
+  <p>Args должны быть immutable-friendly — примитивы или stable references для pure pipe cache.</p>
+</div>
+
+<div class="question" id="q-29">
+  <h3><span class="q-num">29.</span> Каковы преимущества асинхронных пайпов? Как применить с Observable или Promise?</h3>
+  <p><code>async</code> pipe подписывается на Observable/Promise, unwrap value в шаблон, <strong>авто-unsubscribe</strong> при destroy. Триггерит OnPush при новых emits.</p>
+  <pre>@if (user$ | async; as user) { {{ user.name }} }</pre>
+  <p><strong>Современная альтернатива:</strong> <code>toSignal(obs$)</code> в классе — явнее, лучше с signals templates: <code>{{ user()?.name }}</code>.</p>
+  <div class="tradeoff">
+    async pipe — меньше boilerplate в шаблоне. toSignal — единый signals model, проще тестировать class logic. В ngKittyDebug преобладают signals, не async pipe.
+  </div>
+</div>
+
+<div class="question" id="q-30">
+  <h3><span class="q-num">30.</span> Как происходит процесс регистрации собственного пайпа в модуле?</h3>
+  <p><strong>Standalone:</strong> <code>@Pipe({ standalone: true })</code> + добавить в <code>imports</code> компонента — NgModule не нужен.</p>
+  <p><strong>Исторически:</strong> <code>declarations</code> + <code>exports</code> в NgModule. Root import через shared barrel.</p>
+  <div class="tradeoff">
+    Pipe для display-only transform. Сложная бизнес-логика — в facade/computed, не в pipe (тестируемость).
+  </div>
+</div>
+
+<div class="question" id="q-31">
+  <h3><span class="q-num">31.</span> Как обрабатывать сложные преобразования в пайпах?</h3>
+  <p>Держи pipe <strong>pure и deterministic</strong>. Тяжёлые вычисления — memoization в injectable service или <code>computed()</code>. Для коллекций — <code>track</code> в <code>@for</code>, не transform в pipe каждый CD.</p>
+  <p>Несколько параметров, optional args, locale-aware formatting через <code>inject(LOCALE_ID)</code>. Unit-test: <code>new MyPipe().transform(input, arg)</code> без TestBed.</p>
+  <div class="tradeoff">
+    Если pipe нуждается в DI сервисах и state — возможно, это должен быть computed signal или метод facade, не pipe.
+  </div>
+</div>
+
+<!-- ═══════════════════ ROUTING ═══════════════════ -->
+<h2 id="routing">Routing</h2>
+
+<div class="question" id="q-32">
+  <h3><span class="q-num">32.</span> Что такое маршрутизация в Angular, и для чего она используется?</h3>
+  <p>Client-side router сопоставляет URL → компонент (view). SPA без full page reload. Поддерживает nested routes, guards, resolvers, lazy loading, params, history API.</p>
+  <p><code>provideRouter(routes, withComponentInputBinding(), withPreloading(...))</code> в <code>app.config.ts</code>.</p>
+  <div class="project"><strong>Проект:</strong> <code>app.routes.ts</code> — layout shell + lazy feature routes (main, altar, shrift, sanctum, profile, auth).</div>
+</div>
+
+<div class="question" id="q-33">
+  <h3><span class="q-num">33.</span> Как настроить базовую систему маршрутизации с RouterModule и router-outlet?</h3>
+  <p><strong>Legacy:</strong> <code>RouterModule.forRoot(routes)</code> в AppModule.</p>
+  <p><strong>Modern:</strong> <code>provideRouter(routes)</code>; в shell template <code>&lt;router-outlet /&gt;</code>. Nested: child routes рендерятся в outlet родительского routed component.</p>
+  <pre>export const routes: Routes = [
+  { path: '', component: LayoutComponent, children: [...] },
+  { path: '**', loadComponent: () => import('./not-found')... },
+];</pre>
+</div>
+
+<div class="question" id="q-34">
+  <h3><span class="q-num">34.</span> Как использовать параметры маршрута и queryParams?</h3>
+  <p>Route params: <code>/user/:id</code> → <code>ActivatedRoute.paramMap</code> или signal input <code>id = input.required&lt;string&gt;()</code> с <code>withComponentInputBinding()</code>.</p>
+  <p>Query: <code>?lang=ru</code> → <code>queryParamMap</code> / <code>queryParams</code>. Navigate: <code>router.navigate(['/path'], { queryParams: { lang: 'ru' } })</code>.</p>
+  <div class="tradeoff">
+    Params — identity ресурса в path. Query — optional filters/state. Signal inputs из route — меньше boilerplate чем subscribe в ngOnInit.
+  </div>
+</div>
+
+<div class="question" id="q-35">
+  <h3><span class="q-num">35.</span> Можете ли вы привести пример использования дочерних маршрутов?</h3>
+  <pre>{
+  path: '',
+  component: LayoutComponent,
+  children: [
+    { path: '', loadComponent: () => import('./main')... },
+    { path: 'altar', loadComponent: () => import('./altar')... },
+  ],
+}</pre>
+  <p><code>LayoutComponent</code> содержит <code>&lt;router-outlet&gt;</code> + chrome (header, sidebar). Children swap в outlet. Relative navigation: <code>routerLink="altar"</code> от current activated route.</p>
+  <div class="project"><strong>Проект:</strong> <code>LayoutComponent</code> — persistent sidebar/header; features — child routes.</div>
+</div>
+
+<div class="question" id="q-36">
+  <h3><span class="q-num">36.</span> Какие существуют стратегии предварительной загрузки?</h3>
+  <ul>
+    <li><code>NoPreloading</code> — только on-demand (default).</li>
+    <li><code>PreloadAllModules</code> — все lazy chunks после bootstrap (legacy name; работает с loadComponent).</li>
+    <li><strong>Custom <code>PreloadingStrategy</code></strong> — <code>preload(route, load)</code> return Observable; selective preload.</li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> <code>UserStateStrategy</code> — прелоадит guest routes для неавторизованных, auth routes для залогиненных.</div>
+</div>
+
+<div class="question" id="q-37">
+  <h3><span class="q-num">37.</span> Как использовать Route Guards (CanActivate и CanDeactivate)?</h3>
+  <p><strong>Functional guards (modern):</strong> <code>CanMatchFn</code>, <code>CanActivateFn</code>, <code>CanDeactivateFn</code> — чистые функции с <code>inject()</code>.</p>
+  <pre>export const authGuard: CanMatchFn = () =>
+  inject(AuthService).isAuthenticated() || inject(Router).createUrlTree(['/login']);
+
+export const dirtyFormGuard: CanDeactivateFn = () =>
+  !inject(FormFacade).isDirty() || confirm('Leave?');</pre>
+  <div class="tradeoff">
+    <code>canMatch</code> — блокирует route matching (лучше для lazy + auth split). <code>canActivate</code> — после match. Проект использует <code>canMatch</code> для auth/guest разделения.
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>authGuard</code>, <code>guestGuard</code>, <code>dirtyFormGuard</code> на registration.</div>
+</div>
+
+<div class="question" id="q-38">
+  <h3><span class="q-num">38.</span> Что такое ActivatedRoute, и как его использовать?</h3>
+  <p>Сервис с snapshot текущего route segment: <code>params</code>, <code>queryParams</code>, <code>data</code>, <code>fragment</code>. Observable streams (<code>paramMap</code>) эмитят при navigation.</p>
+  <p>С <code>withComponentInputBinding()</code> — предпочитай signal <code>input()</code> от route params. <code>ActivatedRoute</code> нужен для imperative subscribe или parent/child param traversal (<code>route.parent</code>).</p>
+</div>
+
+<div class="question" id="q-39">
+  <h3><span class="q-num">39.</span> Как обрабатывать ленивую загрузку в маршрутизации?</h3>
+  <p><code>loadComponent: () => import('./feature').then(m => m.FeatureComponent)</code> — отдельный JS chunk. <code>loadChildren</code> — для child route arrays или legacy modules.</p>
+  <p>Route-level <code>providers</code> создают injector на время visit. Guards (<code>canMatch</code>) решают до загрузки chunk.</p>
+  <div class="tradeoff">
+    Lazy = smaller initial bundle, но latency при первом visit. PreloadingStrategy балансирует. Все feature routes ngKittyDebug lazy-loaded кроме shell.
+  </div>
+</div>
+
+<!-- ═══════════════════ RxJS ═══════════════════ -->
+<h2 id="rxjs">RxJS</h2>
+
+<div class="question" id="q-40">
+  <h3><span class="q-num">40.</span> Определите концепцию RxJS и ее использование в Angular.</h3>
+  <p>RxJS — Reactive Extensions для JS: Observable как push-based коллекция во времени. Angular использует для HttpClient, Router events, form <code>valueChanges</code>, interceptors.</p>
+  <p>В Angular 22 RxJS чаще на <strong>async-границах</strong>; UI state — signals. <code>@angular/core/rxjs-interop</code>: <code>toSignal</code>, <code>toObservable</code>, <code>rxResource</code>, <code>takeUntilDestroyed</code>.</p>
+  <div class="tradeoff">
+    Не переписывай всё в signals — RxJS силён в композиции async. Не держи UI state в Subjects — signals проще.
+  </div>
+</div>
+
+<div class="question" id="q-41">
+  <h3><span class="q-num">41.</span> Что такое Observable, Observer и Subscriptions?</h3>
+  <ul>
+    <li><strong>Observable</strong> — ленивый producer; логика в subscribe.</li>
+    <li><strong>Observer</strong> — <code>{ next, error, complete }</code>.</li>
+    <li><strong>Subscription</strong> — handle от subscribe; <code>unsubscribe()</code> отменяет work и HTTP.</li>
+  </ul>
+  <p>HttpClient subscribe → network request; unsubscribe → abort (XHR/fetch).</p>
+</div>
+
+<div class="question" id="q-42">
+  <h3><span class="q-num">42.</span> В чем разница между Observable и Promise?</h3>
+  <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+    <tr><th>Observable</th><th>Promise</th></tr>
+    <tr><td>Lazy (on subscribe)</td><td>Eager</td></tr>
+    <tr><td>0..N values, cancellable</td><td>One settle, hard to cancel</td></tr>
+    <tr><td>Rich operator pipeline</td><td>then/catch/finally</td></tr>
+  </table>
+  <p><code>lastValueFrom()</code> / <code>firstValueFrom()</code> — мост к async/await. Предпочитай Observable + <code>takeUntilDestroyed</code> в компонентах.</p>
+</div>
+
+<div class="question" id="q-43">
+  <h3><span class="q-num">43.</span> Можете ли вы привести примеры основных операторов RxJS в Angular?</h3>
+  <ul>
+    <li><code>map</code>, <code>filter</code>, <code>tap</code>, <code>catchError</code></li>
+    <li><code>switchMap</code> — отмена предыдущего (search)</li>
+    <li><code>mergeMap</code> — параллель (N HTTP chunks)</li>
+    <li><code>concatMap</code> — очередь; <code>exhaustMap</code> — ignore while busy</li>
+    <li><code>debounceTime</code>, <code>distinctUntilChanged</code>, <code>finalize</code></li>
+    <li><code>forkJoin</code>, <code>combineLatest</code>, <code>takeUntilDestroyed</code></li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> <code>MyMemoryTranslationService</code> — <code>forkJoin</code> + <code>mergeMap(3)</code>. <code>createRitualTimelineStream</code> — <code>timer</code> + <code>map</code>. <code>MainPageFacade</code> — <code>finalize</code>.</div>
+</div>
+
+<div class="question" id="q-44">
+  <h3><span class="q-num">44.</span> Как создать собственный Observable с new Observable()?</h3>
+  <pre>const ritual$ = new Observable&lt;State&gt;((subscriber) => {
+  const id = setInterval(() => subscriber.next({ step }), 1000);
+  return () => clearInterval(id); // teardown on unsubscribe
+});</pre>
+  <p>Subscriber function получает Observer + teardown. Предпочитай <code>timer</code>, <code>fromEvent</code>, <code>defer</code> — кастомный нужен для callback APIs (WebSocket).</p>
+  <div class="tradeoff">
+    В Angular 22 рассмотри <code>resource()</code> / signals для async state вместо hand-rolled Observable.
+  </div>
+</div>
+
+<div class="question" id="q-45">
+  <h3><span class="q-num">45.</span> Что такое Subject и BehaviorSubject?</h3>
+  <ul>
+    <li><strong>Subject</strong> — multicast, hot, нет initial value.</li>
+    <li><strong>BehaviorSubject</strong> — хранит current value; новые subs получают последнее.</li>
+    <li><strong>ReplaySubject(n)</strong> — replay last N.</li>
+  </ul>
+  <p>Исторически app state. Сейчас — <code>signal()</code> / <code>signalStore</code>. Subjects — event bus, legacy interop.</p>
+  <div class="tradeoff">
+    BehaviorSubject ≈ signal с худшим template DX. Root Subject без complete — leak risk.
+  </div>
+  <div class="project"><strong>Проект:</strong> нет BehaviorSubject — <code>uiStateStore</code>, facades на signals.</div>
+</div>
+
+<div class="question" id="q-46">
+  <h3><span class="q-num">46.</span> Как вы объясните концепции Горячих и Холодных Observables?</h3>
+  <p><strong>Cold</strong> — producer per subscriber (HttpClient, <code>ajax</code>). <strong>Hot</strong> — shared producer (DOM events, Subject, <code>shareReplay</code>).</p>
+  <p><code>shareReplay({ bufferSize: 1, refCount: true })</code> — cold→hot с auto-teardown.</p>
+</div>
+
+<div class="question" id="q-47">
+  <h3><span class="q-num">47.</span> Как правильно отписаться от Observable?</h3>
+  <ol>
+    <li><code>async</code> pipe в шаблоне</li>
+    <li><code>takeUntilDestroyed(inject(DestroyRef))</code></li>
+    <li><code>toSignal(obs$)</code> — managed subscription</li>
+    <li><code>effect</code> onCleanup для manual subs</li>
+  </ol>
+  <div class="project"><strong>Проект:</strong> <code>takeUntilDestroyed</code> в <code>BallComponent</code>, <code>MainPageFacade</code>; нет <code>destroy$</code> subjects.</div>
+</div>
+
+<div class="question" id="q-48">
+  <h3><span class="q-num">48.</span> Какие существуют подходы к управлению состоянием в Angular? Какие преимущества использования методов на основе сервисов по сравнению с NgRx или другими библиотеками управления состоянием?</h3>
+  <table style="width:100%; font-size:0.85rem;">
+    <tr><th>Подход</th><th>Плюсы</th><th>Минусы</th></tr>
+    <tr><td>Service + signals</td><td>Просто, идиоматично A22</td><td>Нет enforced patterns</td></tr>
+    <tr><td>NgRx Store</td><td>DevTools, strict flow</td><td>Boilerplate</td></tr>
+    <tr><td>NgRx signalStore</td><td>Composable, reactive</td><td>Learning curve</td></tr>
+    <tr><td>Component state</td><td>Быстро для local UI</td><td>Не для shared domain</td></tr>
+  </table>
+  <div class="project"><strong>Проект:</strong> <code>uiStateStore</code> (NgRx Signals) + feature facades (<code>MainPageFacade</code>) + core services (<code>CandlesService</code>).</div>
+</div>
+
+<div class="question" id="q-49">
+  <h3><span class="q-num">49.</span> Как обрабатывать обработку ошибок и логику повтора с RxJS?</h3>
+  <pre>.pipe(
+  retry({ count: 3, delay: 1000 }),
+  retry({ delay: (err, i) => timer(i * 1000) }),
+  catchError((err) => err.status === 404 ? of(fallback) : throwError(() => err))
+)</pre>
+  <p><code>retry</code> — только для идемпотентных GET. POST — осторожно. Комбинируй с interceptor для 503.</p>
+</div>
+
+<!-- ═══════════════════ DI ═══════════════════ -->
+<h2 id="di">Dependency Injection</h2>
+
+<div class="question" id="q-50">
+  <h3><span class="q-num">50.</span> Что такое Dependency Injection, и каковы ее цели в Angular?</h3>
+  <p>DI — паттерн: класс получает зависимости извне через constructor/<code>inject()</code>, не создаёт их сам. Angular Injector разрешает token → instance по иерархии.</p>
+  <p>Цели: testability (mock providers), loose coupling, lifecycle control (singleton vs per-route), composable app config.</p>
+</div>
+
+<div class="question" id="q-51">
+  <h3><span class="q-num">51.</span> Как создать сервис и использовать его в компонентах?</h3>
+  <pre>@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private readonly auth = inject(Auth);
+}
+
+@Component({ ... })
+export class LoginComponent {
+  private readonly auth = inject(AuthService);
+}</pre>
+  <p>Или constructor injection. Сервис — обычный класс с <code>@Injectable</code>; Angular создаёт instance при первом inject.</p>
+  <div class="project"><strong>Проект:</strong> кастомный <code>@Service()</code> декоратор оборачивает <code>@Injectable({ providedIn: 'root' })</code> для единообразия.</div>
+</div>
+
+<div class="question" id="q-52">
+  <h3><span class="q-num">52.</span> В чем разница между providedIn: 'root', providedIn: 'any' и регистрацией провайдера в разделе "providers" NgModule?</h3>
+  <ul>
+    <li><code>providedIn: 'root'</code> — app singleton, tree-shakeable если не используется.</li>
+    <li><code>providedIn: 'any'</code> — новый instance per lazy-loaded bundle (редко).</li>
+    <li><code>providers: [S]</code> в component/route/module — instance per injector scope.</li>
+  </ul>
+  <div class="tradeoff">
+    Root для true singletons (<code>AuthService</code>). Route providers для feature isolation (<code>MainPageFacade</code>).
+  </div>
+</div>
+
+<div class="question" id="q-53">
+  <h3><span class="q-num">53.</span> Что такое useClass, useValue и useFactory?</h3>
+  <ul>
+    <li><code>useClass: MockAuth</code> — подмена реализации (тесты).</li>
+    <li><code>useValue: { apiUrl: '/api' }</code> — константа/объект.</li>
+    <li><code>useFactory: () => new S(inject(X))</code> — динамическое создание.</li>
+    <li><code>useExisting</code> — alias на другой token.</li>
+  </ul>
+  <pre>{ provide: API_URL, useValue: environment.apiUrl }
+{ provide: TarotService, useClass: MockTarotService }</pre>
+</div>
+
+<div class="question" id="q-54">
+  <h3><span class="q-num">54.</span> Объясните концепцию Injector и иерархии провайдеров.</h3>
+  <p><strong>Environment injectors:</strong> platform → root (<code>app.config</code>) → route injectors. <strong>Element injectors:</strong> per component/directive, child ищет вверх.</p>
+  <p>Resolution: element injector chain → environment injector branch → root. Child provider shadows parent token.</p>
+</div>
+
+<div class="question" id="q-55">
+  <h3><span class="q-num">55.</span> Что такое DI-токен, и как его использовать?</h3>
+  <p><code>InjectionToken&lt;T&gt;</code> — typed key для non-class dependencies:</p>
+  <pre>export const API_URL = new InjectionToken&lt;string&gt;('api.url');
+inject(API_URL); // в компоненте/функции</pre>
+  <p>Также interface tokens, multi tokens (<code>HTTP_INTERCEPTORS</code>), <code>ENVIRONMENT_INITIALIZER</code>.</p>
+  <div class="project"><strong>Проект:</strong> <code>UI_STATE</code> token для <code>uiStateStore</code> injection.</div>
+</div>
+
+<div class="question" id="q-56">
+  <h3><span class="q-num">56.</span> Как использовать декораторы @Optional, @Self и @SkipSelf для управления внедрением зависимостей и их обработкой?</h3>
+  <p>Параметры <code>inject()</code>:</p>
+  <ul>
+    <li><code>optional: true</code> — null если нет provider.</li>
+    <li><code>self: true</code> — только текущий element injector.</li>
+    <li><code>skipSelf: true</code> — пропустить текущий, искать у parent.</li>
+    <li><code>host: true</code> — до host component.</li>
+  </ul>
+  <p>Используй для optional parent refs, library components, избежания circular DI.</p>
+</div>
+
+<div class="question" id="q-57">
+  <h3><span class="q-num">57.</span> Как внедрять зависимости на основе условий?</h3>
+  <p><code>useFactory</code> с <code>inject(ENV)</code> для environment-specific impl. <code>EnvironmentProviders</code> в условных import. Route-level providers для per-feature impl.</p>
+  <p>Anti-pattern: if/else в constructor — лучше strategy pattern или отдельные tokens per environment file.</p>
+</div>
+
+<div class="question" id="q-58">
+  <h3><span class="q-num">58.</span> Что такое мульти-провайдер и как его настроить?</h3>
+  <pre>providers: [
+  { provide: HTTP_INTERCEPTORS, useClass: LogInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+]
+// Modern: withInterceptors([logFn, authFn])</pre>
+  <p>Injector собирает массив всех registrations для token. Порядок важен для interceptor chain.</p>
+</div>
+
+<div class="question" id="q-59">
+  <h3><span class="q-num">59.</span> Как реализовать внедрение зависимостей для отдельных компонентов?</h3>
+  <p><code>@Component({ providers: [LocalService] })</code> — новый instance per component instance. <code>viewProviders</code> — только для view children, не projected content.</p>
+  <p>Route <code>providers</code> — scope на visit route subtree. Destroyed при navigation away.</p>
+  <div class="project"><strong>Проект:</strong> <code>MainPageFacade</code>, <code>TarotService</code> на main route; <code>SanctumRitualService</code> на sanctum.</div>
+</div>
+
+<div class="question" id="q-60">
+  <h3><span class="q-num">60.</span> Как можно повторно использовать отдельные компоненты в различных частях приложения?</h3>
+  <p>Standalone component в <code>shared/ui/</code> — импортируй в <code>imports: [CardComponent]</code> где нужно. Path aliases <code>@shared/*</code>. Не дублируй providers — stateless presentational components.</p>
+  <p>Smart/dumb split: shared dumb components + feature smart containers с facades.</p>
+  <div class="project"><strong>Проект:</strong> <code>CardComponent</code>, <code>DigitalPriestComponent</code> в shared; features импортируют явно.</div>
+</div>
+
+<!-- ═══════════════════ FORMS ═══════════════════ -->
+<h2 id="forms">Forms</h2>
+
+<div class="question" id="q-61">
+  <h3><span class="q-num">61.</span> В чем разница между Template-driven Forms и Reactive Forms?</h3>
+  <table style="width:100%; font-size:0.85rem;">
+    <tr><th>Template-driven</th><th>Reactive</th></tr>
+    <tr><td>Модель в шаблоне (<code>ngModel</code>)</td><td>Модель в классе (<code>FormGroup</code>)</td></tr>
+    <tr><td>FormsModule, менее типизировано</td><td>ReactiveFormsModule, typed forms</td></tr>
+    <tr><td>Быстрые простые формы</td><td>Сложная валидация, unit tests</td></tr>
+  </table>
+  <div class="project"><strong>Проект:</strong> login, registration, profile, confess — reactive + typed + facades.</div>
+</div>
+
+<div class="question" id="q-62">
+  <h3><span class="q-num">62.</span> Что такое FormControl, FormGroup и FormArray?</h3>
+  <ul>
+    <li><code>FormControl&lt;T&gt;</code> — одно поле, value + validators + status.</li>
+    <li><code>FormGroup</code> — объект полей, nested groups.</li>
+    <li><code>FormArray</code> — динамический список controls (repeatable rows).</li>
+  </ul>
+  <pre>const form = fb.nonNullable.group({
+  email: ['', [Validators.required, Validators.email]],
+  passwords: fb.group({ pass: [''], confirm: [''] }),
+});</pre>
+</div>
+
+<div class="question" id="q-63">
+  <h3><span class="q-num">63.</span> В чем различия в работе с валидацией для Template-driven и Reactive Forms?</h3>
+  <p><strong>Reactive:</strong> validators в model (<code>Validators.required</code>, custom <code>ValidatorFn</code>); sync/async на control level; <code>form.errors</code>, <code>control.hasError('email')</code>.</p>
+  <p><strong>Template-driven:</strong> HTML attributes (<code>required</code>, <code>minlength</code>) + directive validators; состояние через <code>ngModel</code> refs (<code>#email="ngModel"</code>).</p>
+  <div class="tradeoff">
+    Reactive — validators тестируются без DOM. Template — быстрее прототип, хуже scale.
+  </div>
+</div>
+
+<div class="question" id="q-64">
+  <h3><span class="q-num">64.</span> Как реализовать собственные валидаторы для форм?</h3>
+  <pre>export const passwordConfirmationValidator = (...): ValidatorFn =>
+  (control) => {
+    const group = control.parent;
+    // cross-field: set errors on sibling, return null on group
+    return null;
+  };</pre>
+  <p>Sync: <code>ValidatorFn</code>. Async: <code>AsyncValidatorFn</code> returns Observable/Promise. Group-level для cross-field.</p>
+  <div class="project"><strong>Проект:</strong> <code>passwordConfirmationValidator</code> — сохраняет unrelated errors на sibling control; unit-tested без TestBed.</div>
+</div>
+
+<div class="question" id="q-65">
+  <h3><span class="q-num">65.</span> Как можно извлечь и обработать данные из форм после их отправки?</h3>
+  <p>Reactive: <code>if (form.invalid) return; const value = form.getRawValue();</code> — typed object. <code>form.disable()</code> during submit. Facade orchestrates API call + error state.</p>
+  <p>Template-driven: <code>ngSubmit</code> + <code>ngForm.value</code> если valid. Предпочитай facade method <code>submit()</code> — UI не знает про HTTP.</p>
+  <div class="project"><strong>Проект:</strong> <code>LoginFacade.login()</code>, <code>RegisterPageFacade</code> — validate → auth API → navigate/toast.</div>
+</div>
+
+<div class="question" id="q-66">
+  <h3><span class="q-num">66.</span> Что такое двустороннее связывание данных в контексте Template-driven Forms?</h3>
+  <p><code>[(ngModel)]="name"</code> синхронизирует input ↔ component property через <code>NgModel</code> directive. Требует <code>name</code> attribute для registration в parent <code>ngForm</code>.</p>
+  <div class="tradeoff">
+    Удобно для прототипов. В production forms ngKittyDebug — reactive: explicit control, no ngModel banana-in-box.
+  </div>
+</div>
+
+<div class="question" id="q-67">
+  <h3><span class="q-num">67.</span> Как использовать FormBuilder?</h3>
+  <pre>private readonly fb = inject(FormBuilder);
+readonly form = this.fb.nonNullable.group({
+  sin: ['', Validators.required],
+});</pre>
+  <p><code>nonNullable</code> — controls не принимают null (Angular 14+ typed forms). Shorthand vs <code>new FormGroup({...})</code>.</p>
+</div>
+
+<div class="question" id="q-68">
+  <h3><span class="q-num">68.</span> Как отслеживать состояние изменения форм или элементов управления формой (например, touched, dirty)?</h3>
+  <ul>
+    <li><code>dirty</code> — value changed from initial.</li>
+    <li><code>touched</code> — blur event.</li>
+    <li><code>pristine</code> / <code>untouched</code> — opposites.</li>
+    <li><code>valid</code> / <code>invalid</code>, <code>pending</code> (async validators).</li>
+  </ul>
+  <p>UI: показывай errors только <code>touched && invalid</code>. <code>dirtyFormGuard</code> использует <code>form.dirty</code> для canDeactivate.</p>
+  <div class="project"><strong>Проект:</strong> <code>dirtyFormGuard</code> на registration route.</div>
+</div>
+
+<div class="question" id="q-69">
+  <h3><span class="q-num">69.</span> Как обрабатывать асинхронную валидацию?</h3>
+  <pre>email: ['', [Validators.required], [uniqueEmailValidator(inject(HttpClient))]]
+
+// AsyncValidatorFn returns Observable&lt;ValidationErrors|null&gt;
+return http.get(`/api/check?email=${v}`).pipe(
+  map((exists) => exists ? { emailTaken: true } : null),
+  catchError(() => of(null))
+);</pre>
+  <p>Control <code>pending</code> while async runs. Debounce via <code>timer(300)</code> + <code>switchMap</code> in validator. Не блокируй UI без индикатора.</p>
+</div>
+
+<!-- ═══════════════════ LAZY LOADING ═══════════════════ -->
+<h2 id="lazy">Lazy Loading</h2>
+
+<div class="question" id="q-70">
+  <h3><span class="q-num">70.</span> Что такое Lazy Loading, и для чего она используется?</h3>
+  <p>Отложенная загрузка feature code в отдельных JS chunks до первого visit на route. Уменьшает initial bundle, ускоряет TTI. Angular router + dynamic <code>import()</code>.</p>
+  <div class="tradeoff">
+    Trade-off: latency при первом navigation vs smaller bootstrap. Preloading смягчает.
+  </div>
+</div>
+
+<div class="question" id="q-71">
+  <h3><span class="q-num">71.</span> Как настроить ленивую загрузку для конкретного модуля?</h3>
+  <p><strong>Legacy NgModule:</strong> <code>loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule)</code>.</p>
+  <p><strong>Modern standalone:</strong> <code>loadComponent: () => import('./feature.component').then(c => c.FeatureComponent)</code> или <code>loadChildren: () => import('./routes').then(m => m.FEATURE_ROUTES)</code>.</p>
+  <div class="project"><strong>Проект:</strong> все features через <code>loadComponent</code> — profile, login, altar, shrift, sanctum, ball.</div>
+</div>
+
+<div class="question" id="q-72">
+  <h3><span class="q-num">72.</span> Какие изменения в системе маршрутизации необходимы?</h3>
+  <ul>
+    <li>Route entry с <code>loadComponent</code> / <code>loadChildren</code> вместо синхронного <code>component:</code>.</li>
+    <li>Feature providers на route level (<code>providers: [Facade, ApiService]</code>).</li>
+    <li>Guards (<code>canMatch</code>) до chunk load.</li>
+    <li>Build config — application builder автоматически code-splits.</li>
+  </ul>
+</div>
+
+<div class="question" id="q-73">
+  <h3><span class="q-num">73.</span> Каковы преимущества использования ленивой загрузки?</h3>
+  <ul>
+    <li>Меньший initial bundle → faster first paint.</li>
+    <li>Изоляция feature providers/injectors.</li>
+    <li>Parallel chunk loading в браузере.</li>
+    <li>Natural feature boundaries для команд.</li>
+  </ul>
+</div>
+
+<div class="question" id="q-74">
+  <h3><span class="q-num">74.</span> Что такое стратегия предварительной загрузки, и какие основные стратегии используются для предварительной загрузки модулей (NoPreloading или PreloadAllModules)?</h3>
+  <p><code>NoPreloading</code> — chunks только on-demand. Минимальный network после bootstrap, но wait при первом click.</p>
+  <p><code>PreloadAllModules</code> — idle-time preload всех lazy routes. Быстрее subsequent navigation, больше background traffic.</p>
+  <div class="tradeoff">
+    Для auth-aware apps custom strategy лучше обоих — не грузи sanctum guest'у.
+  </div>
+</div>
+
+<div class="question" id="q-75">
+  <h3><span class="q-num">75.</span> Как использовать PreloadingStrategy с Angular Router?</h3>
+  <pre>provideRouter(routes, withPreloading(UserStateStrategy))
+
+@Injectable({ providedIn: 'root' })
+export class UserStateStrategy implements PreloadingStrategy {
+  preload(route: Route, load: () => Observable&lt;unknown&gt;) {
+    return this.shouldPreload(route) ? load() : of(null);
+  }
+}</pre>
+  <div class="project"><strong>Проект:</strong> <code>UserStateStrategy</code> — conditional preload по auth state.</div>
+</div>
+
+<div class="question" id="q-76">
+  <h3><span class="q-num">76.</span> Какие недостатки ленивой загрузки?</h3>
+  <ul>
+    <li>First-visit latency (network round-trip).</li>
+    <li>Сложнее shared singletons — нужен root vs route scope discipline.</li>
+    <li>Duplicate dependencies в chunks без careful sharing.</li>
+    <li>Debugging split bundles сложнее monolith.</li>
+  </ul>
+</div>
+
+<div class="question" id="q-77">
+  <h3><span class="q-num">77.</span> Как отлаживать проблемы ленивой загрузки?</h3>
+  <ul>
+    <li>Network tab — chunk 404/500, wrong path in <code>import()</code>.</li>
+    <li><code>ng build --stats-json</code> + webpack-bundle-analyzer / source-map-explorer.</li>
+    <li>Router config tracing: <code>withDebugTracing()</code> в dev.</li>
+    <li>Проверь export name в <code>.then(m => m.Component)</code> — typos = runtime error.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════ MODULES ═══════════════════ -->
+<h2 id="modules">Modules</h2>
+
+<div class="question" id="q-78">
+  <h3><span class="q-num">78.</span> Что такое Модуль в Angular, и какова его роль в приложении?</h3>
+  <p><code>@NgModule</code> — metadata container: <code>declarations</code> (components/pipes/directives), <code>imports</code>, <code>exports</code>, <code>providers</code>, <code>bootstrap</code>. Роль: compilation boundary, encapsulation exports, lazy loading unit.</p>
+  <p>В Angular 22 роль переняли standalone + route config. «Модуль» = feature folder, не обязательно NgModule.</p>
+</div>
+
+<div class="question" id="q-79">
+  <h3><span class="q-num">79.</span> Можете ли вы объяснить структуру модуля и его метаданные?</h3>
+  <pre>@NgModule({
+  declarations: [FeatureComponent, FeaturePipe], // legacy
+  imports: [CommonModule, RouterModule],
+  exports: [FeatureComponent],
+  providers: [FeatureService],
+})
+export class FeatureModule {}</pre>
+  <p>Standalone эквивалент: каждый component declares own <code>imports: []</code>; shared providers в route или <code>providedIn</code>.</p>
+</div>
+
+<div class="question" id="q-80">
+  <h3><span class="q-num">80.</span> Как можно разделить функциональность на различные модули и подключить их к основному модулю приложения?</h3>
+  <p><strong>Legacy:</strong> FeatureModule imported в AppModule или lazy <code>loadChildren</code>.</p>
+  <p><strong>Modern:</strong> <code>features/&lt;name&gt;/</code> с <code>data/</code>, <code>facades/</code>, <code>ui/</code>; route entry в <code>app.routes.ts</code> с <code>loadComponent</code>.</p>
+  <div class="project"><strong>Проект:</strong> canonical pattern в <code>features/main</code> — API service → Facade → UI; route-scoped providers.</div>
+</div>
+
+<!-- ═══════════════════ HTTP ═══════════════════ -->
+<h2 id="http">HTTP</h2>
+
+<div class="question" id="q-81">
+  <h3><span class="q-num">81.</span> Что такое HttpClientModule, и почему он важен?</h3>
+  <p>Исторически NgModule для регистрации <code>HttpClient</code>. Современно: <code>provideHttpClient(withInterceptors([...]), withXhr())</code> в <code>app.config.ts</code>.</p>
+  <p>Даёт typed HTTP, interceptors, progress events, JSON parsing, XSRF support.</p>
+  <div class="project"><strong>Проект:</strong> <code>provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor]))</code>.</div>
+</div>
+
+<div class="question" id="q-82">
+  <h3><span class="q-num">82.</span> Как можно делать HTTP-запросы с помощью HttpClient?</h3>
+  <pre>private readonly http = inject(HttpClient);
+getReading(p: TarotParams) {
+  return this.http.get&lt;TarotResponse&gt;(url, { params: { ...p } });
+}</pre>
+  <p>Cold Observable — lazy until subscribe. Options: headers, params, responseType, observe, reportProgress, context.</p>
+  <div class="project"><strong>Проект:</strong> <code>TarotService</code>, <code>MyMemoryTranslationService</code>, <code>TranslocoHttpLoader</code>.</div>
+</div>
+
+<div class="question" id="q-83">
+  <h3><span class="q-num">83.</span> Можете ли вы объяснить разницу между Observables и Promises в HTTP?</h3>
+  <p>HttpClient returns Observable: cancellable via unsubscribe, composable (retry, switchMap), multi-event with <code>observe: 'events'</code>. Promise — eager, single value.</p>
+  <p><code>firstValueFrom(http.get(...))</code> — bridge для async/await в guards/resources.</p>
+</div>
+
+<div class="question" id="q-84">
+  <h3><span class="q-num">84.</span> Как обрабатывать ошибки во время HTTP-запросов?</h3>
+  <p>Defense in depth: interceptor (global toast) → facade (domain error signal) → component (display). <code>catchError</code> + <code>HttpErrorResponse</code> typing.</p>
+  <div class="project"><strong>Проект:</strong> interceptor skips <code>/i18n/</code>; <code>MainPageFacade</code> maps errors to signal.</div>
+</div>
+
+<div class="question" id="q-85">
+  <h3><span class="q-num">85.</span> Какие техники оптимизации HTTP и кэширования?</h3>
+  <ul>
+    <li><code>shareReplay</code> dedup; Resource API dedup by params.</li>
+    <li>In-memory Map cache (<code>PriestQuotesService</code>).</li>
+    <li>Batching: <code>forkJoin</code>, concurrency <code>mergeMap(n)</code>.</li>
+    <li>Lazy routes + selective preloading.</li>
+  </ul>
+</div>
+
+<div class="question" id="q-86">
+  <h3><span class="q-num">86.</span> Какова цель HttpInterceptor и как он работает?</h3>
+  <p>Chain между app и network: <code>(req, next) => next(req.clone(...)).pipe(...)</code>. Functional <code>HttpInterceptorFn</code> + <code>withInterceptors</code>. Immutable <code>req.clone</code>.</p>
+</div>
+
+<div class="question" id="q-87">
+  <h3><span class="q-num">87.</span> В каких сценариях interceptor для обработки ошибок?</h3>
+  <p>Глобальный toast, logging, 401 redirect. Не для feature-specific validation messages — используй <code>HttpContext</code> tokens для opt-out.</p>
+</div>
+
+<div class="question" id="q-88">
+  <h3><span class="q-num">88.</span> Как обрабатывать аутентификацию через HTTP-интерсепторы?</h3>
+  <p>Attach Bearer token: <code>req.clone({ setHeaders: { Authorization: `Bearer ${token}` }})</code>. AuthZ на сервере; client-side route guards для UI protection.</p>
+  <div class="tradeoff">
+    ngKittyDebug: Firebase Auth через SDK, не Bearer — guards вместо auth interceptor. REST+JWT apps — interceptor standard.
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>authGuard</code>/<code>guestGuard</code> как <code>CanMatchFn</code>.</div>
+</div>
+
+<!-- ═══════════════════ TESTING ═══════════════════ -->
+<h2 id="testing">Testing</h2>
+
+<div class="question" id="q-89">
+  <h3><span class="q-num">89.</span> Какие типы Тестирования поддерживает Angular (например, модульные тесты, интеграционные тесты, e2e-тесты)?</h3>
+  <ul>
+    <li><strong>Unit</strong> — class/function isolated (validators, facades, services).</li>
+    <li><strong>Component/DOM</strong> — component + template + DI (TestBed).</li>
+    <li><strong>E2E</strong> — full browser flow (Playwright/Cypress), отдельный toolchain.</li>
+  </ul>
+  <p><code>ng test</code> — unit + component. E2E не в default runner.</p>
+</div>
+
+<div class="question" id="q-90">
+  <h3><span class="q-num">90.</span> Какие основные инструменты и библиотеки используются Angular для тестирования (Jasmine, Karma и Protractor)?</h3>
+  <p><strong>Исторически:</strong> Jasmine assertions + Karma browser runner + Protractor E2E.</p>
+  <p><strong>Современно (ngKittyDebug):</strong> <strong>Vitest</strong> runner + jsdom + <code>@angular/core/testing</code>. Protractor deprecated; E2E → Playwright.</p>
+  <div class="project"><strong>Проект:</strong> <code>vitest.config.ts</code>, <code>vi.spyOn</code>, 113+ passing specs.</div>
+</div>
+
+<div class="question" id="q-91">
+  <h3><span class="q-num">91.</span> Что такое TestBed?</h3>
+  <p>DI + compiler sandbox. <code>configureTestingModule({ imports: [Component], providers: [...] })</code>. <code>compileComponents()</code> для async template. <code>createComponent()</code>, <code>inject()</code> in beforeEach.</p>
+</div>
+
+<div class="question" id="q-92">
+  <h3><span class="q-num">92.</span> Как тестировать компоненты с ComponentFixture и DebugElement?</h3>
+  <p><code>fixture.componentInstance</code>, <code>fixture.detectChanges()</code>, <code>fixture.debugElement.query(By.css('button'))</code>, <code>triggerEventHandler</code>. <code>nativeElement</code> для DOM asserts.</p>
+</div>
+
+<div class="question" id="q-93">
+  <h3><span class="q-num">93.</span> Как тестировать директивы и пайпы?</h3>
+  <p><strong>Pure pipes:</strong> <code>new TruncatePipe().transform('x', 3)</code> — без TestBed.</p>
+  <p><strong>Directives:</strong> host component с минимальным template, assert host behavior/DOM.</p>
+</div>
+
+<div class="question" id="q-94">
+  <h3><span class="q-num">94.</span> Как мокировать зависимости в тестах сервисов?</h3>
+  <ul>
+    <li><code>{ provide: X, useValue: mock }</code></li>
+    <li><code>vi.spyOn(s, 'method').mockReturnValue(...)</code></li>
+    <li><code>HttpTestingController</code> для HTTP</li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> <code>TranslocoTestingMock</code>; guards via <code>TestBed.runInInjectionContext(() => authGuard(...))</code>.</div>
+</div>
+
+<div class="question" id="q-95">
+  <h3><span class="q-num">95.</span> Как тестировать template-driven и reactive forms?</h3>
+  <p>Reactive: <code>patchValue</code>, assert <code>form.valid</code>, DOM error messages, spy submit. Template: simulate input events. Тестируй через facade public API.</p>
+  <div class="project"><strong>Проект:</strong> <code>profile-form.component.spec.ts</code>, <code>register-page.component.spec.ts</code>.</div>
+</div>
+
+<div class="question" id="q-96">
+  <h3><span class="q-num">96.</span> Что такое async, fakeAsync и tick?</h3>
+  <ul>
+    <li><code>async</code> test + <code>await fixture.whenStable()</code></li>
+    <li><code>fakeAsync</code> + <code>tick(ms)</code> — Zone fake timers</li>
+    <li><code>TestBed.tick()</code> / <code>flushEffects()</code> — signal effects</li>
+  </ul>
+  <div class="tradeoff">
+    <code>fakeAsync</code> needs Zone — problematic zoneless. Prefer <code>TestBed.tick()</code> + Vitest <code>await vi.waitFor</code>.
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>main-page.facade.spec.ts</code> — <code>TestBed.tick()</code>; <code>sanctum-page.facade.spec.ts</code> — <code>flushEffects()</code>.</div>
+</div>
+
+<div class="question" id="q-97">
+  <h3><span class="q-num">97.</span> Как обеспечить изоляцию тестов?</h3>
+  <ul>
+    <li>Fresh TestBed config per test (<code>beforeEach</code>).</li>
+    <li><code>httpMock.verify()</code> — no outstanding requests.</li>
+    <li><code>vi.clearAllMocks()</code>.</li>
+    <li>No shared mutable state between tests.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════ SIGNALS ═══════════════════ -->
+<h2 id="signals">Signals</h2>
+
+<div class="question" id="q-98">
+  <h3><span class="q-num">98.</span> Что такое Signals?</h3>
+  <p>Reactive primitive: <code>signal(initial)</code> holds value; readers track dependency graph. <code>computed()</code> derives; <code>effect()</code> side effects. Fine-grained updates без full tree CD scan.</p>
+  <p>Основа state model в Angular 16+; интегрированы в templates, inputs, router, forms (experimental).</p>
+</div>
+
+<div class="question" id="q-99">
+  <h3><span class="q-num">99.</span> Как читать и изменять значение signal?</h3>
+  <pre>const count = signal(0);
+count();        // read
+count.set(5);   // replace
+count.update(v => v + 1);  // mutate based on current</pre>
+  <p>Read в computed/template/effect регистрирует dependency. Write через set/update/mutate (objects).</p>
+</div>
+
+<div class="question" id="q-100">
+  <h3><span class="q-num">100.</span> Какова основная выгода signals вместо примитивов?</h3>
+  <p>Примитив в class — change detection не знает об изменении без markForCheck/zone. Signal — framework отслеживает reads, точечно обновляет views. <code>computed</code> кэширует derived values.</p>
+  <div class="tradeoff">
+    Не заменяет RxJS для event streams — дополняет для sync/reactive UI state.
+  </div>
+  <div class="project"><strong>Проект:</strong> facades expose <code>readonly loading = this._loading.asReadonly()</code>.</div>
+</div>
+
+<div class="question" id="q-101">
+  <h3><span class="q-num">101.</span> В чем преимущество сигнальных входов?</h3>
+  <pre>role = input&lt;TarotRole&gt;('oracle');
+intent = input.required&lt;string&gt;();</pre>
+  <p>Type-safe, callable in class (<code>this.role()</code>), integrates with transforms, required variant. Заменяет <code>@Input()</code> + <code>ngOnChanges</code>.</p>
+  <div class="tradeoff">
+    Signal inputs — default в new components. Legacy @Input для interop libraries.
+  </div>
+</div>
+
+<div class="question" id="q-102">
+  <h3><span class="q-num">102.</span> Как подписаться на signal?</h3>
+  <p>Signals не имеют subscribe API — это не Observable. «Подписка» = <code>effect(() => { console.log(count()); })</code> или <code>computed</code> или template read <code>{{ count() }}</code>.</p>
+  <p>Для bridge к RxJS: <code>toObservable(signal)</code>. Из Observable: <code>toSignal(obs$)</code>.</p>
+</div>
+
+<div class="question" id="q-103">
+  <h3><span class="q-num">103.</span> Можно ли читать signal из computed без создания зависимости?</h3>
+  <p>Да — <code>untracked(() => otherSignal())</code> внутри <code>computed</code> или <code>effect</code>. Читает current value без регистрации dependency.</p>
+  <p>Use case: logging, compare with previous, read config that shouldn't trigger recompute.</p>
+</div>
+
+<div class="question" id="q-104">
+  <h3><span class="q-num">104.</span> Обнаружение изменений signal с использованием API effect()</h3>
+  <pre>effect(() => {
+  const lang = this.activeLang();
+  document.documentElement.lang = lang;
+});</pre>
+  <p><code>effect</code> runs after CD, tracks signal reads, re-runs on change. <code>onCleanup</code> for teardown. Не мутируй signals в effect (risk loops) — prefer derived computed.</p>
+  <div class="project"><strong>Проект:</strong> <code>uiStateStore</code> — effects sync theme to DOM + Firestore.</div>
+</div>
+
+<div class="question" id="q-105">
+  <h3><span class="q-num">105.</span> Какова связь между signals и обнаружением изменений?</h3>
+  <p>Template/control flow reads signals → view records dependencies → signal change marks dirty views only. OnPush default works naturally. Path to zoneless: signals + async events trigger updates without Zone.js.</p>
+  <p><code>linkedSignal</code> — writable derived that resets when source changes (<code>MainPageFacade</code> reading state).</p>
+</div>
+
+<div class="question" id="q-106">
+  <h3><span class="q-num">106.</span> Как обрабатывать отладку сигналов?</h3>
+  <ul>
+    <li>Angular DevTools — signal graph inspection.</li>
+    <li><code>effect(() => console.log('[debug]', state()))</code> — temporary.</li>
+    <li><code>isDevMode()</code> guards on debug effects.</li>
+    <li>NgRx Signals DevTools plugin for stores.</li>
+    <li>Unit tests: read <code>facade.loading()</code> directly — no DOM needed.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════ ANGULAR 16–18+ ═══════════════════ -->
+<h2 id="versions">Angular 16, 17, 18+</h2>
+
+<div class="question" id="q-107">
+  <h3><span class="q-num">107.</span> Что нового в версиях Angular 16, 17 и 18?</h3>  <ul>
+    <li><strong>16:</strong> signals (developer preview), required inputs, destroyRef, esbuild optimizer.</li>
+    <li><strong>17:</strong> control flow (<code>@if</code>/<code>@for</code>), deferrable views, standalone default, new app builder.</li>
+    <li><strong>18:</strong> signals stable, zoneless preview, Material 3, server routing, <code>resource()</code> preview.</li>
+    <li><strong>19–22:</strong> signal inputs/outputs default, incremental hydration, linkedSignal, rxResource stable, Vitest default.</li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> Angular 22 — полный modern stack из списка выше.</div>
+</div>
+
+<div class="question" id="q-108">
+  <h3><span class="q-num">108.</span> Опишите новые возможности @if, @for, @switch, @defer.</h3>
+  <p><strong>Control flow</strong> — built-in template blocks, no <code>CommonModule</code> structural directives. <code>@for</code> requires <code>track</code>. <code>@defer</code> lazy-loads template subtree with triggers (viewport, idle, interaction, timer, when).</p>
+  <div class="tradeoff">
+    <code>@defer</code> — in-template perf. <code>loadComponent</code> — route-level. ngKittyDebug: control flow yes, @defer no (uses route lazy + preloading).
+  </div>
+</div>
+
+<div class="question" id="q-109">
+  <h3><span class="q-num">109.</span> Можете ли вы объяснить преимущества использования нового рендерера Angular Ivy, представленного в Angular 18?</h3>
+  <p><strong>Ivy</strong> (с Angular 9+) — AOT compilation, tree-shakable components, smaller bundles, improved DI, local template compilation. К Angular 18 Ivy зрелый: faster build (esbuild), better HMR, partial compilation for libraries.</p>
+  <p>На интервью: Ivy = compile-time template → instructions; не interpret templates at runtime. Enables standalone, tree-shaking, defer blocks.</p>
+  <div class="tradeoff">
+    Вопрос часто путают «новый рендерер в 18» — уточни: Ivy давно default; в 18+ улучшения builder/hydration/zoneless, не смена Ivy.
+  </div>
+</div>
+
+<div class="question" id="q-110">
+  <h3><span class="q-num">110.</span> Как Angular 18 улучшает производительность и оптимизацию размера пакета по сравнению с предыдущими версиями?</h3>
+  <ul>
+    <li>esbuild/Vite application builder — faster builds, better code splitting.</li>
+    <li>Control flow — less runtime directive code.</li>
+    <li>Zoneless — remove zone.js (~30KB) when ready.</li>
+    <li>Defer + lazy routes — smaller initial chunks.</li>
+    <li>Signals — granular CD, fewer full tree walks.</li>
+  </ul>
+</div>
+
+<div class="question" id="q-111">
+  <h3><span class="q-num">111.</span> Какие улучшения или дополнения были внесены в Angular Material в последних версиях?</h3>
+  <p>Material 3 design tokens, theming API refresh, improved accessibility, density controls. В ecosystem ngKittyDebug используется <strong>Taiga UI</strong>, не Material — но принципы те же: design tokens, CDK overlays, form field patterns.</p>
+  <div class="tradeoff">
+    Taiga — меньше community vs Material, но лучше кастомный visual identity проекта (delulu-church aesthetic).
+  </div>
+  <div class="project"><strong>Проект:</strong> <code>provideTaiga()</code>, <code>TuiDialogService</code>, <code>tui-root</code> shell, custom CSS variables в <code>styles.css</code>.</div>
+</div>
+
+<div class="question" id="q-112">
+  <h3><span class="q-num">112.</span> Как Angular 18 поддерживает серверный рендеринг (SSR) и какие улучшения он предлагает в этой области?</h3>
+  <p><code>ng add @angular/ssr</code> — server-side rendering + hydration. Incremental hydration (19+) — hydrate visible parts first. Event replay — не терять clicks до hydration. <code>provideClientHydration()</code>.</p>
+  <div class="tradeoff">
+    ngKittyDebug — client-only SPA on Netlify, no SSR. Знать концепцию для интервью: SEO, TTFB, hydration mismatch pitfalls.
+  </div>
+</div>
+
+<div class="question" id="q-113">
+  <h3><span class="q-num">113.</span> Обсудите любые обновления или улучшения, внесенные в Angular CLI и его функции в последних релизах.</h3>
+  <ul>
+    <li>Application builder (esbuild) replaces browser builder.</li>
+    <li>Standalone schematic default; <code>ng generate</code> signal inputs.</li>
+    <li>Vitest as test runner option (default in 21+).</li>
+    <li><code>ng update</code> migrations for control flow, standalone, inject().</li>
+    <li>SSR/hydration schematics; environment builder configs.</li>
+  </ul>
+  <div class="project"><strong>Проект:</strong> <code>pnpm</code> + Angular CLI 22; <code>pnpm typecheck</code>, <code>pnpm lint</code>, <code>pnpm test</code> в pre-flight checklist.</div>
+</div>
+
+<footer>
+  <p>Связанное: <a href="angular-interview-excellent.html">Справочник Excellent (44 вопроса)</a> · <a href="../lessons/0001-interview-retrieval-practice.html">Урок 1 — Retrieval Practice</a></p>
+  <p>Задавай уточняющие вопросы в чате — учитель может углубить любой раздел.</p>
+  <p>Источники: <a href="https://angular.dev">angular.dev</a> · <a href="https://angular.dev/guide/signals">Signals</a> · <a href="https://rxjs.dev/">RxJS</a></p>
+</footer>
+
+</main>
+</div>
+
+</body>
+</html>

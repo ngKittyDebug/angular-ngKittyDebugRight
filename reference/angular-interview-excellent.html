@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Angular Interview — уровень Excellent (51 вопрос)</title>
+  <link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body class="ref-page">
+
+<div class="ref-layout">
+
+<nav class="ref-sidebar" aria-label="Оглавление вопросов">
+  <p class="ref-sidebar-title">51 вопрос</p>
+
+  <p class="ref-sidebar-group"><a href="#http">HTTP</a></p>
+  <a href="#q-01"><span class="q-link-num">01</span> HttpClientModule</a>
+  <a href="#q-02"><span class="q-link-num">02</span> HTTP-запросы</a>
+  <a href="#q-03"><span class="q-link-num">03</span> Observable vs Promise</a>
+  <a href="#q-04"><span class="q-link-num">04</span> Ошибки HTTP</a>
+  <a href="#q-05"><span class="q-link-num">05</span> Оптимизация и кэш</a>
+  <a href="#q-06"><span class="q-link-num">06</span> HttpInterceptor</a>
+  <a href="#q-07"><span class="q-link-num">07</span> Interceptor: ошибки</a>
+  <a href="#q-08"><span class="q-link-num">08</span> Auth interceptors</a>
+
+  <p class="ref-sidebar-group"><a href="#rxjs">RxJS</a></p>
+  <a href="#q-09"><span class="q-link-num">09</span> RxJS в Angular</a>
+  <a href="#q-10"><span class="q-link-num">10</span> Observer, Subscription</a>
+  <a href="#q-11"><span class="q-link-num">11</span> Observable vs Promise</a>
+  <a href="#q-12"><span class="q-link-num">12</span> Базовые операторы</a>
+  <a href="#q-13"><span class="q-link-num">13</span> Custom Observable</a>
+  <a href="#q-14"><span class="q-link-num">14</span> Subject, BehaviorSubject</a>
+  <a href="#q-15"><span class="q-link-num">15</span> Hot vs Cold</a>
+  <a href="#q-16"><span class="q-link-num">16</span> Отписка</a>
+  <a href="#q-17"><span class="q-link-num">17</span> State management</a>
+  <a href="#q-18"><span class="q-link-num">18</span> Ошибки и retry</a>
+  <a href="#q-19"><span class="q-link-num">19</span> Higher-order operators</a>
+
+  <p class="ref-sidebar-group"><a href="#forms">Forms</a></p>
+  <a href="#q-20"><span class="q-link-num">20</span> ControlValueAccessor</a>
+  <a href="#q-21"><span class="q-link-num">21</span> Custom form control</a>
+  <a href="#q-22"><span class="q-link-num">22</span> Custom validator</a>
+
+  <p class="ref-sidebar-group"><a href="#testing">Testing</a></p>
+  <a href="#q-23"><span class="q-link-num">23</span> Типы тестирования</a>
+  <a href="#q-24"><span class="q-link-num">24</span> Инструменты</a>
+  <a href="#q-25"><span class="q-link-num">25</span> TestBed</a>
+  <a href="#q-26"><span class="q-link-num">26</span> ComponentFixture</a>
+  <a href="#q-27"><span class="q-link-num">27</span> Directives и pipes</a>
+  <a href="#q-28"><span class="q-link-num">28</span> Моки и стабы</a>
+  <a href="#q-29"><span class="q-link-num">29</span> Тестирование форм</a>
+  <a href="#q-30"><span class="q-link-num">30</span> async, fakeAsync</a>
+  <a href="#q-31"><span class="q-link-num">31</span> Изоляция тестов</a>
+
+  <p class="ref-sidebar-group"><a href="#di">DI</a></p>
+  <a href="#q-32"><span class="q-link-num">32</span> Иерархия injector</a>
+  <a href="#q-33"><span class="q-link-num">33</span> Scope сервиса</a>
+  <a href="#q-34"><span class="q-link-num">34</span> Tree-shaking</a>
+  <a href="#q-35"><span class="q-link-num">35</span> Environment vs element</a>
+
+  <p class="ref-sidebar-group"><a href="#signals">Signals</a></p>
+  <a href="#q-36"><span class="q-link-num">36</span> Resource API</a>
+  <a href="#q-37"><span class="q-link-num">37</span> resource vs rxResource</a>
+
+  <p class="ref-sidebar-group"><a href="#components">Components</a></p>
+  <a href="#q-38"><span class="q-link-num">38</span> Роль компонентов</a>
+  <a href="#q-39"><span class="q-link-num">39</span> @Component</a>
+  <a href="#q-40"><span class="q-link-num">40</span> Жизненный цикл</a>
+  <a href="#q-41"><span class="q-link-num">41</span> Data binding</a>
+  <a href="#q-42"><span class="q-link-num">42</span> Standalone</a>
+  <a href="#q-43"><span class="q-link-num">43</span> ViewChild</a>
+  <a href="#q-44"><span class="q-link-num">44</span> Change Detection</a>
+  <a href="#q-45"><span class="q-link-num">45</span> Динамические</a>
+  <a href="#q-46"><span class="q-link-num">46</span> ngComponentOutlet</a>
+  <a href="#q-47"><span class="q-link-num">47</span> @defer</a>
+
+  <p class="ref-sidebar-group"><a href="#project">Проект</a></p>
+  <a href="#q-48"><span class="q-link-num">48</span> Вклад в спринт</a>
+  <a href="#q-49"><span class="q-link-num">49</span> Навигация по коду</a>
+  <a href="#q-50"><span class="q-link-num">50</span> Демо приложения</a>
+  <a href="#q-51"><span class="q-link-num">51</span> Решения и сложности</a>
+</nav>
+
+<main class="ref-content">
+
+<h1>Angular Interview — уровень Excellent</h1>
+<p>Глубокие ответы с trade-offs, сравнениями подходов и привязкой к проекту <strong>ngKittyDebug</strong>. Основной источник: <a href="https://angular.dev">angular.dev</a>.</p>
+
+<!-- ═══════════════════ HTTP ═══════════════════ -->
+<h2 id="http">HTTP</h2>
+
+<div class="question" id="q-01">
+  <h3><span class="q-num">1.</span> Что такое HttpClientModule и зачем он нужен?</h3>
+  <p><strong>Исторически:</strong> <code>HttpClientModule</code> — NgModule-способ зарегистрировать <code>HttpClient</code> и его DI-токены. Он подключал <code>HttpClientXsrfModule</code>, связывал interceptors через DI multi-providers и делал <code>HttpClient</code> доступным для инъекции во всём приложении.</p>
+  <p><strong>Современный подход (Angular 15+):</strong> в standalone-приложениях вместо модуля используется <code>provideHttpClient()</code> в <code>ApplicationConfig</code>. Функционально то же самое, но с tree-shaking и композицией через feature-функции: <code>withInterceptors()</code>, <code>withFetch()</code>, <code>withXsrfConfiguration()</code>.</p>
+  <div class="tradeoff">
+    <strong>Trade-off:</strong> модульный подход тащил всё разом; функциональные providers позволяют подключать только нужное. Interceptors переехали с class-based <code>HTTP_INTERCEPTORS</code> на <code>HttpInterceptorFn</code> — проще тестировать, не нужен <code>@Injectable()</code>.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>app.config.ts</code> — <code>provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor]))</code>. Явно выбран XHR-бэкенд; глобальный toast об ошибках через functional interceptor.
+  </div>
+</div>
+
+<div class="question" id="q-02">
+  <h3><span class="q-num">2.</span> Как делать HTTP-запросы через HttpClient?</h3>
+  <p>Инжектируем <code>HttpClient</code> и вызываем типизированные методы — <code>get&lt;T&gt;()</code>, <code>post</code>, <code>put</code>, <code>patch</code>, <code>delete</code>, <code>head</code>, <code>options</code>. Каждый возвращает <strong>cold</strong> <code>Observable</code>: один emit и complete (или error). Запрос ленивый — ничего не уходит в сеть до subscribe.</p>
+  <pre>private readonly http = inject(HttpClient);
+
+getReading(params: TarotParams): Observable&lt;TarotResponse&gt; {
+  return this.http.get&lt;TarotResponse&gt;(this.tarotUrl, { params: { ... } });
+}</pre>
+  <p>Опции: <code>headers</code>, <code>params</code> (<code>HttpParams</code>), <code>responseType</code>, <code>observe</code> (<code>'body' | 'events' | 'response'</code>), <code>reportProgress</code>, <code>context</code> (метаданные запроса для interceptors).</p>
+  <div class="tradeoff">
+    <strong>vs fetch:</strong> <code>withFetch()</code> использует Fetch API — лучше для SSR/edge; XHR даёт progress загрузки. <strong>vs Promise:</strong> Observable поддерживает отмену через <code>unsubscribe</code>, retry, композицию — критично при destroy компонента.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> тонкий API-слой — <code>TarotService</code> (GET tarot), <code>MyMemoryTranslationService</code> (параллельный перевод чанков через <code>forkJoin</code>), <code>TranslocoHttpLoader</code> (i18n JSON).
+  </div>
+</div>
+
+<div class="question" id="q-03">
+  <h3><span class="q-num">3.</span> Observable vs Promise для HTTP-ответов?</h3>
+  <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+    <tr><th style="text-align:left">Observable</th><th style="text-align:left">Promise</th></tr>
+    <tr><td>Lazy — выполняется при subscribe</td><td>Eager — стартует сразу</td></tr>
+    <tr><td>Может быть multicast (через операторы)</td><td>Один потребитель</td></tr>
+    <tr><td>Отменяется через unsubscribe</td><td>Не отменяется (обход через AbortSignal)</td></tr>
+    <tr><td>0..N значений во времени</td><td>Ровно одно settle-состояние</td></tr>
+    <tr><td>Богатый pipeline операторов</td><td>Только <code>then/catch/finally</code></td></tr>
+  </table>
+  <p>HttpClient возвращает Observable, потому что HTTP в UI — это <em>потоковая задача</em>: progress events, retry, гонки запросов, объединение нескольких вызовов. <code>lastValueFrom()</code> / <code>firstValueFrom()</code> — мост к Promise, когда нужен async/await (guards, loader в <code>resource()</code>).</p>
+  <div class="tradeoff">
+    Не конвертируй всё в Promise — потеряешь отмену при destroy компонента посреди запроса. Предпочитай <code>takeUntilDestroyed()</code> или <code>async</code> pipe.
+  </div>
+</div>
+
+<div class="question" id="q-04">
+  <h3><span class="q-num">4.</span> Как обрабатывать ошибки HTTP-запросов?</h3>
+  <p><strong>Слои (defense in depth):</strong></p>
+  <ol>
+    <li><strong>Interceptor</strong> — сквозная UX-логика (toast, логирование, redirect при auth). Пробрасывает ошибку дальше, чтобы caller тоже мог обработать.</li>
+    <li><strong>Service/Facade</strong> — маппит <code>HttpErrorResponse</code> в доменные error signals/сообщения.</li>
+    <li><strong>Component</strong> — показывает error state из facade; редко ловит HTTP напрямую.</li>
+  </ol>
+  <pre>// Interceptor — глобальное уведомление, re-throw
+return next(req).pipe(
+  catchError((error: HttpErrorResponse) => {
+    if (!req.url.includes('/i18n/')) showToast(error);
+    return throwError(() => error);
+  })
+);
+
+// Facade — доменная обработка
+.pipe(
+  catchError((err) => {
+    this._error.set(err instanceof HttpErrorResponse ? err.message : 'Unknown');
+    return EMPTY;
+  }),
+  finalize(() => this._loading.set(false))
+)</pre>
+  <div class="tradeoff">
+    <strong>Только interceptor:</strong> теряется контекст фичи — facade всё равно нужен для специфичных сообщений. <strong>catchError в каждом сервисе:</strong> дублирование — разделяй ответственность.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>httpErrorInterceptor</code> пропускает <code>/i18n/</code> (отсутствие перевода не должно показывать toast). <code>MainPageFacade</code> различает <code>HttpErrorResponse</code> и неизвестные ошибки, записывая в signal.
+  </div>
+</div>
+
+<div class="question" id="q-05">
+  <h3><span class="q-num">5.</span> Оптимизация HTTP-запросов и кэширование?</h3>
+  <ul>
+    <li><strong>Дедупликация запросов</strong> — <code>shareReplay(1)</code> для hot shared streams; Resource API дедуплицирует по params.</li>
+    <li><strong>In-memory cache</strong> — Map по URL/params/lang; инвалидация при мутации.</li>
+    <li><strong>HTTP cache headers</strong> — уважать <code>Cache-Control</code>; interceptors могут добавлять <code>If-None-Match</code>.</li>
+    <li><strong>Lazy loading</strong> — <code>loadComponent</code> откладывает загрузку чанка до визита на route.</li>
+    <li><strong>Batching</strong> — объединить N вызовов в один (<code>forkJoin</code>) или ограничить concurrency (<code>mergeMap(n)</code>).</li>
+    <li><strong>Prefetch</strong> — кастомная <code>PreloadingStrategy</code> для вероятных следующих маршрутов.</li>
+  </ul>
+  <div class="tradeoff">
+    Кэш vs актуальность: паттерн stale-while-revalidate — показать кэш, обновить в фоне. Перекэширование i18n или user-specific данных даёт баги.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>PriestQuotesService</code> — <code>Map&lt;lang, quotes&gt;</code> перед Firestore. <code>MyMemoryTranslationService</code> — чанки с лимитом concurrency. <code>UserStateStrategy</code> выборочно прелоадит auth/guest routes.
+  </div>
+</div>
+
+<div class="question" id="q-06">
+  <h3><span class="q-num">6.</span> Что такое HttpInterceptor и как он работает?</h3>
+  <p>Interceptor стоит в <strong>цепочке</strong> между вашим кодом и бэкендом. Каждый получает <code>(req, next)</code> и возвращает <code>Observable&lt;HttpEvent&lt;unknown&gt;&gt;</code>. Вызов <code>next(req)</code> передаёт запрос дальше; изменять <code>req</code> только через <code>req.clone({...})</code> (immutable).</p>
+  <p><strong>Современный стиль:</strong> <code>HttpInterceptorFn</code> — обычная функция с <code>inject()</code> для зависимостей. Регистрация через <code>withInterceptors([fn1, fn2])</code>. Порядок важен: первый в массиве обрабатывает исходящий запрос первым, входящий ответ — последним.</p>
+  <div class="tradeoff">
+    Class interceptors (<code>HTTP_INTERCEPTORS</code>) ещё работают, но functional предпочтительнее — нет DI-класса, проще unit-тест через <code>TestBed.runInInjectionContext</code>.
+  </div>
+</div>
+
+<div class="question" id="q-07">
+  <h3><span class="q-num">7.</span> Когда использовать interceptor для обработки ошибок?</h3>
+  <p><strong>Хорошо подходит:</strong> глобальный toast/snackbar, централизованное логирование, 401 → logout/redirect, retry на 503, нормализация формата ошибки.</p>
+  <p><strong>Плохо подходит:</strong> фича-специфичные validation messages, ошибки которые на одном экране глотаются, а на другом показываются, бизнес-логика принятия решений.</p>
+  <div class="tradeoff">
+    Используй <code>HttpContext</code> tokens для opt in/out на уровне запроса (<code>SKIP_ERROR_TOAST</code>). В проекте фильтрация по URL-паттерну для i18n — та же идея.
+  </div>
+</div>
+
+<div class="question" id="q-08">
+  <h3><span class="q-num">8.</span> Аутентификация и авторизация через interceptors?</h3>
+  <pre>export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = inject(AuthService).getToken();
+  if (!token) return next(req);
+  return next(req.clone({
+    setHeaders: { Authorization: `Bearer ${token}` }
+  }));
+};</pre>
+  <p><strong>Auth (кто ты):</strong> прикрепить token/cookie к каждому API-вызову.</p>
+  <p><strong>Authorization (что тебе можно):</strong> обычно на сервере; на клиенте — <strong>guards</strong> (<code>canMatch</code>, <code>canActivate</code>) блокируют маршруты, а не interceptors. Interceptor обрабатывает 401/403 глобально.</p>
+  <div class="tradeoff">
+    Firebase Auth в проекте идёт через SDK напрямую, не через Bearer headers — interceptors менее центральны. Для REST API с JWT auth interceptor — стандарт.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>authGuard</code> / <code>guestGuard</code> как <code>CanMatchFn</code> с <code>inject(AuthService)</code> — auth на уровне route, не HTTP interceptor.
+  </div>
+</div>
+
+<!-- ═══════════════════ RxJS ═══════════════════ -->
+<h2 id="rxjs">RxJS</h2>
+
+<div class="question" id="q-09">
+  <h3><span class="q-num">9.</span> Что такое RxJS и зачем он в Angular?</h3>
+  <p><strong>RxJS</strong> (Reactive Extensions for JavaScript) — библиотека для работы с <strong>асинхронными потоками данных</strong> через Observable (<a href="https://rxjs.dev/guide/overview">rxjs.dev</a>). Паттерн: push-based — producer пушит значения подписчикам, а не pull (как iterator).</p>
+  <p><strong>Где Angular использует RxJS из коробки:</strong></p>
+  <ul>
+    <li><code>HttpClient</code> — каждый запрос возвращает <code>Observable</code></li>
+    <li><code>Router</code> — <code>events</code>, <code>paramMap</code>, guards с Observable return</li>
+    <li>Forms — <code>valueChanges</code>, <code>statusChanges</code></li>
+    <li><code>async</code> pipe в шаблонах</li>
+    <li>HTTP interceptors — pipeline из операторов</li>
+    <li><code>PreloadingStrategy</code>, resolvers</li>
+  </ul>
+  <p><strong>Angular 16+ и signals:</strong> RxJS смещается на <em>async boundaries</em> (сеть, таймеры, DOM events), а UI state держат <strong>signals</strong>. Мост — пакет <code>@angular/core/rxjs-interop</code> (<a href="https://angular.dev/ecosystem/rxjs-interop">документация</a>):</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>API</th><th>Назначение</th></tr>
+    <tr><td><code>toSignal(obs$, { initialValue })</code></td><td>Observable → signal (auto-unsubscribe)</td></tr>
+    <tr><td><code>toObservable(signal)</code></td><td>signal → Observable</td></tr>
+    <tr><td><code>takeUntilDestroyed(destroyRef)</code></td><td>Отписка при destroy без destroy$ Subject</td></tr>
+    <tr><td><code>rxResource()</code></td><td>Observable stream как async resource</td></tr>
+  </table>
+  <div class="tradeoff">
+    <strong>Signals vs RxJS:</strong> signals — для state (loading, user, theme). RxJS — для <em>событий во времени</em> (HTTP sequences, debounced search, progressive streams). Не конвертируй всё в signals — потеряешь операторы композиции. Не держи весь state в Subjects — хуже DX чем signals в Angular 22.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> RxJS — HTTP (Tarot, translation API), ritual timeline (<code>timer</code> + <code>merge</code>), ball charging (<code>timer(1800)</code>). Signals — loading/error/result в <code>MainPageFacade</code>. <code>toSignal(langChanges$)</code> в <code>PriestQuotesService</code>.
+  </div>
+</div>
+
+<div class="question" id="q-10">
+  <h3><span class="q-num">10.</span> Observable, Observer и Subscription</h3>
+  <p>Три ключевых понятия RxJS (<a href="https://rxjs.dev/guide/observable">Observable guide</a>):</p>
+  <p><strong>Observable</strong> — «рецепт» потока. <em>Ленивый</em>: producer-функция выполняется только при <code>subscribe()</code>. Может emit 0..N значений, затем <code>complete</code> или <code>error</code>.</p>
+  <p><strong>Observer</strong> — потребитель. Контракт:</p>
+  <pre>interface Observer&lt;T&gt; {
+  next: (value: T) =&gt; void;
+  error?: (err: any) =&gt; void;
+  complete?: () =&gt; void;
+}</pre>
+  <p>Можно передать три отдельных callback вместо объекта: <code>.subscribe(next, error, complete)</code>.</p>
+  <p><strong>Subscription</strong> — disposable handle:</p>
+  <ul>
+    <li><code>unsubscribe()</code> — отмена, вызов teardown logic producer'а</li>
+    <li><code>closed</code> — boolean флаг</li>
+    <li><code>add(teardown)</code> — регистрация дополнительного cleanup</li>
+  </ul>
+  <p><strong>Teardown logic:</strong> при создании Observable через <code>new Observable(subscriber =&gt; { ... return () =&gt; cleanup })</code> — return function вызывается при unsubscribe. Критично для intervals, WebSocket, event listeners.</p>
+  <pre>const sub = http.get('/api').subscribe({
+  next: (data) =&gt; this.result.set(data),
+  error: (err) =&gt; this.error.set(err),
+  complete: () =&gt; console.log('stream finished'),
+});
+// позже:
+sub.unsubscribe();</pre>
+  <div class="tradeoff">
+    Забытый <code>subscribe()</code> без отписки на infinite stream (interval, Subject) = memory leak. HTTP GET complete после одного emit, но unsubscribe всё равно полезен если компонент destroy до ответа.
+  </div>
+</div>
+
+<div class="question" id="q-11">
+  <h3><span class="q-num">11.</span> Observable vs Promise (общее)</h3>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Observable</th><th>Promise</th></tr>
+    <tr><td>Lazy — стартует при subscribe</td><td>Eager — executor запускается сразу</td></tr>
+    <tr><td>0..N значений (stream)</td><td>Ровно 1 resolve или reject</td></tr>
+    <tr><td>Cancellable (unsubscribe)</td><td>Не отменяется (только AbortSignal обход)</td></tr>
+    <tr><td>Синхронный или асинхронный emit</td><td>Всегда microtask-async после executor</td></tr>
+    <tr><td>Rich operator pipeline (map, switchMap…)</td><td>then/catch/finally chain</td></tr>
+    <tr><td>Multicast через Subject/share</td><td>Single consumer</td></tr>
+  </table>
+  <p><strong>Мосты:</strong></p>
+  <ul>
+    <li><code>lastValueFrom(obs$)</code> / <code>firstValueFrom(obs$)</code> — Observable → Promise (для async/await)</li>
+    <li><code>from(promise)</code> — Promise → Observable (один emit + complete)</li>
+    <li><code>async</code> pipe — управляет подпиской в template, auto-unsubscribe</li>
+  </ul>
+  <p><strong>В Angular:</strong> HttpClient → Observable потому что HTTP в UI — stream problem: progress events, retry, race, combine. Guards/resolvers могут возвращать Observable, Promise или boolean.</p>
+  <div class="tradeoff">
+    Не конвертируй все HTTP в <code>async/await</code> + Promise — потеряешь отмену и композицию. <code>firstValueFrom</code> ok для one-shot в <code>resource()</code> loader. В компонентах prefer <code>async</code> pipe или <code>takeUntilDestroyed</code>, не голый subscribe.
+  </div>
+</div>
+
+<div class="question" id="q-12">
+  <h3><span class="q-num">12.</span> Базовые RxJS-операторы в Angular</h3>
+  <p>Операторы — чистые функции в <code>.pipe(...)</code> (<a href="https://rxjs.dev/guide/operators">Operators guide</a>). Группы:</p>
+  <p><strong>Creation</strong> (создают Observable): <code>of</code>, <code>from</code>, <code>timer</code>, <code>interval</code>, <code>fromEvent</code>, <code>defer</code>, <code>EMPTY</code>, <code>throwError</code>.</p>
+  <p><strong>Transformation:</strong></p>
+  <ul>
+    <li><code>map</code> — transform каждого value (DTO → domain model)</li>
+    <li><code>pluck</code> / <code>scan</code> — extract field / accumulator</li>
+    <li><code>switchMap</code>, <code>mergeMap</code>, <code>concatMap</code>, <code>exhaustMap</code> — higher-order (см. вопрос 19)</li>
+  </ul>
+  <p><strong>Filtering:</strong> <code>filter</code>, <code>take(n)</code>, <code>takeUntil</code>, <code>takeWhile</code>, <code>distinctUntilChanged</code>, <code>debounceTime</code>, <code>throttleTime</code>, <code>skip</code>.</p>
+  <p><strong>Combination:</strong></p>
+  <ul>
+    <li><code>forkJoin</code> — ждёт complete всех sources, emit массив последних values (параллельные HTTP)</li>
+    <li><code>combineLatest</code> — emit при изменении любого source (form field A + B)</li>
+    <li><code>merge</code> — все sources в один поток (timeline events)</li>
+    <li><code>concat</code> — последовательно, один за другим</li>
+    <li><code>race</code> — первый emit wins</li>
+  </ul>
+  <p><strong>Utility:</strong> <code>tap</code> (side effect), <code>delay</code>, <code>finalize</code> (cleanup always), <code>catchError</code>, <code>retry</code>, <code>shareReplay</code>.</p>
+  <pre>// Проектный паттерн: parallel translation
+forkJoin({ cards: translateCards(), verdict: translateVerdict() }).pipe(
+  map(({ cards, verdict }) =&gt; ({ ...reading, cards, verdict_text: verdict }))
+);
+
+// Chunk translation с concurrency limit
+from(chunks).pipe(
+  mergeMap(chunk =&gt; translateChunk(chunk), 2), // max 2 parallel
+  toArray(),
+  map(results =&gt; results.sort(...).join(' '))
+);</pre>
+  <div class="project">
+    <strong>Проект:</strong> <code>MyMemoryTranslationService</code> — <code>forkJoin</code> + <code>mergeMap(2)</code> + <code>toArray</code> + per-chunk <code>catchError</code>. <code>createRitualTimelineStream</code> — <code>timer</code> + <code>map</code> + <code>merge</code>. <code>MainPageFacade</code> — <code>finalize</code>. <code>BallComponent</code> — <code>timer(1800)</code>.
+  </div>
+</div>
+
+<div class="question" id="q-13">
+  <h3><span class="q-num">13.</span> Кастомный Observable через new Observable()</h3>
+  <p>Когда готовые creators не подходят — обёртка callback/polling API (<a href="https://rxjs.dev/guide/observable">Creating observables</a>):</p>
+  <pre>export function createRitualTimelineStream(request: RitualRequest): Observable&lt;RitualSessionState&gt; {
+  const judgment = analyzeBranch(...);
+  const lineEvents = judgment.litany.map((line, index) =&gt;
+    timer((index + 1) * DELAY_MS).pipe(
+      map(() =&gt; ({ litanyLines: judgment.litany.slice(0, index + 1), judgment: null }))
+    )
+  );
+  const verdictEvent = timer(totalDelay).pipe(
+    map(() =&gt; ({ litanyLines: judgment.litany, judgment }))
+  );
+  return merge(...lineEvents, verdictEvent);
+}</pre>
+  <p>Hand-rolled через <code>new Observable</code>:</p>
+  <pre>new Observable&lt;T&gt;((subscriber) =&gt; {
+  const ws = new WebSocket(url);
+  ws.onmessage = (e) =&gt; subscriber.next(JSON.parse(e.data));
+  ws.onerror = (e) =&gt; subscriber.error(e);
+  ws.onclose = () =&gt; subscriber.complete();
+  return () =&gt; ws.close(); // teardown при unsubscribe
+});</pre>
+  <p><strong>Правила:</strong></p>
+  <ul>
+    <li>Вызывай <code>subscriber.next()</code>, затем <code>complete()</code> или <code>error()</code></li>
+    <li>После <code>complete</code>/<code>error</code> — никаких emit</li>
+    <li>Return teardown function для cleanup</li>
+    <li>Не забудь обработать unsubscribe до первого emit</li>
+  </ul>
+  <div class="tradeoff">
+    Prefer <code>timer</code>, <code>fromEvent</code>, <code>defer</code> когда возможно. В Angular 22 для async state рассмотри <code>resource()</code>/<code>rxResource()</code> вместо custom Observable + manual loading signals.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> ritual timeline — не <code>new Observable</code>, а композиция <code>timer</code> + <code>merge</code> (читаемее, тестируемее). Подключён к <code>rxResource</code> в <code>SanctumRitualService</code>.
+  </div>
+</div>
+
+<div class="question" id="q-14">
+  <h3><span class="q-num">14.</span> Subject и BehaviorSubject</h3>
+  <p><strong>Subject</strong> — одновременно Observable и Observer (<a href="https://rxjs.dev/guide/subject">Subject guide</a>). Multicast: один producer → много subscribers. <em>Hot</em> — не хранит начальное значение.</p>
+  <pre>const clicks$ = new Subject&lt;MouseEvent&gt;();
+clicks$.subscribe(e =&gt; console.log('A', e));
+clicks$.next(event); // только подписчики в момент emit получат</pre>
+  <p><strong>BehaviorSubject&lt;T&gt;</strong> — Subject + <strong>текущее значение</strong>:</p>
+  <ul>
+    <li>Новый subscriber сразу получает latest value</li>
+    <li><code>getValue()</code> — синхронное чтение (осторожно, outside reactive context)</li>
+    <li>Исторически: <code>currentUser$ = new BehaviorSubject&lt;User | null&gt;(null)</code></li>
+  </ul>
+  <p><strong>ReplaySubject(n)</strong> — буфер последних N values для новых подписчиков.</p>
+  <p><strong>AsyncSubject</strong> — emit только последнее value при complete (редко).</p>
+  <p><strong>В Angular 22:</strong> для app state → <code>signal()</code> / <code>signalStore</code>. Subjects остаются для:</p>
+  <ul>
+    <li>event bus между несвязанными модулями</li>
+    <li>мост к legacy API, возвращающему callbacks</li>
+    <li><code>takeUntil(destroy$)</code> паттерн (legacy; заменён на <code>takeUntilDestroyed</code>)</li>
+  </ul>
+  <div class="tradeoff">
+    BehaviorSubject ≈ signal, но без интеграции в template/CD. Root Subject без <code>complete()</code> при destroy приложения — leak. <code>shareReplay(1)</code> часто лучше Subject для shared HTTP cache.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> нет BehaviorSubject/Subject для state — signals everywhere. <code>destroy$</code> Subject не используется; <code>takeUntilDestroyed</code> вместо этого.
+  </div>
+</div>
+
+<div class="question" id="q-15">
+  <h3><span class="q-num">15.</span> Hot vs Cold Observables</h3>
+  <p>Фундаментальное различие (<a href="https://rxjs.dev/guide/glossary-and-semantics#hot-and-cold-observables">Hot vs Cold</a>):</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Cold</th><th>Hot</th></tr>
+    <tr><td>Producer на каждого subscriber</td><td>Один producer, много observers</td></tr>
+    <tr><td>Unicast (по умолчанию)</td><td>Multicast</td></tr>
+    <tr><td>HttpClient, <code>of</code>, <code>ajax</code>, <code>timer</code></td><td>DOM events, Subjects, shared streams</td></tr>
+    <tr><td>Два subscribe = два HTTP запроса</td><td>Два subscribe = те же events</td></tr>
+  </table>
+  <p><strong>Cold → Hot конвертация:</strong></p>
+  <pre>const shared$ = coldHttp$.pipe(
+  shareReplay({ bufferSize: 1, refCount: true })
+);
+// refCount: true — unsubscribe source когда subscribers = 0</pre>
+  <p><strong>ConnectableObservable</strong> — <code>publish()</code> + <code>connect()</code> — ручной контроль старта hot stream (редко в app code).</p>
+  <p><strong>Практический тест:</strong> два <code>subscribe</code> на HttpClient без share → два network request. С <code>shareReplay(1)</code> → один request, оба получат cached result.</p>
+  <div class="tradeoff">
+    <code>shareReplay</code> без <code>refCount</code> — source никогда не отписывается (memory leak на long-lived HTTP). <code>refCount: true</code> — preferred default.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> HttpClient cold — каждый <code>loadTarot()</code> новый request (ожидаемо). <code>PriestQuotesService</code> — in-memory Map cache до RxJS share. Ritual timeline hot-like через <code>merge</code> таймеров в одном subscribe <code>rxResource</code>.
+  </div>
+</div>
+
+<div class="question" id="q-16">
+  <h3><span class="q-num">16.</span> Как правильно отписываться от Observable</h3>
+  <p>Memory leaks — главный RxJS-риск в SPA. Иерархия предпочтений:</p>
+  <ol>
+    <li><strong><code>async</code> pipe</strong> в template — Angular управляет subscribe/unsubscribe при destroy. Идеально для display-only streams.</li>
+    <li><strong><code>takeUntilDestroyed(destroyRef)</code></strong> — inject <code>DestroyRef</code>, pipe перед subscribe. Работает в constructor (Angular 16+).</li>
+    <li><strong><code>toSignal(obs$)</code></strong> — автоматическая подписка/отписка при destroy компонента.</li>
+    <li><strong><code>effect</code> + <code>onCleanup</code></strong> — для подписок внутри signal effects:
+      <pre>effect((onCleanup) =&gt; {
+  const sub = service.translate(...).subscribe(...);
+  onCleanup(() =&gt; sub.unsubscribe());
+});</pre>
+    </li>
+    <li><strong><code>takeUntil(destroy$)</code></strong> — classic: Subject + <code>ngOnDestroy</code> → <code>destroy$.next(); destroy$.complete()</code>. Legacy, но ещё встречается.</li>
+    <li><strong>Finite streams</strong> — HTTP GET auto-completes, но unsubscribe при destroy всё равно отменяет in-flight request.</li>
+  </ol>
+  <p><strong>НЕ нужна отписка:</strong> Observable завершился (<code>complete</code>/<code>error</code>) до destroy; <code>firstValueFrom</code> one-shot.</p>
+  <div class="tradeoff">
+    Голый <code>.subscribe()</code> в компоненте без cleanup — code smell. Если subscribe в сервисе root-level — stream должен быть infinite-safe или self-completing. <code>Subscription.add()</code> — группировка нескольких subs для bulk unsubscribe.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>MainPageFacade.loadTarot()</code> — <code>takeUntilDestroyed(destroyRef)</code>. Translation effect — <code>onCleanup(() =&gt; subscription.unsubscribe())</code>. <code>BallComponent</code> — <code>timer().pipe(takeUntilDestroyed)</code>. Нет <code>destroy$</code> Subject нигде.
+  </div>
+</div>
+
+<div class="question" id="q-17">
+  <h3><span class="q-num">17.</span> Подходы к state management в Angular</h3>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Подход</th><th>Плюсы</th><th>Минусы</th><th>Когда</th></tr>
+    <tr><td>Component signals</td><td>Простейший</td><td>Не shared</td><td>Локальный UI state</td></tr>
+    <tr><td>Service + signals</td><td>Мало boilerplate, OnPush-friendly</td><td>Нет enforced pattern</td><td>Shared domain (candles, sins)</td></tr>
+    <tr><td>Facade + signals</td><td>Тестируемый orchestration layer</td><td>Дополнительный слой</td><td>HTTP-backed features</td></tr>
+    <tr><td>NgRx SignalStore</td><td>Composable features, less boilerplate vs classic NgRx</td><td>Learning curve</td><td>Global app state</td></tr>
+    <tr><td>NgRx Store (Redux)</td><td>DevTools, time-travel, strict flow</td><td>Много кода</td><td>Большие команды, complex domains</td></tr>
+    <tr><td>Service + BehaviorSubject</td><td>Знакомо Rx-ветеранам</td><td>Leaks, нет signal DX</td><td>Legacy code</td></tr>
+  </table>
+  <p><strong>Рекомендация Angular 22:</strong> signals для state, RxJS для async pipelines. Facade на уровне feature — единственный API для UI.</p>
+  <pre>// Facade pattern — проект
+private readonly _loading = signal(false);
+public readonly loading = this._loading.asReadonly();
+public readonly isLoading = computed(() =&gt; this._tarotLoading() || this._translationLoading());
+
+loadTarot() {
+  this._loading.set(true);
+  this.api.load().pipe(finalize(() =&gt; this._loading.set(false)), takeUntilDestroyed())
+    .subscribe(result =&gt; this._result.set(result));
+}</pre>
+  <div class="tradeoff">
+    NgRx Store overkill для SPA с 5 фичами. Service без facade → UI вызывает HTTP напрямую → не тестируется. SignalStore vs hand-rolled signals: store даёт <code>withMethods</code>, <code>withHooks</code>, <code>patchState</code> из коробки.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>uiStateStore</code> (NgRx Signals) — theme/lang + Firestore sync. Facades per feature (<code>MainPageFacade</code>, <code>ShriftPageFacade</code>). Shared services (<code>CandlesService</code>, <code>ConfessService</code>) — signal state, reused altar/shrift/profile.
+  </div>
+</div>
+
+<div class="question" id="q-18">
+  <h3><span class="q-num">18.</span> Обработка ошибок и retry в RxJS</h3>
+  <p>Стратегии обработки ошибок (<a href="https://rxjs.dev/guide/operators#error-handling-operators">Error handling operators</a>):</p>
+  <p><strong>1. catchError</strong> — перехват в pipeline, recovery или rethrow:</p>
+  <pre>.pipe(
+  catchError((err: HttpErrorResponse) =&gt; {
+    if (err.status === 404) return of(fallbackData);  // замена потока
+    return throwError(() =&gt; err);                      // проброс дальше
+  })
+)</pre>
+  <p><strong>2. retry / retryWhen</strong> — переподписка на source:</p>
+  <pre>retry({ count: 3, delay: 1000 })
+retry({ delay: (err, retryCount) =&gt; timer(retryCount * 1000) }) // backoff</pre>
+  <p>Только для <strong>идемпотентных</strong> операций (GET). POST без idempotency key — опасно.</p>
+  <p><strong>3. finalize</strong> — выполняется при complete, error или unsubscribe (сброс loading):</p>
+  <pre>.pipe(finalize(() =&gt; this._loading.set(false)))</pre>
+  <p><strong>4. Слои в Angular app:</strong></p>
+  <ol>
+    <li>Interceptor — global toast, re-throw</li>
+    <li>Service/Facade — map to domain error signal, fallback value</li>
+    <li>Component — display from facade (редко catch HTTP)</li>
+  </ol>
+  <p><strong>5. Per-item fallback</strong> (проект):</p>
+  <pre>mergeMap(chunk =&gt; translateChunk(chunk).pipe(
+  catchError(() =&gt; of(originalChunk)) // один чанк failed → оригинал
+))</pre>
+  <div class="tradeoff">
+    <code>catchError</code> returning <code>of(null)</code> глотает ошибку — UI не узнает о failure. Лучше explicit error state signal. <code>retry</code> на infinite без backoff — DDoS свой же API.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> interceptor — toast + re-throw (кроме <code>/i18n/</code>). <code>MainPageFacade</code> — <code>HttpErrorResponse</code> vs unknown в error signal; translation fallback на source text при ошибке перевода. Translation chunks — per-chunk <code>catchError(() =&gt; of(text))</code>.
+  </div>
+</div>
+
+<div class="question" id="q-19">
+  <h3><span class="q-num">19.</span> Higher-order mapping operators — в чём разница?</h3>
+  <p>Higher-order mapping — outer stream emit value → создаётся <strong>inner Observable</strong> → flatten в output (<a href="https://rxjs.dev/guide/operators#higher-order-observables">Higher-order observables</a>). Самая частая RxJS-тема на интервью.</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Оператор</th><th>Concurrency</th><th>Отмена предыдущего inner</th><th>Use case</th></tr>
+    <tr><td><code>switchMap</code></td><td>1 inner</td><td>Да — unsubscribe previous</td><td>Search-as-you-type, route params → fetch</td></tr>
+    <tr><td><code>mergeMap</code> / <code>flatMap</code></td><td>Все параллельно (или limit N)</td><td>Нет</td><td>Parallel HTTP, N chunks (<code>mergeMap(fn, 2)</code>)</td></tr>
+    <tr><td><code>concatMap</code></td><td>1 inner, очередь</td><td>Ждёт complete предыдущего</td><td>Sequential writes, order matters</td></tr>
+    <tr><td><code>exhaustMap</code></td><td>1 inner</td><td>Игнорирует новые outer пока busy</td><td>Double-submit protection</td></tr>
+  </table>
+  <pre>// switchMap — только последний search
+searchInput$.pipe(
+  debounceTime(300),
+  distinctUntilChanged(),
+  switchMap(term =&gt; this.api.search(term)) // отменяет предыдущий HTTP
+);
+
+// mergeMap(2) — max 2 parallel (проект)
+from(chunks).pipe(mergeMap(c =&gt; translate(c), 2));
+
+// exhaustMap — кнопка submit
+submit$.pipe(exhaustMap(() =&gt; this.api.save(data))); // клики пока save — ignored</pre>
+  <p><strong>Marble diagram intuition:</strong> switch = переключатель; merge = все сразу; concat = очередь; exhaust = занят, не принимаю новые.</p>
+  <p><strong>Выбор оператора</strong> = выбор semantics отмены и concurrency. Неправильный оператор → race conditions, duplicate POST, stale search results.</p>
+  <div class="tradeoff">
+    <code>mergeMap</code> без concurrency limit на 100 items → 100 parallel HTTP → rate limit / browser connection cap. Всегда указывай limit или используй <code>concatMap</code> для sequential. <code>switchMap</code> на submit form — потеряешь предыдущие saves (нужен exhaustMap).
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>MyMemoryTranslationService.translateText</code> — <code>mergeMap(..., 2)</code> для rate-limited translation API. Route params search не используется; tarot load — простой subscribe без higher-order. Sanctum timeline — <code>merge</code> (не mapping), несколько timer streams параллельно.
+  </div>
+</div>
+
+<!-- ═══════════════════ FORMS ═══════════════════ -->
+<h2 id="forms">Forms</h2>
+
+<div class="question" id="q-20">
+  <h3><span class="q-num">20.</span> Что такое ControlValueAccessor (CVA)?</h3>
+  <p><strong>ControlValueAccessor</strong> — интерфейс-мост между <em>моделью формы Angular</em> (<code>FormControl</code>) и <em>кастомным UI-компонентом</em>. Без CVA Angular не знает, как читать/писать значение вашего виджета (slider, date picker, rich editor).</p>
+  <p>Регистрация через multi-provider:</p>
+  <pre>{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MyControl), multi: true }</pre>
+  <p><strong>Методы интерфейса</strong> (<a href="https://angular.dev/api/forms/ControlValueAccessor">документация</a>):</p>
+  <ul>
+    <li><code>writeValue(value)</code> — форма → компонент. Вызывается при инициализации и при <code>setValue</code>/<code>patchValue</code> снаружи.</li>
+    <li><code>registerOnChange(fn)</code> — сохранить callback; вызывать при каждом изменении значения пользователем, чтобы обновить модель.</li>
+    <li><code>registerOnTouched(fn)</code> — вызывать при blur, чтобы control стал <code>touched</code>.</li>
+    <li><code>setDisabledState(isDisabled)</code> — реагировать на <code>control.disable()</code> / <code>enable()</code>.</li>
+  </ul>
+  <p><strong>Когда нужен:</strong> переиспользуемый form control, который должен работать и с <code>formControlName</code>, и с <code>[(ngModel)]</code>, участвовать в validation/touched/dirty/pristine.</p>
+  <p><strong>Когда НЕ нужен:</strong> одноразовый wrapper вокруг <code>&lt;input&gt;</code> с <code>[value]</code> + <code>(input)</code> внутри одного экрана.</p>
+  <div class="tradeoff">
+    <strong>CVA vs инжект NgControl:</strong> CVA — правильный путь для библиотечных контролов. Инжект <code>NgControl</code> + <code>valueAccessor = this</code> — legacy-паттерн, сложнее и хрупче. <strong>OnChange-only:</strong> некоторые контролы вызывают <code>onChange</code> только при commit (datepicker on close) — важно не спамить валидацию на каждый keystroke, если UX этого не требует.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> Taiga UI form controls уже реализуют CVA внутри — в формах login/register используем <code>tuiInput</code>, <code>tuiPassword</code> через <code>ReactiveFormsModule</code>. Кастомный CVA — учебный паттерн для интервью; в production предпочитаем готовые контролы библиотеки.
+  </div>
+</div>
+
+<div class="question" id="q-21">
+  <h3><span class="q-num">21.</span> Кастомный form control с Reactive Forms</h3>
+  <p><strong>Пошаговый рецепт</strong> (<a href="https://angular.dev/guide/forms/form-validation">Form validation guide</a>):</p>
+  <ol>
+    <li><strong>Standalone component</strong> с <code>implements ControlValueAccessor</code>.</li>
+    <li><strong>Provider:</strong> <code>NG_VALUE_ACCESSOR</code> + <code>forwardRef</code> — нужен, потому что класс ещё не объявлен в момент metadata.</li>
+    <li><strong>Внутри:</strong> хранить value; при user input вызывать сохранённый <code>onChange</code>; при blur — <code>onTouched</code>.</li>
+    <li><strong>Validation classes:</strong> через <code>inject(NgControl, { optional: true, self: true })</code> или host bindings <code>[class.ng-invalid]</code> / <code>[class.ng-touched]</code>.</li>
+    <li><strong>Родитель:</strong> typed <code>FormGroup</code> + <code>formControlName</code>.</li>
+  </ol>
+  <pre>// Родитель
+form = new FormGroup({ rating: new FormControl(0, Validators.required) });
+
+// Шаблон
+&lt;ngKitty-rating formControlName="rating" /&gt;
+
+// Доступ к ошибкам
+@if (form.controls.rating.invalid && form.controls.rating.touched) {
+  &lt;span&gt;Обязательное поле&lt;/span&gt;
+}</pre>
+  <p><strong>Typed Reactive Forms</strong> (Angular 14+): <code>FormBuilder.nonNullable.group&lt;MyForm&gt;()</code> — тип значения CVA должен совпадать с типом control. <code>FormGroup.controls.field</code> даёт автокомплит.</p>
+  <p><strong>Disabled state:</strong> <code>[disabled]="true"</code> на шаблоне deprecated — используй <code>formControl.disable()</code>; CVA получит <code>setDisabledState</code>.</p>
+  <div class="tradeoff">
+    <strong>Reactive vs Template-driven для кастомных контролов:</strong> Reactive — явная модель, проще тестировать (<code>patchValue</code> в spec). Template-driven — быстрее для прототипов, но cross-field validation и сложная логика хуже масштабируются.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> формы вынесены в <code>*FormService</code> (<code>LoginFormService</code>, <code>RegisterFormService</code>, <code>ConfessFormService</code>); facade отдаёт <code>form</code> компоненту. UI — Taiga + <code>ReactiveFormsModule</code>. Валидационные сообщения — <code>tuiValidationErrorsProvider</code> в <code>app.config.ts</code>, ключи маппятся на i18n.
+  </div>
+</div>
+
+<div class="question" id="q-22">
+  <h3><span class="q-num">22.</span> Кастомный validator для template-driven forms</h3>
+  <p><code>ValidatorFn</code> — <code>(control: AbstractControl) =&gt; ValidationErrors | null</code>. Работает <strong>одинаково</strong> для Template-driven и Reactive forms — разница только в способе подключения.</p>
+  <p><strong>Уровни валидации</strong> (<a href="https://angular.dev/guide/forms/form-validation">angular.dev — Form validation</a>):</p>
+  <ul>
+    <li><strong>Control-level</strong> — <code>Validators.required</code>, regex, min/max на одном поле.</li>
+    <li><strong>Group-level (cross-field)</strong> — validator на <code>FormGroup</code>; сравнение password/confirmPassword.</li>
+    <li><strong>Async validators</strong> — <code>AsyncValidatorFn</code>, возвращает <code>Observable</code> или <code>Promise</code>; control в состоянии <code>PENDING</code> до завершения.</li>
+  </ul>
+  <pre>// Cross-field validator — возвращает null на group,
+// ошибки ставит на дочерний control
+export const passwordConfirmationValidator = (
+  controlName: string,
+  matchingControlName: string
+): ValidatorFn =&gt; {
+  return (abstractControl: AbstractControl): ValidationErrors | null =&gt; {
+    if (!isFormGroup(abstractControl)) return null;
+    const control = abstractControl.controls[controlName];
+    const matching = abstractControl.controls[matchingControlName];
+    // ...сравнение, setErrors на matching, сохранение других ошибок
+    return null;
+  };
+};
+
+// Reactive: validators на group
+this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
+  validators: passwordConfirmationValidator('password', 'confirm'),
+});</pre>
+  <p><strong>Template-driven:</strong> <code>&lt;input ngModel required #email="ngModel"&gt;</code> или директива с <code>@Directive({ providers: [NG_VALIDATORS] })</code>.</p>
+  <p><strong>Тестирование:</strong> pure validator тестируется без TestBed — создай <code>FormGroup</code>, вызови <code>validator(group)</code>, assert <code>control.errors</code>.</p>
+  <div class="tradeoff">
+    <strong>setErrors в validator:</strong> императивная установка ошибок на sibling control — мощно, но легко затереть чужие ошибки. Проектный паттерн: фильтровать <code>otherErrors</code> перед <code>setErrors</code>. <strong>updateOn:</strong> <code>'change' | 'blur' | 'submit'</code> на FormGroup — контролирует, когда валидация срабатывает.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>passwordConfirmationValidator</code> в <code>shared/validators/</code> — group-level, сохраняет несвязанные ошибки на <code>matchingControl</code>. Spec без TestBed: <code>password-confirmation.validator.spec.ts</code>. <code>dirtyFormGuard</code> проверяет <code>form.dirty</code> перед уходом с login/register.
+  </div>
+</div>
+
+<!-- ═══════════════════ TESTING ═══════════════════ -->
+<h2 id="testing">Testing</h2>
+
+<div class="question" id="q-23">
+  <h3><span class="q-num">23.</span> Какие типы тестирования поддерживает Angular?</h3>
+  <p>Angular не навязывает один runner, но экосистема делится на уровни (<a href="https://angular.dev/guide/testing">Testing guide</a>):</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Тип</th><th>Что тестируем</th><th>Инструменты</th></tr>
+    <tr><td><strong>Unit</strong></td><td>Один класс/функция изолированно: validators, pipes, services, facades, guards</td><td>Vitest/Jasmine + mocks</td></tr>
+    <tr><td><strong>Component (shallow/deep)</strong></td><td>Компонент + шаблон + DI; shallow — с mock children</td><td>TestBed + ComponentFixture</td></tr>
+    <tr><td><strong>Integration</strong></td><td>Несколько реальных модулей вместе (форма + валидатор + сервис)</td><td>TestBed с реальными imports</td></tr>
+    <tr><td><strong>E2E</strong></td><td>Полное приложение в браузере, user flows</td><td>Playwright, Cypress — <em>вне</em> ng test</td></tr>
+  </table>
+  <p><strong>Философия Angular:</strong> тестируй поведение, не implementation details. Facade/публичный API компонента — stable contract; приватные поля и внутренняя структура DOM — хрупкие.</p>
+  <div class="tradeoff">
+    <strong>Пирамида тестов:</strong> много быстрых unit (validators, facades), меньше component, мало E2E. Component tests дороже из-за compile + CD. В ngKittyDebug богатые facade specs, тонкие component specs — осознанный выбор.
+  </div>
+</div>
+
+<div class="question" id="q-24">
+  <h3><span class="q-num">24.</span> Основные инструменты и библиотеки</h3>
+  <ul>
+    <li><strong>Vitest</strong> (Angular 19+) — default test runner; быстрее Karma, native ESM, <code>vi.spyOn</code>/<code>vi.fn</code>. Исторически: Karma + Jasmine + browser.</li>
+    <li><strong><code>@angular/core/testing</code></strong> — <code>TestBed</code>, <code>ComponentFixture</code>, <code>fakeAsync</code>, <code>tick</code>, <code>flush</code>, <code>TestBed.tick()</code> (signals).</li>
+    <li><strong><code>@angular/common/http/testing</code></strong> — <code>HttpTestingController</code>, <code>provideHttpClientTesting()</code>.</li>
+    <li><strong>jsdom</strong> — headless DOM для component tests без реального браузера.</li>
+    <li><strong>Testing Library</strong> (@testing-library/angular) — queries по роли/label, user-centric.</li>
+    <li><strong>Protractor</strong> — deprecated; E2E → Playwright/Cypress.</li>
+  </ul>
+  <p><code>ng test</code> запускает Vitest через Angular CLI builder. Single file: <code>pnpm test -- --include='**/main-page.facade.spec.ts'</code>.</p>
+  <div class="project">
+    <strong>Проект:</strong> Vitest + jsdom; shared mocks в <code>shared/mocks/</code> (<code>transloco-testing</code>, <code>router</code>, <code>auth</code>). <code>TranslocoTestingMock</code> — module для i18n в тестах без реального HTTP loader.
+  </div>
+</div>
+
+<div class="question" id="q-25">
+  <h3><span class="q-num">25.</span> Что такое TestBed?</h3>
+  <p><strong>TestBed</strong> — изолированная среда Angular для тестов: компилятор шаблонов + DI-контейнер (<a href="https://angular.dev/guide/testing/components-basics">Component testing basics</a>).</p>
+  <p><strong>Основной workflow:</strong></p>
+  <ol>
+    <li><code>TestBed.configureTestingModule({ imports, providers })</code> — конфигурация как mini-приложение.</li>
+    <li><code>await TestBed.compileComponents()</code> — компиляция шаблонов (нужно при templateUrl).</li>
+    <li><code>TestBed.createComponent(MyComponent)</code> или <code>TestBed.inject(MyService)</code>.</li>
+    <li><code>fixture.detectChanges()</code> — запуск change detection.</li>
+  </ol>
+  <pre>beforeEach(async () =&gt; {
+  await TestBed.configureTestingModule({
+    imports: [LoginComponent],           // standalone component
+    providers: [
+      { provide: ActivatedRoute, useValue: mockRoute },
+      LoginPageFacade,
+    ],
+  }).compileComponents();
+});</pre>
+  <p><strong>Продвинутые API:</strong></p>
+  <ul>
+    <li><code>TestBed.overrideComponent()</code> — подменить template/providers конкретного компонента.</li>
+    <li><code>TestBed.runInInjectionContext(() =&gt; ...)</code> — тест functional guards/interceptors/resolvers с <code>inject()</code>.</li>
+    <li><code>TestBed.inject()</code> — получить сервис из тестового injector.</li>
+    <li><code>TestBed.tick()</code> — flush signal effects (Angular 19+).</li>
+    <li><code>TestBed.flushEffects()</code> — выполнить все pending effects.</li>
+  </ul>
+  <div class="tradeoff">
+    <code>configureTestingModule</code> вызывается в <code>beforeEach</code> — каждый тест получает чистый injector. Не кэшируй TestBed config с mutable state между тестами.
+  </div>
+</div>
+
+<div class="question" id="q-26">
+  <h3><span class="q-num">26.</span> ComponentFixture и DebugElement</h3>
+  <p><strong>ComponentFixture&lt;T&gt;</strong> — обёртка над созданным компонентом:</p>
+  <ul>
+    <li><code>componentInstance</code> — доступ к классу компонента.</li>
+    <li><code>detectChanges()</code> — OnPush/signals: запускает CD для этого компонента и детей.</li>
+    <li><code>whenStable()</code> — Promise, резолвится когда нет microtasks/macrotasks (async pipe, HTTP).</li>
+    <li><code>autoDetectChanges(true)</code> — CD после каждого async callback (осторожно в unit tests).</li>
+    <li><code>debugElement</code> — корневой DebugElement.</li>
+    <li><code>nativeElement</code> — raw DOM (в jsdom — симулированный).</li>
+  </ul>
+  <p><strong>DebugElement</strong> — тестовый API поверх DOM:</p>
+  <pre>const btn = fixture.debugElement.query(By.css('[data-testid="submit"]'));
+btn.triggerEventHandler('click', null);
+fixture.detectChanges();
+
+// Дочерние элементы
+fixture.debugElement.queryAll(By.directive(MyDirective));
+
+// Injector конкретного узла
+btn.injector.get(MyService);</pre>
+  <p><code>By.css</code>, <code>By.directive</code>, <code>By.debugEl</code> — поиск. Prefer <code>data-testid</code> или role-based queries (Testing Library) вместо хрупких CSS-селекторов.</p>
+  <div class="tradeoff">
+    <code>nativeElement</code> — browser-specific API, ломается в non-DOM платформах. <code>DebugElement</code> + <code>triggerEventHandler</code> — platform-agnostic. Для signals: после действия вызывай <code>detectChanges()</code> или <code>TestBed.tick()</code>.
+  </div>
+</div>
+
+<div class="question" id="q-27">
+  <h3><span class="q-num">27.</span> Тестирование directives и pipes</h3>
+  <p><strong>Pure pipes</strong> — тестируй как обычную функцию, TestBed не нужен:</p>
+  <pre>const pipe = new MachineSpiritStatePipe();
+expect(pipe.transform(5)).toBe('pleased');</pre>
+  <p>Pure pipe пересчитывается только при изменении input reference — важно для performance-тестов.</p>
+  <p><strong>Impure pipes</strong> — вызываются каждый CD cycle; тестируй через component fixture или проверяй <code>pure: false</code> в metadata.</p>
+  <p><strong>Attribute directives</strong> — host component pattern:</p>
+  <pre>@Component({
+  template: '&lt;div ngKittyScanEffect&gt;content&lt;/div&gt;',
+  imports: [ScanEffectDirective],
+})
+class HostComponent {}
+
+const fixture = TestBed.createComponent(HostComponent);
+fixture.detectChanges();
+expect(fixture.nativeElement.querySelector('div').classList).toContain('scan');</pre>
+  <p><strong>Structural directives</strong> — assert presence/absence DOM-элементов после <code>detectChanges()</code>.</p>
+  <div class="project">
+    <strong>Проект:</strong> <code>MachineSpiritStatePipe</code> — custom pipe в header/altar. <code>ScanEffectDirective</code>, <code>EyeBlinkDirective</code> — attribute directives; тест через host component.
+  </div>
+</div>
+
+<div class="question" id="q-28">
+  <h3><span class="q-num">28.</span> Моки и стабы зависимостей</h3>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Способ</th><th>Когда</th></tr>
+    <tr><td><code>{ provide: X, useValue: mock }</code></td><td>Полная замена объектом с <code>vi.fn()</code></td></tr>
+    <tr><td><code>{ provide: X, useClass: MockX }</code></td><td>Отдельный mock-класс с override методов</td></tr>
+    <tr><td><code>{ provide: X, useFactory: () =&gt; ... }</code></td><td>Динамическое создание mock</td></tr>
+    <tr><td><code>vi.spyOn(obj, 'method')</code></td><td>Частичный mock реального объекта</td></tr>
+    <tr><td><code>HttpTestingController</code></td><td>HTTP без сети: <code>expectOne(url).flush(data)</code></td></tr>
+  </table>
+  <pre>// HTTP test
+const httpMock = TestBed.inject(HttpTestingController);
+service.getReading().subscribe();
+const req = httpMock.expectOne('/api/reading');
+expect(req.request.method).toBe('GET');
+req.flush(mockResponse);
+httpMock.verify(); // нет лишних запросов
+
+// Functional guard
+TestBed.runInInjectionContext(() =&gt; authGuard(route, segments, snapshot));</pre>
+  <div class="tradeoff">
+    <strong>useValue vs useClass:</strong> useValue — один shared object (осторожно с mutable state). useClass — новый instance per injector. <strong>Spy на private signals:</strong> <code>vi.spyOn(facade['_error'], 'set')</code> — допустимо для проверки side effects, но лучше тестировать публичный <code>error()</code> readonly signal.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>tarot.service.mock.ts</code>, <code>auth.service.mock.ts</code> — переиспользуемые mocks. <code>auth-guard.spec.ts</code> — guard через <code>runInInjectionContext</code>. Facade specs мокают API layer, не HTTP напрямую.
+  </div>
+</div>
+
+<div class="question" id="q-29">
+  <h3><span class="q-num">29.</span> Тестирование template-driven и reactive forms</h3>
+  <p><strong>Reactive Forms</strong> (<a href="https://angular.dev/guide/forms/reactive-forms">Reactive forms guide</a>):</p>
+  <ol>
+    <li>Импортируй компонент + <code>ReactiveFormsModule</code> (или standalone imports).</li>
+    <li><code>component.form.patchValue({ email: 'bad' })</code> или взаимодействие с DOM input.</li>
+    <li><code>fixture.detectChanges()</code>.</li>
+    <li>Assert: <code>form.valid</code>, <code>form.controls.email.errors</code>, текст ошибки в DOM.</li>
+    <li>Spy на submit: <code>vi.spyOn(facade, 'login')</code>; клик submit; expect вызов с payload.</li>
+  </ol>
+  <p><strong>Template-driven:</strong> нужен <code>FormsModule</code>; симулируй input events:</p>
+  <pre>const input = fixture.debugElement.query(By.css('input')).nativeElement;
+input.value = 'test@mail.com';
+input.dispatchEvent(new Event('input'));
+fixture.detectChanges();
+expect(fixture.componentInstance.form.value.email).toBe('test@mail.com');</pre>
+  <p><strong>Состояния control:</strong> <code>valid/invalid</code>, <code>pristine/dirty</code>, <code>touched/untouched</code>, <code>pending</code> (async validators).</p>
+  <div class="tradeoff">
+    Тестируй через facade.form (публичный API), не лезь в приватный FormGroup компонента. E2E-like DOM interaction — для component tests; чистая логика validator — unit без TestBed.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> login/register — Reactive Forms через <code>LoginPageFacade</code>. <code>dirtyFormGuard</code> + spec на Observable из modal. <code>passwordConfirmationValidator.spec.ts</code> — unit без DOM.
+  </div>
+</div>
+
+<div class="question" id="q-30">
+  <h3><span class="q-num">30.</span> async, fakeAsync и tick</h3>
+  <p>Три механизма для async в тестах:</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>API</th><th>Как работает</th><th>Когда</th></tr>
+    <tr><td><code>async/await + whenStable()</code></td><td>Реальные microtasks/Promises</td><td>HTTP, async pipe, Promise-based code</td></tr>
+    <tr><td><code>fakeAsync + tick()</code></td><td>Zone.js перехватывает timers; синхронное тело теста</td><td><code>setTimeout</code>, <code>debounceTime</code>, <code>interval</code></td></tr>
+    <tr><td><code>TestBed.tick()</code></td><td>Flush signal effects</td><td><code>effect()</code>, <code>computed()</code> chains в facades</td></tr>
+  </table>
+  <pre>// fakeAsync
+it('debounced search', fakeAsync(() =&gt; {
+  component.search('a');
+  tick(300);
+  expect(service.search).toHaveBeenCalledWith('a');
+}));
+
+// Signals
+service.loadTarot();
+TestBed.tick(); // flush effect → translation → result signal
+expect(service.result()).toEqual(expected);
+
+// Observable
+await fixture.whenStable();
+fixture.detectChanges();</pre>
+  <div class="tradeoff">
+    <code>fakeAsync</code> требует Zone.js — в zoneless apps не работает. Angular движется к zoneless: предпочитай <code>await whenStable()</code>, <code>TestBed.tick()</code>, <code>flushEffects()</code>. <code>flush()</code> в fakeAsync — дренирует все pending microtasks.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>main-page.facade.spec.ts</code> — <code>TestBed.tick()</code> после <code>loadTarot()</code> для effect с переводом. <code>sanctum-page.facade.spec.ts</code> — <code>TestBed.flushEffects()</code>.
+  </div>
+</div>
+
+<div class="question" id="q-31">
+  <h3><span class="q-num">31.</span> Изоляция тестов</h3>
+  <p>Тесты должны быть <strong>детерминированными</strong> и не влиять друг на друга:</p>
+  <ul>
+    <li><strong>Свежий TestBed</strong> — <code>beforeEach</code> с новой конфигурацией; <code>afterEach(() =&gt; TestBed.resetTestingModule())</code> при кастомных override.</li>
+    <li><strong>HTTP cleanup</strong> — <code>httpMock.verify()</code> в <code>afterEach</code>: нет незавершённых запросов.</li>
+    <li><strong>Mocks</strong> — создавай в <code>beforeEach</code>, не шарь mutable objects. <code>vi.clearAllMocks()</code> / <code>mockReset()</code>.</li>
+    <li><strong>No global state</strong> — не мутируй singleton services без restore. Override <code>providedIn: 'root'</code> в TestBed providers.</li>
+    <li><strong>Random/time</strong> — фиксируй <code>vi.setSystemTime()</code> для date-dependent logic.</li>
+    <li><strong>DOM cleanup</strong> — Vitest/jsdom изолирует; при manual DOM append — cleanup в <code>afterEach</code>.</li>
+  </ul>
+  <p><strong>Arrange-Act-Assert</strong> — один logical assert на тест; несколько <code>expect</code> ok, если проверяют один сценарий.</p>
+  <div class="tradeoff">
+    Integration tests с реальными сервисами — медленнее, но ловят wiring bugs. Unit с mocks — быстрее, но mocks могут расходиться с реальностью. Проект: mock на границе (API services), реальный facade logic.
+  </div>
+</div>
+
+<!-- ═══════════════════ DI ═══════════════════ -->
+<h2 id="di">Dependency Injection</h2>
+
+<div class="question" id="q-32">
+  <h3><span class="q-num">32.</span> Иерархия injector в Angular</h3>
+  <p>Angular DI — <strong>иерархическая система injectors</strong> (<a href="https://angular.dev/guide/di/hierarchical-dependency-injection">Hierarchical DI</a>). Два типа:</p>
+  <ol>
+    <li><strong>Environment injectors</strong> — вне DOM-дерева:
+      <ul>
+        <li><code>PlatformInjector</code> — платформенные сервисы (редко в app code).</li>
+        <li><code>RootInjector</code> — <code>bootstrapApplication(App, config)</code> providers.</li>
+        <li><strong>Route injectors</strong> — <code>providers</code> на каждом route; создаются при навигации, уничтожаются при уходе.</li>
+      </ul>
+    </li>
+    <li><strong>Element injectors</strong> — по одному на каждый component/directive instance в DOM-дереве.</li>
+  </ol>
+  <p><strong>Алгоритм разрешения</strong> (<a href="https://angular.dev/guide/di/debugging-and-troubleshooting-di">Debugging DI</a>):</p>
+  <ol>
+    <li>Старт в element injector текущего компонента.</li>
+    <li>Подъём по DOM-дереву (parent components).</li>
+    <li>Если не найден — fall through в environment injector этой ветки (route → root).</li>
+    <li>NullInjectorError — токен нигде не зарегистрирован.</li>
+  </ol>
+  <p>Child injector <strong>shadowing</strong>: provider в child перекрывает parent token — получаешь новый instance, parent не затронут.</p>
+  <div class="tradeoff">
+    Понимание иерархии критично для багов «почему два разных instance AuthService» или «почему TarotService undefined» — почти всегда missing route provider или shadowing.
+  </div>
+</div>
+
+<div class="question" id="q-33">
+  <h3><span class="q-num">33.</span> Как ограничить сервис поддеревом компонента?</h3>
+  <p>Три уровня scope:</p>
+  <pre>// 1. Component providers — один instance на instance компонента + дети
+@Component({ providers: [LocalStateService] })
+
+// 2. Route providers — на всё поддерево маршрута
+{ path: 'main', component: MainComponent,
+  providers: [MainPageFacade, TarotService] }
+
+// 3. viewProviders — только view children, НЕ content-projected
+@Component({ viewProviders: [ViewOnlyService] })</pre>
+  <p><strong>Lifecycle:</strong> route-scoped services уничтожаются при navigate away (если route deactivated). Component-scoped — при destroy компонента.</p>
+  <p><strong>Functional guards/resolvers</strong> на route используют route injector — видят route providers.</p>
+  <div class="tradeoff">
+    <code>providedIn: 'root'</code> — singleton на всё приложение. Route providers — feature isolation + lazy bundle splitting. Не клади feature API в root без причины — усложняет тесты и увеличивает initial bundle.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>MainPageFacade</code>, <code>TarotService</code>, <code>MyMemoryTranslationService</code> — только на main route. <code>SanctumRitualService</code>, <code>PriestQuotesService</code> — sanctum route. <code>AuthService</code>, <code>CandlesService</code>, <code>ConfessService</code> — root (shared domain). Декоратор <code>@Service({ autoProvided: false })</code> блокирует auto root registration.
+  </div>
+</div>
+
+<div class="question" id="q-34">
+  <h3><span class="q-num">34.</span> Tree-shaking: providedIn: 'root' vs explicit providers</h3>
+  <p><strong><code>@Injectable({ providedIn: 'root' })</code></strong> — Angular compiler регистрирует factory в root injector. Если ни один injection site не ссылается на класс — <strong>tree-shakeable</strong> (не попадёт в bundle).</p>
+  <p><strong>Варианты providedIn:</strong></p>
+  <ul>
+    <li><code>'root'</code> — один singleton app-wide.</li>
+    <li><code>'platform'</code> — shared между несколькими Angular apps на странице (micro-frontends).</li>
+    <li><code>'any'</code> — отдельный instance per lazy-loaded module (legacy NgModule); с standalone редко нужен.</li>
+    <li><code>SomeModule</code> — привязка к модулю (legacy).</li>
+  </ul>
+  <p><strong>Explicit <code>providers: [MyService]</code></strong> — сервис bundled вместе с route/component chunk. Новый instance per injector. Не tree-shakeable на уровне класса, если chunk загружен.</p>
+  <p><strong>Provider shapes:</strong></p>
+  <ul>
+    <li><code>useClass</code> — создать instance класса (можно заменить implementation).</li>
+    <li><code>useValue</code> — готовый объект/mock.</li>
+    <li><code>useFactory</code> — <code>factory: (dep) =&gt; new X(dep)</code>, <code>deps: [OtherService]</code>.</li>
+    <li><code>useExisting</code> — алиас на другой token.</li>
+  </ul>
+  <div class="tradeoff">
+    Singleton (root) vs per-feature (route): AuthService — root. TarotService — route. <code>useFactory</code> — когда нужна конфигурация при создании (API URL из injection token).
+  </div>
+</div>
+
+<div class="question" id="q-35">
+  <h3><span class="q-num">35.</span> Environment injectors vs element injectors</h3>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Environment</th><th>Element</th></tr>
+    <tr><td>Конфиг через <code>ApplicationConfig</code>, routes</td><td>Один на component/directive instance</td></tr>
+    <tr><td>HTTP interceptors, Router, global stores</td><td>Component-local services</td></tr>
+    <tr><td>Переживает destroy дочерних компонентов</td><td>Умирает с компонентом</td></tr>
+    <tr><td><code>inject()</code> в app.config factories</td><td><code>inject()</code> в constructor/field initializer</td></tr>
+  </table>
+  <p><strong>Injection flags</strong> (<code>inject(Token, options)</code>):</p>
+  <ul>
+    <li><code>optional: true</code> — <code>null</code> вместо error.</li>
+    <li><code>self: true</code> — только текущий injector, не подниматься.</li>
+    <li><code>skipSelf: true</code> — начать с parent injector.</li>
+    <li><code>host: true</code> — до root element injector (для directives).</li>
+  </ul>
+  <p><strong>DI tokens:</strong> <code>InjectionToken&lt;T&gt;('description')</code> — для non-class dependencies (config objects, interfaces). <code>inject(TAROT_URL)</code>.</p>
+  <p><strong>Multi-providers:</strong> <code>multi: true</code> — массив значений (HTTP_INTERCEPTORS, APP_INITIALIZER).</p>
+  <p><strong>Debugging:</strong> Angular DevTools → Injector Tree; <code>NullInjectorError: No provider for X</code> — проверь route providers и import chain.</p>
+  <div class="project">
+    <strong>Проект:</strong> guards через <code>inject(AuthService)</code> + <code>inject(Router)</code>. <code>UI_STATE</code> injection token для начального state в <code>uiStateStore</code>. <code>provideAppInitializer(() =&gt; inject(AuthService).initialize())</code> — multi-init pattern.
+  </div>
+</div>
+
+<!-- ═══════════════════ SIGNALS ═══════════════════ -->
+<h2 id="signals">Signals</h2>
+
+<div class="question" id="q-36">
+  <h3><span class="q-num">36.</span> Resource API и асинхронная загрузка данных</h3>
+  <p><strong>Signals</strong> — примитив fine-grained reactivity в Angular (<a href="https://angular.dev/guide/signals">Signals guide</a>). Перед Resource API — обзор экосистемы:</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>API</th><th>Назначение</th></tr>
+    <tr><td><code>signal(initial)</code></td><td>Writable state; чтение <code>s()</code>, запись <code>s.set(v)</code> / <code>s.update(fn)</code></td></tr>
+    <tr><td><code>computed(() =&gt; ...)</code></td><td>Derived state; кэшируется, пересчитывается при изменении зависимостей</td></tr>
+    <tr><td><code>linkedSignal(source)</code></td><td>Writable, но сбрасывается при изменении source signals</td></tr>
+    <tr><td><code>effect(() =&gt; ...)</code></td><td>Side effects (logging, sync, subscriptions); cleanup через <code>onCleanup</code></td></tr>
+    <tr><td><code>asReadonly()</code></td><td>Expose writable signal как ReadonlySignal наружу</td></tr>
+  </table>
+  <p><strong>Resource API</strong> (<code>resource()</code> из <code>@angular/core</code>) — обёртка async loading:</p>
+  <pre>quotesByPool = resource({
+  params: () =&gt; this.activeLang(),  // reload при смене lang
+  loader: async ({ params: lang, abortSignal }) =&gt; {
+    if (abortSignal.aborted) return fallback;
+    return this.loadQuotes(lang);
+  },
+});
+
+// В шаблоне / классе:
+quotesByPool.value()    // T | undefined
+quotesByPool.status()   // 'idle' | 'loading' | 'resolved' | 'error' | 'reloading'
+quotesByPool.error()    // ошибка loader
+quotesByPool.reload()   // принудительный reload</pre>
+  <p><strong>Reactive contexts</strong> — signal читается «под капотом» при вызове в template, <code>computed</code>, <code>effect</code>, <code>linkedSignal</code>, <code>resource params</code>. Это регистрирует dependency для CD.</p>
+  <p><strong>Мост RxJS ↔ Signals:</strong> <code>toSignal(obs$)</code>, <code>toObservable(signal)</code>, <code>takeUntilDestroyed</code>.</p>
+  <div class="tradeoff">
+    Signals — для <em>state</em>. RxJS — для <em>async event streams</em> (HTTP, timers). Не конвертируй всё в signals — <code>effect</code> не для derived state (используй <code>computed</code>). Effects не должны мутировать unrelated signals (риск circular updates).
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>MainPageFacade</code> — <code>signal</code>, <code>computed(isLoading)</code>, <code>linkedSignal</code> (сброс tarot при смене role/intent), <code>effect</code> для translation. <code>uiStateStore</code> — NgRx <code>signalStore</code> с <code>patchState</code>. <code>PriestQuotesService</code> — <code>resource()</code> + Map cache.
+  </div>
+</div>
+
+<div class="question" id="q-37">
+  <h3><span class="q-num">37.</span> Разница между resource и rxResource</h3>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th><code>resource()</code></th><th><code>rxResource()</code></th><th><code>httpResource()</code></th></tr>
+    <tr><td>Loader: <code>Promise</code></td><td>Stream: <code>Observable</code></td><td>HTTP GET wrapper</td></tr>
+    <tr><td>One-shot async</td><td>Multi-value over time</td><td>HttpClient под капотом</td></tr>
+    <tr><td>Firestore, fetch, async/await</td><td>RxJS pipelines, progressive UI</td><td>REST endpoints</td></tr>
+    <tr><td><code>abortSignal</code> в loader</td><td>unsubscribe при смене params</td><td>Typed HTTP params</td></tr>
+  </table>
+  <p>Общее: <code>params()</code> function — при изменении deps перезапускает loader/stream. <code>defaultValue</code> — начальное значение до первого resolve. Статусы одинаковые.</p>
+  <pre>// rxResource — progressive stream
+ritualSession = rxResource({
+  params: () =&gt; this._ritualRequest(),
+  defaultValue: EMPTY_RITUAL_SESSION,
+  stream: ({ params }) =&gt; {
+    if (!params) return EMPTY;
+    return createRitualTimelineStream(params).pipe(
+      tap(state =&gt; this.sanctumSound.play(...))
+    );
+  },
+});
+
+// computed на resource
+isJudging = computed(() =&gt; this.ritualSession.status() === 'loading');</pre>
+  <p><strong>untracked():</strong> чтение signal внутри <code>computed</code> без создания dependency — когда нужно «прочитать, но не пересчитываться».</p>
+  <p><strong>Отладка:</strong> Angular DevTools → Signals tab; логируй <code>effect(() =&gt; console.log(store.theme()))</code> в dev only.</p>
+  <div class="tradeoff">
+    <code>rxResource</code> когда UI обновляется по мере поступления данных (ritual litany line by line). <code>resource</code> когда нужен один финальный результат (список quotes). <code>httpResource</code> — thin wrapper, если не нужен custom RxJS pipeline.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>SanctumRitualService.ritualSession</code> — <code>rxResource</code> + <code>createRitualTimelineStream</code>. <code>PriestQuotesService</code> — <code>resource()</code> + Firestore. <code>toSignal(translocoService.langChanges$)</code> — bridge Observable → signal для params.
+  </div>
+</div>
+
+<!-- ═══════════════════ COMPONENTS ═══════════════════ -->
+<h2 id="components">Components</h2>
+
+<div class="question" id="q-38">
+  <h3><span class="q-num">38.</span> Что такое компоненты в Angular и как они являются основой структуры приложения?</h3>
+  <p><strong>Компонент</strong> — фундаментальная единица UI в Angular (<a href="https://angular.dev/guide/components">Components guide</a>): TypeScript-класс + HTML-шаблон + стили + metadata (<code>@Component</code>).</p>
+  <p>Angular-приложение — <strong>дерево компонентов</strong>. Каждый узел:</p>
+  <ul>
+    <li>имеет свой <strong>element injector</strong> (DI scope);</li>
+    <li>проходит <strong>lifecycle hooks</strong>;</li>
+    <li>участвует в <strong>change detection</strong>;</li>
+    <li>может содержать дочерние компоненты, директивы, pipes.</li>
+  </ul>
+  <p><strong>Standalone</strong> (современный дефолт): компонент сам объявляет <code>imports: [...]</code> — не нужен NgModule. Bootstrap: <code>bootstrapApplication(AppComponent, appConfig)</code>.</p>
+  <p><strong>Композиция:</strong> smart (container) компоненты оркестрируют данные через facade/service; dumb (presentational) — получают <code>input()</code>, эмитят <code>output()</code>, не знают об HTTP.</p>
+  <div class="tradeoff">
+    Дроби UI на мелкие переиспользуемые компоненты, но не создавай «компонент на каждый div» — balance между cohesion и overhead. Facade pattern отделяет orchestration от presentation.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>LayoutComponent</code> (shell: sidebar + header + <code>router-outlet</code>) → feature components (<code>MainComponent</code>, <code>TarotReadingComponent</code>). Shared UI в <code>shared/ui/</code> (<code>CardComponent</code>). Префикс селекторов <code>ngKitty</code>.
+  </div>
+</div>
+
+<div class="question" id="q-39">
+  <h3><span class="q-num">39.</span> Как настраивается селектор, шаблон и стиль через @Component?</h3>
+  <p>Декоратор <code>@Component</code> (<a href="https://angular.dev/api/core/Component">API</a>) — metadata, которую компилятор использует для генерации фабрики, шаблона и стилей:</p>
+  <pre>@Component({
+  selector: 'ngKitty-tarot-reading',       // element selector
+  standalone: true,
+  imports: [TuiIcon, TranslocoPipe, UpperCasePipe],
+  templateUrl: './tarot-reading.component.html',
+  styleUrl: './tarot-reading.component.scss',
+  encapsulation: ViewEncapsulation.Emulated, // default
+})</pre>
+  <p><strong>Ключевые поля:</strong></p>
+  <ul>
+    <li><code>selector</code> — element (<code>ngKitty-main</code>), attribute (<code>[ngKittyHighlight]</code>) или class. Должен быть уникальным в приложении.</li>
+    <li><code>template</code> / <code>templateUrl</code> — inline HTML или внешний файл. AOT компиляция на build.</li>
+    <li><code>styles</code> / <code>styleUrl(s)</code> — scoped стили. <code>styleUrl</code> (singular) — Angular 17+.</li>
+    <li><code>encapsulation</code> — <code>Emulated</code> (default, _ngcontent attributes), <code>ShadowDom</code>, <code>None</code> (глобальные стили).</li>
+    <li><code>changeDetection</code> — <code>OnPush</code> (default в Angular 22) или <code>Default</code>.</li>
+    <li><code>host</code> — bindings на host element (<code>{ '(click)': 'onClick()', '[class.active]': 'isActive' }</code>).</li>
+  </ul>
+  <div class="tradeoff">
+    Inline template — для &lt;10 строк. External files — для Prettier, подсветки, code review. <code>styleUrl</code> + SCSS <code>includePaths</code> в <code>angular.json</code> — для shared mixins.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> SCSS с <code>includePaths: ["src", "src/styles"]</code> — импорт <code>@use 'styles/...'</code> без глубоких relative paths. Taiga UI themes из <code>node_modules</code> + <code>src/styles.css</code>.
+  </div>
+</div>
+
+<div class="question" id="q-40">
+  <h3><span class="q-num">40.</span> Жизненный цикл компонента и основные хуки</h3>
+  <p>Lifecycle hooks — методы интерфейсов, вызываемые Angular в строгом порядке (<a href="https://angular.dev/guide/components/lifecycle">Lifecycle</a>):</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Хук</th><th>Когда</th><th>Типичное использование</th></tr>
+    <tr><td><code>constructor</code></td><td>Создание instance</td><td>Только <code>inject()</code> / DI, без тяжёлой логики</td></tr>
+    <tr><td><code>ngOnChanges</code></td><td>При изменении @Input (до ngOnInit и далее)</td><td>Реакция на новые props; не срабатывает для signal inputs</td></tr>
+    <tr><td><code>ngOnInit</code></td><td>После первого set inputs</td><td>Одноразовая инициализация, загрузка данных</td></tr>
+    <tr><td><code>ngDoCheck</code></td><td>Каждый CD cycle</td><td>Кастомный dirty checking (редко)</td></tr>
+    <tr><td><code>ngAfterContentInit</code></td><td>После первого <code>ng-content</code> projection</td><td>Работа с projected content</td></tr>
+    <tr><td><code>ngAfterContentChecked</code></td><td>После каждой проверки projected content</td><td>—</td></tr>
+    <tr><td><code>ngAfterViewInit</code></td><td>После инициализации child views</td><td>DOM доступен; <code>viewChild</code> populated</td></tr>
+    <tr><td><code>ngAfterViewChecked</code></td><td>После каждой проверки child views</td><td>—</td></tr>
+    <tr><td><code>ngOnDestroy</code></td><td>Перед уничтожением</td><td>Cleanup: unsubscribe, clearInterval</td></tr>
+  </table>
+  <p><strong>Современная альтернатива хукам:</strong></p>
+  <ul>
+    <li><code>effect()</code> — side effects при изменении signals (с <code>onCleanup</code>).</li>
+    <li><code>afterNextRender()</code> / <code>afterRender()</code> — DOM operations после render (SSR-safe).</li>
+    <li><code>takeUntilDestroyed()</code> — вместо <code>ngOnDestroy</code> + destroy$ для Observable.</li>
+  </ul>
+  <div class="tradeoff">
+    Не ставь бизнес-логику в <code>ngAfterViewChecked</code> — вызывается очень часто. Signal <code>input()</code> + <code>effect</code> / <code>computed</code> заменяют <code>ngOnChanges</code> для большинства reactive cases.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>TarotReadingComponent</code> — <code>effect()</code> в constructor: при новом reading закрывает все <code>&lt;details&gt;</code> карт через <code>viewChildren('tarotCard')</code>. Cleanup подписок — <code>takeUntilDestroyed</code> в facades, не <code>ngOnDestroy</code>.
+  </div>
+</div>
+
+<div class="question" id="q-41">
+  <h3><span class="q-num">41.</span> Двустороннее vs одностороннее связывание данных</h3>
+  <p>Angular data binding (<a href="https://angular.dev/guide/templates/binding">Template binding</a>):</p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>Синтаксис</th><th>Направление</th><th>Пример</th></tr>
+    <tr><td><code>{{ expr }}</code></td><td>Component → DOM (interpolation)</td><td><code>{{ facade.result()?.verdict }}</code></td></tr>
+    <tr><td><code>[property]="expr"</code></td><td>Component → DOM (property binding)</td><td><code>[reading]="facade.result()"</code></td></tr>
+    <tr><td><code>(event)="handler"</code></td><td>DOM → Component (event binding)</td><td><code>(click)="facade.loadTarot()"</code></td></tr>
+    <tr><td><code>[(ngModel)]="val"</code></td><td>Two-way (Banana in a box)</td><td>Template-driven forms</td></tr>
+    <tr><td><code>[prop]="x" (propChange)="x=$event"</code></td><td>Two-way contract</td><td>Основа <code>[(ngModel)]</code></td></tr>
+  </table>
+  <p><strong>Односторонний flow</strong> — предсказуемее: данные текут сверху вниз (inputs/signals), события снизу вверх (outputs). Легче отлаживать и тестировать.</p>
+  <p><strong>Two-way binding:</strong></p>
+  <ul>
+    <li><code>[(ngModel)]</code> — template-driven forms, нужен <code>FormsModule</code>.</li>
+    <li>Reactive Forms — через <code>formControlName</code>; модель и view синхронизированы через <code>FormControl.value</code>, не <code>[(ngModel)]</code>.</li>
+    <li>Custom components: <code>value = input(); valueChange = output()</code> → <code>[(value)]="x"</code>.</li>
+  </ul>
+  <div class="tradeoff">
+    Two-way удобен для простых полей. В сложных формах — Reactive Forms: явные <code>valid</code>/<code>dirty</code>/<code>touched</code>, cross-field validators, typed <code>FormGroup</code>. Не смешивай <code>ngModel</code> и <code>formControlName</code> на одном элементе.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> login/register — Reactive Forms через facade (<code>formControlName</code>). Main page — односторонний flow: facade signals → <code>[tarotReading]="facade.result()"</code> в <code>TarotReadingComponent</code>.
+  </div>
+</div>
+
+<div class="question" id="q-42">
+  <h3><span class="q-num">42.</span> Отдельные (standalone) компоненты</h3>
+  <p><strong>Standalone component</strong> — <code>standalone: true</code> (implicit default в Angular 19+ CLI). Не требует NgModule; зависимости явные:</p>
+  <pre>@Component({
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, TarotReadingComponent],
+  // ...
+})</pre>
+  <p><strong>Преимущества</strong> (<a href="https://angular.dev/guide/components/importing">Importing</a>):</p>
+  <ul>
+    <li>Tree-shaking — неиспользуемые imports не в bundle.</li>
+    <li>Lazy loading через <code>loadComponent: () =&gt; import('...').then(m =&gt; m.X)</code> — отдельный chunk без NgModule wrapper.</li>
+    <li>Route-scoped <code>providers</code> заменяют feature modules.</li>
+    <li>Явные зависимости в файле — проще навигация и code review.</li>
+  </ul>
+  <p><strong>Bootstrapping:</strong></p>
+  <pre>// main.ts
+bootstrapApplication(AppComponent, appConfig);
+
+// app.config.ts — глобальные providers
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes), provideHttpClient(), ...],
+};</pre>
+  <div class="tradeoff">
+    NgModules ещё работают (legacy), но новый код — standalone only. Не создавай SharedModule-баррели — они ломают tree-shaking. Импортируй только то, что нужно конкретному компоненту.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> ноль NgModules в <code>src/app/</code>. Все фичи — standalone. Route providers в <code>app.routes.ts</code> вместо <code>FeatureModule.forRoot()</code>.
+  </div>
+</div>
+
+<div class="question" id="q-43">
+  <h3><span class="q-num">43.</span> Что такое ViewChild и ViewChildren?</h3>
+  <p>Запросы к элементам <strong>собственного шаблона</strong> (view children), не projected content (<a href="https://angular.dev/guide/components/queries">Query API</a>).</p>
+  <p><strong>Современный signal-based API (Angular 17+):</strong></p>
+  <pre>// Один элемент
+readonly header = viewChild&lt;ElementRef&gt;('headerRef');
+readonly child = viewChild(TarotCardComponent);
+
+// Несколько
+readonly cards = viewChildren&lt;ElementRef&lt;HTMLDetailsElement&gt;&gt;('tarotCard');</pre>
+  <p>Доступны после render — в <code>ngAfterViewInit</code>, <code>effect()</code>, <code>afterNextRender()</code>. Signal queries обновляются при изменении DOM.</p>
+  <p><strong>Legacy decorators:</strong> <code>@ViewChild('ref') el!: ElementRef</code> — всё ещё работают, но signal queries предпочтительнее.</p>
+  <p><strong>Content queries:</strong> <code>contentChild()</code> / <code>contentChildren()</code> — для projected nodes (<code>ng-content</code>).</p>
+  <p><strong>Когда нужны:</strong> focus management, scroll, интеграция с non-Angular widgets, imperative DOM (редко). Prefer data binding.</p>
+  <div class="tradeoff">
+    Прямой DOM access через <code>nativeElement</code> — escape hatch; ломает SSR abstraction. <code>Renderer2</code> — platform-safe, но binding предпочтительнее. <code>{ read: Token }</code> — получить directive/service вместо ElementRef.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>TarotReadingComponent</code> — <code>viewChildren('tarotCard')</code> + <code>effect</code>: при новом reading сбрасывает <code>open = false</code> на всех <code>&lt;details&gt;</code> картах.
+  </div>
+</div>
+
+<div class="question" id="q-44">
+  <h3><span class="q-num">44.</span> Change Detection: Default vs OnPush</h3>
+  <p><strong>Change Detection (CD)</strong> — механизм синхронизации model → view (<a href="https://angular.dev/guide/change-detection">Change detection</a>).</p>
+  <p><strong>Default (исторически):</strong> при любом async event в Zone.js Angular проверяет всё дерево (или с оптимизациями).</p>
+  <p><strong>OnPush:</strong> компонент проверяется только когда:</p>
+  <ul>
+    <li>изменился <strong>reference</strong> @Input;</li>
+    <li>событие произошло <strong>в самом компоненте или его детях</strong>;</li>
+    <li><code>async</code> pipe получил новое значение;</li>
+    <li>прочитан <strong>signal</strong> в template (Angular 17+);</li>
+    <li>вызван <code>markForCheck()</code> / <code>detectChanges()</code> вручную.</li>
+  </ul>
+  <p><strong>Angular 22:</strong> OnPush — default для новых компонентов. Signals интегрированы: чтение <code>signal()</code> в template регистрирует dependency → CD при <code>.set()</code>/<code>.update()</code>.</p>
+  <p><strong>Zone.js vs Zoneless:</strong></p>
+  <ul>
+    <li>С Zone (<code>provideZoneChangeDetection</code>) — CD триггерится zone hooks.</li>
+    <li>Zoneless (<code>provideExperimentalZonelessChangeDetection</code>) — CD только через signals, events, explicit marks. Будущее Angular.</li>
+  </ul>
+  <pre>// app.config.ts — проект на Zone с coalescing
+provideZoneChangeDetection({ eventCoalescing: true })</pre>
+  <div class="tradeoff">
+    OnPush + immutable patterns = performance. Мутация объектов in-place без смены reference — OnPush не увидит (с signals эта проблема уходит). <code>ChangeDetectorRef.detach()</code> — ручное отключение CD (virtual scroll). Не вызывай <code>detectChanges()</code> без необходимости — bypass оптимизаций.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> UI на signals (<code>facade.result()</code>, <code>facade.isLoading()</code> в templates). Explicit OnPush не указан — default A22. <code>eventCoalescing: true</code> — меньше CD runs при burst events.
+  </div>
+</div>
+
+<div class="question" id="q-45">
+  <h3><span class="q-num">45.</span> Динамические компоненты</h3>
+  <p><strong>Динамический компонент</strong> — тип и/или момент создания определяется в runtime, а не в static template (<a href="https://angular.dev/guide/components/programmatic-rendering">Programmatic rendering</a>).</p>
+  <p><strong>1. ViewContainerRef.createComponent()</strong> — императивный API:</p>
+  <pre>const ref = viewContainerRef.createComponent(DynamicComponent, {
+  bindings: [
+    inputBinding('data', () =&gt; item),
+    outputBinding('selected', (e) =&gt; handle(e)),
+  ],
+});
+// Обновление
+ref.setInput('data', newItem);
+// Уничтожение
+ref.destroy();</pre>
+  <p><strong>2. NgComponentOutlet</strong> — декларативный (см. вопрос 46).</p>
+  <p><strong>3. Overlay / Dialog</strong> — компонент вне DOM-иерархии (Taiga <code>TuiDialogService</code>, CDK Overlay). Portal pattern.</p>
+  <p><strong>4. *ngTemplateOutlet</strong> — переключение шаблонов без полноценного component (легче, если нет своей логики).</p>
+  <p><strong>Lazy loading dynamic:</strong> <code>import('./widget').then(m =&gt; createComponent(m.Widget))</code> — code splitting.</p>
+  <div class="tradeoff">
+    Dynamic components обходят AOT template checking — ошибки bindings только в runtime. Tree-shaking слабее. Prefer static <code>imports</code> + <code>@if</code> switching когда набор типов конечен и известен на compile time.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> <code>ModalService</code> — Taiga <code>TuiDialogService.open(TUI_CONFIRM)</code> для confirm при dirty form guard. Profile — <code>*ngTemplateOutlet</code> для переключения секций без dynamic component overhead.
+  </div>
+</div>
+
+<div class="question" id="q-46">
+  <h3><span class="q-num">46.</span> ngComponentOutlet — когда использовать?</h3>
+  <p><strong>NgComponentOutlet</strong> (<a href="https://angular.dev/api/common/NgComponentOutlet">API reference</a>) — директива для рендера standalone component по ссылке на класс:</p>
+  <pre>&lt;ng-container *ngComponentOutlet="
+  activeTabComponent;
+  inputs: { userId: id(), mode: 'edit' };
+  outputs: { saved: onSaved($event) }
+" /&gt;</pre>
+  <p><strong>Когда использовать:</strong></p>
+  <ul>
+    <li>Tab panel / wizard steps — конечный набор компонентов.</li>
+    <li>Widget registry / plugin system.</li>
+    <li>CMS-driven blocks (тип из API → component map).</li>
+  </ul>
+  <p><strong>vs createComponent:</strong> NgComponentOutlet — template-driven, проще, автоматический lifecycle. createComponent — полный контроль (insertion index, projectable nodes, manual destroy timing).</p>
+  <p><strong>Inputs/Outputs (17.3+):</strong> <code>inputs</code> и <code>outputs</code> bindings без ручного <code>setInput</code>/<code>subscribe</code>.</p>
+  <div class="tradeoff">
+    Все dynamic types должны быть standalone. Для content projection в dynamic child — используй <code>createComponent</code> с <code>projectableNodes</code>.
+  </div>
+</div>
+
+<div class="question" id="q-47">
+  <h3><span class="q-num">47.</span> Deferrable views (@defer)</h3>
+  <p><strong>@defer</strong> (<a href="https://angular.dev/guide/templates/defer">Defer guide</a>) — встроенный lazy loading на уровне шаблона. Код deferred блока — отдельный chunk, грузится по триггеру.</p>
+  <pre>@defer (on viewport; prefetch on idle) {
+  &lt;ngKitty-heavy-chart [data]="chartData()" /&gt;
+} @placeholder (minimum 100ms) {
+  &lt;div class="skeleton-chart" /&gt;
+} @loading (minimum 200ms) {
+  &lt;ngKitty-spinner /&gt;
+} @error {
+  &lt;p&gt;Не удалось загрузить график&lt;/p&gt;
+}</pre>
+  <p><strong>Триггеры:</strong></p>
+  <ul>
+    <li><code>on idle</code> — requestIdleCallback.</li>
+    <li><code>on viewport</code> — Intersection Observer (видимость).</li>
+    <li><code>on interaction</code> / <code>on hover</code> — user gesture.</li>
+    <li><code>on immediate</code> — сразу после initial render.</li>
+    <li><code>on timer(500ms)</code> — задержка.</li>
+    <li><code>when condition()</code> — signal-based условие.</li>
+    <li><code>prefetch on idle</code> — загрузить chunk заранее, показать по основному триггеру.</li>
+  </ul>
+  <p><strong>@defer vs loadComponent:</strong></p>
+  <table style="width:100%;font-size:0.85rem">
+    <tr><th>@defer</th><th>loadComponent (route)</th></tr>
+    <tr><td>Гранулярность внутри страницы</td><td>Гранулярность на уровне route</td></tr>
+    <tr><td>Placeholder/loading/error blocks</td><td>Нет встроенных блоков</td></tr>
+    <tr><td>Триггеры viewport/interaction</td><td>Триггер = навигация</td></tr>
+  </table>
+  <div class="tradeoff">
+    @defer идеален для тяжёлых виджетов below the fold (charts, maps, rich editors). Не defer-и критичный above-the-fold UI — ухудшит LCP. Комбинируй: lazy route + @defer для тяжёлого child.
+  </div>
+  <div class="project">
+    <strong>Проект:</strong> @defer не используется — вместо него route-level <code>loadComponent</code> (profile, login, sanctum…) + кастомная <code>UserStateStrategy</code> preloading (guest routes для гостей, auth routes для залогиненных). Та же цель — меньший initial bundle.
+  </div>
+</div>
+
+<!-- ═══════════════════ PROJECT ═══════════════════ -->
+<h2 id="project">Вопросы по проекту</h2>
+
+<div class="question" id="q-48">
+  <h3><span class="q-num">48.</span> Опиши свой вклад в спринт</h3>
+  <p><em>Шаблон — заполни своей реальной работой:</em></p>
+  <ul>
+    <li>Область: например, tarot main page / sanctum ritual / registration forms / profile</li>
+    <li>Что сделал: facade, API service, component, validator, tests</li>
+    <li>PRs merged: ссылки на коммиты</li>
+  </ul>
+</div>
+
+<div class="question" id="q-49">
+  <h3><span class="q-num">49.</span> Навигация по коду и объяснение работы</h3>
+  <p><strong>End-to-end: Tarot draw</strong></p>
+  <ol>
+    <li><code>MainComponent</code> → клик draw → вызов <code>MainPageFacade.draw()</code></li>
+    <li>Facade ставит loading signal, вызывает <code>TarotService.getReading()</code> (HTTP GET через proxy на deploytarot.com)</li>
+    <li>При успехе опционально <code>MyMemoryTranslationService</code> переводит чанки текста (forkJoin + mergeMap concurrency)</li>
+    <li>Результат в <code>linkedSignal</code> — сбрасывается при смене role/intent</li>
+    <li>Шаблон показывает карты через <code>@if</code> / <code>@for</code> из readonly signals facade</li>
+    <li>Ошибки: interceptor toast + facade error signal</li>
+  </ol>
+  <p><strong>Sanctum ritual:</strong> <code>SanctumRitualService</code> — <code>rxResource</code> ведёт прогрессивную litany через RxJS timeline; звуковые эффекты в <code>tap</code>.</p>
+</div>
+
+<div class="question" id="q-50">
+  <h3><span class="q-num">50.</span> Показ работающего приложения</h3>
+  <p>Demo flow: main tarot → login/register (dirty form guard) → shrift confess → altar candles → sanctum ritual → profile. Показать переключение i18n (uiStateStore → синхронизация с Firestore при auth).</p>
+</div>
+
+<div class="question" id="q-51">
+  <h3><span class="q-num">51.</span> Решения и сложности</h3>
+  <ul>
+    <li><strong>Facade pattern</strong> — UI никогда не вызывает HTTP напрямую; тестируемый orchestration layer.</li>
+    <li><strong>Route-scoped providers</strong> — tarot services не засоряют root injector.</li>
+    <li><strong>Signals вместо Subjects</strong> — проще state; RxJS только для async streams.</li>
+    <li><strong>Shared domain в core/</strong> — CandlesService, ConfessService переиспользуются между фичами.</li>
+    <li><strong>Пример сложности:</strong> chunk translation с rate limits → mergeMap(3) + per-chunk catchError fallback.</li>
+    <li><strong>Пример сложности:</strong> cross-field password validator, сохраняющий несвязанные ошибки на sibling control.</li>
+  </ul>
+</div>
+
+<footer>
+  <p>Связанное: <a href="angular-interview-full.html">Полный справочник (113 вопросов)</a> · <a href="../lessons/0001-interview-retrieval-practice.html">Урок 1 — Retrieval Practice</a></p>
+  <p>Задавай уточняющие вопросы в чате — учитель может углубить любой раздел.</p>
+  <p>Источники: <a href="https://rxjs.dev/">RxJS</a> · <a href="https://angular.dev/ecosystem/rxjs-interop">RxJS Interop</a> · <a href="https://angular.dev/guide/components">Components</a> · <a href="https://angular.dev/guide/testing">Testing</a> · <a href="https://angular.dev/guide/forms/form-validation">Forms</a> · <a href="https://angular.dev/guide/di/hierarchical-dependency-injection">DI</a> · <a href="https://angular.dev/guide/signals">Signals</a></p>
+</footer>
+
+</main>
+</div>
+
+</body>
+</html>
