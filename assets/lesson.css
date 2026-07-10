@@ -75,12 +75,27 @@ pre {
 .question h3 { color: var(--text); margin-top: 0; }
 
 .tradeoff {
-  font-style: italic;
-  color: var(--muted);
-  border-left: 2px solid var(--accent);
-  padding-left: 1rem;
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1rem;
   margin: 0.75rem 0;
+  background: #fffdf8;
+  font-size: 0.95rem;
 }
+
+.tradeoff-lead {
+  margin: 0 0 0.4rem;
+  font-style: normal;
+}
+
+.tradeoff ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.tradeoff li { margin: 0.35rem 0; }
+
+.tradeoff p:last-child { margin-bottom: 0; }
 
 .project {
   background: #fff8f0;
@@ -89,6 +104,16 @@ pre {
   margin: 0.75rem 0;
   font-size: 0.92rem;
 }
+
+.docs {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.88rem;
+  background: #f8fafc;
+  border-left: 2px solid #94a3b8;
+}
+
+.docs a { margin-right: 0.15rem; }
 
 .quiz {
   border: 1px solid var(--border);
