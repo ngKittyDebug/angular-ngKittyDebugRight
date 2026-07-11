@@ -222,6 +222,11 @@ body.ref-page {
 
 .ref-content h1 { margin-top: 0; }
 
+.ref-mobile-nav-btn,
+.ref-nav-backdrop {
+  display: none;
+}
+
 .question {
   scroll-margin-top: 1.5rem;
 }
@@ -234,20 +239,236 @@ body.ref-page {
 }
 
 @media (max-width: 900px) {
-  .ref-layout { flex-direction: column; }
+  :root {
+    font-size: 16px;
+  }
+
+  body:not(.ref-page) {
+    padding: 1.25rem 1rem 2.5rem;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1.05rem; }
+
+  pre {
+    font-size: 0.72rem;
+    padding: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  code {
+    word-break: break-word;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0.75rem 0;
+    max-width: 100%;
+  }
+
+  .table-scroll table {
+    margin: 0;
+    min-width: 100%;
+  }
+
+  .ref-layout {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .ref-mobile-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    width: 100%;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    min-height: 3rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+  }
+
+  .ref-mobile-nav-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .ref-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 180;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: rgb(0 0 0 / 0.45);
+    cursor: pointer;
+  }
+
+  .ref-nav-backdrop[hidden] {
+    display: none;
+  }
+
+  body.ref-nav-lock {
+    overflow: hidden;
+  }
 
   .ref-sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    max-height: 40vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 200;
+    width: min(18.5rem, 88vw);
+    max-width: 88vw;
+    height: 100vh;
+    max-height: none;
+    padding: 1rem 1rem 2rem;
+    border-right: 1px solid var(--border);
+    border-bottom: none;
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+    box-shadow: 4px 0 24px rgb(0 0 0 / 0.12);
+  }
+
+  .ref-layout.ref-nav-open .ref-sidebar {
+    transform: translateX(0);
+  }
+
+  .ref-sidebar a {
+    padding: 0.45rem 0;
+    min-height: 2.25rem;
+    display: flex;
+    align-items: center;
   }
 
   .ref-content {
     max-width: none;
-    padding: 1.5rem 1.25rem 3rem;
+    width: 100%;
+    padding: 1rem 0.85rem 2.5rem;
+    overflow-x: hidden;
+  }
+
+  .ref-content table {
+    font-size: 0.78rem;
+  }
+
+  .ref-content table th,
+  .ref-content table td {
+    padding: 0.4rem 0.45rem;
+    vertical-align: top;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .question {
+    scroll-margin-top: 3.5rem;
+  }
+
+  .tradeoff,
+  .project,
+  .docs {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .quiz {
+    padding: 0.85rem 1rem;
+  }
+
+  .quiz-options label {
+    padding: 0.35rem 0;
+    min-height: 2.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 901px) {
+  .ref-mobile-nav-btn,
+  .ref-nav-backdrop {
+    display: none !important;
+  }
+}
+
+/* Hub landing page */
+.hub {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.hub h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hub p.lead {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.hub-cards {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.hub-card {
+  display: block;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hub-card:active {
+  border-color: var(--accent);
+}
+
+.hub-card strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.hub-card span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.hub-meta {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media (min-width: 600px) {
+  .hub {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .hub h1 {
+    font-size: 1.75rem;
   }
 }
 
