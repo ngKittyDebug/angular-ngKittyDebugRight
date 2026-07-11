@@ -21,22 +21,28 @@
   <a href="#setup"><span class="q-link-num">1</span> Старт проекта и тимлид</a>
 
   <p class="ref-sidebar-group"><a href="#altar">Алтарь</a></p>
-  <a href="#altar"><span class="q-link-num">2</span> CandlesService и UI</a>
+  <a href="#altar"><span class="q-link-num">2</span> Страница и CandlesService</a>
+
+  <p class="ref-sidebar-group"><a href="#main">Main</a></p>
+  <a href="#main"><span class="q-link-num">3</span> Tarot + перевод</a>
+
+  <p class="ref-sidebar-group"><a href="#ui-state">UI Store</a></p>
+  <a href="#ui-state"><span class="q-link-num">4</span> uiStateStore</a>
 
   <p class="ref-sidebar-group"><a href="#sanctum">Санктум</a></p>
-  <a href="#sanctum"><span class="q-link-num">3</span> Ритуал и Digital Priest</a>
+  <a href="#sanctum"><span class="q-link-num">5</span> Ритуал и Digital Priest</a>
 
   <p class="ref-sidebar-group"><a href="#errors">Ошибки</a></p>
-  <a href="#errors"><span class="q-link-num">4</span> HTTP + Firestore stack</a>
+  <a href="#errors"><span class="q-link-num">6</span> HTTP interceptor</a>
 
   <p class="ref-sidebar-group"><a href="#forms">Формы</a></p>
-  <a href="#forms"><span class="q-link-num">5</span> Валидация и toast</a>
+  <a href="#forms"><span class="q-link-num">7</span> Валидация и toast</a>
 
   <p class="ref-sidebar-group"><a href="#testing">Тесты</a></p>
-  <a href="#testing"><span class="q-link-num">6</span> Моки и покрытие</a>
+  <a href="#testing"><span class="q-link-num">8</span> Моки и покрытие</a>
 
   <p class="ref-sidebar-group"><a href="#shared">Shared / UX</a></p>
-  <a href="#shared"><span class="q-link-num">7</span> Scan effect, i18n, тема</a>
+  <a href="#shared"><span class="q-link-num">9</span> Scan effect, layout</a>
 
   <p class="ref-sidebar-group"><a href="#stories">Скрипты</a></p>
   <a href="#stories"><span class="q-link-num">★</span> Готовые ответы</a>
@@ -52,11 +58,11 @@
   <h2>Elevator pitch (30–60 секунд)</h2>
   <div class="say">
     <p class="say-lead">На английском (шаблон)</p>
-    <p>«I'm Daria, frontend developer and team lead on ngKittyDebug — an Angular 22 SPA with Firebase, Taiga UI, and signals-first architecture. I owned the altar feature end-to-end, built the sanctum ritual flow with RxJS timelines and the Resource API, and designed our error-handling strategy: HTTP errors via a functional interceptor, Firestore errors in feature facades with shared helpers and timeouts. I also set up project architecture guidelines, CI quality gates, and expanded unit test coverage across services and facades.»</p>
+    <p>«I'm Daria, frontend developer and team lead on ngKittyDebug — an Angular 22 SPA with Firebase, Taiga UI, and signals-first architecture. I built the main tarot page with facade, external API, and chunked MyMemory translation; owned the altar feature with CandlesService and drag-and-drop UX; designed uiStateStore for theme and language persistence; and implemented our HTTP error interceptor plus Firestore error handling in facades. I also built sanctum, set up architecture guidelines, and expanded test coverage.»</p>
   </div>
   <div class="say">
     <p class="say-lead">На русском</p>
-    <p>«Я тимлид и фронтенд в ngKittyDebug — Angular 22 SPA с Firebase. С нуля подняла инфраструктуру и архитектурный стайлгайд, сделала фичу алтаря со свечами и доменным CandlesService, полностью собрала санктум с ритуалом и digital priest, выстроила единый стек обработки ошибок HTTP и Firestore, мигрировала уведомления на HotToast, централизовала валидацию форм и расширила unit-тесты. На собеседовании могу провести по любому из этих потоков от UI до persistence.»</p>
+    <p>«Я тимлид и фронтенд в ngKittyDebug — Angular 22 SPA с Firebase. Подняла инфраструктуру и стайлгайд, сделала главную страницу с Tarot API и переводом через MyMemory, фичу алтаря со свечами и CandlesService, глобальный uiStateStore для темы и языка, санктум, HTTP interceptor и стек ошибок Firestore. На собеседовании могу провести по любому потоку: draw cards → translate → UI, offer candle → Firestore, смена темы → persist в Firestore.»</p>
   </div>
   <p class="docs"><strong>Демо ошибок и loading:</strong> <a href="https://drive.google.com/file/d/1xQl8qfHqrmiRhw6KaKnjK7WEUC5O3FE4/view?usp=sharing">видео в README</a></p>
 </div>
@@ -74,9 +80,19 @@
         <td>Angular CLI 22, pnpm, Husky, withComponentInputBinding</td>
       </tr>
       <tr>
+        <td><span class="sprint-tag">S1</span> Main</td>
+        <td>Главная страница: TarotService, MainPageFacade, TarotOracle/TarotReading, proxy <code>/api/reading</code>, MyMemoryTranslationService (chunk + mergeMap), linkedSignal</td>
+        <td>HttpClient, linkedSignal, effect, forkJoin, mergeMap</td>
+      </tr>
+      <tr>
         <td><span class="sprint-tag">S1–2</span> Алтарь</td>
-        <td>Вся фича altar: drag-and-drop свечи, CandlesService, Firestore sync, decay «Духа Машины», statistics, scan effect</td>
-        <td>signals, computed, effect, timer, Firestore</td>
+        <td>Страница altar целиком: CDK drag-drop, CandlesService, spirit decay, statistics/prayer/instructions, AltarPageFacade, связь с header</td>
+        <td>signals, CDK DnD, effect, timer, Firestore</td>
+      </tr>
+      <tr>
+        <td><span class="sprint-tag">S2</span> UI Store</td>
+        <td>uiStateStore (NgRx Signals): theme + language, persist в Firestore, sync Transloco и ThemeService</td>
+        <td>signalStore, withHooks, effect</td>
       </tr>
       <tr>
         <td><span class="sprint-tag">S3</span> Санктум</td>
@@ -85,7 +101,7 @@
       </tr>
       <tr>
         <td><span class="sprint-tag">S4</span> Качество</td>
-        <td>HTTP interceptor, toErrorMessage, withTimeout, facade-level toasts, HotToast, tuiValidationErrorsProvider, тесты</td>
+        <td>HTTP interceptor (functional), эволюция без global ErrorHandler, toErrorMessage, withTimeout, HotToast, tuiValidationErrorsProvider, тесты</td>
         <td>HttpInterceptorFn, Vitest, моки сервисов</td>
       </tr>
       <tr>
@@ -98,7 +114,7 @@
   <div class="tradeoff">
     <p class="tradeoff-lead">Почему важно говорить «зона ответственности», а не «я всё написала»</p>
     <ul>
-      <li>Честность: профиль, часть shrift/main — коллеги; ты можешь объяснить <em>интеграцию</em> и <em>архитектурные решения</em>, которые затрагивают весь проект.</li>
+      <li>Честность: profile и часть shrift — коллеги; <strong>main, altar, uiStateStore, interceptor, sanctum</strong> — твоя зона для глубокого разбора.</li>
       <li>Сильная позиция тимлида: ты задала паттерны (facade, error stack, стайлгайд), и команда их следует.</li>
       <li>На Excellent оценивают глубину по 2–3 фичам — алтарь + санктум + error handling достаточно.</li>
     </ul>
@@ -137,52 +153,247 @@
 </div>
 
 <div class="question" id="altar">
-  <h2><span class="sprint-tag">S1–2</span> Алтарь — CandlesService и интерактивный UI</h2>
+  <h2><span class="sprint-tag">S1–2</span> Алтарь — страница, UI и CandlesService</h2>
 
   <h3>Что делала</h3>
   <ul>
-    <li>Собрала фичу <strong>altar</strong> целиком: страница, prayer, instructions, statistics, candle component.</li>
-    <li><strong>Drag-and-drop</strong> свечей на алтарь → зажигание, анимации wick/flame, таймер затухания.</li>
-    <li><strong>CandlesService</strong> в <code>core/</code> — shared domain: счётчики свечей, список горящих, «удовлетворённость Духа Машины».</li>
-    <li>Persist в Firestore <code>users/{uid}.candleCounts</code> + spirit satisfaction; загрузка при смене пользователя через <code>effect</code>.</li>
-    <li><strong>Decay</strong>: <code>timer</code> + <code>effect(onCleanup)</code> периодически снижает уровень благословения — геймификация без отдельного backend.</li>
-    <li>Computed: <code>totalOfferings</code>, <code>blessingLevel</code>, <code>isSpiritPleased</code> — UI только читает сигналы.</li>
-    <li>Machine spirit state в header — связка altar → layout через сервис и pipe.</li>
+    <li>Собрала фичу <strong>altar</strong> с нуля: lazy route + <code>authGuard</code>, scope Transloco <code>altar</code>, provider <code>AltarPageFacade</code>.</li>
+    <li><strong>AltarComponent</strong> — тонкий page shell: statistics, prayer, instructions, candles; только пробрасывает readonly signals из facade.</li>
+    <li><strong>CandlesComponent</strong> — презентационный: Angular CDK drag-drop (<code>CdkDrag</code>/<code>CdkDropList</code>), клавиатура Enter/Space, <code>output</code> <code>candleListChanged</code>; не знает про Firestore.</li>
+    <li>Три способа подношения: drag на алтарь, click, keyboard — <code>canOfferCandle</code> блокирует двойной submit во время drag.</li>
+    <li><strong>CandlesService</strong> в <code>core/services/candles</code> — shared domain (altar + header + sanctum spirit level + будущий profile).</li>
+    <li>Модели и конфиги: типы свечей, <code>CandleCounts</code>, spirit satisfaction, константы decay/extinguish.</li>
+    <li>Анимации wick/flame, responsive layout алтаря, statistics с total offerings и blessing level.</li>
+    <li>Позже (S4): <code>AltarPageFacade</code> с <code>effect</code> на <code>CandlesService.error()</code> → HotToast; Firestore через <code>withTimeout(7s)</code>.</li>
+    <li><strong>MachineSpiritStatePipe</strong> + <code>isSpiritPleased</code> в header через <code>LayoutService</code> — алтарь влияет на chrome всего приложения.</li>
   </ul>
 
-  <h3>Технический поток (end-to-end)</h3>
-  <pre>User drag candle → CandlesService.offerCandle()
-  → optimistic update signals (_litCandleList, _candleCounts)
-  → increaseSpiritSatisfaction()
-  → setDoc Firestore (withTimeout 7s)
-  → on error: _error signal → AltarPageFacade effect → HotToast</pre>
+  <h3>Структура страницы</h3>
+  <pre>app.routes → loadComponent(AltarComponent)
+  providers: [provideTranslocoScope('altar'), AltarPageFacade]
+
+AltarComponent → inject(AltarPageFacade)
+  ├── StatisticsComponent  (totalOfferings, blessingLevel)
+  ├── PrayerComponent
+  ├── InstructionsComponent
+  └── CandlesComponent     (candleListChanged → facade.offerCandle)</pre>
+
+  <h3>Технический поток подношения свечи</h3>
+  <pre>Drag / click / Enter → CandlesComponent.offerCandle()
+  → emit candleListChanged
+  → AltarPageFacade.offerCandle() → CandlesService.offerCandle()
+
+CandlesService:
+  1. Сразу добавить LitCandle в _litCandleList (визуал «горит»)
+  2. timer(CANDLE_EXTINGUISH_TIME) + takeUntilDestroyed
+  3. completeOffering():
+     - убрать из lit list
+     - increment candleCounts + increaseSpiritSatisfaction
+     - если user logged in → setDoc Firestore (merge, withTimeout)
+     - если guest → только local state
+     - при ошибке Firestore → rollback counts/spirit, _error.set(err)</pre>
 
   <div class="tradeoff">
-    <p class="tradeoff-lead">Почему signals + effect, а не NgRx store для свечей</p>
+    <p class="tradeoff-lead">Почему двухфазное подношение (горит → затухает → persist), а не сразу increment</p>
     <ul>
-      <li>Состояние локально для домена «свечи», не нужен time-travel и middleware — <code>signal</code> + <code>computed</code> проще и быстрее в Angular 22.</li>
-      <li><code>effect</code> для sync с <code>UserProfileService.user()</code> — реактивная перезагрузка при login/logout без подписок в компонентах.</li>
-      <li>Decay через <code>timer</code> в effect с <code>onCleanup</code> — автоматическая отписка при destroy / level 0; альтернатива <code>setInterval</code> в компоненте — утечки и дубли при OnPush.</li>
-      <li>CandlesService в <code>core</code>, не в <code>features/altar</code> — profile и header тоже читают blessing level без circular imports.</li>
+      <li>UX: пользователь видит ритуал — свеча горит несколько секунд, потом гаснет и засчитывается в statistics.</li>
+      <li>Counts не меняются до завершения таймера — нельзя «накликать» 10 свечей за секунду в статистике.</li>
+      <li>Один <code>timer</code> на instanceId через <code>takeUntilDestroyed</code> — при destroy сервиса таймеры не утекают.</li>
+      <li>Альтернатива «сразу persist» — меньше магии, но теряется игровой feedback и сложнее откатывать визуал при ошибке.</li>
     </ul>
   </div>
 
   <div class="tradeoff">
-    <p class="tradeoff-lead">Почему withTimeout на Firestore, а не бесконечный loading</p>
+    <p class="tradeoff-lead">Почему dumb CandlesComponent + fat CandlesService, а не всё в компоненте</p>
     <ul>
-      <li>Firestore SDK не даёт встроенного deadline на <code>getDoc</code>/<code>setDoc</code> — при плохой сети UI зависал.</li>
-      <li><code>withTimeout(promise, 7000)</code> — reject с понятным сообщением → <code>error</code> signal → toast.</li>
-      <li>Альтернатива global loading spinner — пользователь не понимает, <em>что</em> зависло; toast + сброс error точечнее.</li>
+      <li>CDK и a11y остаются в UI; Firestore, decay, rollback — в сервисе → unit-тесты без TestBed DOM.</li>
+      <li>Сервис в <code>core</code> — header читает <code>isSpiritPleased</code>, sanctum читает <code>blessingLevel</code> без import из <code>features/altar</code>.</li>
+      <li>Facade — тонкий слой для toast и делегирования; page component не вызывает CandlesService напрямую.</li>
+      <li>Альтернатива smart component с inject Firestore — дублирование при втором consumer (profile).</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему rollback при ошибке Firestore, а не silent fail</p>
+    <ul>
+      <li>Optimistic UI только для «горящей» свечи; counts и spirit — после таймера, но до ack от Firestore.</li>
+      <li>При fail восстанавливаем <code>previousCounts</code> и <code>previousSpiritSatisfaction</code> — UI не врёт пользователю.</li>
+      <li><code>_error</code> signal → facade → toast с ключом <code>altar</code> — понятно, что не сохранилось.</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Spirit satisfaction decay — зачем timer в effect</p>
+    <ul>
+      <li>Геймификация: уровень благословения падает со временем, мотивирует возвращаться на алтарь.</li>
+      <li><code>effect(onCleanup)</code> подписывается на <code>timer(DECAY_INTERVAL)</code> только когда level &gt; 0.</li>
+      <li>Persist decay в Firestore — sanctum может использовать spirit level как input в branch judgment.</li>
     </ul>
   </div>
 
   <div class="say">
     <p class="say-lead">Что сказать на собеседовании</p>
-    <p>«I built the altar as a signals-first domain service. CandlesService owns all candle state, syncs to Firestore when the user profile changes, and runs a decay timer for the Machine Spirit satisfaction meter. The UI is dumb — it calls facade methods and binds to readonly signals. I chose effects over manual subscriptions because cleanup is automatic and it fits Angular 22 defaults.»</p>
+    <p>«Altar is a lazy-loaded feature with a thin page component and a presentational candles widget using CDK drag-drop and keyboard support. Domain logic lives in CandlesService in core — candle counts, lit candles, Machine Spirit satisfaction with decay, and Firestore sync on user change via effect. Offering is two-phase: immediate visual flame, then after a timer we persist counts with rollback on Firestore failure. AltarPageFacade shows contextual toasts on service errors. The header reads isSpiritPleased from the same service, so altar state is global game state, not page-local.»</p>
   </div>
 
-  <p class="file-list"><strong>Файлы:</strong> <code>core/services/candles/candles.service.ts</code> · <code>features/altar/facades/altar-page.facade.ts</code> · <code>features/altar/ui/candles/</code></p>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/signals">Signals</a> · <a href="https://angular.dev/guide/di/hierarchical-dependency-injection">DI hierarchy</a></p>
+  <p class="file-list"><strong>Файлы:</strong> <code>features/altar/ui/altar.component.ts</code> · <code>features/altar/ui/candles/candles.component.ts</code> · <code>core/services/candles/candles.service.ts</code> · <code>features/altar/facades/altar-page.facade.ts</code> · <code>shared/pipes/machine-spirit-state.pipe.ts</code></p>
+  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/drag-drop">Drag and drop</a> · <a href="https://angular.dev/guide/signals">Signals</a></p>
+</div>
+
+<div class="question" id="main">
+  <h2><span class="sprint-tag">S1</span> Main — Tarot API, facade и перевод расклада</h2>
+
+  <h3>Что делала</h3>
+  <ul>
+    <li>Реализовала <strong>главную страницу</strong> — первый user-facing flow проекта после layout.</li>
+    <li><strong>TarotService</strong> — thin HttpClient wrapper: <code>GET /api/reading?role=&amp;intent=</code>; role/intent как <code>signal</code> в сервисе.</li>
+    <li>Proxy dev (<code>proxy.conf.json</code>) + Netlify redirect prod → <code>deploytarot.com</code> — без backend в репо.</li>
+    <li><strong>MainPageFacade</strong> — единственный API для UI: loading, error, result, loadTarot().</li>
+    <li>UI: <strong>TarotOracleComponent</strong> (выбор role/intent), <strong>TarotReadingComponent</strong> (карты, flip animation, verdict, empty state).</li>
+    <li><strong>MyMemoryTranslationService</strong> — перевод ответа API с EN на активный язык (MyMemory public API).</li>
+    <li>Route providers: <code>MainPageFacade</code>, <code>TarotService</code>, <code>MyMemoryTranslationService</code> — scoped к главной, не root.</li>
+  </ul>
+
+  <h3>Технический поток draw cards</h3>
+  <pre>User picks role/intent (TarotService signals)
+  → MainComponent.onDrawCards() → MainPageFacade.loadTarot()
+
+loadTarot:
+  _isTarotLoading = true, _error = null
+  TarotService.loadReading().pipe(finalize, takeUntilDestroyed)
+  → next: _sourceResult.set(tarotResponse)
+  → error: _error.set (HttpErrorResponse.message)
+
+_sourceResult = linkedSignal(() => { role(); intent(); return null })
+  → смена role/intent сбрасывает результат без ручного clear
+
+effect (constructor):
+  when _sourceResult + activeLang change:
+    _isTranslationLoading = true
+    MyMemoryTranslationService.translateReading(source, lang)
+      → finalize: _isTranslationLoading = false
+      → next: _result.set(translated)
+      → error: _result.set(source)  // fallback на английский
+
+isLoading = computed(tarotLoading || translationLoading)</pre>
+
+  <h3>MyMemoryTranslationService — детали</h3>
+  <ul>
+    <li>Если язык EN — <code>of(reading)</code>, без HTTP.</li>
+    <li>Текст режется на chunks по <strong>500 bytes</strong> (UTF-8 через TextEncoder) — лимит MyMemory API.</li>
+    <li><code>mergeMap(..., 2)</code> — максимум 2 параллельных запроса перевода (rate limit + не блокировать UI).</li>
+    <li><code>forkJoin</code> для карт и verdict; <code>toArray + sort by index</code> — склеить chunks в правильном порядке.</li>
+    <li><code>catchError(() => of(text))</code> на chunk и на card — при fail показываем оригинал, не ломаем весь расклад.</li>
+    <li>Фильтр <code>MYMEMORY WARNING</code> в ответе — не показываем мусор от API.</li>
+  </ul>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему linkedSignal для source result, а не обычный signal</p>
+    <ul>
+      <li><code>linkedSignal</code> пересчитывается при смене <code>role()</code> или <code>intent()</code> и возвращает <code>null</code> — старый расклад не висит при новых настройках оракула.</li>
+      <li>Не нужны ручные <code>setRole/setIntent</code> с clear — меньше методов в facade, декларативная связь.</li>
+      <li>Translation effect реагирует на новый source — pipeline «fetch → translate → display» линейный.</li>
+      <li>Альтернатива: один signal + watch role/intent в effect с manual reset — больше императивного кода и риск забыть сброс.</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему два флага loading (tarot vs translation)</p>
+    <ul>
+      <li>Tarot API и MyMemory — разные endpoints с разной latency; пользователь видит прогресс «карты» и «перевод».</li>
+      <li><code>computed(isLoading)</code> блокирует кнопку draw на всём pipeline — нельзя спамить запросы.</li>
+      <li>Translation error не блокирует показ — fallback на EN текст в <code>_result</code>.</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему перевод в отдельном сервисе, а не в TarotService</p>
+    <ul>
+      <li>Single responsibility: TarotService только deploytarot API; translation — отдельный HTTP client к MyMemory.</li>
+      <li>Тестируется изолированно: chunking, mergeMap concurrency, fallback.</li>
+      <li>MainPageFacade orchestrates — UI не знает про chunk size и langpair.</li>
+      <li>Альтернатива backend proxy с переводом — out of scope (static SPA + Netlify redirect только для tarot).</li>
+    </ul>
+  </div>
+
+  <div class="say">
+    <p class="say-lead">Что сказать на собеседовании</p>
+    <p>«Main page follows our facade pattern: TarotService wraps the external reading API through a dev proxy and Netlify redirect. MainPageFacade owns loading and error signals. I used linkedSignal so changing role or intent clears the previous reading automatically. After fetch, an effect pipes the response through MyMemoryTranslationService — text is chunked to 500 bytes, translated with mergeMap concurrency 2, and reassembled in order. If translation fails, we fall back to English content so the user still sees cards. HTTP errors hit our interceptor for toast and set a local error signal for empty UI.»</p>
+  </div>
+
+  <p class="file-list"><strong>Файлы:</strong> <code>features/main/facades/main-page.facade.ts</code> · <code>features/main/data/api/services/tarot/tarot.service.ts</code> · <code>features/main/data/api/services/my-memory-translation/my-memory-translation.service.ts</code> · <code>features/main/ui/main.component.ts</code> · <code>proxy.conf.json</code></p>
+  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http">HttpClient</a> · <a href="https://angular.dev/guide/signals/linked-signal">linkedSignal</a> · <a href="https://rxjs.dev/api/operators/mergeMap">mergeMap</a></p>
+</div>
+
+<div class="question" id="ui-state">
+  <h2><span class="sprint-tag">S2</span> uiStateStore — тема, язык, persist</h2>
+
+  <h3>Что делала</h3>
+  <ul>
+    <li>Завела глобальный <strong>uiStateStore</strong> на <code>@ngrx/signals</code> — theme + language.</li>
+    <li><code>UI_STATE</code> InjectionToken с factory <code>initialUiState</code> — удобно подменять в тестах.</li>
+    <li><code>withMethods</code>: <code>setTheme</code>, <code>setLanguage</code>, <code>toggleTheme</code> — каждый метод <code>patchState</code> + async <code>persistUiState</code>.</li>
+    <li><code>withHooks.onInit</code> — три <code>effect</code> для синхронизации с внешним миром.</li>
+    <li>Интеграция: <code>LanguageSwitcherComponent</code>, <code>LayoutService.toggleTheme</code>, <code>AppComponent.theme</code> → <code>tuiTheme</code> на root.</li>
+    <li><code>provideAppInitializer</code> inject store при старте — store живёт до первого render.</li>
+    <li>Рефактор language handling: enum <code>Languages</code>, связка с Transloco и login flow.</li>
+  </ul>
+
+  <h3>Три effect при инициализации</h3>
+  <pre>1. userProfileService.user() → patchState(profile?.uiState ?? initialUiState)
+   Login: подтянуть theme/lang из Firestore users/{uid}.uiState
+   Logout: сброс на initialUiState
+
+2. store.theme() → themeService.setTheme()
+   Применить CSS/Taiga theme глобально
+
+3. store.language() → translocoService.load(lang).subscribe → setActiveLang
+   Подгрузить JSON переводов; onCleanup unsubscribe</pre>
+
+  <h3>Persist — когда пишем в Firestore</h3>
+  <pre>setTheme / setLanguage / toggleTheme:
+  patchState локально (UI мгновенно)
+  persistUiState():
+    if (!userProfileService.user()) return  // гость — только local
+    userProfileService.updateUiState(uid, { theme, language })</pre>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему NgRx signalStore для UI state, а не BehaviorSubject или localStorage</p>
+    <ul>
+      <li>Theme + language — truly global; нужен один source of truth для header, app root, Transloco.</li>
+      <li><code>signalStore</code> даёт methods + hooks в одном месте — меньше boilerplate чем root service с manual subjects.</li>
+      <li>Persist в Firestore только для auth user — настройки следуют за аккаунтом на других устройствах.</li>
+      <li>localStorage без auth — рассинхрон с Firestore profile; мы выбрали server truth после login.</li>
+      <li>Feature stores (candles, tarot) не в uiStateStore — разделение «chrome preferences» vs «domain data».</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему language effect грузит Transloco, а не только setActiveLang</p>
+    <ul>
+      <li><code>translocoService.load(language)</code> — async fetch <code>/i18n/{lang}.json</code> перед switch.</li>
+      <li>Без load — ключи мелькают или показывают fallback.</li>
+      <li><code>onCleanup</code> unsubscribe — при быстрой смене языка не применяется устаревший bundle.</li>
+      <li>HTTP к <code>/i18n/</code> исключён из error interceptor toast — иначе шум при каждой смене языка (см. раздел interceptor).</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему LayoutService читает store, а компоненты не inject store напрямую</p>
+    <ul>
+      <li>Layout — orchestration layer: theme, user, spirit pleased, mobile nav в одном месте.</li>
+      <li>Header получает <code>themeChanged</code> output → <code>layoutService.toggleTheme()</code> → store.</li>
+      <li>Меньше прямых зависимостей от store в leaf components — проще менять persist logic.</li>
+    </ul>
+  </div>
+
+  <div class="say">
+    <p class="say-lead">Что сказать на собеседовании</p>
+    <p>«uiStateStore is a root signalStore for theme and language. On init, an effect hydrates state from the Firebase user profile; another applies theme to ThemeService; a third loads Transloco bundles when language changes. User actions patch state immediately for snappy UI, then persist to Firestore users/{uid}.uiState if authenticated. Guests keep local state only until login. I used an InjectionToken for initial state so tests can override defaults without mocking Firestore.»</p>
+  </div>
+
+  <p class="file-list"><strong>Файлы:</strong> <code>core/store/ui-state.store.ts</code> · <code>core/store/tokens/ui-state.token.ts</code> · <code>core/ui/components/language-switcher/language-switcher.component.ts</code> · <code>core/services/layout/layout.service.ts</code> · <code>app.component.ts</code> · <code>app.config.ts</code></p>
+  <p class="docs"><strong>Документация:</strong> <a href="https://ngrx.io/guide/signals/signal-store">NgRx SignalStore</a> · <a href="https://angular.dev/guide/signals">Signals</a></p>
 </div>
 
 <div class="question" id="sanctum">
@@ -237,50 +448,87 @@ createRitualTimelineStream(request) {
 </div>
 
 <div class="question" id="errors">
-  <h2><span class="sprint-tag">S4</span> Обработка ошибок — единый стек</h2>
+  <h2><span class="sprint-tag">S4</span> HTTP interceptor — эволюция и связка с Main</h2>
 
-  <h3>Что делала</h3>
+  <h3>Что делала (итерации)</h3>
+  <ol>
+    <li><strong>v1</strong> — functional <code>httpErrorInterceptor</code> + черновик global <code>ErrorHandler</code>.</li>
+    <li><strong>v2</strong> — убрала global ErrorHandler для UX-ошибок: слишком generic, нет контекста фичи, дубли с facade.</li>
+    <li><strong>v3</strong> — финальный interceptor: HotToast + <code>toErrorMessage</code> + skip <code>/i18n/</code> + rethrow.</li>
+    <li>Параллельно: <code>withTimeout</code> для Firestore, toasts в facades (altar, shrift, auth), README-таблица «кто за что отвечает».</li>
+  </ol>
+
+  <h3>Код interceptor — что делает</h3>
+  <pre>export const httpErrorInterceptor: HttpInterceptorFn = (request, next) => {
+  return next(request).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (request.url.includes('/i18n/')) {
+        return throwError(() => error);  // без toast
+      }
+      hotToast.error(transloco('http_error_label') + toErrorMessage(error));
+      return throwError(() => error);    // subscriber всё ещё видит error
+    })
+  );
+};</pre>
+
+  <h3>Как interceptor стыкуется с Main и uiStateStore</h3>
   <ul>
-    <li><strong>httpErrorInterceptor</strong> (functional) — все HTTP ошибки → HotToast; исключение <code>/i18n/</code> (иначе двойной шум при смене языка).</li>
-    <li><strong>toErrorMessage</strong> — нормализация HttpErrorResponse / Error / unknown в строку для toast.</li>
-    <li><strong>withTimeout</strong> — обёртка Promise для Firestore с 7s deadline.</li>
-    <li>Firestore ошибки <strong>не в interceptor</strong> — в facade через <code>effect</code> на <code>service.error</code> или try/catch в методах (shrift, altar, sanctum, auth).</li>
-    <li>Создала <strong>AltarPageFacade</strong> с toast на ошибки CandlesService — эталон для остальных фич.</li>
-    <li>Отказалась от глобального ErrorHandler для UX-ошибок — пользователю нужен контекст фичи, не generic crash screen.</li>
+    <li><strong>Tarot API</strong> (<code>/api/reading</code>) — ошибка → toast из interceptor + <code>MainPageFacade._error</code> для empty/error UI.</li>
+    <li><strong>MyMemory translation</strong> — HTTP fail на chunk → <code>catchError</code> в сервисе возвращает оригинальный текст; расклад не пустой.</li>
+    <li><strong>Transloco /i18n/*.json</strong> — skip toast; иначе при каждой смене языка (uiStateStore effect) пользователь видит ложные ошибки.</li>
+    <li><strong>Firestore</strong> — interceptor не участвует; facade + <code>CandlesService.error</code> signal.</li>
   </ul>
 
-  <pre>// HTTP — централизованно
-httpErrorInterceptor → catchError → HotToast → rethrow
+  <pre>// Два слоя для HTTP
+Interceptor:  user-visible toast (global copy)
+Facade:       local error signal (feature UI state)
 
-// Firestore — контекст фичи
-CandlesService._error.set(err) → AltarPageFacade effect → toast с ключом 'altar'
-ShriftPageFacade try/catch on addSin/deleteSin → toast с ключом 'shrift'</pre>
+// Firestore — только facade + service error signal
+CandlesService._error → AltarPageFacade effect → toast 'altar'
+ConfessService throw → ShriftPageFacade try/catch → toast 'shrift'</pre>
 
   <div class="tradeoff">
-    <p class="tradeoff-lead">Почему два канала (HTTP interceptor vs facade), а не один global handler</p>
+    <p class="tradeoff-lead">Почему functional interceptor (HttpInterceptorFn), а не class-based</p>
     <ul>
-      <li>HTTP и Firestore — разные источники: interceptor видит только HttpClient; Firebase SDK бросает в Promise, не через HTTP pipeline.</li>
-      <li>Текст toast с контекстом фичи (<code>notifications.failure</code> + scope altar/shrift) — пользователь понимает, где сломалось.</li>
-      <li>Rethrow после toast в interceptor — facade/main может ещё выставить локальный error state для empty UI.</li>
-      <li>Global ErrorHandler хорош для непойманных исключений, но плох как единственный UX для ожидаемых сетевых сбоев.</li>
+      <li>Angular 15+ recommended: <code>inject()</code> внутри функции, без class boilerplate.</li>
+      <li>Регистрация <code>provideHttpClient(withInterceptors([httpErrorInterceptor]))</code> — tree-shakable, явный список.</li>
+      <li>Легко тестировать через <code>TestBed.runInInjectionContext</code>.</li>
     </ul>
   </div>
 
   <div class="tradeoff">
-    <p class="tradeoff-lead">Почему HotToast вместо TuiNotificationService</p>
+    <p class="tradeoff-lead">Почему rethrow после toast, а не swallow error</p>
     <ul>
-      <li>Единый glassmorphism стиль, stack, auto-dismiss — меньше кастомной вёрстки в каждой фиче.</li>
-      <li>Проще мокать в тестах facades (<code>HotToastService</code> stub).</li>
-      <li>Taiga остаётся для форм и layout — уведомления вынесены в специализированную библиотеку.</li>
+      <li><code>MainPageFacade.loadTarot</code> subscribe error handler выставляет <code>_error</code> — UI показывает empty state.</li>
+      <li>Если проглотить — facade думает, что success; loading сбросится через finalize, но result останется stale.</li>
+      <li>Facade может решить не дублировать toast (interceptor уже показал) — только local state.</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему skip /i18n/, а не отдельный HttpClient без interceptor</p>
+    <ul>
+      <li>Transloco loader использует тот же HttpClient — один клиент, один pipeline.</li>
+      <li>URL filter проще второго client instance и duplicate providers.</li>
+      <li>404 на missing locale — dev issue; не нужен scary toast пользователю при switch lang.</li>
+    </ul>
+  </div>
+
+  <div class="tradeoff">
+    <p class="tradeoff-lead">Почему убрали global ErrorHandler после первой версии</p>
+    <ul>
+      <li>ErrorHandler ловит всё подряд — including programming bugs; toast на каждый throw = noise.</li>
+      <li>Firestore и form errors уже handled в facades с правильным copy.</li>
+      <li>Оставили <code>provideBrowserGlobalErrorListeners()</code> для dev diagnostics, UX — через interceptor + facades.</li>
     </ul>
   </div>
 
   <div class="say">
     <p class="say-lead">Что сказать на собеседовании</p>
-    <p>«We split errors by transport: HttpClient goes through a functional interceptor with i18n skip for translation files. Firebase operations use shared toErrorMessage and withTimeout helpers, but toasts are shown at the facade layer so the message includes feature context. I explicitly rejected a single global handler for user-facing network errors because altar and shrift need different copy and recovery flows.»</p>
+    <p>«I implemented a functional HTTP error interceptor that shows a localized HotToast and rethrows so facades can update local error state — MainPageFacade uses that for tarot empty UI. We skip /i18n/ URLs because uiStateStore triggers Transloco loads on language change and those shouldn't spam errors. Firebase errors don't go through HttpClient, so they use shared toErrorMessage and withTimeout in services, with contextual toasts in facades. I initially tried a global ErrorHandler but removed it — feature-specific copy and recovery beat one generic handler.»</p>
   </div>
 
-  <p class="file-list"><strong>Файлы:</strong> <code>core/interceptors/http-error-interceptor.ts</code> · <code>shared/helpers/to-error-message.helper.ts</code> · <code>shared/helpers/with-timeout.helper.ts</code> · <code>features/altar/facades/altar-page.facade.ts</code> · <code>features/shrift/facades/shrift-page.facade.ts</code></p>
+  <p class="file-list"><strong>Файлы:</strong> <code>core/interceptors/http-error-interceptor.ts</code> · <code>app.config.ts</code> (provideHttpClient) · <code>shared/helpers/to-error-message.helper.ts</code> · <code>features/main/facades/main-page.facade.ts</code> · <code>features/altar/facades/altar-page.facade.ts</code></p>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/interceptors">Interceptors</a> · README таблица ошибок</p>
 </div>
 
@@ -345,26 +593,18 @@ ShriftPageFacade try/catch on addSin/deleteSin → toast с ключом 'shrift
 </div>
 
 <div class="question" id="shared">
-  <h2>Shared UX — scan effect, i18n, тема</h2>
+  <h2>Shared UX — scan effect, layout, i18n</h2>
 
   <h3>Что делала</h3>
   <ul>
-    <li><strong>ScanEffectDirective</strong> — host binding, CSS variables, <code>prefers-reduced-motion</code> в SCSS; навешен на <code>app.component</code> для атмосферы CRT.</li>
-    <li><strong>uiStateStore</strong> (NgRx Signals): theme + language, sync с Firestore <code>users/{uid}.uiState</code>, effects на Transloco и ThemeService.</li>
-    <li>i18n ключи для machine spirit, altar, sanctum, crystal ball route.</li>
-    <li>Тема light/dark через Taiga <code>tuiTheme</code> на root.</li>
+    <li><strong>ScanEffectDirective</strong> — host binding, CSS variables, <code>prefers-reduced-motion</code>; сначала на main/altar, затем на <code>app.component</code> app-wide.</li>
+    <li>Типографика и theme variables (light/dark) — SCSS variables для altar, header, main.</li>
+    <li>i18n ключи: machine spirit, altar, main/tarot, sanctum routes.</li>
+    <li>Layout component + LayoutService — mobile nav, logout, bridge к uiStateStore и CandlesService.</li>
   </ul>
 
-  <div class="tradeoff">
-    <p class="tradeoff-lead">Почему directive на root, а не CSS в каждой фиче</p>
-    <ul>
-      <li>Один host class <code>scan-effect</code> — DRY; фичи не знают про эффект.</li>
-      <li>Signal inputs (<code>scanEnabled</code>, <code>scanDuration</code>) — можно отключить на reduced-motion или в settings позже.</li>
-      <li>uiStateStore в root — язык/тема глобальны; persist только для authenticated user через UserProfileService.</li>
-    </ul>
-  </div>
-
-  <p class="file-list"><strong>Файлы:</strong> <code>shared/directives/scan-effect/</code> · <code>core/store/ui-state.store.ts</code> · <code>app.component.html</code></p>
+  <p class="file-list"><strong>См. также:</strong> раздел <a href="#ui-state">uiStateStore</a> — тема и язык.</p>
+  <p class="file-list"><strong>Файлы:</strong> <code>shared/directives/scan-effect/</code> · <code>core/ui/components/layout/</code> · <code>app.component.html</code></p>
 </div>
 
 <div class="question" id="stories">
@@ -380,7 +620,7 @@ ShriftPageFacade try/catch on addSin/deleteSin → toast с ключом 'shrift
 
   <h3>«Как у вас устроен state management?»</h3>
   <div class="say">
-    <p>«Мы не тащим один NgRx на всё. Глобально — uiStateStore на NgRx Signals для темы и языка. Feature state — signals в сервисах (CandlesService, ConfessService) или rxResource/resource в sanctum. UI не ходит в Firestore напрямую: только facade → service. Так проще тестировать и не смешивать HTTP и Firebase error paths.»</p>
+    <p>«Глобально — uiStateStore на NgRx Signals: theme и language с persist в Firestore после login. Main — MainPageFacade с linkedSignal и effect для tarot + translation pipeline. Altar — CandlesService в core с signals, computed, decay timer. Sanctum — rxResource для ritual timeline. UI не ходит в API/Firestore напрямую: page → facade → service. HTTP errors — interceptor; Firestore — error signal + facade toast.»</p>
   </div>
 
   <h3>«Почему Angular 22 / signals?»</h3>
@@ -397,14 +637,14 @@ ShriftPageFacade try/catch on addSin/deleteSin → toast с ключом 'shrift
 
   <h3>«Как ты работала в команде как тимлид?»</h3>
   <div class="say">
-    <p>«Я задала архитектурный стайлгайд и паттерн facade + error handling, ревьюила PR, мержила в develop. Фичи распределены: я — altar, sanctum, инфраструктура ошибок; коллеги — profile, части shrift/main. Общие сервисы в core, чтобы не было copy-paste Firestore логики. Документация в docs/ и README синхронизирована с реальным кодом.»</p>
+    <p>«Я задала архитектурный стайлгайд и паттерн facade + error handling, ревьюила PR, мержила в develop. Main, altar, uiStateStore, interceptor и sanctum — моя зона; коллеги — profile, части shrift. Общие сервисы в core (CandlesService, ConfessService), чтобы не было copy-paste Firestore. README и docs синхронизированы с реальным кодом.»</p>
   </div>
 
   <h3>Быстрый чеклист перед интервью</h3>
   <ul>
-    <li>Открыть код: <code>candles.service.ts</code>, <code>sanctum-ritual.service.ts</code>, <code>http-error-interceptor.ts</code></li>
+    <li>Открыть код: <code>main-page.facade.ts</code>, <code>candles.service.ts</code>, <code>ui-state.store.ts</code>, <code>http-error-interceptor.ts</code></li>
     <li>Прогнать: <code>pnpm typecheck && pnpm test</code></li>
-    <li>Повторить 3 потока: offer candle → Firestore; start ritual → timeline; HTTP tarot error → interceptor</li>
+    <li>4 потока: draw tarot → translate; offer candle → Firestore rollback; toggle theme → persist; HTTP error → interceptor + facade error</li>
     <li>Демо-видео ошибок — если спросят про UX loading/error</li>
     <li>Связанный справочник: <a href="angular-interview-excellent.html">Excellent 44 вопроса</a></li>
   </ul>
