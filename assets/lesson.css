@@ -97,6 +97,42 @@ pre {
 
 .tradeoff p:last-child { margin-bottom: 0; }
 
+.say {
+  border-left: 3px solid var(--correct);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  background: #f0fdf4;
+  font-size: 0.95rem;
+}
+
+.say-lead {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+  color: var(--correct);
+}
+
+.sprint-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 0.15em 0.45em;
+  border-radius: 3px;
+  color: var(--muted);
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.file-list {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0.5rem 0;
+}
+
+.file-list code {
+  font-size: 0.78rem;
+}
+
 .project {
   background: #fff8f0;
   border: 1px solid #f0d9b5;
@@ -454,6 +490,11 @@ body.ref-page {
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.45;
+}
+
+.hub-card--personal {
+  border-color: #c4b5fd;
+  background: linear-gradient(135deg, #faf5ff 0%, #fff 100%);
 }
 
 .hub-meta {
