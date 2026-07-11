@@ -219,127 +219,160 @@ return next(req).pipe(
 
 <div class="question" id="q-09">
   <h3><span class="q-num">9.</span> Что такое RxJS и зачем он в Angular?</h3>
-  <p><strong>RxJS</strong> (Reactive Extensions for JavaScript) — библиотека для работы с <strong>асинхронными потоками данных</strong> через Observable (<a href="https://rxjs.dev/guide/overview">rxjs.dev</a>). Паттерн: push-based — producer пушит значения подписчикам, а не pull (как iterator).</p>
-  <p><strong>Где Angular использует RxJS из коробки:</strong></p>
+  <p><strong>RxJS</strong> (Reactive Extensions for JavaScript) — библиотека для описания и композиции <strong>асинхронных последовательностей значений</strong> через тип <code>Observable&lt;T&gt;</code>. Каждое значение доставляется подписчикам по мере появления; поток завершается сигналом <code>complete</code> или <code>error</code>.</p>
+  <p><strong>Где Angular использует RxJS напрямую:</strong></p>
   <ul>
-    <li><code>HttpClient</code> — каждый запрос возвращает <code>Observable</code></li>
-    <li><code>Router</code> — <code>events</code>, <code>paramMap</code>, guards с Observable return</li>
-    <li>Forms — <code>valueChanges</code>, <code>statusChanges</code></li>
-    <li><code>async</code> pipe в шаблонах</li>
-    <li>HTTP interceptors — pipeline из операторов</li>
-    <li><code>PreloadingStrategy</code>, resolvers</li>
+    <li><code>HttpClient</code> — методы <code>get/post/...</code> возвращают <code>Observable</code></li>
+    <li><code>Router</code> — <code>events</code>, <code>paramMap</code>, <code>queryParamMap</code>; guards/resolvers могут возвращать <code>Observable</code></li>
+    <li>Reactive Forms — <code>valueChanges</code>, <code>statusChanges</code></li>
+    <li><code>async</code> pipe — подписка в шаблоне с автоматической отпиской</li>
+    <li>HTTP interceptors — цепочка операторов над <code>Observable&lt;HttpEvent&gt;</code></li>
+    <li><code>PreloadingStrategy.preload()</code> возвращает <code>Observable</code></li>
   </ul>
-  <p><strong>Angular 16+ и signals:</strong> RxJS смещается на <em>async boundaries</em> (сеть, таймеры, DOM events), а UI state держат <strong>signals</strong>. Мост — пакет <code>@angular/core/rxjs-interop</code> (<a href="https://angular.dev/ecosystem/rxjs-interop">документация</a>):</p>
+  <p><strong>Angular 16+ и signals:</strong> синхронное UI-состояние (loading, result, theme) — в <code>signal()</code> / <code>computed()</code>. RxJS остаётся на границах с асинхронным миром: HTTP, таймеры, DOM-события, длинные пайплайны. Мост — <code>@angular/core/rxjs-interop</code>:</p>
   <table style="width:100%;font-size:0.85rem">
     <tr><th>API</th><th>Назначение</th></tr>
-    <tr><td><code>toSignal(obs$, { initialValue })</code></td><td>Observable → signal (auto-unsubscribe)</td></tr>
-    <tr><td><code>toObservable(signal)</code></td><td>signal → Observable</td></tr>
-    <tr><td><code>takeUntilDestroyed(destroyRef)</code></td><td>Отписка при destroy без destroy$ Subject</td></tr>
-    <tr><td><code>rxResource()</code></td><td>Observable stream как async resource</td></tr>
+    <tr><td><code>toSignal(obs$, { initialValue })</code></td><td>Подписка на Observable → запись в signal; отписка при destroy</td></tr>
+    <tr><td><code>toObservable(signal)</code></td><td>Каждое изменение signal → emit в Observable</td></tr>
+    <tr><td><code>takeUntilDestroyed(destroyRef)</code></td><td>Оператор: завершить поток при destroy компонента/контекста</td></tr>
+    <tr><td><code>rxResource({ stream })</code></td><td>Observable как источник данных для Resource API</td></tr>
   </table>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><strong>Signals vs RxJS:</strong> signals — для state (loading, user, theme). RxJS — для <em>событий во времени</em> (HTTP sequences, debounced search, progressive streams). Не конвертируй всё в signals — потеряешь операторы композиции. Не держи весь state в Subjects — хуже DX чем signals в Angular 22.</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> RxJS — HTTP (Tarot, translation API), ritual timeline (<code>timer</code> + <code>merge</code>), ball charging (<code>timer(1800)</code>). Signals — loading/error/result в <code>MainPageFacade</code>. <code>toSignal(langChanges$)</code> в <code>PriestQuotesService</code>.
+    <ul>
+      <li><strong>Signals для state</strong> — проще читать шаблон и CD; нет встроенных операторов отмены/ретрая/композиции потоков.</li>
+      <li><strong>RxJS для async pipelines</strong> — мощная композиция (<code>switchMap</code>, <code>forkJoin</code>), но выше порог входа и риск утечек без дисциплины отписки.</li>
+      <li><strong>Дублирование</strong> — хранить то же состояние и в Subject, и в signal: два источника правды, сложнее отладка.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">RxJS interop in Angular</a> · <a href="https://rxjs.dev/">rxjs.dev</a></p>
-</div><div class="question" id="q-10">
+  <div class="project">
+    <strong>Проект:</strong> RxJS — <code>TarotService</code>, <code>MyMemoryTranslationService</code> (HTTP + <code>forkJoin</code>/<code>mergeMap</code>), <code>createRitualTimelineStream</code> (<code>timer</code> + <code>merge</code>), <code>BallComponent</code> (<code>timer</code>). Signals — <code>MainPageFacade</code> (loading/result/error). <code>toSignal(langChanges$)</code> в <code>PriestQuotesService</code>.
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">RxJS interop in Angular</a> · <a href="https://rxjs.dev/guide/overview">RxJS overview</a></p>
+</div>
+
+<div class="question" id="q-10">
   <h3><span class="q-num">10.</span> Observable, Observer и Subscription</h3>
-  <p>Три ключевых понятия RxJS (<a href="https://rxjs.dev/guide/observable">Observable guide</a>):</p>
-  <p><strong>Observable</strong> — «рецепт» потока. <em>Ленивый</em>: producer-функция выполняется только при <code>subscribe()</code>. Может emit 0..N значений, затем <code>complete</code> или <code>error</code>.</p>
-  <p><strong>Observer</strong> — потребитель. Контракт:</p>
+  <p><strong>Observable&lt;T&gt;</strong> — объект, который при вызове <code>subscribe(observer)</code> запускает функцию-подписчик (producer). До <code>subscribe</code> producer <strong>не выполняется</strong> (lazy). Может выдать 0..N значений типа <code>T</code>, затем <code>complete()</code> или <code>error(err)</code>.</p>
+  <p><strong>Observer&lt;T&gt;</strong> — интерфейс потребителя:</p>
   <pre>interface Observer&lt;T&gt; {
   next: (value: T) =&gt; void;
-  error?: (err: any) =&gt; void;
+  error?: (err: unknown) =&gt; void;
   complete?: () =&gt; void;
 }</pre>
-  <p>Можно передать три отдельных callback вместо объекта: <code>.subscribe(next, error, complete)</code>.</p>
-  <p><strong>Subscription</strong> — disposable handle:</p>
+  <p>В <code>subscribe</code> можно передать объект или три отдельных callback: <code>subscribe(next, error, complete)</code>.</p>
+  <p><strong>Subscription</strong> — результат <code>subscribe</code>; методы:</p>
   <ul>
-    <li><code>unsubscribe()</code> — отмена, вызов teardown logic producer'а</li>
-    <li><code>closed</code> — boolean флаг</li>
-    <li><code>add(teardown)</code> — регистрация дополнительного cleanup</li>
+    <li><code>unsubscribe()</code> — остановить поток и вызвать teardown-функцию producer'а</li>
+    <li><code>closed</code> — флаг, что подписка уже закрыта</li>
+    <li><code>add(fn)</code> — зарегистрировать дополнительный cleanup</li>
   </ul>
-  <p><strong>Teardown logic:</strong> при создании Observable через <code>new Observable(subscriber =&gt; { ... return () =&gt; cleanup })</code> — return function вызывается при unsubscribe. Критично для intervals, WebSocket, event listeners.</p>
-  <pre>const sub = http.get('/api').subscribe({
-  next: (data) =&gt; this.result.set(data),
-  error: (err) =&gt; this.error.set(err),
-  complete: () =&gt; console.log('stream finished'),
+  <p><strong>Teardown:</strong> в <code>new Observable(subscriber =&gt; { ...; return () =&gt; cleanup })</code> возвращаемая функция вызывается при <code>unsubscribe</code>. Нужна для <code>setInterval</code>, <code>addEventListener</code>, WebSocket — иначе ресурс остаётся висеть.</p>
+  <p><strong>Жизненный цикл одной подписки:</strong> <code>subscribe</code> → (опционально) несколько <code>next</code> → ровно один из исходов: <code>complete</code> или <code>error</code> → после этого <code>next</code> игнорируются.</p>
+  <pre>const sub = this.http.get&lt;TarotResponse&gt;('/api/reading').subscribe({
+  next: (data) =&gt; this._result.set(data),
+  error: (err) =&gt; this._error.set(err),
+  complete: () =&gt; this._loading.set(false),
 });
-// позже:
-sub.unsubscribe();</pre>
+// при destroy компонента до ответа:
+sub.unsubscribe(); // отменяет HTTP-запрос (XHR abort)</pre>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Забытый <code>subscribe()</code> без отписки на infinite stream (interval, Subject) = memory leak. HTTP GET complete после одного emit, но unsubscribe всё равно полезен если компонент destroy до ответа.</p>
-</div>
+    <ul>
+      <li><strong>HTTP GET</strong> — поток конечный (один <code>next</code> + <code>complete</code>), но <code>unsubscribe</code> до ответа всё равно отменяет запрос — важно при быстрой навигации.</li>
+      <li><strong>Infinite streams</strong> (<code>interval</code>, Subject без complete) — без отписки подписчик и producer остаются в памяти.</li>
+      <li><strong>Множественные subscribe</strong> на один cold Observable — отдельный запуск producer на каждую подписку (см. вопрос 15).</li>
+    </ul>
+  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Observable</a> · <a href="https://rxjs.dev/api/index/class/Subscription">Subscription</a></p>
-</div><div class="question" id="q-11">
-  <h3><span class="q-num">11.</span> Observable vs Promise (общее)</h3>
+</div>
+
+<div class="question" id="q-11">
+  <h3><span class="q-num">11.</span> Observable vs Promise</h3>
   <table style="width:100%;font-size:0.85rem">
-    <tr><th>Observable</th><th>Promise</th></tr>
-    <tr><td>Lazy — стартует при subscribe</td><td>Eager — executor запускается сразу</td></tr>
-    <tr><td>0..N значений (stream)</td><td>Ровно 1 resolve или reject</td></tr>
-    <tr><td>Cancellable (unsubscribe)</td><td>Не отменяется (только AbortSignal обход)</td></tr>
-    <tr><td>Синхронный или асинхронный emit</td><td>Всегда microtask-async после executor</td></tr>
-    <tr><td>Rich operator pipeline (map, switchMap…)</td><td>then/catch/finally chain</td></tr>
-    <tr><td>Multicast через Subject/share</td><td>Single consumer</td></tr>
+    <tr><th>Критерий</th><th>Observable</th><th>Promise</th></tr>
+    <tr><td>Старт выполнения</td><td>При <code>subscribe</code> (lazy)</td><td>Сразу при создании (eager)</td></tr>
+    <tr><td>Количество значений</td><td>0..N (<code>next</code> может быть многократным)</td><td>Одно: resolve или reject</td></tr>
+    <tr><td>Отмена</td><td><code>subscription.unsubscribe()</code></td><td>Нет встроенной; только через <code>AbortSignal</code> в API, которое его поддерживает</td></tr>
+    <tr><td>Композиция</td><td>Операторы в <code>.pipe()</code> — декларативный граф преобразований</td><td>Цепочка <code>then/catch/finally</code></td></tr>
+    <tr><td>Множественные потребители</td><td>Cold по умолчанию; multicast через <code>share</code>/<code>Subject</code></td><td>Один потребитель на settled promise</td></tr>
+    <tr><td>Синхронные значения</td><td><code>of(1)</code> может emit синхронно в том же stack frame</td><td>Executor синхронный; then-callback — в microtask</td></tr>
   </table>
-  <p><strong>Мосты:</strong></p>
+  <p><strong>Мосты RxJS ↔ Promise:</strong></p>
   <ul>
-    <li><code>lastValueFrom(obs$)</code> / <code>firstValueFrom(obs$)</code> — Observable → Promise (для async/await)</li>
-    <li><code>from(promise)</code> — Promise → Observable (один emit + complete)</li>
-    <li><code>async</code> pipe — управляет подпиской в template, auto-unsubscribe</li>
+    <li><code>firstValueFrom(obs$)</code> / <code>lastValueFrom(obs$)</code> — Promise из Observable (ошибка, если 0 или &gt;1 значений для first/last)</li>
+    <li><code>from(promise)</code> — Observable: один <code>next</code> + <code>complete</code> или <code>error</code></li>
+    <li><code>async</code> pipe — подписка в шаблоне без ручного Promise</li>
   </ul>
-  <p><strong>В Angular:</strong> HttpClient → Observable потому что HTTP в UI — stream problem: progress events, retry, race, combine. Guards/resolvers могут возвращать Observable, Promise или boolean.</p>
+  <p><strong>В Angular HttpClient</strong> возвращает Observable, потому что один HTTP-запрос может порождать несколько событий (<code>HttpEventType</code>: Sent, UploadProgress, ResponseHeader, Response), поддерживает отмену через unsubscribe и встраивается в interceptor pipeline.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Не переводи весь HTTP в <code>async/await</code> — потеряешь отмену запроса и композицию операторов. <code>firstValueFrom</code> уместен для одноразовой загрузки в <code>resource()</code>. В компонентах — <code>async</code> pipe или <code>takeUntilDestroyed</code>, не голый <code>subscribe()</code>.</p>
+    <ul>
+      <li><strong><code>async/await</code> + <code>firstValueFrom</code></strong> — читаемо для one-shot в <code>resource().loader</code> или guard; теряется пошаговая композиция операторов и отмена «из коробки» в цепочке.</li>
+      <li><strong>Observable в компоненте</strong> — <code>async</code> pipe или <code>takeUntilDestroyed</code>; голый <code>subscribe</code> без cleanup на infinite stream — утечка.</li>
+      <li><strong>Guards/resolvers</strong> — Angular принимает <code>boolean | UrlTree | Observable | Promise</code>; Observable удобен, если нужно дождаться нескольких async источников через операторы.</li>
+    </ul>
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Observable</a> · <a href="https://rxjs.dev/api/index/function/firstValueFrom">firstValueFrom</a></p>
 </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Observable vs Promise</a></p>
-</div><div class="question" id="q-12">
+
+<div class="question" id="q-12">
   <h3><span class="q-num">12.</span> Базовые RxJS-операторы в Angular</h3>
-  <p>Операторы — чистые функции в <code>.pipe(...)</code> (<a href="https://rxjs.dev/guide/operators">Operators guide</a>). Группы:</p>
-  <p><strong>Creation</strong> (создают Observable): <code>of</code>, <code>from</code>, <code>timer</code>, <code>interval</code>, <code>fromEvent</code>, <code>defer</code>, <code>EMPTY</code>, <code>throwError</code>.</p>
+  <p>Оператор — чистая функция вида <code>(source: Observable) =&gt; Observable</code>, вызывается в <code>source.pipe(op1, op2, ...)</code>. Порядок операторов задаёт порядок обработки событий.</p>
+  <p><strong>Creation</strong> (новый Observable без upstream): <code>of</code>, <code>from</code>, <code>timer</code>, <code>interval</code>, <code>fromEvent</code>, <code>defer</code> (отложенное создание при subscribe), <code>EMPTY</code>, <code>throwError</code>.</p>
   <p><strong>Transformation:</strong></p>
   <ul>
-    <li><code>map</code> — transform каждого value (DTO → domain model)</li>
-    <li><code>pluck</code> / <code>scan</code> — extract field / accumulator</li>
-    <li><code>switchMap</code>, <code>mergeMap</code>, <code>concatMap</code>, <code>exhaustMap</code> — higher-order (см. вопрос 19)</li>
+    <li><code>map(fn)</code> — преобразует каждое значение (sync)</li>
+    <li><code>switchMap/mergeMap/concatMap/exhaustMap</code> — преобразует в inner Observable и «разворачивает» (см. вопрос 19)</li>
+    <li><code>scan(accumulator)</code> — аккумулятор по потоку (как reduce, но emit на каждом шаге)</li>
   </ul>
-  <p><strong>Filtering:</strong> <code>filter</code>, <code>take(n)</code>, <code>takeUntil</code>, <code>takeWhile</code>, <code>distinctUntilChanged</code>, <code>debounceTime</code>, <code>throttleTime</code>, <code>skip</code>.</p>
+  <p><strong>Filtering:</strong> <code>filter</code>, <code>take(n)</code>, <code>takeUntil(notifier$)</code>, <code>takeWhile</code>, <code>distinctUntilChanged</code> (пропуск, если значение равно предыдущему), <code>debounceTime(ms)</code> (ждёт паузу между событиями), <code>throttleTime(ms)</code> (не чаще чем раз в N мс).</p>
   <p><strong>Combination:</strong></p>
   <ul>
-    <li><code>forkJoin</code> — ждёт complete всех sources, emit массив последних values (параллельные HTTP)</li>
-    <li><code>combineLatest</code> — emit при изменении любого source (form field A + B)</li>
-    <li><code>merge</code> — все sources в один поток (timeline events)</li>
-    <li><code>concat</code> — последовательно, один за другим</li>
-    <li><code>race</code> — первый emit wins</li>
+    <li><code>forkJoin({ a: obsA$, b: obsB$ })</code> — ждёт <code>complete</code> всех источников; один emit с последними значениями; если любой error — весь forkJoin error</li>
+    <li><code>combineLatest([a$, b$])</code> — emit при первом значении каждого и при каждом последующем изменении любого</li>
+    <li><code>merge(a$, b$)</code> — все события в один поток по мере поступления</li>
+    <li><code>concat(a$, b$)</code> — сначала полностью a$, после complete — b$</li>
+    <li><code>race(a$, b$)</code> — подписка на все; побеждает первый emit; остальные отписываются</li>
   </ul>
-  <p><strong>Utility:</strong> <code>tap</code> (side effect), <code>delay</code>, <code>finalize</code> (cleanup always), <code>catchError</code>, <code>retry</code>, <code>shareReplay</code>.</p>
-  <pre>// Проектный паттерн: parallel translation
-forkJoin({ cards: translateCards(), verdict: translateVerdict() }).pipe(
-  map(({ cards, verdict }) =&gt; ({ ...reading, cards, verdict_text: verdict }))
-);
+  <p><strong>Utility / error:</strong> <code>tap</code> (side effect без изменения значения), <code>finalize</code> (всегда при complete/error/unsubscribe), <code>catchError</code>, <code>retry</code>, <code>shareReplay({ bufferSize, refCount })</code>.</p>
+  <pre>// Проект: параллельный перевод карт и вердикта
+forkJoin({
+  cards: this.translateCardList(reading.cards, lang),
+  verdictText: this.translateText(reading.verdict_text, lang),
+}).pipe(map(({ cards, verdictText }) =&gt; ({ ...reading, cards, verdict_text: verdictText })));
 
-// Chunk translation с concurrency limit
-from(chunks).pipe(
-  mergeMap(chunk =&gt; translateChunk(chunk), 2), // max 2 parallel
+// Проект: чанки текста — max 2 одновременных HTTP
+from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
+  mergeMap(({ chunk, index }) =&gt;
+    this.translateChunk(chunk, lang).pipe(map((t) =&gt; ({ index, translated: t }))),
+    2 // concurrency limit
+  ),
   toArray(),
-  map(results =&gt; results.sort(...).join(' '))
+  map((items) =&gt; items.sort((a, b) =&gt; a.index - b.index).map((i) =&gt; i.translated).join(' ')),
 );</pre>
+  <div class="tradeoff">
+    <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
+    <ul>
+      <li><strong><code>forkJoin</code></strong> — быстрый параллелизм, но один failed source валит весь результат; для partial success — <code>mergeMap</code> + per-item <code>catchError</code>.</li>
+      <li><strong><code>combineLatest</code></strong> — удобен для форм (поле A + поле B), но emit на каждое изменение — нужен <code>debounceTime</code> или фильтр, чтобы не спамить.</li>
+      <li><strong><code>debounceTime</code> vs <code>throttleTime</code></strong> — debounce ждёт тишину (search input); throttle ограничивает частоту (scroll/resize).</li>
+    </ul>
+  </div>
   <div class="project">
-    <strong>Проект:</strong> <code>MyMemoryTranslationService</code> — <code>forkJoin</code> + <code>mergeMap(2)</code> + <code>toArray</code> + per-chunk <code>catchError</code>. <code>createRitualTimelineStream</code> — <code>timer</code> + <code>map</code> + <code>merge</code>. <code>MainPageFacade</code> — <code>finalize</code>. <code>BallComponent</code> — <code>timer(1800)</code>.
-</div>
+    <strong>Проект:</strong> <code>MyMemoryTranslationService</code> — <code>forkJoin</code> на уровне reading/cards, <code>mergeMap(2)</code> на чанках, <code>catchError(() =&gt; of(text))</code> на чанке и на всём тексте. <code>createRitualTimelineStream</code> — <code>timer</code> + <code>map</code> + <code>merge</code>. <code>MainPageFacade</code> — <code>finalize</code> для сброса loading.
+  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/operators">RxJS operators</a> · <a href="https://rxjs.dev/api">Operators API</a></p>
-</div><div class="question" id="q-13">
+</div>
+
+<div class="question" id="q-13">
   <h3><span class="q-num">13.</span> Кастомный Observable через new Observable()</h3>
-  <p>Когда готовые creators не подходят — обёртка callback/polling API (<a href="https://rxjs.dev/guide/observable">Creating observables</a>):</p>
+  <p>Создавайте кастомный Observable, когда внешний API основан на callback/listener, а готового creation-оператора нет (<code>fromEvent</code>, <code>timer</code>, <code>defer</code> не покрывают кейс).</p>
+  <p><strong>Вариант 1 — композиция существующих операторов</strong> (предпочтительно в проекте):</p>
   <pre>export function createRitualTimelineStream(request: RitualRequest): Observable&lt;RitualSessionState&gt; {
-  const judgment = analyzeBranch(...);
+  const judgment = analyzeBranch(request.branch, request.spiritLevel, request.ritualIntent);
   const lineEvents = judgment.litany.map((line, index) =&gt;
-    timer((index + 1) * DELAY_MS).pipe(
+    timer((index + 1) * RITUAL_LITANY_LINE_DELAY_MS).pipe(
       map(() =&gt; ({ litanyLines: judgment.litany.slice(0, index + 1), judgment: null }))
     )
   );
@@ -348,204 +381,246 @@ from(chunks).pipe(
   );
   return merge(...lineEvents, verdictEvent);
 }</pre>
-  <p>Hand-rolled через <code>new Observable</code>:</p>
-  <pre>new Observable&lt;T&gt;((subscriber) =&gt; {
+  <p><strong>Вариант 2 — <code>new Observable</code></strong> для callback API:</p>
+  <pre>new Observable&lt;Message&gt;((subscriber) =&gt; {
   const ws = new WebSocket(url);
   ws.onmessage = (e) =&gt; subscriber.next(JSON.parse(e.data));
   ws.onerror = (e) =&gt; subscriber.error(e);
   ws.onclose = () =&gt; subscriber.complete();
-  return () =&gt; ws.close(); // teardown при unsubscribe
+  return () =&gt; ws.close(); // teardown
 });</pre>
-  <p><strong>Правила:</strong></p>
+  <p><strong>Контракт producer:</strong></p>
   <ul>
-    <li>Вызывай <code>subscriber.next()</code>, затем <code>complete()</code> или <code>error()</code></li>
-    <li>После <code>complete</code>/<code>error</code> — никаких emit</li>
-    <li>Return teardown function для cleanup</li>
-    <li>Не забудь обработать unsubscribe до первого emit</li>
+    <li>После <code>subscriber.complete()</code> или <code>subscriber.error()</code> — нельзя вызывать <code>next</code></li>
+    <li>Teardown вызывается при <code>unsubscribe</code> — освобождайте listeners/timers/сокеты</li>
+    <li>Если subscribe синхронно отписали до первого emit — teardown всё равно должен отработать</li>
   </ul>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Предпочитай <code>timer</code>, <code>fromEvent</code>, <code>defer</code> когда возможно. В Angular 22 для async state рассмотри <code>resource()</code>/<code>rxResource()</code> вместо custom Observable + manual loading signals.</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> ritual timeline — не <code>new Observable</code>, а композиция <code>timer</code> + <code>merge</code> (читаемее, тестируемее). Подключён к <code>rxResource</code> в <code>SanctumRitualService</code>.
+    <ul>
+      <li><strong>Композиция <code>timer/merge/fromEvent</code></strong> — проще тестировать (мокаете время через marble tests / fakeAsync), меньше ручного кода.</li>
+      <li><strong><code>new Observable</code></strong> — полный контроль, но легко забыть teardown или нарушить контракт complete/error.</li>
+      <li><strong>Resource API</strong> — для load-one-result с loading/error signals; для progressive stream (ritual) — <code>rxResource</code> + Observable pipeline.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Creating Observables</a></p>
-</div><div class="question" id="q-14">
+  <div class="project">
+    <strong>Проект:</strong> sanctum timeline — только композиция <code>timer</code> + <code>merge</code>, без <code>new Observable</code>. Подключено через <code>rxResource({ stream })</code> в <code>SanctumRitualService</code>.
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Creating Observables</a> · <a href="https://rxjs.dev/api/index/class/Observable">Observable</a></p>
+</div>
+
+<div class="question" id="q-14">
   <h3><span class="q-num">14.</span> Subject и BehaviorSubject</h3>
-  <p><strong>Subject</strong> — одновременно Observable и Observer (<a href="https://rxjs.dev/guide/subject">Subject guide</a>). Multicast: один producer → много subscribers. <em>Hot</em> — не хранит начальное значение.</p>
-  <pre>const clicks$ = new Subject&lt;MouseEvent&gt;();
-clicks$.subscribe(e =&gt; console.log('A', e));
-clicks$.next(event); // только подписчики в момент emit получат</pre>
-  <p><strong>BehaviorSubject&lt;T&gt;</strong> — Subject + <strong>текущее значение</strong>:</p>
+  <p><strong>Subject&lt;T&gt;</strong> — одновременно <code>Observable</code> (можно подписаться) и <code>Observer</code> (можно вызвать <code>next/error/complete</code> извне). Это <strong>multicast</strong>: один источник → много подписчиков. Новый подписчик получает только события <em>после</em> момента подписки.</p>
+  <p><strong>BehaviorSubject&lt;T&gt;</strong> — Subject с обязательным начальным значением:</p>
   <ul>
-    <li>Новый subscriber сразу получает latest value</li>
-    <li><code>getValue()</code> — синхронное чтение (осторожно, outside reactive context)</li>
-    <li>Исторически: <code>currentUser$ = new BehaviorSubject&lt;User | null&gt;(null)</code></li>
+    <li>При <code>subscribe</code> сразу emit текущего значения (даже если новых <code>next</code> не было)</li>
+    <li><code>getValue()</code> — синхронное чтение последнего значения (вне reactive context — осторожно)</li>
+    <li>Типичное legacy-использование: <code>currentUser$ = new BehaviorSubject&lt;User | null&gt;(null)</code></li>
   </ul>
-  <p><strong>ReplaySubject(n)</strong> — буфер последних N values для новых подписчиков.</p>
-  <p><strong>AsyncSubject</strong> — emit только последнее value при complete (редко).</p>
-  <p><strong>В Angular 22:</strong> для app state → <code>signal()</code> / <code>signalStore</code>. Subjects остаются для:</p>
-  <ul>
-    <li>event bus между несвязанными модулями</li>
-    <li>мост к legacy API, возвращающему callbacks</li>
-    <li><code>takeUntil(destroy$)</code> паттерн (legacy; заменён на <code>takeUntilDestroyed</code>)</li>
-  </ul>
+  <p><strong>ReplaySubject(n)</strong> — буфер последних <code>n</code> значений; новый подписчик получает replay буфера, затем live события.</p>
+  <p><strong>AsyncSubject</strong> — хранит только последнее значение и emit его один раз при <code>complete</code>.</p>
+  <p><strong>Отличие от signal:</strong> Subject не интегрирован в Angular change detection; обновление через Subject в компоненте не обновит шаблон без <code>async</code> pipe или ручного <code>markForCheck</code>. Signal читается в шаблоне напрямую и участвует в CD graph.</p>
+  <p><strong>Когда Subject ещё уместен:</strong> event bus между несвязанными модулями; обёртка callback API; legacy код с <code>takeUntil(destroy$)</code>.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>BehaviorSubject ≈ signal, но без интеграции в template/CD. Root Subject без <code>complete()</code> при destroy приложения — leak. <code>shareReplay(1)</code> часто лучше Subject для shared HTTP cache.</p>
-</div>
+    <ul>
+      <li><strong>BehaviorSubject как store</strong> — привычно Rx-разработчикам, но нет <code>computed</code>/DevTools signals; риск забыть <code>complete</code> на root Subject.</li>
+      <li><strong><code>shareReplay(1)</code> вместо Subject для HTTP cache</strong> — кэширует последний ответ cold-потока; с <code>refCount: true</code> отписка от источника, когда нет подписчиков.</li>
+      <li><strong>Multicast без Subject</strong> — оператор <code>share()</code> / <code>publish()</code> на cold Observable.</li>
+    </ul>
+  </div>
   <div class="project">
-    <strong>Проект:</strong> нет BehaviorSubject/Subject для state — signals everywhere. <code>destroy$</code> Subject не используется; <code>takeUntilDestroyed</code> вместо этого.
+    <strong>Проект:</strong> Subject/BehaviorSubject для app state не используются. Отписка — <code>takeUntilDestroyed</code>, не <code>destroy$</code> Subject.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/subject">Subject</a> · <a href="https://rxjs.dev/api/index/class/BehaviorSubject">BehaviorSubject</a></p>
-</div><div class="question" id="q-15">
+</div>
+
+<div class="question" id="q-15">
   <h3><span class="q-num">15.</span> Hot vs Cold Observables</h3>
-  <p>Фундаментальное различие (<a href="https://rxjs.dev/guide/glossary-and-semantics#hot-and-cold-observables">Hot vs Cold</a>):</p>
+  <p>Различие определяется тем, <strong>разделяют ли подписчики один producer</strong> (<a href="https://rxjs.dev/guide/glossary-and-semantics#hot-and-cold-observables">Hot and cold</a>):</p>
   <table style="width:100%;font-size:0.85rem">
-    <tr><th>Cold</th><th>Hot</th></tr>
-    <tr><td>Producer на каждого subscriber</td><td>Один producer, много observers</td></tr>
-    <tr><td>Unicast (по умолчанию)</td><td>Multicast</td></tr>
-    <tr><td>HttpClient, <code>of</code>, <code>ajax</code>, <code>timer</code></td><td>DOM events, Subjects, shared streams</td></tr>
-    <tr><td>Два subscribe = два HTTP запроса</td><td>Два subscribe = те же events</td></tr>
+    <tr><th></th><th>Cold (по умолчанию)</th><th>Hot</th></tr>
+    <tr><td>Producer</td><td>Запускается заново на каждый <code>subscribe</code></td><td>Один producer на всех подписчиков</td></tr>
+    <tr><td>Данные</td><td>Подписчик получает полную последовательность с начала</td><td>Подписчик получает только события после момента подписки (кроме replay-буфера)</td></tr>
+    <tr><td>Примеры</td><td><code>HttpClient.get</code>, <code>of</code>, <code>ajax</code>, <code>defer</code></td><td>DOM events, <code>Subject</code>, shared socket stream</td></tr>
+    <tr><td>Два subscribe на HttpClient без share</td><td>Два отдельных HTTP-запроса</td><td>—</td></tr>
   </table>
-  <p><strong>Cold → Hot конвертация:</strong></p>
-  <pre>const shared$ = coldHttp$.pipe(
+  <p><strong>Cold → hot (share):</strong></p>
+  <pre>const cached$ = this.http.get&lt;Data&gt;('/api/data').pipe(
   shareReplay({ bufferSize: 1, refCount: true })
 );
-// refCount: true — unsubscribe source когда subscribers = 0</pre>
-  <p><strong>ConnectableObservable</strong> — <code>publish()</code> + <code>connect()</code> — ручной контроль старта hot stream (редко в app code).</p>
-  <p><strong>Практический тест:</strong> два <code>subscribe</code> на HttpClient без share → два network request. С <code>shareReplay(1)</code> → один request, оба получат cached result.</p>
+// первый subscribe — HTTP-запрос
+// второй subscribe до complete первого — тот же запрос, тот же результат
+// refCount: true — когда subscribers = 0, отписка от source</pre>
+  <p><strong><code>ConnectableObservable</code></strong> (<code>publish()</code> + <code>connect()</code>) — ручной старт multicast: без <code>connect()</code> подписчики не получают данных. В прикладном коде чаще <code>shareReplay</code>.</p>
+  <p><strong>Проверка на интервью:</strong> «Что произойдёт при двух subscribe на <code>http.get</code>?» — два запроса. «Что добавит <code>shareReplay(1)</code>?» — один запрос, общий последний результат.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><code>shareReplay</code> без <code>refCount</code> — source никогда не отписывается (memory leak на long-lived HTTP). <code>refCount: true</code> — preferred default.</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> HTTP-запросы «холодные» — каждый <code>loadTarot()</code> создаёт новый запрос. <code>PriestQuotesService</code> кэширует в Map. Ritual timeline — несколько таймеров в одной подписке <code>rxResource</code>.
+    <ul>
+      <li><strong><code>shareReplay</code> без <code>refCount</code></strong> — подписка на source не снимается при уходе всех consumers → утечка (особенно на long-polling/WebSocket wrapper).</li>
+      <li><strong>Кэш HTTP через shareReplay</strong> — ускоряет повторный доступ, но нужна стратегия инвалидации; иначе stale data.</li>
+      <li><strong>In-memory Map cache</strong> (как в <code>PriestQuotesService</code>) — явный контроль TTL/инвалидации vs неявный replay буфер.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable#cold-vs-hot-observables">Cold vs hot Observables</a></p>
-</div><div class="question" id="q-16">
+  <div class="project">
+    <strong>Проект:</strong> каждый <code>loadTarot()</code> — новый cold HTTP. <code>PriestQuotesService</code> — Map-кэш по языку, не <code>shareReplay</code>. Ritual timeline — hot-подобное поведение через <code>merge</code> таймеров в одной подписке <code>rxResource</code>.
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/glossary-and-semantics#hot-and-cold-observables">Hot and cold</a> · <a href="https://rxjs.dev/api/operators/shareReplay">shareReplay</a></p>
+</div>
+
+<div class="question" id="q-16">
   <h3><span class="q-num">16.</span> Как правильно отписываться от Observable</h3>
-  <p>Memory leaks — главный RxJS-риск в SPA. Иерархия предпочтений:</p>
+  <p>Утечка памяти возникает, когда подписка остаётся активной после уничтожения компонента или когда producer держит ссылку на closure с DOM/компонентом.</p>
+  <p><strong>Способы (от предпочтительного к legacy):</strong></p>
   <ol>
-    <li><strong><code>async</code> pipe</strong> в template — Angular управляет subscribe/unsubscribe при destroy. Идеально для display-only streams.</li>
-    <li><strong><code>takeUntilDestroyed(destroyRef)</code></strong> — inject <code>DestroyRef</code>, pipe перед subscribe. Работает в constructor (Angular 16+).</li>
-    <li><strong><code>toSignal(obs$)</code></strong> — автоматическая подписка/отписка при destroy компонента.</li>
-    <li><strong><code>effect</code> + <code>onCleanup</code></strong> — для подписок внутри signal effects:
+    <li><strong><code>async</code> pipe</strong> — подписка в шаблоне; Angular отписывается при destroy view. Подходит для отображения потока в UI.</li>
+    <li><strong><code>takeUntilDestroyed(destroyRef)</code></strong> — оператор в <code>pipe</code> перед <code>subscribe</code>; работает в injection context (constructor, field initializer). Angular 16+.</li>
+    <li><strong><code>toSignal(obs$)</code></strong> — подписка управляется инфраструктурой signal; отписка при destroy.</li>
+    <li><strong><code>effect</code> + <code>onCleanup</code></strong> — для подписки внутри effect:
       <pre>effect((onCleanup) =&gt; {
-  const sub = service.translate(...).subscribe(...);
+  const sub = stream$.subscribe((v) =&gt; doWork(v));
   onCleanup(() =&gt; sub.unsubscribe());
 });</pre>
     </li>
-    <li><strong><code>takeUntil(destroy$)</code></strong> — classic: Subject + <code>ngOnDestroy</code> → <code>destroy$.next(); destroy$.complete()</code>. Legacy, но ещё встречается.</li>
-    <li><strong>Finite streams</strong> — HTTP GET auto-completes, но unsubscribe при destroy всё равно отменяет in-flight request.</li>
+    <li><strong><code>takeUntil(notifier$)</code> + Subject</strong> — в <code>ngOnDestroy</code>: <code>destroy$.next(); destroy$.complete()</code>. Legacy-паттерн.</li>
+    <li><strong>Конечные потоки</strong> — HTTP после <code>complete</code> отписка не обязательна для GC подписчика, но <code>unsubscribe</code> до ответа отменяет запрос.</li>
   </ol>
-  <p><strong>НЕ нужна отписка:</strong> Observable завершился (<code>complete</code>/<code>error</code>) до destroy; <code>firstValueFrom</code> one-shot.</p>
+  <p><strong>Когда отписка не критична:</strong> one-shot <code>firstValueFrom</code>; поток уже завершился до destroy; root-сервис живёт lifetime приложения и поток infinite by design (с осторожностью).</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Голый <code>.subscribe()</code> в компоненте без отписки — признак проблемы (утечка памяти на infinite streams). Если subscribe в сервисе root-level — stream должен быть infinite-safe или self-completing. <code>Subscription.add()</code> — группировка нескольких subs для bulk unsubscribe.</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MainPageFacade.loadTarot()</code> — <code>takeUntilDestroyed(destroyRef)</code>. Translation effect — <code>onCleanup(() =&gt; subscription.unsubscribe())</code>. <code>BallComponent</code> — <code>timer().pipe(takeUntilDestroyed)</code>. Нет <code>destroy$</code> Subject нигде.
+    <ul>
+      <li><strong><code>async</code> pipe</strong> — нельзя использовать результат в TypeScript-классе без дублирования через <code>toSignal</code> или subscribe.</li>
+      <li><strong><code>subscribe</code> в компоненте</strong> — нужен явный cleanup; в facade допустим с <code>takeUntilDestroyed(destroyRef)</code>, если facade создаётся в injection context компонента/route.</li>
+      <li><strong>Subscribe в root service</strong> — сервис не уничтожается; infinite stream без complete держит память всё время сессии.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">takeUntilDestroyed</a> · <a href="https://rxjs.dev/api/index/class/Subscription#unsubscribe">unsubscribe</a></p>
-</div><div class="question" id="q-17">
+  <div class="project">
+    <strong>Проект:</strong> <code>MainPageFacade</code> — <code>takeUntilDestroyed(this.destroyRef)</code> на tarot load. Translation — <code>effect</code> + <code>onCleanup</code>. <code>BallComponent</code> — <code>timer().pipe(takeUntilDestroyed)</code>. <code>CandlesService</code> — <code>takeUntilDestroyed</code> на Firestore listener.
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">takeUntilDestroyed</a> · <a href="https://rxjs.dev/api/operators/takeUntil">takeUntil</a></p>
+</div>
+
+<div class="question" id="q-17">
   <h3><span class="q-num">17.</span> Подходы к state management в Angular</h3>
   <table style="width:100%;font-size:0.85rem">
-    <tr><th>Подход</th><th>Плюсы</th><th>Минусы</th><th>Когда</th></tr>
-    <tr><td>Component signals</td><td>Простейший</td><td>Не shared</td><td>Локальный UI state</td></tr>
-    <tr><td>Service + signals</td><td>Мало boilerplate, OnPush-friendly</td><td>Нет enforced pattern</td><td>Shared domain (candles, sins)</td></tr>
-    <tr><td>Facade + signals</td><td>Тестируемый orchestration layer</td><td>Дополнительный слой</td><td>HTTP-backed features</td></tr>
-    <tr><td>NgRx SignalStore</td><td>Composable features, less boilerplate vs classic NgRx</td><td>Learning curve</td><td>Global app state</td></tr>
-    <tr><td>NgRx Store (Redux)</td><td>DevTools, time-travel, strict flow</td><td>Много кода</td><td>Большие команды, complex domains</td></tr>
-    <tr><td>Service + BehaviorSubject</td><td>Знакомо Rx-ветеранам</td><td>Leaks, нет signal DX</td><td>Legacy code</td></tr>
+    <tr><th>Подход</th><th>Плюсы</th><th>Минусы</th><th>Когда выбирать</th></tr>
+    <tr><td>Signals в компоненте</td><td>Минимум кода, нативный CD</td><td>Не shared между компонентами</td><td>Локальный UI (toggle, tab index)</td></tr>
+    <tr><td>Service + signals</td><td>Shared state без RxJS boilerplate</td><td>Нет единого паттерна mutations</td><td>Доменные сервисы (candles, sins)</td></tr>
+    <tr><td>Facade + signals</td><td>Один API для UI; легко мокать в тестах</td><td>Дополнительный слой файлов</td><td>HTTP-backed features</td></tr>
+    <tr><td>NgRx SignalStore</td><td><code>withMethods</code>, <code>patchState</code>, composable features</td><td>Кривая обучения</td><td>Глобальный UI state (theme, lang)</td></tr>
+    <tr><td>NgRx Store (Redux)</td><td>DevTools, time-travel, строгий unidirectional flow</td><td>Много boilerplate (actions/reducers/effects)</td><td>Большие команды, сложный domain</td></tr>
+    <tr><td>Service + BehaviorSubject</td><td>Знакомо команде RxJS</td><td>Ручная отписка, нет signal DX</td><td>Legacy / постепенная миграция</td></tr>
   </table>
-  <p><strong>Рекомендация Angular 22:</strong> signals для state, RxJS для async pipelines. Facade на уровне feature — единственный API для UI.</p>
-  <pre>// Facade pattern — проект
-private readonly _loading = signal(false);
-public readonly loading = this._loading.asReadonly();
+  <p><strong>Практика Angular 22:</strong> state → signals (<code>signal</code>, <code>computed</code>, SignalStore). Async work → RxJS внутри facade/service, результат пишется в signals. UI читает только facade public API (<code>readonly loading = ...asReadonly()</code>).</p>
+  <pre>// Facade — проект
+private readonly _tarotLoading = signal(false);
 public readonly isLoading = computed(() =&gt; this._tarotLoading() || this._translationLoading());
 
-loadTarot() {
-  this._loading.set(true);
-  this.api.load().pipe(finalize(() =&gt; this._loading.set(false)), takeUntilDestroyed())
-    .subscribe(result =&gt; this._result.set(result));
+loadTarot(): void {
+  this._tarotLoading.set(true);
+  this.tarotService.getReading(params).pipe(
+    finalize(() =&gt; this._tarotLoading.set(false)),
+    takeUntilDestroyed(this.destroyRef),
+  ).subscribe({ next: (r) =&gt; this._result.set(r), error: (e) =&gt; this._error.set(e) });
 }</pre>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>NgRx Store overkill для SPA с 5 фичами. Service без facade → UI вызывает HTTP напрямую → не тестируется. SignalStore vs hand-rolled signals: store даёт <code>withMethods</code>, <code>withHooks</code>, <code>patchState</code> из коробки.</p>
-</div>
+    <ul>
+      <li><strong>Facade без NgRx Store</strong> — меньше ceremony, но нет Redux DevTools; отладка через unit-тесты facade и signal snapshots.</li>
+      <li><strong>NgRx Store на маленьком SPA</strong> — избыточен: actions/reducers для 5 экранов дороже facade + signals.</li>
+      <li><strong>UI вызывает HttpClient напрямую</strong> — нет слоя для тестов и единообразной обработки loading/error.</li>
+    </ul>
+  </div>
   <div class="project">
-    <strong>Проект:</strong> <code>uiStateStore</code> (NgRx Signals) — theme/lang + Firestore sync. Facades per feature (<code>MainPageFacade</code>, <code>ShriftPageFacade</code>). Shared services (<code>CandlesService</code>, <code>ConfessService</code>) — signal state, reused altar/shrift/profile.
+    <strong>Проект:</strong> <code>uiStateStore</code> (NgRx SignalStore) — theme/lang + sync Firestore. Facades: <code>MainPageFacade</code>, <code>ShriftPageFacade</code>. Shared: <code>CandlesService</code>, <code>ConfessService</code> — signals, reused в altar/shrift/profile.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/signals">Signals</a> · <a href="https://ngrx.io/guide/signals">NgRx Signals</a></p>
-</div><div class="question" id="q-18">
+</div>
+
+<div class="question" id="q-18">
   <h3><span class="q-num">18.</span> Обработка ошибок и retry в RxJS</h3>
-  <p>Стратегии обработки ошибок (<a href="https://rxjs.dev/guide/operators#error-handling-operators">Error handling operators</a>):</p>
-  <p><strong>1. catchError</strong> — перехват в pipeline, recovery или rethrow:</p>
+  <p>Ошибка в Observable — отдельный канал: после <code>subscriber.error(err)</code> поток для этой подписки завершён; последующие <code>next</code> не доставляются.</p>
+  <p><strong><code>catchError(project)</code></strong> — перехватывает error и возвращает <em>новый</em> Observable (recovery stream):</p>
   <pre>.pipe(
   catchError((err: HttpErrorResponse) =&gt; {
-    if (err.status === 404) return of(fallbackData);  // замена потока
-    return throwError(() =&gt; err);                      // проброс дальше
+    if (err.status === 404) return of(fallbackData);   // подмена потока
+    return throwError(() =&gt; err);                     // проброс дальше
   })
 )</pre>
-  <p><strong>2. retry / retryWhen</strong> — переподписка на source:</p>
-  <pre>retry({ count: 3, delay: 1000 })
-retry({ delay: (err, retryCount) =&gt; timer(retryCount * 1000) }) // backoff</pre>
-  <p>Только для <strong>идемпотентных</strong> операций (GET). POST без idempotency key — опасно.</p>
-  <p><strong>3. finalize</strong> — выполняется при complete, error или unsubscribe (сброс loading):</p>
-  <pre>.pipe(finalize(() =&gt; this._loading.set(false)))</pre>
-  <p><strong>4. Слои в Angular app:</strong></p>
+  <p><strong><code>retry(config)</code> / <code>retryWhen</code></strong> — повторная подписка на source после error. Параметры: <code>count</code>, <code>delay</code>, exponential backoff через <code>timer(retryCount * 1000)</code>.</p>
+  <p>Применять retry только к <strong>идемпотентным</strong> операциям (GET, safe read). POST/PUT без idempotency key — риск дублирования записей на сервере.</p>
+  <p><strong><code>finalize(fn)</code></strong> — вызывается при любом завершении: <code>complete</code>, <code>error</code> или <code>unsubscribe</code>. Типично: <code>loading.set(false)</code>.</p>
+  <p><strong>Слои в Angular-приложении:</strong></p>
   <ol>
-    <li>Interceptor — global toast, re-throw</li>
-    <li>Service/Facade — map to domain error signal, fallback value</li>
-    <li>Component — display from facade (редко catch HTTP)</li>
+    <li>HTTP interceptor — глобальный toast/log, затем <code>throwError</code> (не глотать)</li>
+    <li>Facade/service — маппинг в domain error signal или fallback value</li>
+    <li>Component — отображает <code>facade.error()</code>, не ловит HTTP напрямую</li>
   </ol>
-  <p><strong>5. Per-item fallback</strong> (проект):</p>
-  <pre>mergeMap(chunk =&gt; translateChunk(chunk).pipe(
-  catchError(() =&gt; of(originalChunk)) // один чанк failed → оригинал
-))</pre>
+  <p><strong>Partial failure</strong> — когда падает элемент коллекции, а не весь поток:</p>
+  <pre>mergeMap((chunk) =&gt;
+  this.translateChunk(chunk).pipe(
+    catchError(() =&gt; of(chunk)) // fallback на исходный текст чанка
+  )
+)</pre>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><code>catchError</code> returning <code>of(null)</code> глотает ошибку — UI не узнает о failure. Лучше explicit error state signal. <code>retry</code> на infinite без backoff — DDoS свой же API.</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> interceptor — toast + re-throw (кроме <code>/i18n/</code>). <code>MainPageFacade</code> — <code>HttpErrorResponse</code> vs unknown в error signal; translation fallback на source text при ошибке перевода. Translation chunks — per-chunk <code>catchError(() =&gt; of(text))</code>.
+    <ul>
+      <li><strong><code>catchError(() =&gt; of(null))</code></strong> — UI не видит failure; лучше явный error signal или rethrow после логирования.</li>
+      <li><strong><code>retry</code> без лимита count</strong> — может перегрузить API; нужны count и backoff delay.</li>
+      <li><strong>Только interceptor</strong> — нет контекста фичи; facade всё равно нужен для специфичных сообщений и recovery.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/api/operators/catchError">catchError</a> · <a href="https://rxjs.dev/api/operators/retry">retry</a></p>
-</div><div class="question" id="q-19">
+  <div class="project">
+    <strong>Проект:</strong> <code>httpErrorInterceptor</code> — toast + rethrow, кроме <code>/i18n/</code>. <code>MainPageFacade</code> — различает <code>HttpErrorResponse</code> и unknown errors в signal. Translation — per-chunk <code>catchError(() =&gt; of(text))</code>, whole-text fallback при полном сбое.
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/api/operators/catchError">catchError</a> · <a href="https://rxjs.dev/api/operators/retry">retry</a> · <a href="https://rxjs.dev/api/operators/finalize">finalize</a></p>
+</div>
+
+<div class="question" id="q-19">
   <h3><span class="q-num">19.</span> Higher-order mapping operators — в чём разница?</h3>
-  <p>Higher-order mapping — outer stream emit value → создаётся <strong>inner Observable</strong> → flatten в output (<a href="https://rxjs.dev/guide/operators#higher-order-observables">Higher-order observables</a>). Самая частая RxJS-тема на интервью.</p>
+  <p><strong>Higher-order mapping</strong> — оператор принимает значение из outer stream и возвращает <strong>inner Observable</strong>; результат inner подписок «разворачивается» в output stream (<a href="https://rxjs.dev/guide/operators#higher-order-observables">Higher-order observables</a>).</p>
+  <p>На каждое значение outer Observable оператор решает: подписаться на новый inner, ждать ли завершения предыдущего inner, запускать параллельно или игнорировать outer, пока inner активен.</p>
   <table style="width:100%;font-size:0.85rem">
-    <tr><th>Оператор</th><th>Concurrency</th><th>Отмена предыдущего inner</th><th>Use case</th></tr>
-    <tr><td><code>switchMap</code></td><td>1 inner</td><td>Да — unsubscribe previous</td><td>Search-as-you-type, route params → fetch</td></tr>
-    <tr><td><code>mergeMap</code> / <code>flatMap</code></td><td>Все параллельно (или limit N)</td><td>Нет</td><td>Parallel HTTP, N chunks (<code>mergeMap(fn, 2)</code>)</td></tr>
-    <tr><td><code>concatMap</code></td><td>1 inner, очередь</td><td>Ждёт complete предыдущего</td><td>Sequential writes, order matters</td></tr>
-    <tr><td><code>exhaustMap</code></td><td>1 inner</td><td>Игнорирует новые outer пока busy</td><td>Double-submit protection</td></tr>
+    <tr><th>Оператор</th><th>Поведение при новом outer emit</th><th>Параллельность inner</th><th>Типичный сценарий</th></tr>
+    <tr><td><code>switchMap</code></td><td>Отписывается от предыдущего inner</td><td>Максимум 1 active inner</td><td>Search: нужен только ответ последнего запроса</td></tr>
+    <tr><td><code>mergeMap</code></td><td>Подписывается на новый inner, старые продолжают</td><td>Все inner параллельно (или лимит N)</td><td>Параллельные HTTP; чанки с <code>mergeMap(fn, 2)</code></td></tr>
+    <tr><td><code>concatMap</code></td><td>Ставит inner в очередь</td><td>1 inner, остальные ждут complete</td><td>Последовательные записи, порядок важен</td></tr>
+    <tr><td><code>exhaustMap</code></td><td>Игнорирует outer, пока текущий inner не завершён</td><td>1 inner; новые outer dropped</td><td>Защита от double-submit</td></tr>
   </table>
-  <pre>// switchMap — только последний search
-searchInput$.pipe(
+  <pre>// switchMap: при новом term предыдущий HTTP отменяется (unsubscribe inner)
+searchControl.valueChanges.pipe(
   debounceTime(300),
   distinctUntilChanged(),
-  switchMap(term =&gt; this.api.search(term)) // отменяет предыдущий HTTP
+  switchMap((term) =&gt; this.api.search(term)),
 );
 
-// mergeMap(2) — max 2 parallel (проект)
-from(chunks).pipe(mergeMap(c =&gt; translate(c), 2));
+// mergeMap(2): не более 2 одновременных translateChunk — проект
+from(chunks).pipe(mergeMap((c) =&gt; this.translateChunk(c), 2));
 
-// exhaustMap — кнопка submit
-submit$.pipe(exhaustMap(() =&gt; this.api.save(data))); // клики пока save — ignored</pre>
-  <p><strong>Marble diagram intuition:</strong> switch = переключатель; merge = все сразу; concat = очередь; exhaust = занят, не принимаю новые.</p>
-  <p><strong>Выбор оператора</strong> = выбор semantics отмены и concurrency. Неправильный оператор → race conditions, duplicate POST, stale search results.</p>
+// exhaustMap: повторные клики Submit игнорируются до завершения save
+submitClick$.pipe(exhaustMap(() =&gt; this.api.save(formValue)));</pre>
+  <p><strong>Типичные ошибки выбора оператора:</strong></p>
+  <ul>
+    <li><code>mergeMap</code> без лимита на 100 элементов → 100 параллельных HTTP → rate limit, исчерпание лимита браузера на соединения (~6 на origin)</li>
+    <li><code>switchMap</code> на submit формы → при быстрых кликах предыдущие save отменяются, данные могут не сохраниться → нужен <code>exhaustMap</code></li>
+    <li><code>concatMap</code> для search → очередь запросов, UI показывает устаревшие результаты с задержкой → нужен <code>switchMap</code></li>
+  </ul>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><code>mergeMap</code> без concurrency limit на 100 items → 100 parallel HTTP → rate limit / browser connection cap. Всегда указывай limit или используй <code>concatMap</code> для sequential. <code>switchMap</code> на submit form — потеряешь предыдущие saves (нужен exhaustMap).</p>
-</div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MyMemoryTranslationService.translateText</code> — <code>mergeMap(..., 2)</code> для rate-limited translation API. Route params search не используется; tarot load — простой subscribe без higher-order. Sanctum timeline — <code>merge</code> (не mapping), несколько timer streams параллельно.
+    <ul>
+      <li><strong><code>switchMap</code></strong> — отмена устаревших запросов экономит сеть, но теряются in-flight результаты, если они всё ещё нужны.</li>
+      <li><strong><code>mergeMap</code> с concurrency</strong> — баланс скорости и нагрузки на API; лимит подбирается под rate limits (в проекте: 2).</li>
+      <li><strong><code>concatMap</code></strong> — гарантия порядка ценой latency; для независимых чанков перевода — избыточен.</li>
+    </ul>
   </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/higher-order-observables">Higher-order Observables</a></p>
-</div><!-- ═══════════════════ FORMS ═══════════════════ -->
+  <div class="project">
+    <strong>Проект:</strong> <code>MyMemoryTranslationService.translateText</code> — <code>mergeMap(..., 2)</code> из-за лимита MyMemory API и размера чанка 500 байт. Tarot load — прямой subscribe без higher-order. Sanctum — <code>merge</code> нескольких <code>timer</code> (не mapping operator, а объединение потоков).
+  </div>
+  <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/higher-order-observables">Higher-order Observables</a> · <a href="https://rxjs.dev/api/operators/switchMap">switchMap</a> · <a href="https://rxjs.dev/api/operators/mergeMap">mergeMap</a></p>
+</div>
+
+<!-- ═══════════════════ FORMS ═══════════════════ -->
 <h2 id="forms">Forms</h2>
 
 <div class="question" id="q-20">
