@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Angular Interview — уровень Excellent (44 вопроса)</title>
+  <title>Angular Interview — уровень Excellent (40 вопросов)</title>
   <link rel="stylesheet" href="../assets/lesson.css">
 </head>
 <body class="ref-page">
@@ -11,7 +11,7 @@
 <div class="ref-layout">
 
 <nav class="ref-sidebar" aria-label="Оглавление вопросов">
-  <p class="ref-sidebar-title">44 вопроса</p>
+  <p class="ref-sidebar-title">40 вопросов</p>
 
   <p class="ref-sidebar-group"><a href="#http">HTTP</a></p>
   <a href="#q-01"><span class="q-link-num">01</span> HttpClientModule</a>
@@ -66,18 +66,12 @@
   <a href="#q-38"><span class="q-link-num">38</span> Динамические компоненты</a>
   <a href="#q-39"><span class="q-link-num">39</span> ngComponentOutlet</a>
   <a href="#q-40"><span class="q-link-num">40</span> @defer</a>
-
-  <p class="ref-sidebar-group"><a href="#project">Проект</a></p>
-  <a href="#q-41"><span class="q-link-num">41</span> Вклад в спринт</a>
-  <a href="#q-42"><span class="q-link-num">42</span> Навигация по коду</a>
-  <a href="#q-43"><span class="q-link-num">43</span> Демо приложения</a>
-  <a href="#q-44"><span class="q-link-num">44</span> Решения и сложности</a>
 </nav>
 
 <main class="ref-content">
 
 <h1>Angular Interview — уровень Excellent</h1>
-<p>Ответы уровня Excellent: глубина, <strong>явные компромиссы</strong> (что выигрываем / что теряем), привязка к <strong>ngKittyDebug</strong>. У каждого вопроса — ссылки на документацию.</p>
+<p>Ответы уровня Excellent: глубина и <strong>явные компромиссы</strong> (что выигрываем / что теряем). У каждого вопроса — ссылки на документацию.</p>
 
 <!-- ═══════════════════ HTTP ═══════════════════ -->
 <h2 id="http">HTTP</h2>
@@ -90,26 +84,20 @@
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p>модульный подход тащил всё разом; функциональные providers позволяют подключать только нужное. Interceptors переехали с class-based <code>HTTP_INTERCEPTORS</code> на <code>HttpInterceptorFn</code> — проще тестировать, не нужен <code>@Injectable()</code>.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>app.config.ts</code> — <code>provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor]))</code>. Явно выбран XHR-бэкенд; глобальный toast об ошибках через functional interceptor.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/api/common/http/provideHttpClient">provideHttpClient</a> · <a href="https://angular.dev/api/common/http/HttpClientModule">HttpClientModule (legacy)</a></p>
 </div><div class="question" id="q-02">
   <h3><span class="q-num">2.</span> Как делать HTTP-запросы через HttpClient?</h3>
   <p>Инжектируем <code>HttpClient</code> и вызываем типизированные методы — <code>get&lt;T&gt;()</code>, <code>post</code>, <code>put</code>, <code>patch</code>, <code>delete</code>, <code>head</code>, <code>options</code>. Каждый возвращает <strong>cold Observable</strong> (ленивый поток: сеть не трогаем, пока нет <code>subscribe</code>) — обычно один emit, затем complete или error.</p>
   <pre>private readonly http = inject(HttpClient);
 
-getReading(params: TarotParams): Observable&lt;TarotResponse&gt; {
-  return this.http.get&lt;TarotResponse&gt;(this.tarotUrl, { params: { ... } });
+getReading(params: QueryParams): Observable&lt;ApiResponse&gt; {
+  return this.http.get&lt;ApiResponse&gt;(this.apiUrl, { params: { ... } });
 }</pre>
   <p>Опции: <code>headers</code>, <code>params</code> (<code>HttpParams</code>), <code>responseType</code>, <code>observe</code> (<code>'body' | 'events' | 'response'</code>), <code>reportProgress</code>, <code>context</code> (метаданные запроса для interceptors).</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><strong>vs fetch:</strong> <code>withFetch()</code> использует Fetch API — лучше для SSR/edge; XHR даёт progress загрузки. <strong>vs Promise:</strong> Observable поддерживает отмену через <code>unsubscribe</code>, retry, композицию — критично при destroy компонента.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> тонкий API-слой — <code>TarotService</code> (GET tarot), <code>MyMemoryTranslationService</code> (параллельный перевод чанков через <code>forkJoin</code>), <code>TranslocoHttpLoader</code> (i18n JSON).
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/making-requests">Making HTTP requests</a> · <a href="https://angular.dev/api/common/http/HttpClient">HttpClient API</a></p>
 </div><div class="question" id="q-03">
   <h3><span class="q-num">3.</span> Observable vs Promise для HTTP-ответов?</h3>
@@ -155,9 +143,6 @@ return next(req).pipe(
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><strong>Только interceptor:</strong> теряется контекст фичи — facade всё равно нужен для специфичных сообщений. <strong>catchError в каждом сервисе:</strong> дублирование — разделяй ответственность.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>httpErrorInterceptor</code> пропускает <code>/i18n/</code> (отсутствие перевода не должно показывать toast). <code>MainPageFacade</code> различает <code>HttpErrorResponse</code> и неизвестные ошибки, записывая в signal.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/making-requests#handling-request-failure">Handling request failure</a></p>
 </div><div class="question" id="q-05">
   <h3><span class="q-num">5.</span> Оптимизация HTTP-запросов и кэширование?</h3>
@@ -173,9 +158,6 @@ return next(req).pipe(
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p>Кэш vs актуальность: паттерн stale-while-revalidate — показать кэш, обновить в фоне. Перекэширование i18n или user-specific данных даёт баги.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>PriestQuotesService</code> — <code>Map&lt;lang, quotes&gt;</code> перед Firestore. <code>MyMemoryTranslationService</code> — чанки с лимитом concurrency. <code>UserStateStrategy</code> выборочно прелоадит auth/guest routes.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/setup">HTTP setup</a> · <a href="https://angular.dev/guide/http/security">HTTP security</a></p>
 </div><div class="question" id="q-06">
   <h3><span class="q-num">6.</span> Что такое HttpInterceptor и как он работает?</h3>
@@ -192,7 +174,7 @@ return next(req).pipe(
   <p><strong>Плохо подходит:</strong> фича-специфичные validation messages, ошибки которые на одном экране глотаются, а на другом показываются, бизнес-логика принятия решений.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Используй <code>HttpContext</code> tokens для opt in/out на уровне запроса (<code>SKIP_ERROR_TOAST</code>). В проекте фильтрация по URL-паттерну для i18n — та же идея.</p>
+    <p>Используй <code>HttpContext</code> tokens для opt in/out на уровне запроса (<code>SKIP_ERROR_TOAST</code>). фильтрация по URL-паттерну для i18n — та же идея.</p>
 </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/interceptors">Interceptors guide</a></p>
 </div><div class="question" id="q-08">
@@ -208,11 +190,8 @@ return next(req).pipe(
   <p><strong>Authorization (что тебе можно):</strong> обычно на сервере; на клиенте — <strong>guards</strong> (<code>canMatch</code>, <code>canActivate</code>) блокируют маршруты, а не interceptors. Interceptor обрабатывает 401/403 глобально.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Firebase Auth в проекте идёт через SDK напрямую, не через Bearer headers — interceptors менее центральны. Для REST API с JWT auth interceptor — стандарт.</p>
+    <p>Если auth идёт через SDK напрямую (не Bearer в HttpClient), auth-interceptors менее центральны. Для REST API с JWT auth interceptor — стандарт.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>authGuard</code> / <code>guestGuard</code> как <code>CanMatchFn</code> с <code>inject(AuthService)</code> — auth на уровне route, не HTTP interceptor.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/http/interceptors">Interceptors (auth patterns)</a></p>
 </div><!-- ═══════════════════ RxJS ═══════════════════ -->
 <h2 id="rxjs">RxJS</h2>
@@ -245,9 +224,6 @@ return next(req).pipe(
       <li><strong>Дублирование</strong> — хранить то же состояние и в Subject, и в signal: два источника правды, сложнее отладка.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> RxJS — <code>TarotService</code>, <code>MyMemoryTranslationService</code> (HTTP + <code>forkJoin</code>/<code>mergeMap</code>), <code>createRitualTimelineStream</code> (<code>timer</code> + <code>merge</code>), <code>BallComponent</code> (<code>timer</code>). Signals — <code>MainPageFacade</code> (loading/result/error). <code>toSignal(langChanges$)</code> в <code>PriestQuotesService</code>.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">RxJS interop in Angular</a> · <a href="https://rxjs.dev/guide/overview">RxJS overview</a></p>
 </div>
 
@@ -269,7 +245,7 @@ return next(req).pipe(
   </ul>
   <p><strong>Teardown:</strong> в <code>new Observable(subscriber =&gt; { ...; return () =&gt; cleanup })</code> возвращаемая функция вызывается при <code>unsubscribe</code>. Нужна для <code>setInterval</code>, <code>addEventListener</code>, WebSocket — иначе ресурс остаётся висеть.</p>
   <p><strong>Жизненный цикл одной подписки:</strong> <code>subscribe</code> → (опционально) несколько <code>next</code> → ровно один из исходов: <code>complete</code> или <code>error</code> → после этого <code>next</code> игнорируются.</p>
-  <pre>const sub = this.http.get&lt;TarotResponse&gt;('/api/reading').subscribe({
+  <pre>const sub = this.http.get&lt;ApiResponse&gt;('/api/items').subscribe({
   next: (data) =&gt; this._result.set(data),
   error: (err) =&gt; this._error.set(err),
   complete: () =&gt; this._loading.set(false),
@@ -336,13 +312,13 @@ sub.unsubscribe(); // отменяет HTTP-запрос (XHR abort)</pre>
     <li><code>race(a$, b$)</code> — подписка на все; побеждает первый emit; остальные отписываются</li>
   </ul>
   <p><strong>Utility / error:</strong> <code>tap</code> (side effect без изменения значения), <code>finalize</code> (всегда при complete/error/unsubscribe), <code>catchError</code>, <code>retry</code>, <code>shareReplay({ bufferSize, refCount })</code>.</p>
-  <pre>// Проект: параллельный перевод карт и вердикта
+  <pre>// Ограничение concurrency при batch HTTP
 forkJoin({
   cards: this.translateCardList(reading.cards, lang),
   verdictText: this.translateText(reading.verdict_text, lang),
 }).pipe(map(({ cards, verdictText }) =&gt; ({ ...reading, cards, verdict_text: verdictText })));
 
-// Проект: чанки текста — max 2 одновременных HTTP
+// Ограничение concurrency при batch HTTP
 from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
   mergeMap(({ chunk, index }) =&gt;
     this.translateChunk(chunk, lang).pipe(map((t) =&gt; ({ index, translated: t }))),
@@ -359,17 +335,14 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
       <li><strong><code>debounceTime</code> vs <code>throttleTime</code></strong> — debounce ждёт тишину (search input); throttle ограничивает частоту (scroll/resize).</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MyMemoryTranslationService</code> — <code>forkJoin</code> на уровне reading/cards, <code>mergeMap(2)</code> на чанках, <code>catchError(() =&gt; of(text))</code> на чанке и на всём тексте. <code>createRitualTimelineStream</code> — <code>timer</code> + <code>map</code> + <code>merge</code>. <code>MainPageFacade</code> — <code>finalize</code> для сброса loading.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/operators">RxJS operators</a> · <a href="https://rxjs.dev/api">Operators API</a></p>
 </div>
 
 <div class="question" id="q-13">
   <h3><span class="q-num">13.</span> Кастомный Observable через new Observable()</h3>
   <p>Создавайте кастомный Observable, когда внешний API основан на callback/listener, а готового creation-оператора нет (<code>fromEvent</code>, <code>timer</code>, <code>defer</code> не покрывают кейс).</p>
-  <p><strong>Вариант 1 — композиция существующих операторов</strong> (предпочтительно в проекте):</p>
-  <pre>export function createRitualTimelineStream(request: RitualRequest): Observable&lt;RitualSessionState&gt; {
+  <p><strong>Вариант 1 — композиция существующих операторов</strong> (предпочтительно):</p>
+  <pre>export function createTimelineStream(request: TimelineRequest): Observable&lt;TimelineState&gt; {
   const judgment = analyzeBranch(request.branch, request.spiritLevel, request.ritualIntent);
   const lineEvents = judgment.litany.map((line, index) =&gt;
     timer((index + 1) * RITUAL_LITANY_LINE_DELAY_MS).pipe(
@@ -403,9 +376,6 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
       <li><strong>Resource API</strong> — для load-one-result с loading/error signals; для progressive stream (ritual) — <code>rxResource</code> + Observable pipeline.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> sanctum timeline — только композиция <code>timer</code> + <code>merge</code>, без <code>new Observable</code>. Подключено через <code>rxResource({ stream })</code> в <code>SanctumRitualService</code>.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/observable">Creating Observables</a> · <a href="https://rxjs.dev/api/index/class/Observable">Observable</a></p>
 </div>
 
@@ -429,9 +399,6 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
       <li><strong><code>shareReplay(1)</code> вместо Subject для HTTP cache</strong> — кэширует последний ответ cold-потока; с <code>refCount: true</code> отписка от источника, когда нет подписчиков.</li>
       <li><strong>Multicast без Subject</strong> — оператор <code>share()</code> / <code>publish()</code> на cold Observable.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> Subject/BehaviorSubject для app state не используются. Отписка — <code>takeUntilDestroyed</code>, не <code>destroy$</code> Subject.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/subject">Subject</a> · <a href="https://rxjs.dev/api/index/class/BehaviorSubject">BehaviorSubject</a></p>
 </div>
@@ -460,11 +427,8 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
     <ul>
       <li><strong><code>shareReplay</code> без <code>refCount</code></strong> — подписка на source не снимается при уходе всех consumers → утечка (особенно на long-polling/WebSocket wrapper).</li>
       <li><strong>Кэш HTTP через shareReplay</strong> — ускоряет повторный доступ, но нужна стратегия инвалидации; иначе stale data.</li>
-      <li><strong>In-memory Map cache</strong> (как в <code>PriestQuotesService</code>) — явный контроль TTL/инвалидации vs неявный replay буфер.</li>
+      <li><strong>In-memory Map cache</strong> (как в <code>QuotesService</code>) — явный контроль TTL/инвалидации vs неявный replay буфер.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> каждый <code>loadTarot()</code> — новый cold HTTP. <code>PriestQuotesService</code> — Map-кэш по языку, не <code>shareReplay</code>. Ritual timeline — hot-подобное поведение через <code>merge</code> таймеров в одной подписке <code>rxResource</code>.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/glossary-and-semantics#hot-and-cold-observables">Hot and cold</a> · <a href="https://rxjs.dev/api/operators/shareReplay">shareReplay</a></p>
 </div>
@@ -495,9 +459,6 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
       <li><strong>Subscribe в root service</strong> — сервис не уничтожается; infinite stream без complete держит память всё время сессии.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MainPageFacade</code> — <code>takeUntilDestroyed(this.destroyRef)</code> на tarot load. Translation — <code>effect</code> + <code>onCleanup</code>. <code>BallComponent</code> — <code>timer().pipe(takeUntilDestroyed)</code>. <code>CandlesService</code> — <code>takeUntilDestroyed</code> на Firestore listener.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/ecosystem/rxjs-interop">takeUntilDestroyed</a> · <a href="https://rxjs.dev/api/operators/takeUntil">takeUntil</a></p>
 </div>
 
@@ -506,7 +467,7 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
   <table style="width:100%;font-size:0.85rem">
     <tr><th>Подход</th><th>Плюсы</th><th>Минусы</th><th>Когда выбирать</th></tr>
     <tr><td>Signals в компоненте</td><td>Минимум кода, нативный CD</td><td>Не shared между компонентами</td><td>Локальный UI (toggle, tab index)</td></tr>
-    <tr><td>Service + signals</td><td>Shared state без RxJS boilerplate</td><td>Нет единого паттерна mutations</td><td>Доменные сервисы (candles, sins)</td></tr>
+    <tr><td>Service + signals</td><td>Shared state без RxJS boilerplate</td><td>Нет единого паттерна mutations</td><td>Доменные сервисы между несколькими экранами</td></tr>
     <tr><td>Facade + signals</td><td>Один API для UI; легко мокать в тестах</td><td>Дополнительный слой файлов</td><td>HTTP-backed features</td></tr>
     <tr><td>NgRx SignalStore</td><td><code>withMethods</code>, <code>patchState</code>, composable features</td><td>Кривая обучения</td><td>Глобальный UI state (theme, lang)</td></tr>
     <tr><td>NgRx Store (Redux)</td><td>DevTools, time-travel, строгий unidirectional flow</td><td>Много boilerplate (actions/reducers/effects)</td><td>Большие команды, сложный domain</td></tr>
@@ -514,13 +475,13 @@ from(chunkList.map((chunk, index) =&gt; ({ chunk, index }))).pipe(
   </table>
   <p><strong>Практика Angular 22:</strong> state → signals (<code>signal</code>, <code>computed</code>, SignalStore). Async work → RxJS внутри facade/service, результат пишется в signals. UI читает только facade public API (<code>readonly loading = ...asReadonly()</code>).</p>
   <pre>// Facade — проект
-private readonly _tarotLoading = signal(false);
-public readonly isLoading = computed(() =&gt; this._tarotLoading() || this._translationLoading());
+private readonly _dataLoading = signal(false);
+public readonly isLoading = computed(() =&gt; this._dataLoading() || this._translationLoading());
 
-loadTarot(): void {
-  this._tarotLoading.set(true);
-  this.tarotService.getReading(params).pipe(
-    finalize(() =&gt; this._tarotLoading.set(false)),
+loadData(): void {
+  this._dataLoading.set(true);
+  this.apiService.getReading(params).pipe(
+    finalize(() =&gt; this._dataLoading.set(false)),
     takeUntilDestroyed(this.destroyRef),
   ).subscribe({ next: (r) =&gt; this._result.set(r), error: (e) =&gt; this._error.set(e) });
 }</pre>
@@ -532,10 +493,7 @@ loadTarot(): void {
       <li><strong>UI вызывает HttpClient напрямую</strong> — нет слоя для тестов и единообразной обработки loading/error.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>uiStateStore</code> (NgRx SignalStore) — theme/lang + sync Firestore. Facades: <code>MainPageFacade</code>, <code>ShriftPageFacade</code>. Shared: <code>CandlesService</code>, <code>ConfessService</code> — signals, reused в altar/shrift/profile.
-  </div>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/signals">Signals</a> · <a href="https://ngrx.io/guide/signals">NgRx Signals</a></p>
+  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/signals">Signals</a> · <a href="https://ngrx.io/guide/signals">a signal store library</a></p>
 </div>
 
 <div class="question" id="q-18">
@@ -570,9 +528,6 @@ loadTarot(): void {
       <li><strong><code>retry</code> без лимита count</strong> — может перегрузить API; нужны count и backoff delay.</li>
       <li><strong>Только interceptor</strong> — нет контекста фичи; facade всё равно нужен для специфичных сообщений и recovery.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>httpErrorInterceptor</code> — toast + rethrow, кроме <code>/i18n/</code>. <code>MainPageFacade</code> — различает <code>HttpErrorResponse</code> и unknown errors в signal. Translation — per-chunk <code>catchError(() =&gt; of(text))</code>, whole-text fallback при полном сбое.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/api/operators/catchError">catchError</a> · <a href="https://rxjs.dev/api/operators/retry">retry</a> · <a href="https://rxjs.dev/api/operators/finalize">finalize</a></p>
 </div>
@@ -610,12 +565,9 @@ submitClick$.pipe(exhaustMap(() =&gt; this.api.save(formValue)));</pre>
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <ul>
       <li><strong><code>switchMap</code></strong> — отмена устаревших запросов экономит сеть, но теряются in-flight результаты, если они всё ещё нужны.</li>
-      <li><strong><code>mergeMap</code> с concurrency</strong> — баланс скорости и нагрузки на API; лимит подбирается под rate limits (в проекте: 2).</li>
+      <li><strong><code>mergeMap</code> с concurrency</strong> — баланс скорости и нагрузки на API; лимит подбирается под rate limits API.</li>
       <li><strong><code>concatMap</code></strong> — гарантия порядка ценой latency; для независимых чанков перевода — избыточен.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MyMemoryTranslationService.translateText</code> — <code>mergeMap(..., 2)</code> из-за лимита MyMemory API и размера чанка 500 байт. Tarot load — прямой subscribe без higher-order. Sanctum — <code>merge</code> нескольких <code>timer</code> (не mapping operator, а объединение потоков).
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://rxjs.dev/guide/higher-order-observables">Higher-order Observables</a> · <a href="https://rxjs.dev/api/operators/switchMap">switchMap</a> · <a href="https://rxjs.dev/api/operators/mergeMap">mergeMap</a></p>
 </div>
@@ -641,9 +593,6 @@ submitClick$.pipe(exhaustMap(() =&gt; this.api.save(formValue)));</pre>
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><strong>CVA vs инжект NgControl:</strong> CVA — правильный путь для библиотечных контролов. Инжект <code>NgControl</code> + <code>valueAccessor = this</code> — legacy-паттерн, сложнее и хрупче. <strong>OnChange-only:</strong> некоторые контролы вызывают <code>onChange</code> только при commit (datepicker on close) — важно не спамить валидацию на каждый keystroke, если UX этого не требует.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> Taiga UI form controls уже реализуют CVA внутри — в формах login/register используем <code>tuiInput</code>, <code>tuiPassword</code> через <code>ReactiveFormsModule</code>. Кастомный CVA — учебный паттерн для интервью; в production предпочитаем готовые контролы библиотеки.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/api/forms/ControlValueAccessor">ControlValueAccessor</a></p>
 </div><div class="question" id="q-21">
   <h3><span class="q-num">21.</span> Кастомный form control с Reactive Forms</h3>
@@ -659,7 +608,7 @@ submitClick$.pipe(exhaustMap(() =&gt; this.api.save(formValue)));</pre>
 form = new FormGroup({ rating: new FormControl(0, Validators.required) });
 
 // Шаблон
-&lt;ngKitty-rating formControlName="rating" /&gt;
+&lt;app-rating formControlName="rating" /&gt;
 
 // Доступ к ошибкам
 @if (form.controls.rating.invalid && form.controls.rating.touched) {
@@ -671,9 +620,6 @@ form = new FormGroup({ rating: new FormControl(0, Validators.required) });
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><strong>Reactive vs Template-driven для кастомных контролов:</strong> Reactive — явная модель, проще тестировать (<code>patchValue</code> в spec). Template-driven — быстрее для прототипов, но cross-field validation и сложная логика хуже масштабируются.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> формы вынесены в <code>*FormService</code> (<code>LoginFormService</code>, <code>RegisterFormService</code>, <code>ConfessFormService</code>); facade отдаёт <code>form</code> компоненту. UI — Taiga + <code>ReactiveFormsModule</code>. Валидационные сообщения — <code>tuiValidationErrorsProvider</code> в <code>app.config.ts</code>, ключи маппятся на i18n.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/forms/custom-form-controls">Custom form controls</a></p>
 </div><div class="question" id="q-22">
   <h3><span class="q-num">22.</span> Кастомный validator для template-driven forms</h3>
@@ -707,11 +653,8 @@ this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
   <p><strong>Тестирование:</strong> pure validator тестируется без TestBed — создай <code>FormGroup</code>, вызови <code>validator(group)</code>, assert <code>control.errors</code>.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><strong>setErrors в validator:</strong> императивная установка ошибок на sibling control — мощно, но легко затереть чужие ошибки. Проектный паттерн: фильтровать <code>otherErrors</code> перед <code>setErrors</code>. <strong>updateOn:</strong> <code>'change' | 'blur' | 'submit'</code> на FormGroup — контролирует, когда валидация срабатывает.</p>
+    <p><strong>setErrors в validator:</strong> императивная установка ошибок на sibling control — мощно, но легко затереть чужие ошибки. Практичный паттерн: фильтровать <code>otherErrors</code> перед <code>setErrors</code>. <strong>updateOn:</strong> <code>'change' | 'blur' | 'submit'</code> на FormGroup — контролирует, когда валидация срабатывает.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>passwordConfirmationValidator</code> в <code>shared/validators/</code> — group-level, сохраняет несвязанные ошибки на <code>matchingControl</code>. Spec без TestBed: <code>password-confirmation.validator.spec.ts</code>. <code>dirtyFormGuard</code> проверяет <code>form.dirty</code> перед уходом с login/register.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/forms/form-validation#custom-validators">Custom validators</a></p>
 </div><!-- ═══════════════════ TESTING ═══════════════════ -->
 <h2 id="testing">Testing</h2>
@@ -729,7 +672,7 @@ this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
   <p><strong>Философия Angular:</strong> тестируй поведение, не implementation details. Facade/публичный API компонента — stable contract; приватные поля и внутренняя структура DOM — хрупкие.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p><strong>Пирамида тестов:</strong> много быстрых unit (validators, facades), меньше component, мало E2E. Component tests дороже из-за compile + CD. В ngKittyDebug богатые facade specs, тонкие component specs — осознанный выбор.</p>
+    <p><strong>Пирамида тестов:</strong> много быстрых unit (validators, facades), меньше component, мало E2E. Component tests дороже из-за compile + CD. В Angular богатые facade specs, тонкие component specs — осознанный выбор.</p>
 </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing">Testing overview</a></p>
 </div><div class="question" id="q-24">
@@ -742,7 +685,7 @@ this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
     <li><strong>Testing Library</strong> (@testing-library/angular) — queries по роли/label, user-centric.</li>
     <li><strong>Protractor</strong> — deprecated; E2E → Playwright/Cypress.</li>
   </ul>
-  <p><code>ng test</code> запускает Vitest через Angular CLI builder. Single file: <code>pnpm test -- --include='**/main-page.facade.spec.ts'</code>.</p>
+  <p><code>ng test</code> запускает выбранный test runner через Angular CLI builder. Фильтр одного файла — через <code>--include</code>.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <ul>
@@ -751,9 +694,6 @@ this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
       <li><strong>Testing Library vs By.css</strong> — TL ближе к пользователю; CSS-селекторы хрупче при рефакторинге шаблона.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> Vitest + jsdom; shared mocks в <code>shared/mocks/</code> (<code>transloco-testing</code>, <code>router</code>, <code>auth</code>). <code>TranslocoTestingMock</code> — module для i18n в тестах без реального HTTP loader.
-</div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing">Testing tools (Vitest/Jasmine)</a></p>
 </div><div class="question" id="q-25">
   <h3><span class="q-num">25.</span> Что такое TestBed?</h3>
@@ -770,7 +710,7 @@ this.fb.nonNullable.group({ password: [''], confirm: [''] }, {
     imports: [LoginComponent],           // standalone component
     providers: [
       { provide: ActivatedRoute, useValue: mockRoute },
-      LoginPageFacade,
+      AuthFacade,
     ],
   }).compileComponents();
 });</pre>
@@ -817,14 +757,14 @@ btn.injector.get(MyService);</pre>
 </div><div class="question" id="q-27">
   <h3><span class="q-num">27.</span> Тестирование directives и pipes</h3>
   <p><strong>Pure pipes</strong> — тестируй как обычную функцию, TestBed не нужен:</p>
-  <pre>const pipe = new MachineSpiritStatePipe();
+  <pre>const pipe = new StatusLabelPipe();
 expect(pipe.transform(5)).toBe('pleased');</pre>
   <p>Pure pipe пересчитывается только при изменении input reference — важно для performance-тестов.</p>
   <p><strong>Impure pipes</strong> — вызываются каждый CD cycle; тестируй через component fixture или проверяй <code>pure: false</code> в metadata.</p>
   <p><strong>Attribute directives</strong> — host component pattern:</p>
   <pre>@Component({
-  template: '&lt;div ngKittyScanEffect&gt;content&lt;/div&gt;',
-  imports: [ScanEffectDirective],
+  template: '&lt;div appHighlight&gt;content&lt;/div&gt;',
+  imports: [HighlightDirective],
 })
 class HostComponent {}
 
@@ -840,9 +780,6 @@ expect(fixture.nativeElement.querySelector('div').classList).toContain('scan');<
       <li><strong>Impure pipe</strong> — в изолированном тесте не видно, что pipe вызывается на каждом CD cycle; нужен fixture.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MachineSpiritStatePipe</code> — custom pipe в header/altar. <code>ScanEffectDirective</code>, <code>EyeBlinkDirective</code> — attribute directives; тест через host component.
-</div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing/directive-testing">Testing directives</a> · <a href="https://angular.dev/guide/testing/pipes">Testing pipes</a></p>
 </div><div class="question" id="q-28">
   <h3><span class="q-num">28.</span> Моки и стабы зависимостей</h3>
@@ -857,7 +794,7 @@ expect(fixture.nativeElement.querySelector('div').classList).toContain('scan');<
   <pre>// HTTP test
 const httpMock = TestBed.inject(HttpTestingController);
 service.getReading().subscribe();
-const req = httpMock.expectOne('/api/reading');
+const req = httpMock.expectOne('/api/items');
 expect(req.request.method).toBe('GET');
 req.flush(mockResponse);
 httpMock.verify(); // нет лишних запросов
@@ -868,9 +805,6 @@ TestBed.runInInjectionContext(() =&gt; authGuard(route, segments, snapshot));</p
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><strong>useValue vs useClass:</strong> useValue — один shared object (осторожно с mutable state). useClass — новый instance per injector. <strong>Spy на private signals:</strong> <code>vi.spyOn(facade['_error'], 'set')</code> — допустимо для проверки side effects, но лучше тестировать публичный <code>error()</code> readonly signal.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>tarot.service.mock.ts</code>, <code>auth.service.mock.ts</code> — переиспользуемые mocks. <code>auth-guard.spec.ts</code> — guard через <code>runInInjectionContext</code>. Facade specs мокают API layer, не HTTP напрямую.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing/testing-services">Testing services (mocks)</a></p>
 </div><div class="question" id="q-29">
   <h3><span class="q-num">29.</span> Тестирование template-driven и reactive forms</h3>
@@ -893,9 +827,6 @@ expect(fixture.componentInstance.form.value.email).toBe('test@mail.com');</pre>
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p>Тестируй через facade.form (публичный API), не лезь в приватный FormGroup компонента. E2E-like DOM interaction — для component tests; чистая логика validator — unit без TestBed.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> login/register — Reactive Forms через <code>LoginPageFacade</code>. <code>dirtyFormGuard</code> + spec на Observable из modal. <code>passwordConfirmationValidator.spec.ts</code> — unit без DOM.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing/forms-overview">Testing forms</a></p>
 </div><div class="question" id="q-30">
   <h3><span class="q-num">30.</span> async, fakeAsync и tick</h3>
@@ -914,7 +845,7 @@ it('debounced search', fakeAsync(() =&gt; {
 }));
 
 // Signals
-service.loadTarot();
+service.loadData();
 TestBed.tick(); // flush effect → translation → result signal
 expect(service.result()).toEqual(expected);
 
@@ -925,9 +856,6 @@ fixture.detectChanges();</pre>
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
     <p><code>fakeAsync</code> требует Zone.js — в zoneless apps не работает. Angular движется к zoneless: предпочитай <code>await whenStable()</code>, <code>TestBed.tick()</code>, <code>flushEffects()</code>. <code>flush()</code> в fakeAsync — дренирует все pending microtasks.</p>
 </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>main-page.facade.spec.ts</code> — <code>TestBed.tick()</code> после <code>loadTarot()</code> для effect с переводом. <code>sanctum-page.facade.spec.ts</code> — <code>TestBed.flushEffects()</code>.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing/fake-async">async, fakeAsync, tick</a></p>
 </div><div class="question" id="q-31">
   <h3><span class="q-num">31.</span> Изоляция тестов</h3>
@@ -943,7 +871,7 @@ fixture.detectChanges();</pre>
   <p><strong>Arrange-Act-Assert</strong> — один logical assert на тест; несколько <code>expect</code> ok, если проверяют один сценарий.</p>
   <div class="tradeoff">
     <p class="tradeoff-lead"><strong>Компромиссы:</strong></p>
-    <p>Integration tests с реальными сервисами — медленнее, но ловят wiring bugs. Unit с mocks — быстрее, но mocks могут расходиться с реальностью. Проект: mock на границе (API services), реальный facade logic.</p>
+    <p>Integration tests с реальными сервисами — медленнее, но ловят wiring bugs. Unit с mocks — быстрее, но mocks могут расходиться с реальностью. Практичный баланс: mock на границе API, реальная логика facade.</p>
 </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/testing/testing-utility-apis">Test isolation</a></p>
 </div><!-- ═══════════════════ DI ═══════════════════ -->
@@ -973,9 +901,6 @@ fixture.detectChanges();</pre>
       <li><strong>Component providers</strong> — локальный UI-state, но риск дублирования экземпляров и путаницы «почему сервис разный в двух местах».</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>TarotService</code> — route-scoped на main. <code>AuthService</code> — root singleton. Guards используют route injector и видят route providers.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/di/hierarchical-dependency-injection">Hierarchical DI</a></p>
 </div>
 
@@ -986,7 +911,7 @@ fixture.detectChanges();</pre>
 @Component({ providers: [WizardStateService] })
 
 // 2. Route — на всё поддерево маршрута, пока route активен
-{ path: 'main', providers: [MainPageFacade, TarotService], loadComponent: ... }
+{ path: 'main', providers: [PageFacade, ApiService], loadComponent: ... }
 
 // 3. viewProviders — только view children, НЕ projected content (ng-content)
 @Component({ viewProviders: [ViewOnlyService] })</pre>
@@ -998,9 +923,6 @@ fixture.detectChanges();</pre>
       <li><strong>Route providers</strong> — feature isolation + тестируемость, но больше boilerplate в <code>app.routes.ts</code>.</li>
       <li><strong><code>viewProviders</code> vs <code>providers</code></strong> — viewProviders не видят projected content; ошибка выбора = «сервис undefined» в ng-content subtree.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>MainPageFacade</code>, <code>TarotService</code>, <code>MyMemoryTranslationService</code> — main route. <code>SanctumRitualService</code> — sanctum route. <code>CandlesService</code>, <code>ConfessService</code> — root (shared domain). <code>@Service({ autoProvided: false })</code> блокирует автоматический root registration.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/di/dependency-injection-context#providers-on-components-or-directives">Component providers</a> · <a href="https://angular.dev/guide/routing/common-router-tasks#route-providers">Route providers</a></p>
 </div>
@@ -1048,9 +970,6 @@ fixture.detectChanges();</pre>
       <li><strong><code>skipSelf</code> / <code>self</code></strong> — точный контроль shadowing, но код читается хуже — используй только когда действительно нужно обойти локальный provider.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> guards — <code>inject(AuthService)</code> + <code>inject(Router)</code>. <code>UI_STATE</code> InjectionToken для начального state в <code>uiStateStore</code>. <code>provideAppInitializer(() =&gt; inject(AuthService).initialize())</code>.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/di/hierarchical-dependency-injection#types-of-injector-hierarchies">Injector types</a> · <a href="https://angular.dev/api/core/inject">inject()</a></p>
 </div>
 
@@ -1092,9 +1011,6 @@ fixture.detectChanges();</pre>
       <li><strong><code>effect()</code></strong> — удобен для side effects, но мутация unrelated signals внутри effect → риск circular updates; derived state только через <code>computed</code>.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>PriestQuotesService</code> — <code>resource()</code> + Map cache по языку. <code>MainPageFacade</code> — <code>signal</code>, <code>computed(isLoading)</code>, <code>linkedSignal</code> (сброс tarot при смене role/intent), <code>effect</code> для translation side effects.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/signals/resource">Resource API</a> · <a href="https://angular.dev/api/core/resource">resource()</a></p>
 </div>
 
@@ -1104,7 +1020,7 @@ fixture.detectChanges();</pre>
     <tr><th><code>resource()</code></th><th><code>rxResource()</code></th><th><code>httpResource()</code></th></tr>
     <tr><td><code>loader</code> → <code>Promise</code></td><td><code>stream</code> → <code>Observable</code></td><td>HTTP GET wrapper</td></tr>
     <tr><td>One-shot async result</td><td>Multi-value over time</td><td>Typed REST без custom RxJS</td></tr>
-    <tr><td>Firestore, fetch, async/await</td><td>RxJS pipelines, progressive UI</td><td>Простые GET endpoints</td></tr>
+    <tr><td>remote API, fetch, async/await</td><td>RxJS pipelines, progressive UI</td><td>Простые GET endpoints</td></tr>
     <tr><td>Отмена: <code>abortSignal</code></td><td>Отмена: unsubscribe при смене params</td><td>HttpClient под капотом</td></tr>
   </table>
   <p>Общее: <code>params()</code> перезапускает loader/stream; <code>defaultValue</code> — начальное значение; статусы одинаковые.</p>
@@ -1113,8 +1029,8 @@ fixture.detectChanges();</pre>
   defaultValue: EMPTY_RITUAL_SESSION,
   stream: ({ params }) =&gt; {
     if (!params) return EMPTY;
-    return createRitualTimelineStream(params).pipe(
-      tap(state =&gt; this.sanctumSound.play(...))
+    return createTimelineStream(params).pipe(
+      tap(state =&gt; this.soundService.play(...))
     );
   },
 });</pre>
@@ -1127,9 +1043,6 @@ fixture.detectChanges();</pre>
       <li><strong><code>httpResource</code></strong> — быстрый старт для GET, но кастомный interceptor pipeline / chunk translation → лучше обычный HttpClient + facade или <code>rxResource</code>.</li>
       <li><strong>Observable с одним emit</strong> — можно обернуть в <code>resource</code> через <code>firstValueFrom</code>; не нужен rxResource «на всякий случай».</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>SanctumRitualService.ritualSession</code> — <code>rxResource</code> + <code>createRitualTimelineStream</code>. <code>PriestQuotesService</code> — <code>resource()</code>. <code>toSignal(translocoService.langChanges$)</code> — bridge для params.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/api/core/rxResource">rxResource()</a> · <a href="https://angular.dev/guide/signals/resource">Resource guide</a></p>
 </div>
@@ -1155,9 +1068,6 @@ fixture.detectChanges();</pre>
       <li><strong><code>createComponent</code> vs outlet</strong> — createComponent даёт полный контроль lifecycle; outlet проще, но меньше hooks для projection и insertion order.</li>
       <li><strong>Overlay/dialog</strong> — компонент вне change detection tree родителя; нужно явно управлять focus trap и destroy.</li>
     </ul>
-  </div>
-  <div class="project">
-    <strong>Проект:</strong> <code>ModalService</code> — <code>TuiDialogService.open(TUI_CONFIRM)</code> для dirty form guard. Profile — <code>ngTemplateOutlet</code> для секций вместо dynamic component overhead.
   </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/components/programmatic-rendering">Programmatic rendering</a></p>
 </div>
@@ -1187,11 +1097,11 @@ fixture.detectChanges();</pre>
   <h3><span class="q-num">40.</span> Что такое deferrable views (@defer) и как они ускоряют приложение?</h3>
   <p><strong>@defer</strong> — lazy loading на уровне шаблона: код deferred блока — отдельный chunk, грузится по триггеру.</p>
   <pre>@defer (on viewport; prefetch on idle) {
-  &lt;ngKitty-heavy-chart [data]="chartData()" /&gt;
+  &lt;app-heavy-chart [data]="chartData()" /&gt;
 } @placeholder (minimum 100ms) {
   &lt;div class="skeleton-chart" /&gt;
 } @loading (minimum 200ms) {
-  &lt;ngKitty-spinner /&gt;
+  &lt;app-spinner /&gt;
 } @error {
   &lt;p&gt;Не удалось загрузить график&lt;/p&gt;
 }</pre>
@@ -1210,58 +1120,9 @@ fixture.detectChanges();</pre>
       <li><strong>vs route lazy load</strong> — defer для тяжёлых кусков внутри уже загруженной страницы; route lazy — для целых фич. Комбинируют оба.</li>
     </ul>
   </div>
-  <div class="project">
-    <strong>Проект:</strong> @defer не используется — <code>loadComponent</code> на маршрутах + <code>UserStateStrategy</code> preloading (guest/auth routes). Та же цель — меньший initial bundle без усложнения шаблонов.
-  </div>
   <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/templates/defer">Deferrable views (@defer)</a></p>
 </div>
 
-<!-- ═══════════════════ PROJECT ═══════════════════ -->
-<h2 id="project">Вопросы по проекту</h2>
-
-<div class="question" id="q-41">
-  <h3><span class="q-num">41.</span> Опиши свой вклад в спринт</h3>
-  <p><em>Шаблон — заполни своей реальной работой:</em></p>
-  <ul>
-    <li>Область: tarot / sanctum / registration / profile…</li>
-    <li>Что сделал: facade, API service, component, validator, tests</li>
-    <li>PRs merged: ссылки на коммиты</li>
-  </ul>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/essentials">Angular essentials</a></p>
-</div>
-
-<div class="question" id="q-42">
-  <h3><span class="q-num">42.</span> Навигация по коду и объяснение работы</h3>
-  <p><strong>End-to-end: Tarot draw</strong></p>
-  <ol>
-    <li><code>MainComponent</code> → клик → <code>MainPageFacade.draw()</code></li>
-    <li>Facade ставит loading, вызывает <code>TarotService.getReading()</code> (HTTP GET)</li>
-    <li>Опционально <code>MyMemoryTranslationService</code> переводит чанки</li>
-    <li>Результат в signal facade → шаблон через <code>@if</code> / <code>@for</code></li>
-    <li>Ошибки: interceptor toast + error signal в facade</li>
-  </ol>
-  <p><strong>Sanctum:</strong> <code>SanctumRitualService</code> — <code>rxResource</code> + RxJS-таймлайн для litany.</p>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/guide/routing">Routing guide</a> · <a href="https://angular.dev/guide/http">HTTP guide</a></p>
-</div>
-
-<div class="question" id="q-43">
-  <h3><span class="q-num">43.</span> Показ работающего приложения</h3>
-  <p>Demo: tarot → login/register (dirty form guard) → shrift → altar → sanctum → profile. Показать смену языка/темы (<code>uiStateStore</code> + Firestore при auth).</p>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/tools/cli/serve">ng serve</a></p>
-</div>
-
-<div class="question" id="q-44">
-  <h3><span class="q-num">44.</span> Решения и сложности</h3>
-  <ul>
-    <li><strong>Facade</strong> — UI не вызывает HTTP напрямую.</li>
-    <li><strong>Route providers</strong> — изоляция фичевых сервисов.</li>
-    <li><strong>Signals + RxJS по назначению</strong> — state в signals, потоки в RxJS.</li>
-    <li><strong>Shared domain в core/</strong> — CandlesService, ConfessService для нескольких фич.</li>
-    <li><strong>Сложность:</strong> перевод чанков с rate limit → <code>mergeMap(3)</code> + fallback на ошибку чанка.</li>
-    <li><strong>Сложность:</strong> cross-field validator пароля без затирания чужих ошибок.</li>
-  </ul>
-  <p class="docs"><strong>Документация:</strong> <a href="https://angular.dev/essentials">Architecture essentials</a></p>
-</div>
 
 <footer>
   <p>Связанное: <a href="personal-interview-daria.html">Личный гайд — мой вклад</a> · <a href="angular-interview-full.html">Полный справочник (113 вопросов)</a> · <a href="../lessons/0001-interview-retrieval-practice.html">Урок 1 — Retrieval Practice</a></p>
