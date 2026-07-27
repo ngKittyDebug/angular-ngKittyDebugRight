@@ -467,56 +467,169 @@
       .shot-full {
         max-height: 58vh;
       }
+
+      .story-beat {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 16px;
+        align-items: start;
+        background: var(--bg-card);
+        border: 1px solid rgb(214 168 95 / 22%);
+        border-radius: 10px;
+        padding: 16px 20px;
+      }
+
+      .story-beat .who {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--gold);
+      }
+
+      .story-beat .what {
+        font-size: 1.05rem;
+        line-height: 1.4;
+      }
+
+      .story-beat .what small {
+        display: block;
+        margin-top: 6px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .story-stack {
+        display: grid;
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .decision {
+        background: var(--bg-card);
+        border: 1px solid rgb(214 168 95 / 22%);
+        border-radius: 10px;
+        padding: 18px 22px;
+      }
+
+      .decision h3 {
+        margin-bottom: 10px;
+      }
+
+      .decision p {
+        font-size: 0.98rem;
+        line-height: 1.45;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .decision .meta {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+
+      .quote {
+        font-size: 1.15rem;
+        line-height: 1.55;
+        color: var(--gold-pale);
+        border-left: 3px solid var(--gold);
+        padding-left: 18px;
+        max-width: 900px;
+      }
+
+      .score-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .score-grid .card {
+        padding: 16px;
+      }
+
+      .score-grid .card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      .tiny {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .mermaid-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4px;
+        min-height: 0;
+      }
+
+      .mermaid-wrap .mermaid {
+        width: 100%;
+      }
+
+      .mermaid-wrap svg {
+        max-height: 52vh;
+        width: 100% !important;
+      }
     </style>
-  </head>
+</head>
   <body>
     <div class="deck" id="deck">
-      <!-- PART 0 · INTRO -->
-      <section class="slide active title-slide" data-note="Daria: приветствие, 30 сек. Представить команду ngKittyDebug.">
+      <!-- 1 · TITLE -->
+      <section class="slide active title-slide" data-note="Daria: приветствие ~30 сек. Мы ngKittyDebug, покажем одну user story, архитектуру, failure и вклад каждого.">
         <div class="content">
           <div class="emoji">⛪</div>
           <span class="badge">RS School · Angular 2026 Q2 · Team Presentation</span>
           <h1>The Church of the Holy Deploy</h1>
-          <p class="subtitle">delulu-church — цифровой храм для программистов</p>
-          <p class="subtitle small" style="margin-top: 32px">
+          <p class="subtitle">Одна история пользователя · решения · провал · вклад команды</p>
+          <p class="subtitle small" style="margin-top: 28px">
             <a class="link" href="https://delulu-church.netlify.app/" target="_blank" rel="noreferrer"
               >delulu-church.netlify.app</a
             >
           </p>
         </div>
-        <div class="footer"><span>Intro</span><span>1 / 20</span></div>
+        <div class="footer"><span>Intro</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Показать структуру 30-минутной презентации жюри.">
+      <!-- 2 · AGENDA -->
+      <section class="slide" data-note="Новый формат жюри: demo 10 → architecture+failure 10 → contributions 2 → Q&A 8.">
         <div class="content">
-          <span class="badge">Agenda</span>
-          <h2>План на 30 минут</h2>
+          <span class="badge">Agenda · ~30 min</span>
+          <h2>План сессии</h2>
           <div class="agenda">
             <div class="agenda-item">
-              <div class="time">10–15</div>
-              <div class="label"><strong>Product Demo</strong> — live demo приложения</div>
-              <div class="hint">DI, Signals, Forms, Routing, Change Detection</div>
+              <div class="time">~10</div>
+              <div class="label"><strong>Product demo</strong> — одна user story end-to-end</div>
+              <div class="hint">Auth → Исповедь → Алтарь → Profile · каждый ведёт свой кусок</div>
             </div>
             <div class="agenda-item">
               <div class="time">~10</div>
-              <div class="label"><strong>Team Story</strong> — как работали как команда</div>
-              <div class="hint">роли, спринты, дизайн, архитектура, сложности</div>
+              <div class="label"><strong>Architecture & decisions</strong> + failure story</div>
+              <div class="hint">схема · 2 решения с trade-offs · реальный провал</div>
             </div>
             <div class="agenda-item">
-              <div class="time">5–10</div>
-              <div class="label"><strong>Q&A</strong> — вопросы жюри</div>
-              <div class="hint">архитектура, код, Angular-решения — отвечаем устно</div>
+              <div class="time">~2</div>
+              <div class="label"><strong>Contributions</strong> — по 1–2 предложения</div>
+              <div class="hint">что сделал · чему научился</div>
+            </div>
+            <div class="agenda-item">
+              <div class="time">~8</div>
+              <div class="label"><strong>Q&A</strong> — вопросы команде</div>
+              <div class="hint">передаём вопрос тому, кто строил эту часть</div>
             </div>
           </div>
         </div>
-        <div class="footer"><span>Intro</span><span>2 / 20</span></div>
+        <div class="footer"><span>Intro</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Daria: кто мы, 1 мин. Каждый кивнёт при упоминании.">
+      <!-- 3 · TEAM -->
+      <section class="slide" data-note="Daria: представить команду за 30 сек. Детали вклада — в конце, не сейчас.">
         <div class="content">
-          <p class="part-divider">Intro</p>
           <span class="badge">Team</span>
-          <h2>Команда ngKittyDebug</h2>
+          <h2>ngKittyDebug</h2>
           <div class="team-grid">
             <div class="member">
               <div class="name">Daria Melnikova</div>
@@ -535,444 +648,318 @@
             </div>
           </div>
         </div>
-        <div class="footer"><span>Intro</span><span>3 / 20</span></div>
+        <div class="footer"><span>Intro</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Зачем проект: юмор + ритуалы вокруг боли разработчика. 1 мин.">
-        <div class="content">
-          <p class="part-divider">Intro</p>
-          <span class="badge">Theme</span>
-          <h2>Тема и назначение</h2>
-          <ul>
-            <li><strong>The Church of the Holy Deploy</strong> — цифровой храм для программистов</li>
-            <li>Юмор и «ритуалы» вокруг деплоев, багов, code review и техдолга</li>
-            <li><strong>Tarot</strong> — судьба деплоя · <strong>Исповедальня</strong> — список грехов (багов)</li>
-            <li><strong>Алтарь</strong> — свечи за достижения · <strong>Санктум</strong> — суд над веткой</li>
-          </ul>
-        </div>
-        <div class="footer"><span>Intro</span><span>4 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Стек и причины выбора библиотек — кратко, без deep dive.">
-        <div class="content">
-          <span class="badge">Tech Stack</span>
-          <h2>Стек и выбор библиотек</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Angular 22 + TypeScript 6</strong> — standalone, signals-first</li>
-              <li><strong>Taiga UI 5</strong> — единый UI-kit, темизация, a11y</li>
-              <li><strong>Firebase</strong> — Auth + Firestore без своего бэкенда</li>
-              <li><strong>Transloco</strong> — i18n RU/EN</li>
-              <li><strong>NgRx Signals</strong> — uiStateStore без NgRx Store</li>
-            </ul>
-            <ul>
-              <li><strong>HotToast</strong> — единый UX ошибок</li>
-              <li><strong>Vitest</strong> — 64 unit-теста</li>
-              <li><strong>Netlify</strong> — static hosting + tarot API redirect</li>
-              <li><strong>GitHub Actions</strong> — CI/CD и deploy previews</li>
-              <li><strong>ESLint + Husky + pnpm</strong> — единые правила в команде</li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer"><span>Intro</span><span>5 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Alena: обзор продукта, 2 мин. Переход к demo.">
+      <!-- 4 · ONE STORY -->
+      <section class="slide" data-note="Не список фич. Одна история: вошёл → исповедался → зажёг свечу → увидел прогресс в профиле.">
         <div class="content">
           <p class="part-divider">Part 1 · Product Demo</p>
-          <span class="badge">Product</span>
-          <h2>Что мы построили</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Главная</strong> — Tarot-оракул судьбы деплоя</li>
-              <li><strong>Исповедальня</strong> — список «грехов» (багов)</li>
-              <li><strong>Алтарь</strong> — свечи и благословение Духа Машины</li>
-              <li><strong>Санктум</strong> — ритуал суда над веткой</li>
-            </ul>
-            <ul>
-              <li><strong>Дед-сеньор</strong> — цифровая мудрость</li>
-              <li><strong>Crystal ball</strong> — магический шар</li>
-              <li><strong>Auth</strong> — email + GitHub + Google</li>
-              <li><strong>i18n + тема</strong> — RU/EN, light/dark</li>
-            </ul>
+          <span class="badge">One user story</span>
+          <h2>История верующего</h2>
+          <p class="quote" style="margin-bottom: 28px">
+            Пользователь входит в храм → исповедуется в багах → зажигает свечу → видит прогресс в профиле.
+          </p>
+          <div class="flow">
+            <span>Login</span><span class="arrow">→</span>
+            <span>Исповедь</span><span class="arrow">→</span>
+            <span>Алтарь</span><span class="arrow">→</span>
+            <span>Profile</span>
+          </div>
+          <p class="tiny" style="margin-top: 24px">Фича, где участвовали все трое · live: delulu-church.netlify.app</p>
+        </div>
+        <div class="footer"><span>Demo</span><span></span></div>
+      </section>
+
+      <!-- 5 · DEMO SCRIPT -->
+      <section class="slide" data-note="Переключиться на live app. Alena → Daria → Nadezhda. Не уходить в список фич.">
+        <div class="content">
+          <p class="part-divider">Part 1 · Live</p>
+          <span class="badge">~10 min · split</span>
+          <h2>Кто ведёт какой кусок</h2>
+          <div class="story-stack">
+            <div class="story-beat">
+              <div class="who">Alena</div>
+              <div class="what">
+                Login → добавить грех в исповедальне
+                <small>typed forms · ConfessService · facade → toast</small>
+              </div>
+            </div>
+            <div class="story-beat">
+              <div class="who">Daria</div>
+              <div class="what">
+                Алтарь: зажечь свечу · общий Firebase domain
+                <small>CandlesService · Auth / UserProfile · Firestore users/{uid}</small>
+              </div>
+            </div>
+            <div class="story-beat">
+              <div class="who">Nadezhda</div>
+              <div class="what">
+                Header → Profile: счётчики sins + candles обновились
+                <small>навигация · guards · profile stats / form</small>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="footer"><span>Product Demo</span><span>4 / 20</span></div>
+        <div class="footer"><span>Demo</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Переключиться на live demo на 10–15 мин.">
-        <div class="content center-big">
+      <!-- 6 · LIVE CUE -->
+      <section class="slide title-slide" data-note="Открыть prod. Alena начинает login. Если live падает — видео из README + устный story.">
+        <div class="content">
           <span class="badge">Live Demo</span>
-          <h2 style="margin-bottom: 32px">Демонстрация продукта</h2>
-          <p>🌐 <a class="link" href="https://delulu-church.netlify.app/" target="_blank" rel="noreferrer">delulu-church.netlify.app</a></p>
-          <ul class="demo-list" style="margin-top: 40px; text-align: left; max-width: 600px">
-            <li><strong>Tarot</strong> — draw + смена языка → перевод</li>
-            <li><strong>Auth</strong> → Исповедальня → Алтарь</li>
-            <li><strong>Санктум</strong> — ритуал суда над веткой</li>
-            <li><strong>DevTools</strong></li>
-          </ul>
+          <h2 style="margin-bottom: 20px">Демо сейчас</h2>
+          <p class="subtitle">
+            <a class="link" href="https://delulu-church.netlify.app/" target="_blank" rel="noreferrer"
+              >delulu-church.netlify.app</a
+            >
+          </p>
+          <p class="subtitle" style="margin-top: 28px">Login → Confess → Altar → Profile</p>
         </div>
-        <div class="footer"><span>Product Demo</span><span>7 / 20</span></div>
+        <div class="footer"><span>Demo</span><span></span></div>
       </section>
 
-      <!-- PART 2 · TEAM STORY -->
-      <section class="slide title-slide" data-note="Part 2 начинается. ~10 минут.">
+      <!-- 7 · ARCHITECTURE TITLE -->
+      <section class="slide title-slide" data-note="Part 2: ~10 мин. Схема → 2 решения → failure.">
         <div class="content">
-          <h1>Team Story</h1>
-          <p class="subtitle">Как работали, учили Angular и принимали решения</p>
+          <h1>Architecture &amp; decisions</h1>
+          <p class="subtitle">Схема · trade-offs · один реальный провал</p>
         </div>
-        <div class="footer"><span>Team Story</span><span>6 / 20</span></div>
+        <div class="footer"><span>Architecture</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Каждый рассказывает свой вклад за 2–3 мин. Daria → Alena → Nadezhda.">
+      <!-- 8 · DIAGRAM -->
+      <section class="slide" data-note="Daria ~2 мин: UI не знает про HTTP/Firestore. Shared domain в core — его едят shrift, altar, profile.">
         <div class="content">
-          <p class="part-divider">Part 2 · Team Story</p>
-          <span class="badge">Roles</span>
-          <h2>Кто за что отвечал</h2>
+          <p class="part-divider">Part 2 · Architecture</p>
+          <span class="badge">System</span>
+          <h2>Одна схема</h2>
+          <div class="mermaid-wrap">
+            <pre class="mermaid">
+flowchart LR
+  UI["UI<br/>login · shrift · altar · profile"] --> F["Facade"]
+  F --> S["Service<br/>core / feature"]
+  S --> HTTP["HTTP<br/>Tarot API"]
+  S --> FS["Firestore<br/>Auth · sins · candles"]
+
+  classDef box fill:#1f1814,stroke:#d6a85f,color:#f4e7c8,stroke-width:1.5px
+  class UI,F,S,HTTP,FS box
+            </pre>
+          </div>
+          <p class="tiny" style="margin-top: 12px; text-align: center">
+            core/: Auth, Confess, Candles, UserProfile · features/: data + facades + ui
+          </p>
+        </div>
+        <div class="footer"><span>Architecture</span><span></span></div>
+      </section>
+
+      <!-- 9 · DECISION 1 -->
+      <section class="slide" data-note="Alena + Daria: facade vs component→service. Alena: на login впервые переучивалась.">
+        <div class="content">
+          <span class="badge">Decision 1</span>
+          <h2>Facade pattern</h2>
+          <div class="decision">
+            <h3>Выбрали · UI → Facade → Service</h3>
+            <p><strong>Альтернатива:</strong> компонент сразу инжектит сервис.</p>
+            <p class="meta">
+              <strong>Почему:</strong> UI не знает про Firebase/HTTP; проще тесты и review.<br />
+              <strong>Минус:</strong> больше файлов, выше порог входа — учились вместе.
+            </p>
+          </div>
+        </div>
+        <div class="footer"><span>Architecture</span><span></span></div>
+      </section>
+
+      <!-- 10 · DECISION 2 -->
+      <section class="slide" data-note="Daria: Firebase vs Netlify Identity. Alena делала research. Связка uid ↔ sins/candles.">
+        <div class="content">
+          <span class="badge">Decision 2</span>
+          <h2>Firebase Auth + Firestore</h2>
+          <div class="decision">
+            <h3>Выбрали · один вендор для auth и данных</h3>
+            <p><strong>Альтернатива:</strong> Netlify Identity + отдельное хранилище / свой бэкенд.</p>
+            <p class="meta">
+              <strong>Почему:</strong> uid сразу связан с sins, candles, uiState.<br />
+              <strong>Минус:</strong> сложнее SDK; ошибки ≠ HttpClient.
+            </p>
+          </div>
+        </div>
+        <div class="footer"><span>Architecture</span><span></span></div>
+      </section>
+
+      <!-- 11 · FAILURE -->
+      <section class="slide" data-note="Daria ведёт. Alena: research. Nadezhda: профиль на новых моделях / YAGNI. Детали — что сломалось, что пробовали, чем кончилось.">
+        <div class="content">
+          <p class="part-divider">Part 2 · Failure</p>
+          <span class="badge">Real story</span>
+          <h2>Миграция mid-project</h2>
+          <div class="story-stack">
+            <div class="decision">
+              <h3>Что сломалось</h3>
+              <p>Стартовали с Netlify Identity. Auth и данные пользователей разъехались — sins/candles нужны на uid.</p>
+            </div>
+            <div class="decision">
+              <h3>Что пробовали</h3>
+              <p>Alena — разведка Firebase. Daria — переписала AuthService + UserProfileService. По сути миграция посреди спринта.</p>
+            </div>
+            <div class="decision">
+              <h3>Чем закончилось</h3>
+              <p>
+                Один Firebase-слой, история Login→Confess→Altar→Profile заработала. Побочный эффект: два потока ошибок
+                (HttpClient interceptor ≠ Firestore SDK) — компромисс до сих пор.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span>Architecture</span><span></span></div>
+      </section>
+
+      <!-- 13 · CONTRIBUTIONS TITLE -->
+      <section class="slide title-slide" data-note="Part 3: ~2 мин. Каждый — 1–2 предложения. Не разворачивать в резюме.">
+        <div class="content">
+          <h1>Contributions</h1>
+          <p class="subtitle">Что сделал · чему научился · ~40 сек на человека</p>
+        </div>
+        <div class="footer"><span>Contributions</span><span></span></div>
+      </section>
+
+      <!-- 14 · CONTRIBUTIONS -->
+      <section class="slide" data-note="Alena → Daria → Nadezhda. Полный текст в presentation/speeches.md">
+        <div class="content">
+          <span class="badge">~2 min</span>
+          <h2>Кто что сделал</h2>
           <div class="team-grid">
             <div class="member">
-              <div class="name">Daria</div>
-              <div class="role">Team Lead</div>
-              <div class="gh">@dashque</div>
+              <div class="name">Alena</div>
+              <div class="role">Login · Shrift · i18n</div>
               <ul class="contributions">
-                <li>Code Guides / Style Guides</li>
-                <li>CI, Code Review, Architecture</li>
-                <li>Layout, Sidebar, Routing, Guards</li>
-                <li>Main Page</li>
-                <li>Tarot Page</li>
-                <li>Auth Service, Firebase</li>
-                <li>Register Page</li>
-                <li>Altar Page</li>
-                <li>Sanctum Page</li>
-                <li>Error handling, uiStateStore</li>
+                <li>Login, исповедальня, Transloco research</li>
+                <li>Урок: facade и декомпозиция вместо «толстого» компонента</li>
               </ul>
             </div>
             <div class="member">
-              <div class="name">Alena</div>
-              <div class="role">Frontend Developer</div>
-              <div class="gh">@Alena1409</div>
+              <div class="name">Daria</div>
+              <div class="role">TL · Firebase · Altar</div>
               <ul class="contributions">
-                <li>Design</li>
-                <li>Login Page</li>
-                <li>Shrift Page</li>
-                <li>Crystal ball Page</li>
-                <li>404 Page</li>
-                <li>Shared Card, footer</li>
-                <li>Ghost-coder, Eye-blink, Guards</li>
-                <li>i18n: Transloco, Language switcher</li>
-                <li>Firebase Research</li>
-                <li>Code Review</li>
+                <li>Архитектура, CI, Auth, altar/tarot/sanctum</li>
+                <li>Урок: mid-project auth migration дорогая; два транспорта ошибок</li>
               </ul>
             </div>
             <div class="member">
               <div class="name">Nadezhda</div>
-              <div class="role">Frontend Developer</div>
-              <div class="gh">@kozochkina82</div>
+              <div class="role">Header · Profile</div>
               <ul class="contributions">
-                <li>Design</li>
-                <li>Header</li>
-                <li>Navigation item</li>
-                <li>Profile Page</li>
-                <li>Password recovery form</li>
-                <li>Guards</li>
+                <li>Header, guards, весь profile UI</li>
+                <li>Урок: сначала модели/facade, потом UI — иначе YAGNI</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="footer"><span>Team Story</span><span>7 / 20</span></div>
+        <div class="footer"><span>Contributions</span><span></span></div>
       </section>
 
-      <section class="slide" data-note="Хронология по спринтам — общий контекст.">
-        <div class="content">
-          <span class="badge">Journey</span>
-          <h2>4 спринта — хронология</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Sprint 0</strong> — CI, Code guides, Design, Brain Storm</li>
-              <li><strong>Sprint 1</strong> — layout, routing, auth, главная</li>
-              <li><strong>Sprint 2</strong> — shrift, altar, i18n, ghost-coder</li>
-            </ul>
-            <ul>
-              <li><strong>Sprint 4</strong> — sanctum, error handling</li>
-              <li><strong>Sprint 4</strong> — refactor codebase, tests</li>
-              <li><strong>Sprint 5</strong> — profile, presentation preparation</li>
-
-            </ul>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>8 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Sprint 1 и 2: sub-issues closed. UI base, routing, guards, signals.">
-        <div class="content">
-          <p class="part-divider">Part 2 · Team Story</p>
-          <span class="badge">Sprint 1 & 2</span>
-          <div class="shot-two">
-            <div class="shot"><img src="assets/sprint-1-issue.png" alt="Sprint 1 GitHub Issue" /></div>
-            <div class="shot"><img src="assets/sprint-2-issue.png" alt="Sprint 2 GitHub Issue" /></div>
-          </div>
-          <p class="shot-caption">Sprint 1: 14/14 · layout shell · Sprint 2: 23/23 · routes, lazy loading, guards, signals</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>9 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Показать живую доску: задачи двигаются по колонкам, декомпозиция на sub-issues.">
-        <div class="content">
-          <p class="part-divider">Part 2 · Team Story</p>
-          <span class="badge">Project Board</span>
-          <h2>GitHub Projects — живая доска</h2>
-          <div class="shot-two">
-            <div class="shot"><img src="assets/board-kanban.png" alt="GitHub Projects Kanban board" /></div>
-            <div class="shot"><img src="assets/board-issues.png" alt="GitHub Issues list" /></div>
-          </div>
-          <p class="shot-caption">Backlog → In progress → Paused → Done · 132 задачи закрыто · sprint labels · sub-issues</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>13 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Daria: процессы без скриншотов — ветки, pre-push, чистота репо. 125+ merged PRs.">
-        <div class="content">
-          <p class="part-divider">Part 2 · Team Story</p>
-          <span class="badge">Git Culture</span>
-          <h2>Как работали с Git</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Ветки</strong> — feat/, fix/, docs/ · валидация в pre-push hook</li>
-              <li><strong>Pre-push</strong> — typecheck → format → lint → test</li>
-              <li><strong>Дневники</strong> — development-notes + meeting notes</li>
-            </ul>
-            <ul>
-              <li><strong>Чистый репо</strong> — knip, без лишних файлов и неиспользуемых зависимостей</li>
-              <li><strong>125+ merged PRs</strong> — substantive review comments</li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>11 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Merge blocked без approval. CodeQL, test-and-build, auto-assign.">
-        <div class="content">
-          <span class="badge">Branch Protection</span>
-          <div class="shot shot-full"><img src="assets/branch-protection.png" alt="Branch protection and merge rules" /></div>
-          <p class="shot-caption">Review required · CI checks · merge blocked без approval · branch up-to-date</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>16 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Шаблон PR: type, changes, video demo, self-check, Netlify deploy preview.">
-        <div class="content">
-          <span class="badge">PR Description</span>
-          <div class="shot shot-full"><img src="assets/pr-description.png" alt="Pull request with template checklist" /></div>
-          <p class="shot-caption">feat: add coderquotes service · checklist · video proof · deploy preview</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>17 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Ревью: form logic в сервис, не в компоненте; методы в template → control flow.">
-        <div class="content">
-          <span class="badge">Code Review</span>
-          <div class="shot shot-full"><img src="assets/pr-review-code.png" alt="PR review on login component" /></div>
-          <p class="shot-caption">Login: formBuilder → service · template methods → control flow · resolved</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>18 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Ревью не только код: i18n UX, дизайн, кросс-платформенные иконки.">
-        <div class="content">
-          <span class="badge">Code Review</span>
-          <div class="shot-two">
-            <div class="shot"><img src="assets/pr-review-i18n.png" alt="PR review on i18n strings" /></div>
-            <div class="shot"><img src="assets/pr-review-design.png" alt="PR review on design and icons" /></div>
-          </div>
-          <p class="shot-caption">i18n: требования к паролю · дизайн: отступы, emoji → SVG под тему</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>19 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="feat:/fix:/refactor:/test:/chore: — commitlint в Husky, ветки feat/fix/docs.">
-        <div class="content">
-          <span class="badge">Conventional Commits</span>
-          <div class="shot shot-full"><img src="assets/conventional-commits.png" alt="Conventional commit history" /></div>
-          <p class="shot-caption">refactor: · test(ui): · feat: · chore: — единый стиль, CI green checks</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>20 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Discord — основной канал: чат для задач и API, голос для синхронизаций.">
-        <div class="content">
-          <span class="badge">Communication</span>
-          <h2>Discord-сервер команды</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Текстовые каналы</strong> — задачи, API, вопросы по коду</li>
-              <li><strong>Голосовые каналы</strong> — спринт-планирование, daily sync</li>
-              <li>Обсуждение API, схем и декомпозиции до написания кода</li>
-            </ul>
-            <div class="shot" style="max-height: 42vh; margin-top: 0"><img src="assets/discord-chat.png" alt="Discord team chat" /></div>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>21 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Декомпозиция: issues → sub-issues. Схемы: wireframes, UI → Facade → API.">
-        <div class="content">
-          <span class="badge">Planning</span>
-          <h2>Декомпозиция и схемы</h2>
-          <ul style="margin-bottom: 12px">
-            <li><strong>GitHub Issues</strong> — спринты, sub-issues, assignee на каждую задачу</li>
-            <li><strong>Схемы до кода</strong> — wireframes страниц, разбиение на компоненты</li>
-            <li><strong>Архитектура</strong> — UI → Facade → API service, структура features/</li>
-          </ul>
-          <div class="shot-two">
-            <div class="shot"><img src="assets/schema-confess.png" alt="Confession page wireframe" /></div>
-            <div class="shot"><img src="assets/schema-architecture.png" alt="Architecture schema" /></div>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>22 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Сложности: команда, декомпозиция, нагрузка, выгорание, собесы, error handling. Каждый может добавить пример.">
-        <div class="content">
-          <span class="badge">Challenges</span>
-          <h2>Сложности</h2>
-          <div class="two-col">
-            <ul>
-              <li><strong>Взаимодействие в команде</strong> — разный уровень, async, разные таймзоны</li>
-              <li><strong>Декомпозиция задач</strong> — баланс детализации и скорости, sub-issues</li>
-              <li><strong>Нагрузка по навыкам</strong> — распределение задач с учётом сильных сторон</li>
-              <li><strong>Выгорание</strong> — курс «застыл», внезапные задания под конец курса</li>
-            </ul>
-            <ul>
-              <li><strong>Собеседования</strong> — усталость параллельно с курсом и проектом</li>
-              <li><strong>Error handling</strong> — один источник невозможен: Firebase SDK ≠ HttpClient</li>
-              <li><strong>Firebase migration</strong> — Netlify Identity → Firebase Auth</li>
-              <li><strong>Архитектура</strong> — договориться о facade pattern всей командой</li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>23 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Figma AI сгенерировала 2 варианта макета — выбрали элементы, адаптировали под Taiga UI.">
-        <div class="content">
-          <span class="badge">Design</span>
-          <h2>Дизайн: Figma AI</h2>
-          <p class="shot-caption" style="margin-top: 0; margin-bottom: 12px; text-align: left">
-            Два варианта макета через Figma AI → обсудили в команде → взяли лучшее в реализацию
-          </p>
-          <div class="shot-two">
-            <div class="shot"><img src="assets/design-figma.png" alt="Figma AI design variant 1" /></div>
-            <div class="shot"><img src="assets/design-ai-altar.png" alt="Figma AI design variant 2" /></div>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>23 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Чистая архитектура: слои, facade, единообразие. CodeQL: Maintainability и Reliability — Excellent, 0 findings.">
-        <div class="content">
-          <span class="badge">Architecture</span>
-          <h2>Чистая архитектура</h2>
-          <div class="two-col">
-            <div>
-              <div class="flow" style="margin-bottom: 12px">
-                <span>UI</span><span class="arrow">→</span><span>Facade</span><span class="arrow">→</span
-                ><span>Service</span><span class="arrow">→</span><span>HTTP / Firestore</span>
-              </div>
-              <ul>
-                <li><strong>Поддерживаемость</strong> — features/data/facades/ui, domain в core</li>
-                <li><strong>Facade pattern</strong> — UI не знает про HTTP и Firestore</li>
-                <li><strong>Единообразие</strong> — path aliases, ESLint, naming conventions</li>
-                <li><strong>Route-scoped DI</strong> — сервисы привязаны к маршруту</li>
-              </ul>
-            </div>
-            <div class="shot" style="max-height: 48vh; margin-top: 0">
-              <img src="assets/code-quality.png" alt="GitHub CodeQL code quality — Excellent" />
-            </div>
-          </div>
-          <p class="shot-caption">CodeQL · Maintainability Excellent · 0 findings · Reliability Excellent</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>25 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Как запустить проект — всё в README.">
-        <div class="content">
-          <span class="badge">Get Started</span>
-          <h2>Как запустить проект</h2>
-          <div class="shot shot-full"><img src="assets/get-started.png" alt="README Get Started section" /></div>
-          <p class="shot-caption">git clone → pnpm run ci → pnpm start → localhost:4200</p>
-        </div>
-        <div class="footer"><span>Team Story</span><span>26 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Ключевые решения и как решали конфликты.">
-        <div class="content">
-          <span class="badge">Decisions</span>
-          <h2>Решения и процессы</h2>
-          <div class="two-col">
-            <div class="card">
-              <h3>Технические</h3>
-              <ul>
-                <li>Facade pattern</li>
-                <li>Shared domain в core</li>
-                <li>Signals over NgRx Store</li>
-                <li>Taiga UI как единый kit</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h3>Командные</h3>
-              <ul>
-                <li>Repository rulesets</li>
-                <li>Conventional Commits</li>
-                <li>PR review обязателен</li>
-                <li>Дневники + meeting notes</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="footer"><span>Team Story</span><span>12 / 20</span></div>
-      </section>
-
-      <section class="slide" data-note="Ссылки для жюри — всё есть в README.">
+      <!-- 14 · LINKS -->
+      <section class="slide" data-note="Если спросят артефакты — всё в README.">
         <div class="content">
           <span class="badge">Links</span>
-          <h2>Артефакты проекта</h2>
+          <h2>Артефакты</h2>
           <ul>
-            <li><strong>App:</strong> <a class="link" href="https://delulu-church.netlify.app/" target="_blank" rel="noreferrer">delulu-church.netlify.app</a></li>
-            <li><strong>Presentation:</strong> <a class="link" href="https://delulu-church.netlify.app/presentation/" target="_blank" rel="noreferrer">/presentation/</a></li>
-            <li><strong>GitHub:</strong> <a class="link" href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight" target="_blank" rel="noreferrer">angular-ngKittyDebugRight</a></li>
-            <li><strong>Issues:</strong> <a class="link" href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight/issues" target="_blank" rel="noreferrer">GitHub Issues</a></li>
-            <li><strong>Demo video:</strong> <a class="link" href="https://drive.google.com/file/d/1xQl8qfHqrmiRhw6KaKnjK7WEUC5O3FE4/view" target="_blank" rel="noreferrer">error handling & 404</a></li>
+            <li>
+              <strong>App:</strong>
+              <a class="link" href="https://delulu-church.netlify.app/" target="_blank" rel="noreferrer"
+                >delulu-church.netlify.app</a
+              >
+            </li>
+            <li>
+              <strong>Repo:</strong>
+              <a
+                class="link"
+                href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight"
+                target="_blank"
+                rel="noreferrer"
+                >angular-ngKittyDebugRight</a
+              >
+            </li>
+            <li>
+              <strong>Teamwork:</strong>
+              <a class="link" href="./teamwork.md" target="_blank" rel="noreferrer">presentation/teamwork.md</a>
+            </li>
           </ul>
         </div>
-        <div class="footer"><span>Links</span><span>26 / 20</span></div>
+        <div class="footer"><span>Links</span><span></span></div>
       </section>
 
-      <section class="slide title-slide" data-note="Финал. Вопросы?">
+      <!-- 15 · THANKS -->
+      <section class="slide title-slide" data-note="Спасибо. Вопросы? Передавать владельцу части: login/shrift→Alena; Firebase/altar/CI→Daria; header/profile→Nadezhda.">
         <div class="content">
           <div class="emoji">🙏</div>
           <h1>Спасибо!</h1>
-          <p class="subtitle">Вопросы?</p>
-          <p class="subtitle small" style="margin-top: 32px">
-            ngKittyDebug · RS School Angular 2026 Q2
-          </p>
+          <p class="subtitle">Вопросы команде</p>
+          <p class="subtitle small" style="margin-top: 28px">ngKittyDebug · RS School Angular 2026 Q2</p>
         </div>
-        <div class="footer"><span>Fin</span><span>20 / 20</span></div>
+        <div class="footer"><span>Fin</span><span></span></div>
       </section>
     </div>
 
     <div class="nav-hint">← → или клик · N — speaker notes</div>
 
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'dark',
+        securityLevel: 'loose',
+        themeVariables: {
+          darkMode: true,
+          background: '#14100f',
+          primaryColor: '#1f1814',
+          primaryTextColor: '#f4e7c8',
+          primaryBorderColor: '#d6a85f',
+          secondaryColor: '#1b1513',
+          tertiaryColor: '#14100f',
+          lineColor: '#d6a85f',
+          fontFamily: 'Oxanium, system-ui, sans-serif',
+          fontSize: '16px',
+        },
+        flowchart: {
+          curve: 'basis',
+          padding: 16,
+          nodeSpacing: 40,
+          rankSpacing: 50,
+        },
+      });
+
+      window.__renderMermaid = async (root) => {
+        const nodes = [...root.querySelectorAll('pre.mermaid')].filter(
+          (el) => !el.getAttribute('data-processed')
+        );
+        if (nodes.length) await mermaid.run({ nodes });
+      };
+
+      window.__mermaidReady = true;
+      document.dispatchEvent(new Event('mermaid-ready'));
+    </script>
+
     <script>
       const slides = [...document.querySelectorAll('.slide')];
       let index = 0;
 
-      function show(i) {
+      async function show(i) {
         slides[index].classList.remove('active');
         index = (i + slides.length) % slides.length;
         slides[index].classList.add('active');
         const footer = slides[index].querySelector('.footer span:last-child');
         if (footer) footer.textContent = `${index + 1} / ${slides.length}`;
+        if (window.__renderMermaid) await window.__renderMermaid(slides[index]);
       }
+
+      function boot() {
+        show(0);
+      }
+
+      if (window.__mermaidReady) boot();
+      else document.addEventListener('mermaid-ready', boot, { once: true });
 
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
